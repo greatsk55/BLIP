@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+
+@theme {
+  --color-void-black: var(--bg-main);
+  --color-ink: var(--text-main);
+  --color-signal-green: var(--signal-main);
+  --color-ghost-grey: var(--text-secondary);
+  --color-glitch-red: #FF2A6D;
+  
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  /* Light Mode (Clinical White - Pure Inversion) */
+  --bg-main: #FFFFFF;
+  --text-main: #000000;
+  --text-secondary: #666666; /* Gray consistency */
+  --signal-main: #00CC7D; /* Adjusted for visibility on white */
+  --border-color: rgba(0, 0, 0, 0.15);
+}
+
+.dark {
+  /* Dark Mode (Digital Noir) */
+  --bg-main: #050505;
+  --text-main: #FFFFFF;
+  --text-secondary: #888888;
+  --signal-main: #00FF94;
+  --border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Utilities */
+@utility text-shadow-glow {
+  text-shadow: 0 0 10px var(--color-signal-green), 0 0 20px var(--color-signal-green);
+}
+
+/* 모바일 키보드 대응: JS(useVisualViewport)가 동적으로 업데이트 */
+:root {
+  --app-height: 100dvh;
+}
+
+body {
+  background-color: var(--color-void-black);
+  color: var(--text-main);
+  /* 모바일: pull-to-refresh 방지, 바운스 스크롤 제거 */
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 모바일: 텍스트 선택 방지 (메시지 영역) */
+@utility select-none-touch {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+/* iOS: input focus 시 자동 줌 방지 (16px 이상이면 줌 안 됨) */
+@media screen and (max-width: 640px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}

@@ -8,6 +8,8 @@ node_modules/
 .next/
 out/
 
+*.md
+
 # Build
 dist/
 build/
@@ -44,3 +46,7 @@ yarn-error.log*
 coverage/
 
 CLAUDE.md
+.vercel
+
+# Playwright MCP
+.playwright-mcp/

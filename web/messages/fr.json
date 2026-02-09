@@ -1,0 +1,228 @@
+{
+  "Hero": {
+    "title": "Parlez. Puis disparaissez.",
+    "subtitle": "Pas de compte. Pas de trace. Pas d'historique.<br></br>Seule la conversation de ce moment existe.",
+    "cta": "Cliquez pour créer un salon",
+    "linkShare": "Connectez-vous parfaitement avec un seul lien, sans procédures complexes."
+  },
+  "Problem": {
+    "title": "Vos conversations durent trop longtemps.",
+    "description": "Journaux serveur, captures d'écran, discussions de groupe oubliées...<br></br>Toutes les conversations n'ont pas besoin d'être enregistrées. Certaines devraient disparaître comme de la fumée."
+  },
+  "Solution": {
+    "friction": {
+      "title": "0 Friction",
+      "description": "Zéro configuration. Envoyez un lien, commencez à parler."
+    },
+    "anonymity": {
+      "title": "Total Anonymity",
+      "description": "Nous ne demandons pas qui vous êtes. Pas d'identifiant, pas de profil nécessaire."
+    },
+    "destruction": {
+      "title": "Complete Destruction",
+      "description": "À part vous et le destinataire, même nous ne pouvons pas le voir."
+    },
+    "opensource": {
+      "title": "Transparent Code",
+      "description": "100% Open Source. Vous pouvez vérifier avec le code que nous n'espionnons jamais vos conversations."
+    }
+  },
+  "Philosophy": {
+    "text1": "BLIP n'est pas une messagerie. C'est un outil de communication jetable.",
+    "text2": "Nous ne voulons pas vous retenir. Dites ce que vous avez à dire, puis partez."
+  },
+  "Footer": {
+    "easterEgg": "Cette page pourrait aussi disparaître bientôt.",
+    "supportProtocol": "Soutenir le Protocole",
+    "links": {
+      "about": "About",
+      "howItWorks": "How it Works",
+      "faq": "FAQ",
+      "privacy": "Confidentialité",
+      "terms": "Conditions"
+    }
+  },
+  "About": {
+    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
+    "subtitle": "BLIP Service Philosophy",
+    "section1": {
+      "title": "The Right to be Forgotten",
+      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+    },
+    "section2": {
+      "title": "True E2EE (End-to-End Encryption)",
+      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+    },
+    "closing": "Communicate without traces. Be free."
+  },
+  "HowItWorks": {
+    "title": "Don't Trust.<br></br>Verify.",
+    "subtitle": "Technical Architecture",
+    "description": "La sécurité de BLIP n'est pas de la magie. Ce sont des mathématiques vérifiables et une technologie transparente.",
+    "steps": {
+      "1": {
+        "title": "1. Local Key Generation",
+        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+      },
+      "2": {
+        "title": "2. Client-Side Encryption",
+        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+      },
+      "3": {
+        "title": "3. In-Memory Transit",
+        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+      }
+    },
+    "opensource": "Verify Code"
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Whatever you are curious about",
+    "items": {
+      "1": {
+        "question": "Aucun enregistrement ne subsiste vraiment ?",
+        "answer": "Tout le contenu des conversations est chiffré de bout en bout à 100%, donc seul du texte chiffré illisible transite par le serveur. Les systèmes d'hébergement (Vercel, AWS, etc.) peuvent conserver des journaux de connexion minimaux, ce qui échappe à notre contrôle — mais ces journaux ne contiennent que des données aléatoires sans signification."
+      },
+      "2": {
+        "question": "En cas de piratage, mes chats seront-ils divulgués ?",
+        "answer": "Même si le serveur est piraté, les hackers ne peuvent voir que des nombres aléatoires chiffrés. La clé pour déverrouiller la conversation n'existe que dans votre onglet de navigateur."
+      },
+      "3": {
+        "question": "Puis-je envoyer des images et des fichiers ?",
+        "answer": "Actuellement, nous nous concentrons sur la communication textuelle légère. Nous prévoyons d'étendre les fonctionnalités d'une manière qui garantit la sécurité à l'avenir."
+      }
+    }
+  },
+  "Chat": {
+    "header": {
+      "exit": "EXIT",
+      "online": "{count} en ligne",
+      "e2ee": "Chiffrement de bout en bout"
+    },
+    "input": {
+      "placeholder": "Taper un message...",
+      "send": "Envoyer"
+    },
+    "create": {
+      "title": "CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "shareLink": "Lien de partage",
+      "warning": "SAUVEGARDEZ CETTE CLÉ. ELLE NE PEUT PAS ÊTRE RÉCUPÉRÉE.",
+      "enter": "ENTRER DANS LE CANAL"
+    },
+    "join": {
+      "title": "ENTER ACCESS KEY",
+      "connect": "CONNECT",
+      "invalidKey": "INVALID_KEY",
+      "expired": "CHANNEL_EXPIRED",
+      "full": "CHANNEL_FULL"
+    },
+    "leave": {
+      "title": "EXIT CHANNEL?",
+      "description": "Êtes-vous sûr de vouloir partir ?",
+      "lastPersonWarning": "Vous êtes le dernier participant. Partir détruira définitivement ce canal.",
+      "confirm": "EXIT",
+      "cancel": "CANCEL"
+    },
+    "destroyed": {
+      "title": "Aucune trace ne subsiste.",
+      "subtitle": "Ce canal a été définitivement détruit.",
+      "newChat": "Démarrer un nouveau canal"
+    },
+    "roomFull": {
+      "title": "Canal complet.",
+      "subtitle": "Ce canal a déjà 2 participants.",
+      "newChat": "Démarrer un nouveau canal"
+    }
+  },
+  "Privacy": {
+    "title": "Vie Privée par Architecture",
+    "subtitle": "Politique de Confidentialité",
+    "lastUpdated": "Dernière mise à jour : février 2026",
+    "intro": "BLIP est conçu pour ne rien savoir de vous. Ce n'est pas seulement une politique—c'est ainsi que nous avons construit le système. Ce que nous ne pouvons pas collecter, nous ne pouvons pas divulguer.",
+    "sections": {
+      "1": {
+        "title": "Notre Philosophie",
+        "content": "La plupart des politiques de confidentialité expliquent quelles données les entreprises collectent et comment elles les utilisent. La nôtre est différente : nous expliquons pourquoi nous ne pouvons pas collecter vos données même si nous le voulions. L'architecture de BLIP rend la surveillance de masse techniquement impossible."
+      },
+      "2": {
+        "title": "Données que Nous ne Collectons Pas",
+        "content": "Nous ne collectons pas : comptes utilisateurs, adresses e-mail, numéros de téléphone, noms, profils, contenu des messages, historique de chat, listes de contacts ou toute forme d'identification personnelle. Vos conversations sont chiffrées de bout en bout et ne touchent jamais notre base de données. Nous ne pouvons littéralement pas les lire."
+      },
+      "3": {
+        "title": "Données qui Transitent",
+        "content": "Lorsque vous utilisez BLIP, nos serveurs traitent brièvement : les charges de messages chiffrés (texte chiffré illisible) et les métadonnées de connexion temporaires (adresses IP pour le routage WebSocket). Ces données n'existent que dans la mémoire volatile (RAM) et ne sont jamais écrites sur disque. À la fin de votre session, elles disparaissent."
+      },
+      "4": {
+        "title": "Chiffrement de Bout en Bout",
+        "content": "Tous les messages sont chiffrés sur votre appareil en utilisant l'échange de clés Curve25519 ECDH et le chiffrement XSalsa20-Poly1305 avant transmission. Les clés de chiffrement sont générées localement dans votre navigateur et ne sont jamais envoyées à nos serveurs. Même sous contrainte légale, nous ne pouvons pas fournir le contenu des messages—nous ne l'avons pas."
+      },
+      "5": {
+        "title": "Cookies et Stockage Local",
+        "content": "BLIP utilise un stockage local minimal pour : les préférences de thème (mode sombre/clair), les paramètres de langue et les clés de chiffrement temporaires pendant les sessions actives. Nous n'utilisons pas de cookies de suivi, de cookies d'analyse ni de cookies publicitaires tiers. Les clés de chiffrement sont automatiquement détruites lorsque vous fermez l'onglet du navigateur."
+      },
+      "6": {
+        "title": "Services Tiers",
+        "content": "BLIP utilise Supabase pour la communication WebSocket en temps réel (relais de messages uniquement, sans stockage). Nous pouvons afficher des publicités contextuelles. Les fournisseurs de publicité peuvent utiliser leurs propres cookies conformément à leurs politiques de confidentialité. Nous ne partageons jamais de données de conversation avec les annonceurs—parce que nous n'en avons pas."
+      },
+      "7": {
+        "title": "Protection des Mineurs",
+        "content": "BLIP n'est pas destiné aux utilisateurs de moins de 13 ans. Comme nous ne collectons pas d'informations personnelles, nous ne pouvons pas vérifier l'âge. Si vous pensez qu'un enfant utilise ce service de manière inappropriée, veuillez nous contacter."
+      },
+      "8": {
+        "title": "Modifications et Contact",
+        "content": "Nous pouvons mettre à jour cette politique pour refléter des changements dans nos pratiques ou pour la conformité légale. Les changements importants seront publiés sur cette page. Comme nous ne collectons pas d'adresses e-mail, nous ne pouvons pas envoyer de notifications—veuillez consulter cette page périodiquement. Pour toute question, visitez notre dépôt GitHub."
+      }
+    }
+  },
+  "Terms": {
+    "title": "Conditions d'Utilisation",
+    "subtitle": "Conditions Générales",
+    "lastUpdated": "Dernière mise à jour : février 2026",
+    "intro": "En utilisant BLIP, vous acceptez ces conditions. Elles sont courtes, honnêtes et rédigées en langage clair—tout comme notre code.",
+    "sections": {
+      "1": {
+        "title": "Qu'est-ce que BLIP",
+        "content": "BLIP est un service de chat éphémère gratuit, open source et chiffré de bout en bout. Il fournit des canaux de communication temporaires qui sont détruits après utilisation. BLIP n'est pas une messagerie, un réseau social ni une plateforme de stockage de données. C'est un outil de communication jetable."
+      },
+      "2": {
+        "title": "Aucun Compte Requis",
+        "content": "BLIP fonctionne sans inscription, identifiants de connexion ni profils personnels. L'accès est accordé via des liens de salon temporaires et des mots de passe partagés. Vous êtes responsable de la protection de vos mots de passe de salon—nous ne pouvons pas les récupérer."
+      },
+      "3": {
+        "title": "Utilisation Acceptable",
+        "content": "Vous acceptez de ne pas utiliser BLIP pour : distribuer du contenu illégal, harceler ou menacer, transmettre des logiciels malveillants, envoyer du spam automatisé ou abuser, ni pour toute activité violant la loi applicable. Bien que nous ne puissions pas surveiller le contenu chiffré, nous nous réservons le droit de restreindre l'accès à notre infrastructure si un abus est détecté au niveau du réseau."
+      },
+      "4": {
+        "title": "Aucune Récupération de Données",
+        "content": "Les messages ne sont stockés dans aucune base de données. Une fois un salon de chat détruit, toutes les données de conversation sont perdues de manière permanente et irréversible. C'est par conception, pas une limitation. N'utilisez pas BLIP pour des communications que vous devez conserver."
+      },
+      "5": {
+        "title": "Open Source",
+        "content": "Le code source de BLIP est publiquement disponible. Vous êtes libre d'inspecter, de forker et de contribuer au code. La transparence de notre code est notre plus forte garantie de confidentialité. Vous pouvez vérifier chaque affirmation que nous faisons."
+      },
+      "6": {
+        "title": "Disponibilité du Service",
+        "content": "BLIP est fourni 'en l'état'. Nous ne garantissons pas la disponibilité, le temps de fonctionnement ni un service ininterrompu. Nous pouvons modifier, suspendre ou interrompre le service à tout moment sans préavis."
+      },
+      "7": {
+        "title": "Limitation de Responsabilité",
+        "content": "Dans la mesure maximale permise par la loi, BLIP et ses opérateurs ne seront pas responsables des dommages directs, indirects, accessoires ou consécutifs résultant de votre utilisation du service. Cela inclut, sans s'y limiter, la perte de données (qui est la fonctionnalité principale), les interruptions de service et l'accès non autorisé à vos communications."
+      },
+      "8": {
+        "title": "Propriété Intellectuelle",
+        "content": "Le nom BLIP, le logo et les actifs de marque sont protégés. Le code source du service est publié sous une licence open source. Le contenu généré par les utilisateurs dans les salons de chat appartient aux utilisateurs—bien que par conception, il cesse d'exister après la destruction du salon."
+      },
+      "9": {
+        "title": "Modifications et Droit Applicable",
+        "content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de BLIP après les modifications constitue l'acceptation des conditions mises à jour. Ces conditions sont régies par les lois de la République de Corée. Les litiges seront soumis à la juridiction exclusive du Tribunal du District Central de Séoul."
+      }
+    }
+  },
+  "Metadata": {
+    "title": "BLIP - Parlez. Puis disparaissez.",
+    "description": "Chat éphémère chiffré E2E. Sans compte. Sans trace. Sans historique. Conversations sécurisées qui disparaissent.",
+    "roomTitle": "BLIP - Rejoignez un chat sécurisé",
+    "roomDescription": "Vous êtes invité à un chat privé chiffré de bout en bout. Rejoignez instantanément, sans compte."
+  }
+}

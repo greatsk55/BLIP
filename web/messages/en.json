@@ -1,0 +1,228 @@
+{
+  "Hero": {
+    "title": "Talk. Then Vanish.",
+    "subtitle": "No accounts. No traces. No history.<br></br>Only the conversation of this moment exists.",
+    "cta": "Click to Create Chat Room",
+    "linkShare": "Connect perfectly with a single link, no complex procedures."
+  },
+  "Problem": {
+    "title": "Your conversations last too long.",
+    "description": "Server logs, screenshots, forgotten group chats...<br></br>Not every conversation needs a record. Some should vanish like smoke."
+  },
+  "Solution": {
+    "friction": {
+      "title": "0 Friction",
+      "description": "Zero setup. Send a link, start talking."
+    },
+    "anonymity": {
+      "title": "Total Anonymity",
+      "description": "We don't ask who you are. No ID, no profile needed."
+    },
+    "destruction": {
+      "title": "Complete Destruction",
+      "description": "Except for you and the recipient, even we cannot see it."
+    },
+    "opensource": {
+      "title": "Transparent Code",
+      "description": "100% Open Source. You can verify with the code that we never spy on your conversations."
+    }
+  },
+  "Philosophy": {
+    "text1": "BLIP is not a messenger. It's a disposable communication tool.",
+    "text2": "We don't want to keep you here. Say your piece, then leave."
+  },
+  "Footer": {
+    "easterEgg": "This page might disappear soon too.",
+    "supportProtocol": "Support the Protocol",
+    "links": {
+      "about": "About",
+      "howItWorks": "How it Works",
+      "faq": "FAQ",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    }
+  },
+  "About": {
+    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
+    "subtitle": "BLIP Service Philosophy",
+    "section1": {
+      "title": "The Right to be Forgotten",
+      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+    },
+    "section2": {
+      "title": "True E2EE (End-to-End Encryption)",
+      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+    },
+    "closing": "Communicate without traces. Be free."
+  },
+  "HowItWorks": {
+    "title": "Don't Trust.<br></br>Verify.",
+    "subtitle": "Technical Architecture",
+    "description": "BLIP's security isn't magic. It's verifiable math and transparent technology.",
+    "steps": {
+      "1": {
+        "title": "1. Local Key Generation",
+        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+      },
+      "2": {
+        "title": "2. Client-Side Encryption",
+        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+      },
+      "3": {
+        "title": "3. In-Memory Transit",
+        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+      }
+    },
+    "opensource": "Verify Code"
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Whatever you are curious about",
+    "items": {
+      "1": {
+        "question": "Is there really no record left?",
+        "answer": "All conversation content is 100% end-to-end encrypted, so only unreadable ciphertext passes through the server. Hosting systems (Vercel, AWS, etc.) may retain minimal connection logs, which is beyond our control—but those logs contain nothing but meaningless random data."
+      },
+      "2": {
+        "question": "If hacked, will my chats be leaked?",
+        "answer": "Even if the server is hacked, hackers can only see encrypted random numbers. The key to unlock the conversation is only in your browser tab."
+      },
+      "3": {
+        "question": "Can I send images and files?",
+        "answer": "Currently, we focus on lightweight text communication. We plan to expand features in a way that guarantees security in the future."
+      }
+    }
+  },
+  "Chat": {
+    "header": {
+      "exit": "EXIT",
+      "online": "{count} online",
+      "e2ee": "End-to-End Encrypted"
+    },
+    "input": {
+      "placeholder": "Type message...",
+      "send": "Send"
+    },
+    "create": {
+      "title": "CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "shareLink": "Share link",
+      "warning": "SAVE THIS KEY. IT CANNOT BE RECOVERED.",
+      "enter": "ENTER CHANNEL"
+    },
+    "join": {
+      "title": "ENTER ACCESS KEY",
+      "connect": "CONNECT",
+      "invalidKey": "INVALID_KEY",
+      "expired": "CHANNEL_EXPIRED",
+      "full": "CHANNEL_FULL"
+    },
+    "leave": {
+      "title": "EXIT CHANNEL?",
+      "description": "Are you sure you want to leave?",
+      "lastPersonWarning": "You are the last participant. Leaving will permanently destroy this channel.",
+      "confirm": "EXIT",
+      "cancel": "CANCEL"
+    },
+    "destroyed": {
+      "title": "No trace remains.",
+      "subtitle": "This channel has been permanently destroyed.",
+      "newChat": "Start New Channel"
+    },
+    "roomFull": {
+      "title": "Channel is full.",
+      "subtitle": "This channel already has 2 participants.",
+      "newChat": "Start New Channel"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy by Architecture",
+    "subtitle": "Privacy Policy",
+    "lastUpdated": "Last updated: February 2026",
+    "intro": "BLIP is designed to know nothing about you. This isn't just a policy—it's how we built the system. What we can't collect, we can't leak.",
+    "sections": {
+      "1": {
+        "title": "Our Philosophy",
+        "content": "Most privacy policies explain what data companies collect and how they use it. Ours is different: we explain why we can't collect your data even if we wanted to. BLIP's architecture makes mass surveillance technically impossible."
+      },
+      "2": {
+        "title": "Data We Don't Collect",
+        "content": "We do not collect: user accounts, email addresses, phone numbers, names, profiles, message content, chat history, contact lists, or any form of personal identifier. Your conversations are end-to-end encrypted and never touch our database. We literally cannot read them."
+      },
+      "3": {
+        "title": "Data That Passes Through",
+        "content": "When you use BLIP, our servers briefly process: encrypted message payloads (unreadable ciphertext) and temporary connection metadata (IP addresses for WebSocket routing). This data exists only in volatile memory (RAM) and is never written to disk. Once your session ends, it's gone."
+      },
+      "4": {
+        "title": "End-to-End Encryption",
+        "content": "All messages are encrypted on your device using Curve25519 ECDH key exchange and XSalsa20-Poly1305 encryption before transmission. Encryption keys are generated locally in your browser and never sent to our servers. Even under legal compulsion, we cannot provide message content—we don't have it."
+      },
+      "5": {
+        "title": "Cookies & Local Storage",
+        "content": "BLIP uses minimal local storage for: theme preferences (dark/light mode), language settings, and temporary encryption keys during active sessions. We do not use tracking cookies, analytics cookies, or any third-party advertising cookies. Encryption keys are automatically destroyed when you close the browser tab."
+      },
+      "6": {
+        "title": "Third-Party Services",
+        "content": "BLIP uses Supabase for real-time WebSocket communication (message relay only, no storage). We may display contextual advertisements. Ad providers may use their own cookies subject to their privacy policies. We never share any conversation data with advertisers—because we don't have any."
+      },
+      "7": {
+        "title": "Children's Privacy",
+        "content": "BLIP is not intended for users under 13 years of age. Since we don't collect personal information, we cannot verify age. If you believe a child is using this service inappropriately, please contact us."
+      },
+      "8": {
+        "title": "Changes & Contact",
+        "content": "We may update this policy to reflect changes in our practices or for legal compliance. Significant changes will be posted on this page. Since we don't collect email addresses, we cannot send notifications—please check this page periodically. For questions, visit our GitHub repository."
+      }
+    }
+  },
+  "Terms": {
+    "title": "Terms of Use",
+    "subtitle": "Terms of Service",
+    "lastUpdated": "Last updated: February 2026",
+    "intro": "By using BLIP, you agree to these terms. They're short, honest, and written in plain language—just like our code.",
+    "sections": {
+      "1": {
+        "title": "What BLIP Is",
+        "content": "BLIP is a free, open-source, end-to-end encrypted ephemeral chat service. It provides temporary communication channels that are destroyed after use. BLIP is not a messenger, social network, or data storage platform. It's a disposable communication tool."
+      },
+      "2": {
+        "title": "No Accounts Required",
+        "content": "BLIP operates without user registration, login credentials, or personal profiles. Access is granted through temporary room links and shared passwords. You are responsible for safeguarding your room passwords—we cannot recover them."
+      },
+      "3": {
+        "title": "Acceptable Use",
+        "content": "You agree not to use BLIP for: distributing illegal content, harassment or threats, transmission of malware, automated spam or abuse, or any activity that violates applicable law. While we cannot monitor encrypted content, we reserve the right to restrict access to our infrastructure if abuse is detected at the network level."
+      },
+      "4": {
+        "title": "No Data Recovery",
+        "content": "Messages are not stored in any database. Once a chat room is destroyed, all conversation data is permanently and irreversibly lost. This is by design, not a limitation. Do not use BLIP for communications that you need to preserve."
+      },
+      "5": {
+        "title": "Open Source",
+        "content": "BLIP's source code is publicly available. You are free to inspect, fork, and contribute to the codebase. The transparency of our code is our strongest guarantee of privacy. You can verify every claim we make."
+      },
+      "6": {
+        "title": "Service Availability",
+        "content": "BLIP is provided on an 'as-is' basis. We make no guarantees of uptime, availability, or uninterrupted service. We may modify, suspend, or discontinue the service at any time without prior notice."
+      },
+      "7": {
+        "title": "Limitation of Liability",
+        "content": "To the maximum extent permitted by law, BLIP and its operators shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the service. This includes, but is not limited to, loss of data (which is the core feature), service interruptions, and unauthorized access to your communications."
+      },
+      "8": {
+        "title": "Intellectual Property",
+        "content": "The BLIP name, logo, and brand assets are protected. The service codebase is released under an open-source license. User-generated content in chat rooms belongs to the users—though by design, it ceases to exist after the room is destroyed."
+      },
+      "9": {
+        "title": "Changes & Governing Law",
+        "content": "We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea. Disputes shall be subject to the exclusive jurisdiction of the Seoul Central District Court."
+      }
+    }
+  },
+  "Metadata": {
+    "title": "BLIP - Talk. Then Vanish.",
+    "description": "E2E encrypted ephemeral chat. No accounts. No traces. No history. Secure conversations that disappear.",
+    "roomTitle": "BLIP - Join a Secure Chat",
+    "roomDescription": "You've been invited to an end-to-end encrypted private chat. Join instantly, no account needed."
+  }
+}

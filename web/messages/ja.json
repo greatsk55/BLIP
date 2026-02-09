@@ -1,0 +1,228 @@
+{
+  "Hero": {
+    "title": "話して、消える。",
+    "subtitle": "ログイン不要。記録なし。痕跡なし。<br></br>ただ、今この瞬間の会話だけが存在します。",
+    "cta": "クリックしてチャットルームを作成",
+    "linkShare": "複雑な手続きなしで、リンク一つで完璧につながります。"
+  },
+  "Problem": {
+    "title": "あなたの会話は長く残りすぎます。",
+    "description": "サーバーに残るログ、スクリーンショット、忘れられたグループチャット...<br></br>すべての会話を記録する必要はありません。一部の会話は煙のように消えるべきです。"
+  },
+  "Solution": {
+    "friction": {
+      "title": "0 Friction",
+      "description": "準備は0秒。リンクを送るだけで会話開始。"
+    },
+    "anonymity": {
+      "title": "Total Anonymity",
+      "description": "あなたが誰であるか尋ねません。IDもプロフィールも不要です。"
+    },
+    "destruction": {
+      "title": "Complete Destruction",
+      "description": "あなたと受信者以外、私たちでさえ見ることはできません。"
+    },
+    "opensource": {
+      "title": "Transparent Code",
+      "description": "100%オープンソース。私たちがあなたの会話を盗み見ないことを、コードで直接検証できます。"
+    }
+  },
+  "Philosophy": {
+    "text1": "BLIPはメッセンジャーではありません。使い捨ての通信ツールです。",
+    "text2": "私たちはあなたを引き留めたくありません。話して、立ち去ってください。"
+  },
+  "Footer": {
+    "easterEgg": "このページもすぐに消えるかもしれません。",
+    "supportProtocol": "プロトコルを維持する",
+    "links": {
+      "about": "About",
+      "howItWorks": "How it Works",
+      "faq": "FAQ",
+      "privacy": "プライバシー",
+      "terms": "利用規約"
+    }
+  },
+  "About": {
+    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
+    "subtitle": "BLIP Service Philosophy",
+    "section1": {
+      "title": "The Right to be Forgotten",
+      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+    },
+    "section2": {
+      "title": "True E2EE (End-to-End Encryption)",
+      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+    },
+    "closing": "Communicate without traces. Be free."
+  },
+  "HowItWorks": {
+    "title": "Don't Trust.<br></br>Verify.",
+    "subtitle": "Technical Architecture",
+    "description": "BLIPのセキュリティは魔法ではありません。検証可能な数学と透明な技術です。",
+    "steps": {
+      "1": {
+        "title": "1. Local Key Generation",
+        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+      },
+      "2": {
+        "title": "2. Client-Side Encryption",
+        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+      },
+      "3": {
+        "title": "3. In-Memory Transit",
+        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+      }
+    },
+    "opensource": "Verify Code"
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Whatever you are curious about",
+    "items": {
+      "1": {
+        "question": "本当にログは残らないのですか？",
+        "answer": "会話内容は100%エンドツーエンド暗号化されているため、サーバーには「解読不可能な暗号文」のみが通過します。ただし、ホスティングシステム（Vercel、AWSなど）には機械的な接続ログが残る場合があります。これは私たちの制御外ですが、そのログにも意味のないランダムデータしか記録されません。"
+      },
+      "2": {
+        "question": "ハッキングされたらチャットが漏洩しますか？",
+        "answer": "サーバーがハッキングされても、ハッカーが見られるのは暗号化されたランダムな数字だけです。会話を解読する鍵はあなたのブラウザタブにのみ存在します。"
+      },
+      "3": {
+        "question": "画像やファイルの送信はできますか？",
+        "answer": "現在はテキスト中心の軽量化を追求しています。今後、セキュリティが保証される方法で機能を拡張する予定です。"
+      }
+    }
+  },
+  "Chat": {
+    "header": {
+      "exit": "EXIT",
+      "online": "{count}人オンライン",
+      "e2ee": "エンドツーエンド暗号化"
+    },
+    "input": {
+      "placeholder": "メッセージを入力...",
+      "send": "送信"
+    },
+    "create": {
+      "title": "CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "shareLink": "共有リンク",
+      "warning": "このキーを保存してください。復元できません。",
+      "enter": "チャンネルに入る"
+    },
+    "join": {
+      "title": "ENTER ACCESS KEY",
+      "connect": "CONNECT",
+      "invalidKey": "INVALID_KEY",
+      "expired": "CHANNEL_EXPIRED",
+      "full": "CHANNEL_FULL"
+    },
+    "leave": {
+      "title": "EXIT CHANNEL?",
+      "description": "チャットを離れますか？",
+      "lastPersonWarning": "あなたが最後の参加者です。退出するとこのチャンネルは永久に破棄されます。",
+      "confirm": "EXIT",
+      "cancel": "CANCEL"
+    },
+    "destroyed": {
+      "title": "痕跡は残りません。",
+      "subtitle": "このチャンネルは永久に破棄されました。",
+      "newChat": "新しいチャットを始める"
+    },
+    "roomFull": {
+      "title": "チャンネルが満員です。",
+      "subtitle": "このチャンネルにはすでに2名が参加しています。",
+      "newChat": "新しいチャットを始める"
+    }
+  },
+  "Privacy": {
+    "title": "アーキテクチャで守るプライバシー",
+    "subtitle": "プライバシーポリシー",
+    "lastUpdated": "最終更新日：2026年2月",
+    "intro": "BLIPはあなたについて何も知らないように設計されています。これは単なるポリシーではありません—システムの構造そのものです。収集できないデータは漏洩することもありません。",
+    "sections": {
+      "1": {
+        "title": "私たちの哲学",
+        "content": "ほとんどのプライバシーポリシーは、企業がどのようなデータを収集し、どのように使用するかを説明します。私たちのものは違います：望んでもあなたのデータを収集できない理由を説明します。BLIPのアーキテクチャは大規模監視を技術的に不可能にします。"
+      },
+      "2": {
+        "title": "収集しないデータ",
+        "content": "以下のものは収集しません：ユーザーアカウント、メールアドレス、電話番号、名前、プロフィール、メッセージ内容、チャット履歴、連絡先リスト、あらゆる形式の個人識別情報。会話はエンドツーエンド暗号化され、データベースに触れることはありません。文字通り読むことができません。"
+      },
+      "3": {
+        "title": "通過するデータ",
+        "content": "BLIP使用時にサーバーが一時的に処理するデータ：暗号化されたメッセージペイロード（解読不可能な暗号文）、一時的な接続メタデータ（WebSocketルーティング用IPアドレス）。このデータは揮発性メモリ（RAM）にのみ存在し、ディスクに書き込まれることはありません。セッション終了後は消失します。"
+      },
+      "4": {
+        "title": "エンドツーエンド暗号化",
+        "content": "すべてのメッセージは送信前にCurve25519 ECDH鍵交換とXSalsa20-Poly1305暗号化を使用してデバイス上で暗号化されます。暗号鍵はブラウザでローカルに生成され、サーバーに送信されることはありません。法的強制力があっても、メッセージ内容を提供することはできません—保持していないからです。"
+      },
+      "5": {
+        "title": "Cookieとローカルストレージ",
+        "content": "BLIPは最小限のローカルストレージを使用します：テーマ設定（ダーク/ライトモード）、言語設定、アクティブセッション中の一時暗号鍵。トラッキングCookie、分析Cookie、サードパーティ広告Cookieは使用しません。暗号鍵はブラウザタブを閉じると自動的に破棄されます。"
+      },
+      "6": {
+        "title": "サードパーティサービス",
+        "content": "BLIPはリアルタイムWebSocket通信（メッセージ中継のみ、保存なし）にSupabaseを使用します。コンテキスト広告が表示される場合があります。広告プロバイダーは自社のプライバシーポリシーに基づいてCookieを使用する場合があります。会話データを広告主と共有することはありません—保持していないからです。"
+      },
+      "7": {
+        "title": "児童保護",
+        "content": "BLIPは13歳未満のユーザーを対象としていません。個人情報を収集しないため、年齢を確認することはできません。お子様が不適切にこのサービスを使用していると思われる場合は、お問い合わせください。"
+      },
+      "8": {
+        "title": "変更と連絡先",
+        "content": "運営方法の変更や法的要件に応じて本ポリシーを更新する場合があります。重要な変更はこのページに掲載されます。メールアドレスを収集していないため通知をお送りすることはできません—定期的にこのページをご確認ください。お問い合わせはGitHubリポジトリをご利用ください。"
+      }
+    }
+  },
+  "Terms": {
+    "title": "利用規約",
+    "subtitle": "サービス利用規約",
+    "lastUpdated": "最終更新日：2026年2月",
+    "intro": "BLIPを使用することで、これらの規約に同意したことになります。私たちのコードと同様に—短く、正直で、平易な言葉で書かれています。",
+    "sections": {
+      "1": {
+        "title": "BLIPとは",
+        "content": "BLIPは無料のオープンソース、エンドツーエンド暗号化された一時的チャットサービスです。使用後に破棄される一時的な通信チャネルを提供します。BLIPはメッセンジャー、ソーシャルネットワーク、データストレージプラットフォームではありません。使い捨ての通信ツールです。"
+      },
+      "2": {
+        "title": "アカウント不要",
+        "content": "BLIPはユーザー登録、ログイン資格情報、個人プロフィールなしで運営されます。一時的なルームリンクと共有パスワードでアクセスできます。ルームパスワードの管理はお客様の責任です—復元することはできません。"
+      },
+      "3": {
+        "title": "許容される使用",
+        "content": "以下の目的でBLIPを使用しないことに同意します：違法コンテンツの配布、嫌がらせや脅迫、マルウェアの送信、自動化されたスパムや悪用、適用法に違反する活動。暗号化されたコンテンツを監視することはできませんが、ネットワークレベルで悪用が検出された場合、インフラへのアクセスを制限する権利を留保します。"
+      },
+      "4": {
+        "title": "データ復元不可",
+        "content": "メッセージはいかなるデータベースにも保存されません。チャットルームが破棄されると、すべての会話データは永久的かつ不可逆的に失われます。これは制限ではなく設計です。保存が必要な通信にBLIPを使用しないでください。"
+      },
+      "5": {
+        "title": "オープンソース",
+        "content": "BLIPのソースコードは公開されています。コードの検査、フォーク、貢献が自由にできます。コードの透明性がプライバシーに対する最強の保証です。私たちのすべての主張を直接検証できます。"
+      },
+      "6": {
+        "title": "サービスの可用性",
+        "content": "BLIPは「現状のまま」で提供されます。稼働時間、可用性、中断のないサービスを保証しません。事前通知なくサービスを変更、停止、中止する場合があります。"
+      },
+      "7": {
+        "title": "責任の制限",
+        "content": "法律で許容される最大限の範囲内で、BLIPとその運営者はサービス利用から生じる直接的、間接的、付随的、結果的損害について責任を負いません。これにはデータ損失（コア機能です）、サービス中断、通信への不正アクセスが含まれますが、これらに限定されません。"
+      },
+      "8": {
+        "title": "知的財産権",
+        "content": "BLIP名、ロゴ、ブランド資産は保護されています。サービスコードベースはオープンソースライセンスで公開されています。チャットルームのユーザー生成コンテンツはユーザーに帰属します—設計上、ルーム破棄後は存在しなくなります。"
+      },
+      "9": {
+        "title": "変更と準拠法",
+        "content": "これらの規約はいつでも変更される場合があります。変更後のBLIPの継続的な使用は、更新された規約への同意とみなされます。これらの規約は大韓民国の法律に準拠します。紛争はソウル中央地方裁判所を専属管轄裁判所とします。"
+      }
+    }
+  },
+  "Metadata": {
+    "title": "BLIP - 話して、消える。",
+    "description": "E2E暗号化の一時的チャット。アカウント不要。記録なし。痕跡なし。リンク一つで始まる安全な会話。",
+    "roomTitle": "BLIP - セキュアチャットに参加",
+    "roomDescription": "エンドツーエンド暗号化されたプライベートチャットに招待されました。アカウント不要で即参加。"
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "Hero": {
+    "title": "交谈。然后消失。",
+    "subtitle": "无需账号。无需记录。不留痕迹。<br></br>只有此刻的对话存在。",
+    "cta": "点击创建聊天室",
+    "linkShare": "无需复杂手续，仅需一个链接即可完美连接。"
+  },
+  "Problem": {
+    "title": "你的对话保留得太久了。",
+    "description": "服务器日志、截图、被遗忘的群聊...<br></br>不是所有的对话都需要记录。有些应该像烟雾一样消失。"
+  },
+  "Solution": {
+    "friction": {
+      "title": "0 Friction",
+      "description": "零准备。发送链接，开始交谈。"
+    },
+    "anonymity": {
+      "title": "Total Anonymity",
+      "description": "我们不问你是谁。无需ID，无需个人资料。"
+    },
+    "destruction": {
+      "title": "Complete Destruction",
+      "description": "除了你和收件人，连我们也看不到。"
+    },
+    "opensource": {
+      "title": "Transparent Code",
+      "description": "100%开源。你可以通过代码验证我们绝不会窥探你的对话。"
+    }
+  },
+  "Philosophy": {
+    "text1": "BLIP不是信使。它是用完即弃的通讯工具。",
+    "text2": "我们要留住你。说完就走。"
+  },
+  "Footer": {
+    "easterEgg": "这个页面也可能很快消失。",
+    "supportProtocol": "支持协议",
+    "links": {
+      "about": "About",
+      "howItWorks": "How it Works",
+      "faq": "FAQ",
+      "privacy": "隐私政策",
+      "terms": "使用条款"
+    }
+  },
+  "About": {
+    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
+    "subtitle": "BLIP Service Philosophy",
+    "section1": {
+      "title": "The Right to be Forgotten",
+      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+    },
+    "section2": {
+      "title": "True E2EE (End-to-End Encryption)",
+      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+    },
+    "closing": "Communicate without traces. Be free."
+  },
+  "HowItWorks": {
+    "title": "Don't Trust.<br></br>Verify.",
+    "subtitle": "Technical Architecture",
+    "description": "BLIP的安全不是魔法，而是可验证的数学和透明的技术。",
+    "steps": {
+      "1": {
+        "title": "1. Local Key Generation",
+        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+      },
+      "2": {
+        "title": "2. Client-Side Encryption",
+        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+      },
+      "3": {
+        "title": "3. In-Memory Transit",
+        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+      }
+    },
+    "opensource": "Verify Code"
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Whatever you are curious about",
+    "items": {
+      "1": {
+        "question": "真的不会留下任何记录吗？",
+        "answer": "所有对话内容都经过100%端到端加密，因此服务器上只有「无法解读的密文」经过。不过，托管系统（Vercel、AWS等）可能会保留机械性的连接日志，这超出了我们的控制范围——但这些日志中也只记录着毫无意义的随机数据。"
+      },
+      "2": {
+        "question": "如果被黑客攻击，聊天会泄露吗？",
+        "answer": "即使服务器被黑客攻击，黑客也只能看到加密的随机数字。解锁对话的密钥只存在于你的浏览器标签页中。"
+      },
+      "3": {
+        "question": "可以发送图片和文件吗？",
+        "answer": "目前我们专注于轻量级文本通信。未来计划以确保安全的方式扩展功能。"
+      }
+    }
+  },
+  "Chat": {
+    "header": {
+      "exit": "EXIT",
+      "online": "{count}人在线",
+      "e2ee": "端到端加密"
+    },
+    "input": {
+      "placeholder": "输入消息...",
+      "send": "发送"
+    },
+    "create": {
+      "title": "CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "shareLink": "分享链接",
+      "warning": "请保存此密钥。无法恢复。",
+      "enter": "进入频道"
+    },
+    "join": {
+      "title": "ENTER ACCESS KEY",
+      "connect": "CONNECT",
+      "invalidKey": "INVALID_KEY",
+      "expired": "CHANNEL_EXPIRED",
+      "full": "CHANNEL_FULL"
+    },
+    "leave": {
+      "title": "EXIT CHANNEL?",
+      "description": "确定要离开吗？",
+      "lastPersonWarning": "你是最后一个参与者。离开将永久销毁此频道。",
+      "confirm": "EXIT",
+      "cancel": "CANCEL"
+    },
+    "destroyed": {
+      "title": "不留痕迹。",
+      "subtitle": "此频道已被永久销毁。",
+      "newChat": "开始新聊天"
+    },
+    "roomFull": {
+      "title": "频道已满。",
+      "subtitle": "此频道已有2名参与者。",
+      "newChat": "开始新聊天"
+    }
+  },
+  "Privacy": {
+    "title": "架构守护隐私",
+    "subtitle": "隐私政策",
+    "lastUpdated": "最后更新：2026年2月",
+    "intro": "BLIP被设计成对你一无所知。这不仅仅是一项政策——这就是我们构建系统的方式。无法收集的数据，也就无法泄露。",
+    "sections": {
+      "1": {
+        "title": "我们的理念",
+        "content": "大多数隐私政策解释公司收集哪些数据以及如何使用。我们的不同：我们解释为什么即使想要也无法收集你的数据。BLIP的架构使大规模监控在技术上成为不可能。"
+      },
+      "2": {
+        "title": "我们不收集的数据",
+        "content": "我们不收集：用户账号、电子邮件地址、电话号码、姓名、个人资料、消息内容、聊天记录、联系人列表或任何形式的个人身份信息。你的对话经过端到端加密，从不接触我们的数据库。我们确实无法读取它们。"
+      },
+      "3": {
+        "title": "经过的数据",
+        "content": "使用BLIP时，我们的服务器短暂处理：加密消息载荷（不可读的密文）和临时连接元数据（用于WebSocket路由的IP地址）。这些数据仅存在于易失性内存（RAM）中，从不写入磁盘。会话结束后即消失。"
+      },
+      "4": {
+        "title": "端到端加密",
+        "content": "所有消息在传输前使用Curve25519 ECDH密钥交换和XSalsa20-Poly1305加密在你的设备上加密。加密密钥在浏览器中本地生成，从不发送到我们的服务器。即使在法律强制下，我们也无法提供消息内容——因为我们没有。"
+      },
+      "5": {
+        "title": "Cookie和本地存储",
+        "content": "BLIP使用最少的本地存储：主题偏好（深色/浅色模式）、语言设置和活跃会话期间的临时加密密钥。我们不使用跟踪Cookie、分析Cookie或任何第三方广告Cookie。关闭浏览器标签页时，加密密钥会自动销毁。"
+      },
+      "6": {
+        "title": "第三方服务",
+        "content": "BLIP使用Supabase进行实时WebSocket通信（仅消息中继，无存储）。我们可能显示上下文广告。广告提供商可能根据其隐私政策使用自己的Cookie。我们从不与广告商共享任何对话数据——因为我们没有。"
+      },
+      "7": {
+        "title": "儿童保护",
+        "content": "BLIP不面向13岁以下的用户。由于我们不收集个人信息，无法验证年龄。如果你认为儿童在不当使用此服务，请联系我们。"
+      },
+      "8": {
+        "title": "变更与联系",
+        "content": "我们可能会根据运营方式变更或法律要求更新本政策。重大变更将发布在此页面。由于我们不收集电子邮件地址，无法发送通知——请定期查看此页面。如有疑问，请访问我们的GitHub仓库。"
+      }
+    }
+  },
+  "Terms": {
+    "title": "使用条款",
+    "subtitle": "服务条款",
+    "lastUpdated": "最后更新：2026年2月",
+    "intro": "使用BLIP即表示你同意这些条款。像我们的代码一样——简短、诚实、用简明语言编写。",
+    "sections": {
+      "1": {
+        "title": "BLIP是什么",
+        "content": "BLIP是一项免费、开源、端到端加密的临时聊天服务。它提供使用后销毁的临时通信频道。BLIP不是即时通讯工具、社交网络或数据存储平台。它是一次性通信工具。"
+      },
+      "2": {
+        "title": "无需账号",
+        "content": "BLIP无需用户注册、登录凭证或个人资料即可运行。通过临时房间链接和共享密码获得访问权限。房间密码的保管是你的责任——我们无法恢复。"
+      },
+      "3": {
+        "title": "可接受的使用",
+        "content": "你同意不将BLIP用于：分发非法内容、骚扰或威胁、传输恶意软件、自动垃圾信息或滥用、或任何违反适用法律的活动。虽然我们无法监控加密内容，但如果在网络层面检测到滥用，我们保留限制基础设施访问的权利。"
+      },
+      "4": {
+        "title": "数据不可恢复",
+        "content": "消息不存储在任何数据库中。聊天室销毁后，所有对话数据将永久且不可逆地丢失。这是设计，不是限制。不要将BLIP用于需要保存的通信。"
+      },
+      "5": {
+        "title": "开源",
+        "content": "BLIP的源代码是公开的。你可以自由检查、复刻和贡献代码。代码的透明度是我们对隐私最有力的保证。你可以验证我们所有的声明。"
+      },
+      "6": {
+        "title": "服务可用性",
+        "content": "BLIP按'原样'提供。我们不保证正常运行时间、可用性或不间断服务。我们可能在不事先通知的情况下修改、暂停或终止服务。"
+      },
+      "7": {
+        "title": "责任限制",
+        "content": "在法律允许的最大范围内，BLIP及其运营者不对因使用服务而产生的任何直接、间接、附带或后果性损害负责。这包括但不限于数据丢失（这是核心功能）、服务中断和对通信的未授权访问。"
+      },
+      "8": {
+        "title": "知识产权",
+        "content": "BLIP名称、标志和品牌资产受到保护。服务代码库以开源许可证发布。聊天室中用户生成的内容归用户所有——但根据设计，在房间销毁后将不复存在。"
+      },
+      "9": {
+        "title": "变更与管辖法律",
+        "content": "我们保留随时修改这些条款的权利。变更后继续使用BLIP即表示接受更新后的条款。这些条款受大韩民国法律管辖。争议应由首尔中央地方法院专属管辖。"
+      }
+    }
+  },
+  "Metadata": {
+    "title": "BLIP - 交谈。然后消失。",
+    "description": "端到端加密临时聊天。无需账号。无需记录。不留痕迹。一个链接即可开始安全对话。",
+    "roomTitle": "BLIP - 加入安全聊天",
+    "roomDescription": "您被邀请加入端到端加密的私密聊天。无需账号，即刻加入。"
+  }
+}
