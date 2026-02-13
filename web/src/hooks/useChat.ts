@@ -22,6 +22,7 @@ import type {
 interface UseChatOptions {
   roomId: string;
   password: string;
+  onMessageReceived?: (senderName: string) => void;
 }
 
 interface UseChatReturn {
@@ -34,7 +35,7 @@ interface UseChatReturn {
   disconnect: () => void;
 }
 
-export function useChat({ roomId, password }: UseChatOptions): UseChatReturn {
+export function useChat({ roomId, password, onMessageReceived }: UseChatOptions): UseChatReturn {
   const [messages, setMessages] = useState<DecryptedMessage[]>([]);
   const [status, setStatus] = useState<ChatStatus>('connecting');
   const [peerUsername, setPeerUsername] = useState<string | null>(null);
@@ -45,6 +46,8 @@ export function useChat({ roomId, password }: UseChatOptions): UseChatReturn {
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const myUsernameRef = useRef(generateUsername());
   const myIdRef = useRef(crypto.randomUUID());
+  const onMessageReceivedRef = useRef(onMessageReceived);
+  onMessageReceivedRef.current = onMessageReceived;
 
   const sendMessage = useCallback(
     (content: string) => {
@@ -100,9 +103,10 @@ export function useChat({ roomId, password }: UseChatOptions): UseChatReturn {
       channelRef.current.unsubscribe();
       channelRef.current = null;
     }
-    // 메모리에서 키 제거
+    // 메모리에서 키 + 메시지 완전 삭제
     keyPairRef.current = null;
     sharedSecretRef.current = null;
+    setMessages([]);
     setStatus('destroyed');
   }, []);
 
@@ -184,27 +188,31 @@ export function useChat({ roomId, password }: UseChatOptions): UseChatReturn {
                 isMine: false,
               },
             ]);
+            onMessageReceivedRef.current?.(msg.senderName);
           }
         });
 
-        // 6. 상대방 퇴장 감지
-        channel.on('broadcast', { event: 'user_left' }, (payload) => {
+        // 6. 상대방 퇴장 감지 → 즉시 방 폭파 (양쪽 모두 파쇄)
+        channel.on('broadcast', { event: 'user_left' }, () => {
           if (!isMounted) return;
+
+          // 메시지 전체 삭제 + 상태 초기화
+          setMessages([]);
           setPeerConnected(false);
           setPeerUsername(null);
           sharedSecretRef.current = null;
+          keyPairRef.current = null;
 
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: crypto.randomUUID(),
-              senderId: 'system',
-              senderName: 'SYSTEM',
-              content: `${payload.payload.username} LEFT THE CHANNEL`,
-              timestamp: Date.now(),
-              isMine: false,
-            },
-          ]);
+          // 채널 정리
+          if (channelRef.current) {
+            channelRef.current.untrack();
+            channelRef.current.unsubscribe();
+            channelRef.current = null;
+          }
+
+          // DB 방 파쇄
+          updateParticipantCount(roomId, 0).catch(() => {});
+          setStatus('destroyed');
         });
 
         // 7. Presence로 접속자 추적 + DB 상태 동기화
@@ -254,18 +262,30 @@ export function useChat({ roomId, password }: UseChatOptions): UseChatReturn {
           }
         });
 
+        // presence.leave: 네트워크 끊김 등 user_left 브로드캐스트 못 받았을 때 fallback
         channel.on('presence', { event: 'leave' }, () => {
           if (!isMounted) return;
           const state = channel.presenceState();
           const users = Object.values(state).flat();
 
-          // DB participant_count + status 업데이트
           updateParticipantCount(roomId, users.length).catch(() => {});
 
-          if (users.length <= 1) {
-            // 혼자 남음 - 상대방 퇴장
+          // 혼자 남음 + 이전에 상대방이 있었던 경우 → 즉시 폭파
+          if (users.length <= 1 && sharedSecretRef.current) {
+            setMessages([]);
             setPeerConnected(false);
+            setPeerUsername(null);
             sharedSecretRef.current = null;
+            keyPairRef.current = null;
+
+            if (channelRef.current) {
+              channelRef.current.untrack();
+              channelRef.current.unsubscribe();
+              channelRef.current = null;
+            }
+
+            updateParticipantCount(roomId, 0).catch(() => {});
+            setStatus('destroyed');
           }
         });
 

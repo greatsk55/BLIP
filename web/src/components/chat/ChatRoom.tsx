@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useChat } from '@/hooks/useChat';
+import { useNotification } from '@/hooks/useNotification';
 import { useVisualViewport } from '@/hooks/useVisualViewport';
 import { verifyPassword, getRoomStatus, updateParticipantCount } from '@/lib/room/actions';
 import type { ChatStatus } from '@/types/chat';
@@ -24,6 +25,7 @@ interface ChatRoomProps {
 export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoomProps) {
   const router = useRouter();
   useVisualViewport();
+  const { notifyMessage, requestPermission } = useNotification();
   const [password, setPassword] = useState<string | null>(initialPassword ?? null);
   const [viewState, setViewState] = useState<'password' | 'created' | 'chat' | 'destroyed'>(
     isCreator ? 'created' : 'password'
@@ -33,11 +35,18 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const messageAreaRef = useRef<ChatMessageAreaHandle>(null);
 
+  // 채팅 입장 시 브라우저 알림 권한 요청
+  useEffect(() => {
+    if (viewState === 'chat') {
+      requestPermission();
+    }
+  }, [viewState, requestPermission]);
+
   // 비밀번호가 확인되면 채팅 훅 활성화
-  const chatEnabled = password !== null && (viewState === 'chat' || viewState === 'created');
   const chat = useChat({
     roomId,
     password: password ?? '',
+    onMessageReceived: notifyMessage,
   });
 
   // 비밀번호 입력 처리 (참여자)
