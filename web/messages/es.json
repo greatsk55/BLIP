@@ -29,6 +29,26 @@
       "description": "100% de código abierto. Puedes verificar con el código que nunca espiamos tus conversaciones."
     }
   },
+  "CommunityBoard": {
+    "label": "NUEVO",
+    "title": "Algunas conversaciones merecen quedarse. Cifradas.",
+    "subtitle": "Crea un tablón comunitario cifrado con una sola contraseña.<br></br>Las publicaciones se almacenan como texto cifrado ilegible — el servidor nunca puede ver tu contenido.<br></br>Markdown, imágenes, publicación anónima. Todo cifrado de extremo a extremo.",
+    "cta": "Crear Tablón Cifrado",
+    "features": {
+      "password": {
+        "title": "Contraseña = Llave",
+        "description": "Una contraseña compartida cifra todo. Sin cuentas, sin registros. Comparte la contraseña, comparte el espacio."
+      },
+      "serverBlind": {
+        "title": "Servidor Ciego",
+        "description": "Almacenamos tus publicaciones, pero nunca podemos leerlas. La clave de descifrado nunca sale de tu dispositivo."
+      },
+      "moderation": {
+        "title": "Moderación Comunitaria",
+        "description": "Sistema de reportes con ocultamiento automático. Ningún admin necesita leer contenido para mantener el espacio seguro."
+      }
+    }
+  },
   "Philosophy": {
     "text1": "BLIP no es un mensajero. Es una herramienta de comunicación desechable.",
     "text2": "No queremos retenerte. Di lo que tengas que decir y vete."
@@ -40,6 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
+      "board": "Tablón Cifrado",
       "privacy": "Privacidad",
       "terms": "Términos",
       "updates": "Novedades"

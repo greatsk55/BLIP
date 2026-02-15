@@ -29,6 +29,26 @@
       "description": "100%开源。你可以通过代码验证我们绝不会窥探你的对话。"
     }
   },
+  "CommunityBoard": {
+    "label": "NEW",
+    "title": "有些对话值得保留。以加密的方式。",
+    "subtitle": "用一个密码创建加密社区公告板。<br></br>帖子以不可读的密文存储 — 服务器永远无法看到您的内容。<br></br>Markdown、图片、匿名发帖。全部端到端加密。",
+    "cta": "创建加密公告板",
+    "features": {
+      "password": {
+        "title": "密码 = 钥匙",
+        "description": "一个共享密码加密一切。无需账户，无需注册。分享密码，分享空间。"
+      },
+      "serverBlind": {
+        "title": "服务器是盲的",
+        "description": "我们存储您的帖子，但永远无法阅读。解密密钥永远不会离开您的设备。"
+      },
+      "moderation": {
+        "title": "社区自治",
+        "description": "基于举报的自动屏蔽。管理员无需阅读内容即可保持空间安全。"
+      }
+    }
+  },
   "Philosophy": {
     "text1": "BLIP不是信使。它是用完即弃的通讯工具。",
     "text2": "我们要留住你。说完就走。"
@@ -40,6 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
+      "board": "加密公告板",
       "privacy": "隐私政策",
       "terms": "使用条款",
       "updates": "更新日志"

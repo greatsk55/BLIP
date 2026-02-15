@@ -29,6 +29,26 @@
       "description": "100% Open Source. You can verify with the code that we never spy on your conversations."
     }
   },
+  "CommunityBoard": {
+    "label": "NEW",
+    "title": "Some conversations deserve to stay. Encrypted.",
+    "subtitle": "Create an encrypted community board with a single password.<br></br>Posts are stored as unreadable ciphertext — the server can never see your content.<br></br>Markdown, images, anonymous posting. All end-to-end encrypted.",
+    "cta": "Create Encrypted Board",
+    "features": {
+      "password": {
+        "title": "Password = Key",
+        "description": "One shared password encrypts everything. No accounts, no sign-ups. Share the password, share the space."
+      },
+      "serverBlind": {
+        "title": "Server-Blind",
+        "description": "We store your posts, but we can never read them. The decryption key never leaves your device."
+      },
+      "moderation": {
+        "title": "Community-Moderated",
+        "description": "Report system with auto-blinding. No admin needs to read content to keep the space safe."
+      }
+    }
+  },
   "Philosophy": {
     "text1": "BLIP is not a messenger. It's a disposable communication tool.",
     "text2": "We don't want to keep you here. Say your piece, then leave."
@@ -40,6 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
+      "board": "Encrypted Board",
       "privacy": "Privacy",
       "terms": "Terms",
       "updates": "Updates"
