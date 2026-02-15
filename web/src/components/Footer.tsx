@@ -45,6 +45,10 @@ export default function Footer() {
         <Link href="/terms" className="hover:text-ink transition-colors">
           {t("links.terms")}
         </Link>
+        <span className="text-zinc-300 [.dark_&]:text-zinc-800">|</span>
+        <Link href="/updates" className="hover:text-signal-green transition-colors">
+          {t("links.updates")}
+        </Link>
       </div>
       <div className="mt-12 mb-8">
         <a 
