@@ -41,7 +41,50 @@
       "howItWorks": "How it Works",
       "faq": "FAQ",
       "privacy": "Confidentialité",
-      "terms": "Conditions"
+      "terms": "Conditions",
+      "updates": "Mises à jour"
+    }
+  },
+  "Changelog": {
+    "title": "Nouveautés",
+    "subtitle": "Journal des modifications",
+    "description": "Chaque amélioration, suivie de manière transparente.",
+    "versions": {
+      "1": {
+        "version": "v1.2.0",
+        "date": "15 février 2026",
+        "title": "Transfert de médias chiffré",
+        "changes": {
+          "1": "Transfert d'images et vidéos par P2P chiffré (WebRTC DataChannel)",
+          "2": "Relais TURN uniquement pour empêcher l'exposition IP entre pairs",
+          "3": "Compression automatique des images (max 2048px, JPEG 80%)",
+          "4": "Visionneuse d'images plein écran avec zoom par pincement",
+          "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
+        }
+      },
+      "2": {
+        "version": "v1.1.0",
+        "date": "10 février 2026",
+        "title": "Destruction instantanée et notifications",
+        "changes": {
+          "1": "Salons détruits immédiatement lorsque tous les participants partent",
+          "2": "Notifications push du navigateur pour les messages entrants",
+          "3": "Limitation de création de salons (anti-abus)",
+          "4": "Tableau communautaire avec publications chiffrées"
+        }
+      },
+      "3": {
+        "version": "v1.0.0",
+        "date": "1er février 2026",
+        "title": "Version initiale",
+        "changes": {
+          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Création de salon en un clic avec liens partageables",
+          "3": "Aucun compte requis — totalement anonyme",
+          "4": "Support de 6 langues (EN, KO, JA, ZH, ES, FR)",
+          "5": "Code source 100% ouvert"
+        }
+      }
     }
   },
   "About": {
@@ -184,6 +227,10 @@
       "8": {
         "title": "Modifications et Contact",
         "content": "Nous pouvons mettre à jour cette politique pour refléter des changements dans nos pratiques ou pour la conformité légale. Les changements importants seront publiés sur cette page. Comme nous ne collectons pas d'adresses e-mail, nous ne pouvons pas envoyer de notifications—veuillez consulter cette page périodiquement. Pour toute question, visitez notre dépôt GitHub."
+      },
+      "9": {
+        "title": "Tableaux Communautaires",
+        "content": "Les Tableaux Communautaires BLIP stockent des publications chiffrées dans notre base de données. Tout le contenu des publications et les noms d'auteurs sont chiffrés côté client avec XSalsa20-Poly1305 avant le stockage—le serveur ne détient que du texte chiffré illisible. Des empreintes de signalants (hash anonymisé des métadonnées de connexion) sont conservées pour empêcher les signalements en double. Si vous choisissez de sauvegarder le mot de passe de votre tableau dans votre navigateur, il est stocké uniquement dans le localStorage de votre appareil—jamais transmis à nos serveurs. Les données du tableau peuvent être supprimées définitivement par l'administrateur à tout moment."
       }
     }
   },
@@ -228,13 +275,71 @@
       "9": {
         "title": "Modifications et Droit Applicable",
         "content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de BLIP après les modifications constitue l'acceptation des conditions mises à jour. Ces conditions sont régies par les lois de la République de Corée. Les litiges seront soumis à la juridiction exclusive du Tribunal du District Central de Séoul."
+      },
+      "10": {
+        "title": "Tableaux Communautaires",
+        "content": "Les Tableaux Communautaires BLIP sont des espaces de groupe chiffrés où les publications sont stockées sous forme de texte chiffré dans notre base de données. Bien que nous ne puissions pas lire le contenu des publications, vous acceptez de ne pas utiliser les tableaux pour distribuer du matériel illégal, harceler ou toute activité interdite. Les publications peuvent être masquées automatiquement sur la base des signalements de la communauté. Les administrateurs de tableau peuvent supprimer des publications et détruire définitivement les tableaux. Lors de la réception d'une demande légale valide, nous supprimerons les données chiffrées associées au tableau spécifié—bien que nous ne puissions pas fournir leur contenu déchiffré."
       }
     }
   },
   "Metadata": {
     "title": "BLIP - Parlez. Puis disparaissez.",
-    "description": "Chat éphémère chiffré E2E. Sans compte. Sans trace. Sans historique. Conversations sécurisées qui disparaissent.",
-    "roomTitle": "BLIP - Rejoignez un chat sécurisé",
-    "roomDescription": "Vous êtes invité à un chat privé chiffré de bout en bout. Rejoignez instantanément, sans compte."
+    "description": "Chat jetable visible uniquement par vous et votre interlocuteur. Sans compte. Sans trace. Sans historique. Conversations privées qui disparaissent.",
+    "roomTitle": "BLIP - Rejoignez un chat privé",
+    "roomDescription": "Vous êtes invité à un chat privé visible uniquement par les participants. Rejoignez instantanément, sans compte.",
+    "boardTitle": "BLIP - Tableau Privé",
+    "boardDescription": "Rejoignez un tableau communautaire visible uniquement par les participants."
+  },
+  "Board": {
+    "create": {
+      "title": "TABLEAU CRÉÉ",
+      "subtitle": "Créer un Tableau Chiffré",
+      "createButton": "Créer le Tableau",
+      "namePlaceholder": "Nom du tableau",
+      "password": "Mot de passe du Tableau",
+      "adminToken": "Jeton Administrateur",
+      "adminTokenWarning": "Sauvegardez ce jeton — il ne peut pas être récupéré",
+      "shareLink": "Lien de Partage",
+      "enter": "Entrer dans le Tableau"
+    },
+    "header": {
+      "encrypted": "Chiffrement E2E",
+      "admin": "Panneau d'Administration",
+      "forgetPassword": "Oublier le mot de passe enregistré"
+    },
+    "post": {
+      "placeholder": "Écrivez quelque chose... (Markdown pris en charge)",
+      "submit": "Publier",
+      "empty": "Aucune publication pour le moment",
+      "refresh": "Actualiser",
+      "attachImage": "Joindre une image",
+      "maxImages": "4 images maximum",
+      "imageTooLarge": "Image trop volumineuse",
+      "uploading": "Téléchargement..."
+    },
+    "report": {
+      "title": "Signaler la Publication",
+      "spam": "Spam",
+      "abuse": "Abus / Harcèlement",
+      "illegal": "Contenu Illégal",
+      "other": "Autre",
+      "submit": "Signaler",
+      "cancel": "Annuler",
+      "alreadyReported": "Déjà signalé"
+    },
+    "blinded": {
+      "message": "Masqué suite aux signalements de la communauté"
+    },
+    "admin": {
+      "title": "Panneau d'Administration",
+      "destroy": "Détruire le Tableau",
+      "destroyWarning": "Cela supprimera définitivement le tableau et toutes les publications. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "confirmDestroy": "Détruire"
+    },
+    "destroyed": {
+      "title": "Tableau Détruit",
+      "message": "Ce tableau a été définitivement supprimé."
+    }
   }
 }

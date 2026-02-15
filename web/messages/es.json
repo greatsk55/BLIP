@@ -41,7 +41,50 @@
       "howItWorks": "How it Works",
       "faq": "FAQ",
       "privacy": "Privacidad",
-      "terms": "Términos"
+      "terms": "Términos",
+      "updates": "Novedades"
+    }
+  },
+  "Changelog": {
+    "title": "Novedades",
+    "subtitle": "Registro de cambios",
+    "description": "Cada mejora, registrada de forma transparente.",
+    "versions": {
+      "1": {
+        "version": "v1.2.0",
+        "date": "15 de febrero de 2026",
+        "title": "Transferencia de medios cifrada",
+        "changes": {
+          "1": "Transferencia de imágenes y videos por P2P cifrado (WebRTC DataChannel)",
+          "2": "Retransmisión solo TURN para evitar exposición de IP entre pares",
+          "3": "Compresión automática de imágenes (máx 2048px, JPEG 80%)",
+          "4": "Visor de imágenes a pantalla completa con zoom de pellizco",
+          "5": "Verificación de integridad con sumas SHA-256"
+        }
+      },
+      "2": {
+        "version": "v1.1.0",
+        "date": "10 de febrero de 2026",
+        "title": "Destrucción instantánea y notificaciones",
+        "changes": {
+          "1": "Salas destruidas inmediatamente al salir todos los participantes",
+          "2": "Notificaciones push del navegador para mensajes entrantes",
+          "3": "Límite de creación de salas (anti-abuso)",
+          "4": "Tablón comunitario con publicaciones cifradas"
+        }
+      },
+      "3": {
+        "version": "v1.0.0",
+        "date": "1 de febrero de 2026",
+        "title": "Lanzamiento inicial",
+        "changes": {
+          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Creación de salas con un clic y enlaces compartibles",
+          "3": "Sin cuenta requerida — totalmente anónimo",
+          "4": "Soporte para 6 idiomas (EN, KO, JA, ZH, ES, FR)",
+          "5": "Código 100% abierto"
+        }
+      }
     }
   },
   "About": {
@@ -184,6 +227,10 @@
       "8": {
         "title": "Cambios y Contacto",
         "content": "Podemos actualizar esta política para reflejar cambios en nuestras prácticas o por cumplimiento legal. Los cambios significativos se publicarán en esta página. Como no recopilamos direcciones de correo electrónico, no podemos enviar notificaciones—consulta esta página periódicamente. Para preguntas, visita nuestro repositorio de GitHub."
+      },
+      "9": {
+        "title": "Tablones Comunitarios",
+        "content": "Los Tablones Comunitarios de BLIP almacenan publicaciones cifradas en nuestra base de datos. Todo el contenido de las publicaciones y los nombres de los autores se cifran en el lado del cliente con XSalsa20-Poly1305 antes del almacenamiento—el servidor solo contiene texto cifrado ilegible. Se conservan huellas de reportantes (hash anonimizado de metadatos de conexión) para prevenir reportes duplicados. Si eliges guardar la contraseña del tablón en tu navegador, se almacena únicamente en el localStorage de tu dispositivo—nunca se transmite a nuestros servidores. Los datos del tablón pueden ser eliminados permanentemente por el administrador en cualquier momento."
       }
     }
   },
@@ -228,13 +275,71 @@
       "9": {
         "title": "Cambios y Ley Aplicable",
         "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de BLIP después de los cambios constituye la aceptación de los términos actualizados. Estos términos se rigen por las leyes de la República de Corea. Las disputas estarán sujetas a la jurisdicción exclusiva del Tribunal del Distrito Central de Seúl."
+      },
+      "10": {
+        "title": "Tablones Comunitarios",
+        "content": "Los Tablones Comunitarios de BLIP son espacios grupales cifrados donde las publicaciones se almacenan como texto cifrado en nuestra base de datos. Aunque no podemos leer el contenido de las publicaciones, aceptas no usar los tablones para distribuir material ilegal, acoso ni ninguna actividad prohibida. Las publicaciones pueden ser ocultadas automáticamente basándose en reportes de la comunidad. Los administradores del tablón pueden eliminar publicaciones y destruir tablones permanentemente. Al recibir una solicitud legal válida, eliminaremos los datos cifrados asociados al tablón especificado—aunque no podemos proporcionar su contenido descifrado."
       }
     }
   },
   "Metadata": {
     "title": "BLIP - Habla. Luego desaparece.",
-    "description": "Chat efímero con cifrado E2E. Sin cuentas. Sin rastro. Sin historial. Conversaciones seguras que desaparecen.",
-    "roomTitle": "BLIP - Únete a un chat seguro",
-    "roomDescription": "Has sido invitado a un chat privado cifrado de extremo a extremo. Únete al instante, sin cuenta."
+    "description": "Chat desechable que solo tú y tu compañero pueden ver. Sin cuentas. Sin rastro. Sin historial. Conversaciones privadas que desaparecen.",
+    "roomTitle": "BLIP - Únete a un chat privado",
+    "roomDescription": "Has sido invitado a un chat privado visible solo para los participantes. Únete al instante, sin cuenta.",
+    "boardTitle": "BLIP - Tablón Privado",
+    "boardDescription": "Únete a un tablón comunitario visible solo para los participantes."
+  },
+  "Board": {
+    "create": {
+      "title": "TABLÓN CREADO",
+      "subtitle": "Crear Tablón Cifrado",
+      "createButton": "Crear Tablón",
+      "namePlaceholder": "Nombre del tablón",
+      "password": "Contraseña del Tablón",
+      "adminToken": "Token de Administrador",
+      "adminTokenWarning": "Guarda este token — no se puede recuperar",
+      "shareLink": "Enlace para Compartir",
+      "enter": "Entrar al Tablón"
+    },
+    "header": {
+      "encrypted": "Cifrado E2E",
+      "admin": "Panel de Administración",
+      "forgetPassword": "Olvidar contraseña guardada"
+    },
+    "post": {
+      "placeholder": "Escribe algo... (Markdown compatible)",
+      "submit": "Publicar",
+      "empty": "Aún no hay publicaciones",
+      "refresh": "Actualizar",
+      "attachImage": "Adjuntar imagen",
+      "maxImages": "Máximo 4 imágenes",
+      "imageTooLarge": "Imagen demasiado grande",
+      "uploading": "Subiendo..."
+    },
+    "report": {
+      "title": "Reportar Publicación",
+      "spam": "Spam",
+      "abuse": "Abuso / Acoso",
+      "illegal": "Contenido Ilegal",
+      "other": "Otro",
+      "submit": "Reportar",
+      "cancel": "Cancelar",
+      "alreadyReported": "Ya reportado"
+    },
+    "blinded": {
+      "message": "Ocultado por reportes de la comunidad"
+    },
+    "admin": {
+      "title": "Panel de Administración",
+      "destroy": "Destruir Tablón",
+      "destroyWarning": "Esto eliminará permanentemente el tablón y todas las publicaciones. No se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirmDestroy": "Destruir"
+    },
+    "destroyed": {
+      "title": "Tablón Destruido",
+      "message": "Este tablón ha sido eliminado permanentemente."
+    }
   }
 }

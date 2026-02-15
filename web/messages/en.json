@@ -41,7 +41,50 @@
       "howItWorks": "How it Works",
       "faq": "FAQ",
       "privacy": "Privacy",
-      "terms": "Terms"
+      "terms": "Terms",
+      "updates": "Updates"
+    }
+  },
+  "Changelog": {
+    "title": "What's New",
+    "subtitle": "Changelog",
+    "description": "Every improvement, tracked transparently.",
+    "versions": {
+      "1": {
+        "version": "v1.2.0",
+        "date": "February 15, 2026",
+        "title": "Encrypted Media Transfer",
+        "changes": {
+          "1": "Image & video transfer via encrypted P2P (WebRTC DataChannel)",
+          "2": "TURN-only relay to prevent IP exposure between peers",
+          "3": "Automatic image compression (max 2048px, JPEG 80%)",
+          "4": "Fullscreen image viewer with pinch-to-zoom",
+          "5": "File integrity verification with SHA-256 checksums"
+        }
+      },
+      "2": {
+        "version": "v1.1.0",
+        "date": "February 10, 2026",
+        "title": "Instant Room Destruction & Notifications",
+        "changes": {
+          "1": "Rooms destroyed immediately when all participants leave",
+          "2": "Browser push notifications for incoming messages",
+          "3": "Rate limiting for room creation (anti-abuse)",
+          "4": "Community board feature with encrypted posts"
+        }
+      },
+      "3": {
+        "version": "v1.0.0",
+        "date": "February 1, 2026",
+        "title": "Initial Release",
+        "changes": {
+          "1": "E2EE text chat (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "One-click room creation with shareable links",
+          "3": "Zero account requirement — fully anonymous",
+          "4": "6 language support (EN, KO, JA, ZH, ES, FR)",
+          "5": "100% open source codebase"
+        }
+      }
     }
   },
   "About": {
@@ -184,6 +227,10 @@
       "8": {
         "title": "Changes & Contact",
         "content": "We may update this policy to reflect changes in our practices or for legal compliance. Significant changes will be posted on this page. Since we don't collect email addresses, we cannot send notifications—please check this page periodically. For questions, visit our GitHub repository."
+      },
+      "9": {
+        "title": "Community Boards",
+        "content": "BLIP Community Boards store encrypted posts in our database. All post content and author names are encrypted client-side using XSalsa20-Poly1305 before storage—the server holds only unreadable ciphertext. Report fingerprints (anonymized hash of connection metadata) are retained to prevent duplicate reports. If you choose to save your board password in your browser, it is stored in localStorage on your device only—never transmitted to our servers. Board data can be permanently deleted by the board administrator at any time."
       }
     }
   },
@@ -228,13 +275,71 @@
       "9": {
         "title": "Changes & Governing Law",
         "content": "We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea. Disputes shall be subject to the exclusive jurisdiction of the Seoul Central District Court."
+      },
+      "10": {
+        "title": "Community Boards",
+        "content": "BLIP Community Boards are encrypted group spaces where posts are stored as ciphertext in our database. While we cannot read post content, you agree not to use boards for distributing illegal material, harassment, or any prohibited activity. Posts may be blinded automatically based on community reports. Board administrators can delete posts and destroy boards permanently. Upon receiving a valid legal request, we will delete the encrypted data associated with the specified board—though we cannot provide its decrypted content."
       }
     }
   },
   "Metadata": {
     "title": "BLIP - Talk. Then Vanish.",
-    "description": "E2E encrypted ephemeral chat. No accounts. No traces. No history. Secure conversations that disappear.",
-    "roomTitle": "BLIP - Join a Secure Chat",
-    "roomDescription": "You've been invited to an end-to-end encrypted private chat. Join instantly, no account needed."
+    "description": "Disposable chat only you and your partner can see. No accounts. No traces. No history. Private conversations that disappear.",
+    "roomTitle": "BLIP - Join a Private Chat",
+    "roomDescription": "You've been invited to a private chat only participants can read. Join instantly, no account needed.",
+    "boardTitle": "BLIP - Private Board",
+    "boardDescription": "Join a private community board only participants can see."
+  },
+  "Board": {
+    "create": {
+      "title": "BOARD CREATED",
+      "subtitle": "Create Encrypted Board",
+      "createButton": "Create Board",
+      "namePlaceholder": "Board name",
+      "password": "Board Password",
+      "adminToken": "Admin Token",
+      "adminTokenWarning": "Save this token — it cannot be recovered",
+      "shareLink": "Share Link",
+      "enter": "Enter Board"
+    },
+    "header": {
+      "encrypted": "E2E Encrypted",
+      "admin": "Admin Panel",
+      "forgetPassword": "Forget saved password"
+    },
+    "post": {
+      "placeholder": "Write something... (Markdown supported)",
+      "submit": "Post",
+      "empty": "No posts yet",
+      "refresh": "Refresh",
+      "attachImage": "Attach image",
+      "maxImages": "Max 4 images",
+      "imageTooLarge": "Image too large",
+      "uploading": "Uploading..."
+    },
+    "report": {
+      "title": "Report Post",
+      "spam": "Spam",
+      "abuse": "Abuse / Harassment",
+      "illegal": "Illegal Content",
+      "other": "Other",
+      "submit": "Report",
+      "cancel": "Cancel",
+      "alreadyReported": "Already reported"
+    },
+    "blinded": {
+      "message": "Blinded by community reports"
+    },
+    "admin": {
+      "title": "Admin Panel",
+      "destroy": "Destroy Board",
+      "destroyWarning": "This will permanently delete the board and all posts. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirmDestroy": "Destroy"
+    },
+    "destroyed": {
+      "title": "Board Destroyed",
+      "message": "This board has been permanently deleted."
+    }
   }
 }

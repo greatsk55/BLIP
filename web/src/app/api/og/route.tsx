@@ -5,20 +5,20 @@ export const runtime = 'edge';
 
 const ogText = {
   home: {
-    ko: { title: '말하고, 사라지세요.', subtitle: '종단간 암호화 · 계정 없음 · 흔적 없음' },
-    en: { title: 'Talk. Then Vanish.', subtitle: 'E2E Encrypted · No Accounts · No Traces' },
-    ja: { title: '話して、消える。', subtitle: 'E2E暗号化 · アカウント不要 · 痕跡なし' },
-    zh: { title: '交谈。然后消失。', subtitle: '端到端加密 · 无需账号 · 不留痕迹' },
-    es: { title: 'Habla. Luego desaparece.', subtitle: 'Cifrado E2E · Sin cuentas · Sin rastro' },
-    fr: { title: 'Parlez. Puis disparaissez.', subtitle: 'Chiffrement E2E · Sans compte · Sans trace' },
+    ko: { title: '말하고, 사라지세요.', subtitle: '누구도 엿볼 수 없음 · 계정 불필요 · 흔적 제로' },
+    en: { title: 'Talk. Then Vanish.', subtitle: 'Completely Private · No Accounts · No Traces' },
+    ja: { title: '話して、消える。', subtitle: '完全プライベート · アカウント不要 · 痕跡なし' },
+    zh: { title: '交谈。然后消失。', subtitle: '完全私密 · 无需账号 · 不留痕迹' },
+    es: { title: 'Habla. Luego desaparece.', subtitle: 'Totalmente privado · Sin cuentas · Sin rastro' },
+    fr: { title: 'Parlez. Puis disparaissez.', subtitle: 'Totalement privé · Sans compte · Sans trace' },
   },
   room: {
-    ko: { title: '보안 채팅에 초대되었습니다', subtitle: '종단간 암호화 · 계정 없이 바로 참여' },
-    en: { title: "You're invited to a secure chat", subtitle: 'E2E Encrypted · Join instantly, no account needed' },
-    ja: { title: 'セキュアチャットに招待されました', subtitle: 'E2E暗号化 · アカウント不要で即参加' },
-    zh: { title: '您被邀请加入安全聊天', subtitle: '端到端加密 · 无需账号即可加入' },
-    es: { title: 'Has sido invitado a un chat seguro', subtitle: 'Cifrado E2E · Únete al instante, sin cuenta' },
-    fr: { title: 'Vous êtes invité à un chat sécurisé', subtitle: 'Chiffrement E2E · Rejoignez instantanément' },
+    ko: { title: '비공개 채팅에 초대되었습니다', subtitle: '완전 비공개 대화 · 계정 없이 바로 참여' },
+    en: { title: "You're invited to a private chat", subtitle: 'Fully private chat · Join instantly, no account needed' },
+    ja: { title: 'プライベートチャットに招待されました', subtitle: '完全プライベート · アカウント不要で即参加' },
+    zh: { title: '您被邀请加入私密聊天', subtitle: '完全私密对话 · 无需账号即可加入' },
+    es: { title: 'Has sido invitado a un chat privado', subtitle: 'Chat totalmente privado · Únete al instante, sin cuenta' },
+    fr: { title: 'Vous êtes invité à un chat privé', subtitle: 'Chat totalement privé · Rejoignez instantanément' },
   },
 } as const;
 
