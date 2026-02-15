@@ -16,6 +16,17 @@ export interface Message {
   timestamp: number;
 }
 
+export type MessageType = 'text' | 'image' | 'video';
+
+export interface MediaMetadata {
+  fileName: string;
+  mimeType: string;
+  size: number;
+  width?: number;
+  height?: number;
+  duration?: number;
+}
+
 export interface DecryptedMessage {
   id: string;
   senderId: string;
@@ -23,6 +34,25 @@ export interface DecryptedMessage {
   content: string;
   timestamp: number;
   isMine: boolean;
+  type: MessageType;
+  mediaUrl?: string;
+  mediaThumbnail?: string;
+  mediaMetadata?: MediaMetadata;
+  transferProgress?: number;
+}
+
+export interface FileTransferHeader {
+  transferId: string;
+  fileName: string;
+  mimeType: string;
+  totalSize: number;
+  totalChunks: number;
+  checksum: string;
+}
+
+export interface EncryptedFileChunk {
+  ciphertext: Uint8Array;
+  nonce: Uint8Array;
 }
 
 export interface Participant {

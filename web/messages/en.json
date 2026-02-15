@@ -3,7 +3,9 @@
     "title": "Talk. Then Vanish.",
     "subtitle": "No accounts. No traces. No history.<br></br>Only the conversation of this moment exists.",
     "cta": "Click to Create Chat Room",
-    "linkShare": "Connect perfectly with a single link, no complex procedures."
+    "linkShare": "Connect perfectly with a single link, no complex procedures.",
+    "rateLimited": "Room creation limit reached. Please try again later.",
+    "createFailed": "Failed to create room. Please try again."
   },
   "Problem": {
     "title": "Your conversations last too long.",
@@ -89,7 +91,7 @@
       },
       "3": {
         "question": "Can I send images and files?",
-        "answer": "Currently, we focus on lightweight text communication. We plan to expand features in a way that guarantees security in the future."
+        "answer": "Yes! Images and videos are sent directly between users via encrypted P2P (WebRTC). The server never sees your media—data is double-encrypted and relayed through a TURN server only when direct connection isn't possible."
       }
     }
   },
@@ -133,6 +135,16 @@
       "title": "Channel is full.",
       "subtitle": "This channel already has 2 participants.",
       "newChat": "Start New Channel"
+    },
+    "media": {
+      "attachFile": "Attach media",
+      "fileTooLarge": "File exceeds maximum size ({maxSize})",
+      "sendingFile": "Sending file...",
+      "p2pConnecting": "Establishing secure P2P connection...",
+      "p2pFailed": "P2P connection failed. Text only.",
+      "p2pConnected": "P2P media channel ready",
+      "videoLoadFailed": "Video failed to load",
+      "unsupportedType": "Unsupported file type"
     }
   },
   "Privacy": {

@@ -12,6 +12,7 @@ export default function Hero() {
   const router = useRouter();
   const [textVisible, setTextVisible] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Text vanish effect loop
   useEffect(() => {
@@ -24,8 +25,10 @@ export default function Hero() {
   const handleCreateRoom = async () => {
     if (creating) return;
     setCreating(true);
+    setError(null);
     const result = await createRoom();
     if ('error' in result) {
+      setError(result.error === 'TOO_MANY_REQUESTS' ? t("rateLimited") : t("createFailed"));
       setCreating(false);
       return;
     }
@@ -71,6 +74,16 @@ export default function Hero() {
         </span>
         <div className="absolute inset-0 bg-signal-green opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md" />
       </motion.button>
+
+      {error && (
+        <motion.p
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-4 text-sm font-mono text-red-400"
+        >
+          {error}
+        </motion.p>
+      )}
 
       <motion.p
         initial={{ opacity: 0 }}

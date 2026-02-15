@@ -43,6 +43,11 @@ export async function checkRateLimit(
   key: string,
   config: RateLimitConfig
 ): Promise<RateLimitResult> {
+  // 개발 환경에서는 rate limit 비활성화
+  if (process.env.NODE_ENV === 'development') {
+    return { allowed: true, remaining: config.maxRequests };
+  }
+
   const limiter = getLimiter(config);
   const { success, remaining, reset } = await limiter.limit(key);
 

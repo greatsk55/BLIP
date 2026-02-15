@@ -23,3 +23,4 @@ export {
 
 export { encryptMessage } from './encrypt';
 export { decryptMessage } from './decrypt';
+export { encryptFileChunk, decryptFileChunk } from './file';

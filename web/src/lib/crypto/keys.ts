@@ -64,7 +64,8 @@ export async function deriveKeysFromPassword(
  * authKey를 SHA-256 해시 (서버 저장용)
  */
 export async function hashAuthKey(authKey: Uint8Array): Promise<string> {
-  const hashBuffer = await crypto.subtle.digest('SHA-256', authKey.buffer as ArrayBuffer);
+  // @ts-expect-error -- TS strict ArrayBuffer typing vs runtime Uint8Array acceptance
+  const hashBuffer = await crypto.subtle.digest('SHA-256', authKey);
   return encodeBase64(new Uint8Array(hashBuffer));
 }
 

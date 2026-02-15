@@ -7,6 +7,7 @@ import SystemMessage from './SystemMessage';
 
 interface ChatMessageAreaProps {
   messages: DecryptedMessage[];
+  onImageClick?: (src: string) => void;
 }
 
 export interface ChatMessageAreaHandle {
@@ -14,7 +15,7 @@ export interface ChatMessageAreaHandle {
 }
 
 const ChatMessageArea = forwardRef<ChatMessageAreaHandle, ChatMessageAreaProps>(
-  function ChatMessageArea({ messages }, ref) {
+  function ChatMessageArea({ messages, onImageClick }, ref) {
     const bottomRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +84,7 @@ const ChatMessageArea = forwardRef<ChatMessageAreaHandle, ChatMessageAreaProps>(
           msg.senderId === 'system' ? (
             <SystemMessage key={msg.id} content={msg.content} />
           ) : (
-            <MessageBubble key={msg.id} message={msg} />
+            <MessageBubble key={msg.id} message={msg} onImageClick={onImageClick} />
           )
         )}
 

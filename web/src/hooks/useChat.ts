@@ -19,6 +19,20 @@ import type {
   EncryptedPayload,
 } from '@/types/chat';
 
+/** crypto.randomUUID() 폴백 — SSR/구형 브라우저 대응 */
+function generateUUID(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  // crypto.getRandomValues 기반 v4 UUID
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
 interface UseChatOptions {
   roomId: string;
   password: string;
@@ -32,7 +46,14 @@ interface UseChatReturn {
   peerUsername: string | null;
   peerConnected: boolean;
   sendMessage: (content: string) => void;
+  addMediaMessage: (message: DecryptedMessage) => void;
+  updateTransferProgress: (transferId: string, progress: number) => void;
   disconnect: () => void;
+  // WebRTC 연결에 필요한 값 노출 (ChatRoom에서 useWebRTC 조합용)
+  channel: ReturnType<typeof supabase.channel> | null;
+  sharedSecret: Uint8Array | null;
+  isInitiator: boolean;
+  myId: string;
 }
 
 export function useChat({ roomId, password, onMessageReceived }: UseChatOptions): UseChatReturn {
@@ -40,12 +61,14 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const [status, setStatus] = useState<ChatStatus>('connecting');
   const [peerUsername, setPeerUsername] = useState<string | null>(null);
   const [peerConnected, setPeerConnected] = useState(false);
+  const [sharedSecretState, setSharedSecretState] = useState<Uint8Array | null>(null);
+  const [isInitiator, setIsInitiator] = useState(false);
 
   const keyPairRef = useRef<KeyPair | null>(null);
   const sharedSecretRef = useRef<Uint8Array | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const myUsernameRef = useRef(generateUsername());
-  const myIdRef = useRef(crypto.randomUUID());
+  const myIdRef = useRef(generateUUID());
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
 
@@ -54,7 +77,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
       if (!channelRef.current || !sharedSecretRef.current || !content.trim()) return;
 
       const encrypted = encryptMessage(content.trim(), sharedSecretRef.current);
-      const messageId = crypto.randomUUID();
+      const messageId = generateUUID();
 
       channelRef.current.send({
         type: 'broadcast',
@@ -79,18 +102,30 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           content: content.trim(),
           timestamp: Date.now(),
           isMine: true,
+          type: 'text',
         },
       ]);
     },
     []
   );
 
+  // 미디어 메시지 추가 (useWebRTC에서 호출)
+  const addMediaMessage = useCallback((message: DecryptedMessage) => {
+    setMessages((prev) => [...prev, message]);
+  }, []);
+
+  // 전송 진행률 업데이트 (useWebRTC에서 호출)
+  const updateTransferProgress = useCallback((transferId: string, progress: number) => {
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === transferId ? { ...msg, transferProgress: progress } : msg
+      )
+    );
+  }, []);
+
   const disconnect = useCallback(() => {
     if (channelRef.current) {
-      // Presence에서 명시적으로 나가기 (상대방에게 즉시 leave 이벤트 전달)
       channelRef.current.untrack();
-
-      // 퇴장 알림 브로드캐스트
       channelRef.current.send({
         type: 'broadcast',
         event: 'user_left',
@@ -99,14 +134,22 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           username: myUsernameRef.current,
         },
       });
-
       channelRef.current.unsubscribe();
       channelRef.current = null;
     }
-    // 메모리에서 키 + 메시지 완전 삭제
+
+    // 인메모리 미디어 blob URL 해제
+    setMessages((prev) => {
+      prev.forEach((msg) => {
+        if (msg.mediaUrl) URL.revokeObjectURL(msg.mediaUrl);
+        if (msg.mediaThumbnail) URL.revokeObjectURL(msg.mediaThumbnail);
+      });
+      return [];
+    });
+
     keyPairRef.current = null;
     sharedSecretRef.current = null;
-    setMessages([]);
+    setSharedSecretState(null);
     setStatus('destroyed');
   }, []);
 
@@ -147,6 +190,10 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           const peerPublicKey = stringToPublicKey(payload.payload.publicKey);
           const shared = computeSharedSecret(peerPublicKey, keyPairRef.current.secretKey);
           sharedSecretRef.current = shared;
+          setSharedSecretState(shared);
+
+          // userId 비교로 WebRTC initiator 결정 (양쪽 동일한 결과)
+          setIsInitiator(myIdRef.current < payload.payload.userId);
 
           setPeerUsername(payload.payload.username);
           setPeerConnected(true);
@@ -156,12 +203,13 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           setMessages((prev) => [
             ...prev,
             {
-              id: crypto.randomUUID(),
+              id: generateUUID(),
               senderId: 'system',
               senderName: 'SYSTEM',
               content: `${payload.payload.username} CONNECTED`,
               timestamp: Date.now(),
               isMine: false,
+              type: 'text',
             },
           ]);
         });
@@ -186,6 +234,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
                 content: decrypted,
                 timestamp: msg.timestamp,
                 isMine: false,
+                type: 'text',
               },
             ]);
             onMessageReceivedRef.current?.(msg.senderName);
@@ -257,6 +306,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
                 keyPairRef.current.secretKey
               );
               sharedSecretRef.current = shared;
+              setSharedSecretState(shared);
+              setIsInitiator(myIdRef.current < peer.userId);
               if (isMounted) setStatus('chatting');
             }
           }
@@ -393,6 +444,12 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
     peerUsername,
     peerConnected,
     sendMessage,
+    addMediaMessage,
+    updateTransferProgress,
     disconnect,
+    channel: channelRef.current,
+    sharedSecret: sharedSecretState,
+    isInitiator,
+    myId: myIdRef.current,
   };
 }

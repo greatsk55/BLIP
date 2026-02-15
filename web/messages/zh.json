@@ -3,7 +3,9 @@
     "title": "交谈。然后消失。",
     "subtitle": "无需账号。无需记录。不留痕迹。<br></br>只有此刻的对话存在。",
     "cta": "点击创建聊天室",
-    "linkShare": "无需复杂手续，仅需一个链接即可完美连接。"
+    "linkShare": "无需复杂手续，仅需一个链接即可完美连接。",
+    "rateLimited": "房间创建限制已达上限，请稍后再试。",
+    "createFailed": "房间创建失败，请重试。"
   },
   "Problem": {
     "title": "你的对话保留得太久了。",
@@ -89,7 +91,7 @@
       },
       "3": {
         "question": "可以发送图片和文件吗？",
-        "answer": "目前我们专注于轻量级文本通信。未来计划以确保安全的方式扩展功能。"
+        "answer": "可以！图片和视频通过加密的P2P（WebRTC）在用户之间直接传输。服务器无法查看您的媒体文件。只有在无法直接连接时，才会通过TURN服务器中继双重加密的数据。"
       }
     }
   },
@@ -133,6 +135,16 @@
       "title": "频道已满。",
       "subtitle": "此频道已有2名参与者。",
       "newChat": "开始新聊天"
+    },
+    "media": {
+      "attachFile": "附加媒体",
+      "fileTooLarge": "文件大小超限（最大{maxSize}）",
+      "sendingFile": "文件发送中...",
+      "p2pConnecting": "正在建立安全P2P连接...",
+      "p2pFailed": "P2P连接失败，仅可发送文字。",
+      "p2pConnected": "P2P媒体通道就绪",
+      "videoLoadFailed": "视频加载失败",
+      "unsupportedType": "不支持的文件格式"
     }
   },
   "Privacy": {

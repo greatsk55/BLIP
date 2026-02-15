@@ -2,45 +2,52 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useNotification } from './useNotification';
 
-// AudioContext mock
-const mockOscillator = {
-  connect: vi.fn(),
-  frequency: { setValueAtTime: vi.fn() },
-  type: 'sine',
-  start: vi.fn(),
-  stop: vi.fn(),
-};
+// AudioContext mock (Vitest v4: class 기반)
+const mockStart = vi.fn();
+const mockStop = vi.fn();
 
-const mockGain = {
-  connect: vi.fn(),
-  gain: { setValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() },
-};
+class MockAudioContext {
+  state = 'running';
+  resume = vi.fn();
+  destination = {};
+  currentTime = 0;
+  createOscillator() {
+    return {
+      connect: vi.fn(),
+      frequency: { setValueAtTime: vi.fn() },
+      type: 'sine',
+      start: mockStart,
+      stop: mockStop,
+    };
+  }
+  createGain() {
+    return {
+      connect: vi.fn(),
+      gain: { setValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() },
+    };
+  }
+}
 
-const MockAudioContext = vi.fn(() => ({
-  state: 'running',
-  resume: vi.fn(),
-  destination: {},
-  createOscillator: vi.fn(() => mockOscillator),
-  createGain: vi.fn(() => mockGain),
-  currentTime: 0,
-}));
+// Notification mock (class 기반)
+const mockClose = vi.fn();
+const mockRequestPermission = vi.fn().mockResolvedValue('granted');
+let notificationPermission = 'default';
 
-// Notification mock
-const mockNotificationInstance = {
-  close: vi.fn(),
-  onclick: null as (() => void) | null,
-};
-
-const MockNotification = vi.fn(() => mockNotificationInstance) as unknown as typeof Notification;
-Object.defineProperty(MockNotification, 'permission', {
-  value: 'default',
-  writable: true,
-  configurable: true,
-});
-MockNotification.requestPermission = vi.fn().mockResolvedValue('granted');
+class MockNotification {
+  static get permission() { return notificationPermission; }
+  static requestPermission = mockRequestPermission;
+  close = mockClose;
+  onclick: (() => void) | null = null;
+  constructor(_title: string, _options?: NotificationOptions) {}
+}
 
 beforeEach(() => {
   vi.useFakeTimers();
+  mockStart.mockClear();
+  mockStop.mockClear();
+  mockClose.mockClear();
+  mockRequestPermission.mockClear();
+  notificationPermission = 'default';
   globalThis.AudioContext = MockAudioContext as unknown as typeof AudioContext;
   globalThis.Notification = MockNotification as unknown as typeof Notification;
   navigator.vibrate = vi.fn(() => true);
@@ -57,23 +64,20 @@ describe('useNotification', () => {
     it('사운드만 재생한다 (진동/브라우저 알림 없음)', () => {
       const { result } = renderHook(() => useNotification());
 
-      // 탭 활성 상태 (기본)
       act(() => {
         result.current.notifyMessage('GHOST_7x2k');
       });
 
-      // AudioContext가 생성되고 oscillator가 시작됨
-      expect(MockAudioContext).toHaveBeenCalled();
-      expect(mockOscillator.start).toHaveBeenCalled();
+      // oscillator.start가 호출됨
+      expect(mockStart).toHaveBeenCalled();
 
-      // 탭 활성 시 진동/Notification은 호출 안 됨
+      // 탭 활성 시 진동은 호출 안 됨
       expect(navigator.vibrate).not.toHaveBeenCalled();
-      expect(MockNotification).not.toHaveBeenCalled();
     });
   });
 
   describe('notifyMessage - 탭 비활성 시', () => {
-    it('사운드 + 진동 + 브라우저 알림 모두 호출', () => {
+    it('사운드 + 진동 모두 호출', () => {
       const { result } = renderHook(() => useNotification());
 
       // 탭 비활성 시뮬레이션
@@ -85,7 +89,7 @@ describe('useNotification', () => {
         result.current.notifyMessage('SHADOW_abc2');
       });
 
-      expect(mockOscillator.start).toHaveBeenCalled();
+      expect(mockStart).toHaveBeenCalled();
       expect(navigator.vibrate).toHaveBeenCalledWith([80, 40, 80]);
     });
 
@@ -141,11 +145,7 @@ describe('useNotification', () => {
 
   describe('requestPermission', () => {
     it('permission이 "default"이면 requestPermission을 호출한다', async () => {
-      Object.defineProperty(MockNotification, 'permission', {
-        value: 'default',
-        writable: true,
-        configurable: true,
-      });
+      notificationPermission = 'default';
 
       const { result } = renderHook(() => useNotification());
 
@@ -153,17 +153,11 @@ describe('useNotification', () => {
         await result.current.requestPermission();
       });
 
-      expect(MockNotification.requestPermission).toHaveBeenCalled();
+      expect(mockRequestPermission).toHaveBeenCalled();
     });
 
     it('이미 "granted"면 requestPermission을 호출하지 않는다', async () => {
-      Object.defineProperty(MockNotification, 'permission', {
-        value: 'granted',
-        writable: true,
-        configurable: true,
-      });
-
-      MockNotification.requestPermission = vi.fn();
+      notificationPermission = 'granted';
 
       const { result } = renderHook(() => useNotification());
 
@@ -171,7 +165,7 @@ describe('useNotification', () => {
         await result.current.requestPermission();
       });
 
-      expect(MockNotification.requestPermission).not.toHaveBeenCalled();
+      expect(mockRequestPermission).not.toHaveBeenCalled();
     });
   });
 });

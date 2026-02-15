@@ -3,7 +3,9 @@
     "title": "Habla. Luego desaparece.",
     "subtitle": "Sin cuentas. Sin rastro. Sin historial.<br></br>Solo existe la conversación de este momento.",
     "cta": "Haz clic para crear sala de chat",
-    "linkShare": "Conéctate perfectamente con un solo enlace, sin procedimientos complejos."
+    "linkShare": "Conéctate perfectamente con un solo enlace, sin procedimientos complejos.",
+    "rateLimited": "Se alcanzó el límite de creación de salas. Inténtalo más tarde.",
+    "createFailed": "Error al crear la sala. Inténtalo de nuevo."
   },
   "Problem": {
     "title": "Tus conversaciones duran demasiado.",
@@ -89,7 +91,7 @@
       },
       "3": {
         "question": "¿Puedo enviar imágenes y archivos?",
-        "answer": "Actualmente nos enfocamos en la comunicación de texto ligera. Planeamos expandir funciones de una manera que garantice la seguridad en el futuro."
+        "answer": "¡Sí! Las imágenes y videos se envían directamente entre usuarios a través de P2P encriptado (WebRTC). El servidor nunca ve tus archivos multimedia. Los datos se encriptan doblemente y solo se retransmiten a través de un servidor TURN cuando la conexión directa no es posible."
       }
     }
   },
@@ -133,6 +135,16 @@
       "title": "Canal lleno.",
       "subtitle": "Este canal ya tiene 2 participantes.",
       "newChat": "Iniciar nuevo canal"
+    },
+    "media": {
+      "attachFile": "Adjuntar media",
+      "fileTooLarge": "Archivo demasiado grande (máx. {maxSize})",
+      "sendingFile": "Enviando archivo...",
+      "p2pConnecting": "Estableciendo conexión P2P segura...",
+      "p2pFailed": "Conexión P2P fallida. Solo texto disponible.",
+      "p2pConnected": "Canal de media P2P listo",
+      "videoLoadFailed": "Error al cargar el video",
+      "unsupportedType": "Tipo de archivo no soportado"
     }
   },
   "Privacy": {
