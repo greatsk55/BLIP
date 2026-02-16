@@ -25,6 +25,24 @@ async function hashString(input: string): Promise<string> {
   return encodeBase64(new Uint8Array(hashBuffer));
 }
 
+/** 게시글에 연결된 Storage 이미지 파일 삭제 (DB 행은 CASCADE로 처리) */
+async function deletePostImages(
+  supabase: ReturnType<typeof createServerSupabase>,
+  filter: { postId: string } | { boardId: string }
+) {
+  const query = supabase.from('board_post_images').select('storage_path');
+  const filtered =
+    'postId' in filter
+      ? query.eq('post_id', filter.postId)
+      : query.eq('board_id', filter.boardId);
+
+  const { data: images } = await filtered;
+  if (images && images.length > 0) {
+    const paths = images.map((img) => img.storage_path);
+    await supabase.storage.from('board-images').remove(paths);
+  }
+}
+
 // ─── 게시판 생성 ───
 
 export async function createBoard(
@@ -459,6 +477,7 @@ export async function deleteOwnPost(
 
   if (!post) return { success: false, error: 'POST_NOT_FOUND' };
 
+  await deletePostImages(supabase, { postId });
   await supabase.from('board_posts').delete().eq('id', postId);
   return { success: true };
 }
@@ -490,6 +509,7 @@ export async function adminDeletePost(
     return { success: false, error: 'INVALID_ADMIN_TOKEN' };
   }
 
+  await deletePostImages(supabase, { postId });
   await supabase.from('board_posts').delete().eq('id', postId);
   return { success: true };
 }
@@ -556,15 +576,7 @@ export async function destroyBoard(
   }
 
   // Storage 이미지 파일 삭제 (CASCADE 전에 경로 수집)
-  const { data: images } = await supabase
-    .from('board_post_images')
-    .select('storage_path')
-    .eq('board_id', boardId);
-
-  if (images && images.length > 0) {
-    const paths = images.map((img) => img.storage_path);
-    await supabase.storage.from('board-images').remove(paths);
-  }
+  await deletePostImages(supabase, { boardId });
 
   // CASCADE로 board_posts, board_reports, board_post_images 자동 삭제
   await supabase.from('boards').delete().eq('id', boardId);
