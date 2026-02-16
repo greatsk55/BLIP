@@ -391,6 +391,18 @@
     "destroyed": {
       "title": "커뮤니티 폭파됨",
       "message": "이 커뮤니티는 영구적으로 삭제되었습니다."
+    },
+    "dashboard": {
+      "title": "내 커뮤니티",
+      "empty": "저장된 커뮤니티가 없습니다",
+      "remove": "제거",
+      "removeConfirm": "이 커뮤니티를 제거하시겠습니까?",
+      "removeAdminWarning": "관리자 권한이 있어 서버 데이터도 함께 삭제됩니다.",
+      "removeLocalOnly": "이 기기에서만 제거됩니다.",
+      "cancel": "취소",
+      "confirmRemove": "제거",
+      "admin": "관리자",
+      "destroying": "삭제 중..."
     }
   }
 }

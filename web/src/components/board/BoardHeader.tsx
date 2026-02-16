@@ -35,9 +35,9 @@ export default function BoardHeader({
       <header className="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-ink/10 bg-void-black/80 backdrop-blur-sm pt-[env(safe-area-inset-top)]">
         <div className="flex items-center gap-3 min-w-0">
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/board')}
             className="font-mono text-xs text-ghost-grey/70 hover:text-ghost-grey transition-colors"
-            aria-label="Back to home"
+            aria-label="Back to communities"
           >
             ←
           </button>

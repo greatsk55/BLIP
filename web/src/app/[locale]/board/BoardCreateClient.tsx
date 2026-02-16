@@ -7,9 +7,10 @@ import { MessageSquarePlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { createBoard, updateBoardName } from '@/lib/board/actions';
 import { deriveKeysFromPassword, hashAuthKey, encryptSymmetric } from '@/lib/crypto';
-import { saveAdminTokenToStorage } from '@/hooks/useBoard';
+import { saveAdminTokenToStorage, savePassword, saveBoardName } from '@/hooks/useBoard';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import BoardCreatedView from '@/components/board/BoardCreatedView';
+import SavedBoardsList from '@/components/board/SavedBoardsList';
 
 export default function BoardCreateClient() {
   const t = useTranslations('Board');
@@ -57,8 +58,10 @@ export default function BoardCreateClient() {
       return;
     }
 
-    // 관리자 토큰을 localStorage에 자동 저장
+    // 비밀번호 + 관리자 토큰 + 보드 이름을 localStorage에 자동 저장
+    savePassword(result.boardId, result.password);
     saveAdminTokenToStorage(result.boardId, result.adminToken);
+    saveBoardName(result.boardId, boardName.trim());
 
     setCreateResult(result);
     setLoading(false);
@@ -76,12 +79,15 @@ export default function BoardCreateClient() {
     );
   }
 
-  // 생성 폼
+  // 생성 폼 + 대시보드
   return (
-    <div className="h-dvh bg-void-black flex items-center justify-center px-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+    <div className="min-h-dvh bg-void-black flex flex-col items-center justify-center px-6 py-12 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
       <div className="fixed top-4 right-4 z-50 pt-[env(safe-area-inset-top)]">
         <ThemeToggle />
       </div>
+
+      {/* 저장된 커뮤니티 목록 */}
+      <SavedBoardsList />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

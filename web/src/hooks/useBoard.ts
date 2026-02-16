@@ -28,13 +28,14 @@ import type { DecryptedPost, DecryptedPostImage, BoardStatus, ReportReason } fro
 const STORAGE_PREFIX = 'blip-board-';
 const ADMIN_PREFIX = 'blip-board-admin-';
 const USERNAME_PREFIX = 'blip-board-user-';
+const NAME_PREFIX = 'blip-board-name-';
 
 function getSavedPassword(boardId: string): string | null {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem(`${STORAGE_PREFIX}${boardId}`);
 }
 
-function savePassword(boardId: string, password: string): void {
+export function savePassword(boardId: string, password: string): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(`${STORAGE_PREFIX}${boardId}`, password);
 }
@@ -66,6 +67,54 @@ function getOrCreateUsername(boardId: string): string {
   const name = generateUsername();
   localStorage.setItem(`${USERNAME_PREFIX}${boardId}`, name);
   return name;
+}
+
+// ─── 보드 이름 캐시 ───
+
+export function saveBoardName(boardId: string, name: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(`${NAME_PREFIX}${boardId}`, name);
+}
+
+function getSavedBoardName(boardId: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(`${NAME_PREFIX}${boardId}`);
+}
+
+// ─── 저장된 커뮤니티 목록 (대시보드용) ───
+
+export interface SavedBoard {
+  boardId: string;
+  name: string | null;
+  hasAdminToken: boolean;
+}
+
+/** localStorage에서 저장된 커뮤니티 목록을 반환 */
+export function getSavedBoards(): SavedBoard[] {
+  if (typeof window === 'undefined') return [];
+  const boards: SavedBoard[] = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key?.startsWith(STORAGE_PREFIX)) continue;
+    // admin/user/name prefix 제외
+    if (key.startsWith(ADMIN_PREFIX) || key.startsWith(USERNAME_PREFIX) || key.startsWith(NAME_PREFIX)) continue;
+    const boardId = key.slice(STORAGE_PREFIX.length);
+    boards.push({
+      boardId,
+      name: getSavedBoardName(boardId),
+      hasAdminToken: !!getSavedAdminToken(boardId),
+    });
+  }
+  return boards;
+}
+
+/** 커뮤니티의 모든 로컬 데이터를 삭제 */
+export function removeSavedBoard(boardId: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(`${STORAGE_PREFIX}${boardId}`);
+  localStorage.removeItem(`${ADMIN_PREFIX}${boardId}`);
+  localStorage.removeItem(`${USERNAME_PREFIX}${boardId}`);
+  localStorage.removeItem(`${NAME_PREFIX}${boardId}`);
 }
 
 // ─── 타입 ───
@@ -178,6 +227,9 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         encryptionSeed
       );
       setBoardName(name);
+
+      // 이름 캐시 (대시보드 목록용)
+      if (name) saveBoardName(boardId, name);
 
       setStatus('browsing');
 

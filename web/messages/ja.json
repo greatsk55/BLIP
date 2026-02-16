@@ -391,6 +391,18 @@
     "destroyed": {
       "title": "コミュニティ破棄済み",
       "message": "このコミュニティは永久に削除されました。"
+    },
+    "dashboard": {
+      "title": "マイコミュニティ",
+      "empty": "保存されたコミュニティがありません",
+      "remove": "削除",
+      "removeConfirm": "このコミュニティを削除しますか？",
+      "removeAdminWarning": "管理者権限があるため、サーバーデータも削除されます。",
+      "removeLocalOnly": "このデバイスからのみ削除されます。",
+      "cancel": "キャンセル",
+      "confirmRemove": "削除",
+      "admin": "管理者",
+      "destroying": "削除中..."
     }
   }
 }

@@ -391,6 +391,18 @@
     "destroyed": {
       "title": "社区已销毁",
       "message": "此社区已被永久删除。"
+    },
+    "dashboard": {
+      "title": "我的社区",
+      "empty": "没有保存的社区",
+      "remove": "移除",
+      "removeConfirm": "确定移除此社区？",
+      "removeAdminWarning": "您拥有管理员权限，服务器数据也将被删除。",
+      "removeLocalOnly": "仅从此设备上移除。",
+      "cancel": "取消",
+      "confirmRemove": "移除",
+      "admin": "管理员",
+      "destroying": "删除中..."
     }
   }
 }

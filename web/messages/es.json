@@ -391,6 +391,18 @@
     "destroyed": {
       "title": "Comunidad Destruida",
       "message": "Esta comunidad ha sido eliminada permanentemente."
+    },
+    "dashboard": {
+      "title": "Mis Comunidades",
+      "empty": "No hay comunidades guardadas",
+      "remove": "Eliminar",
+      "removeConfirm": "¿Eliminar esta comunidad?",
+      "removeAdminWarning": "Tienes acceso de administrador — los datos del servidor también se eliminarán.",
+      "removeLocalOnly": "Solo se eliminará de este dispositivo.",
+      "cancel": "Cancelar",
+      "confirmRemove": "Eliminar",
+      "admin": "Admin",
+      "destroying": "Eliminando..."
     }
   }
 }
