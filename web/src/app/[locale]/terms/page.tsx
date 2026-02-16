@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import LegalPageLayout from "@/components/LegalPageLayout";
 
-const SECTION_COUNT = 9;
+const SECTION_COUNT = 11;
 
 export default function TermsPage() {
   const t = useTranslations("Terms");

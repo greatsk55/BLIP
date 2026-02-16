@@ -31,9 +31,9 @@
   },
   "CommunityBoard": {
     "label": "NEW",
-    "title": "Some conversations deserve to stay. Encrypted.",
-    "subtitle": "Create an encrypted community board with a single password.<br></br>Posts are stored as unreadable ciphertext — the server can never see your content.<br></br>Markdown, images, anonymous posting. All end-to-end encrypted.",
-    "cta": "Create Encrypted Board",
+    "title": "Build your own private community. Encrypted.",
+    "subtitle": "Create a private community with a single password.<br></br>Posts are stored as unreadable ciphertext — the server can never see your content.<br></br>Markdown, images, anonymous posting. All end-to-end encrypted.",
+    "cta": "Create Private Community",
     "features": {
       "password": {
         "title": "Password = Key",
@@ -60,7 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
-      "board": "Encrypted Board",
+      "board": "Private Community",
       "privacy": "Privacy",
       "terms": "Terms",
       "updates": "Updates"
@@ -300,6 +300,10 @@
       "10": {
         "title": "Community Boards",
         "content": "BLIP Community Boards are encrypted group spaces where posts are stored as ciphertext in our database. While we cannot read post content, you agree not to use boards for distributing illegal material, harassment, or any prohibited activity. Posts may be blinded automatically based on community reports. Board administrators can delete posts and destroy boards permanently. Upon receiving a valid legal request, we will delete the encrypted data associated with the specified board—though we cannot provide its decrypted content."
+      },
+      "11": {
+        "title": "Board Administrator Obligations",
+        "content": "By creating a Community Board, you assume the role of administrator and accept full management responsibility. Administrators must: (1) actively monitor and manage their board to prevent illegal content, harassment, spam, and other prohibited activities; (2) promptly respond to user reports and take appropriate action including post deletion or user restriction; (3) securely store the admin token—BLIP cannot recover or reissue lost tokens. If the admin token is lost, you must immediately report it to the BLIP operations team. Upon receiving the report, the board will be closed and the administrator must create a new board to migrate the community; (4) comply with all applicable laws regarding user-generated content within their board. BLIP provides encryption and infrastructure only. Since all content is end-to-end encrypted and unreadable by BLIP, the administrator bears sole responsibility for the content and activity within their board. BLIP is not liable for any damages, legal issues, or disputes arising from content posted on administrator-managed boards."
       }
     }
   },
@@ -313,30 +317,48 @@
   },
   "Board": {
     "create": {
-      "title": "BOARD CREATED",
-      "subtitle": "Create Encrypted Board",
-      "createButton": "Create Board",
-      "namePlaceholder": "Board name",
-      "password": "Board Password",
+      "title": "COMMUNITY CREATED",
+      "subtitle": "Create Private Community",
+      "createButton": "Create Community",
+      "namePlaceholder": "Community name",
+      "password": "Community Password",
       "adminToken": "Admin Token",
       "adminTokenWarning": "Save this token — it cannot be recovered",
       "shareLink": "Share Link",
-      "enter": "Enter Board"
+      "enter": "Enter Community"
     },
     "header": {
       "encrypted": "E2E Encrypted",
       "admin": "Admin Panel",
-      "forgetPassword": "Forget saved password"
+      "forgetPassword": "Forget saved password",
+      "forgetPasswordConfirm": "The saved password on this device will be deleted. You will need to enter the password again on your next visit.",
+      "cancel": "Cancel",
+      "confirmForget": "Delete",
+      "registerAdmin": "Register Admin Token",
+      "adminTokenPlaceholder": "Paste admin token here",
+      "confirmRegister": "Register"
     },
     "post": {
       "placeholder": "Write something... (Markdown supported)",
       "submit": "Post",
+      "compose": "New Post",
+      "detail": "Post",
       "empty": "No posts yet",
+      "writeFirst": "Write the first post",
       "refresh": "Refresh",
       "attachImage": "Attach image",
       "maxImages": "Max 4 images",
       "imageTooLarge": "Image too large",
-      "uploading": "Uploading..."
+      "uploading": "Uploading...",
+      "titlePlaceholder": "Title (optional)",
+      "insertInline": "Insert in content",
+      "edit": "Edit",
+      "editTitle": "Edit Post",
+      "save": "Save",
+      "delete": "Delete",
+      "adminDelete": "Delete (Admin)",
+      "deleteWarning": "This post will be permanently deleted. This cannot be undone.",
+      "confirmDelete": "Delete"
     },
     "report": {
       "title": "Report Post",
@@ -353,14 +375,14 @@
     },
     "admin": {
       "title": "Admin Panel",
-      "destroy": "Destroy Board",
-      "destroyWarning": "This will permanently delete the board and all posts. This cannot be undone.",
+      "destroy": "Destroy Community",
+      "destroyWarning": "This will permanently delete the community and all posts. This cannot be undone.",
       "cancel": "Cancel",
       "confirmDestroy": "Destroy"
     },
     "destroyed": {
-      "title": "Board Destroyed",
-      "message": "This board has been permanently deleted."
+      "title": "Community Destroyed",
+      "message": "This community has been permanently deleted."
     }
   }
 }

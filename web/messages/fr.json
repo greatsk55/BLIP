@@ -29,6 +29,26 @@
       "description": "100% Open Source. Vous pouvez vérifier avec le code que nous n'espionnons jamais vos conversations."
     }
   },
+  "CommunityBoard": {
+    "label": "NOUVEAU",
+    "title": "Créez votre communauté privée. Chiffrée.",
+    "subtitle": "Créez une communauté privée avec un seul mot de passe.<br></br>Les publications sont stockées en texte chiffré illisible — le serveur ne peut jamais voir votre contenu.<br></br>Markdown, images, publication anonyme. Tout chiffré de bout en bout.",
+    "cta": "Créer une Communauté Privée",
+    "features": {
+      "password": {
+        "title": "Mot de passe = Clé",
+        "description": "Un mot de passe partagé chiffre tout. Pas de compte, pas d'inscription. Partagez le mot de passe, partagez l'espace."
+      },
+      "serverBlind": {
+        "title": "Serveur Aveugle",
+        "description": "Nous stockons vos publications, mais ne pouvons jamais les lire. La clé de déchiffrement ne quitte jamais votre appareil."
+      },
+      "moderation": {
+        "title": "Modération Communautaire",
+        "description": "Système de signalement avec masquage automatique. Aucun admin n'a besoin de lire le contenu pour garder l'espace sûr."
+      }
+    }
+  },
   "Philosophy": {
     "text1": "BLIP n'est pas une messagerie. C'est un outil de communication jetable.",
     "text2": "Nous ne voulons pas vous retenir. Dites ce que vous avez à dire, puis partez."
@@ -40,6 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
+      "board": "Communauté Privée",
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "updates": "Mises à jour"
@@ -279,6 +300,10 @@
       "10": {
         "title": "Tableaux Communautaires",
         "content": "Les Tableaux Communautaires BLIP sont des espaces de groupe chiffrés où les publications sont stockées sous forme de texte chiffré dans notre base de données. Bien que nous ne puissions pas lire le contenu des publications, vous acceptez de ne pas utiliser les tableaux pour distribuer du matériel illégal, harceler ou toute activité interdite. Les publications peuvent être masquées automatiquement sur la base des signalements de la communauté. Les administrateurs de tableau peuvent supprimer des publications et détruire définitivement les tableaux. Lors de la réception d'une demande légale valide, nous supprimerons les données chiffrées associées au tableau spécifié—bien que nous ne puissions pas fournir leur contenu déchiffré."
+      },
+      "11": {
+        "title": "Obligations de l'Administrateur de Tableau",
+        "content": "En créant un Tableau Communautaire, vous assumez le rôle d'administrateur et acceptez l'entière responsabilité de gestion. Les administrateurs doivent : (1) surveiller et gérer activement leur tableau pour prévenir le contenu illégal, le harcèlement, le spam et autres activités interdites ; (2) répondre rapidement aux signalements des utilisateurs et prendre les mesures appropriées, y compris la suppression de publications ou la restriction d'utilisateurs ; (3) conserver en toute sécurité le jeton d'administrateur — BLIP ne peut pas récupérer ni réémettre les jetons perdus. En cas de perte du jeton d'administrateur, vous devez le signaler immédiatement à l'équipe d'exploitation BLIP. Dès réception du signalement, le tableau sera fermé et l'administrateur devra créer un nouveau tableau pour migrer la communauté ; (4) se conformer à toutes les lois applicables concernant le contenu généré par les utilisateurs au sein de leur tableau. BLIP fournit uniquement le chiffrement et l'infrastructure. Étant donné que tout le contenu est chiffré de bout en bout et illisible par BLIP, l'administrateur assume l'entière responsabilité du contenu et de l'activité au sein de son tableau. BLIP n'est pas responsable des dommages, problèmes juridiques ou litiges découlant du contenu publié sur les tableaux gérés par les administrateurs."
       }
     }
   },
@@ -292,30 +317,48 @@
   },
   "Board": {
     "create": {
-      "title": "TABLEAU CRÉÉ",
-      "subtitle": "Créer un Tableau Chiffré",
-      "createButton": "Créer le Tableau",
-      "namePlaceholder": "Nom du tableau",
-      "password": "Mot de passe du Tableau",
+      "title": "COMMUNAUTÉ CRÉÉE",
+      "subtitle": "Créer une Communauté Privée",
+      "createButton": "Créer la Communauté",
+      "namePlaceholder": "Nom de la communauté",
+      "password": "Mot de passe de la Communauté",
       "adminToken": "Jeton Administrateur",
       "adminTokenWarning": "Sauvegardez ce jeton — il ne peut pas être récupéré",
       "shareLink": "Lien de Partage",
-      "enter": "Entrer dans le Tableau"
+      "enter": "Entrer dans la Communauté"
     },
     "header": {
       "encrypted": "Chiffrement E2E",
       "admin": "Panneau d'Administration",
-      "forgetPassword": "Oublier le mot de passe enregistré"
+      "forgetPassword": "Oublier le mot de passe enregistré",
+      "forgetPasswordConfirm": "Le mot de passe enregistré sur cet appareil sera supprimé. Vous devrez le saisir à nouveau lors de votre prochaine visite.",
+      "cancel": "Annuler",
+      "confirmForget": "Supprimer",
+      "registerAdmin": "Enregistrer le jeton admin",
+      "adminTokenPlaceholder": "Coller le jeton admin",
+      "confirmRegister": "Enregistrer"
     },
     "post": {
       "placeholder": "Écrivez quelque chose... (Markdown pris en charge)",
       "submit": "Publier",
+      "compose": "Nouvelle publication",
+      "detail": "Publication",
       "empty": "Aucune publication pour le moment",
+      "writeFirst": "Écrivez la première publication",
       "refresh": "Actualiser",
       "attachImage": "Joindre une image",
       "maxImages": "4 images maximum",
       "imageTooLarge": "Image trop volumineuse",
-      "uploading": "Téléchargement..."
+      "uploading": "Téléchargement...",
+      "titlePlaceholder": "Titre (optionnel)",
+      "insertInline": "Insérer dans le contenu",
+      "edit": "Modifier",
+      "editTitle": "Modifier la Publication",
+      "save": "Enregistrer",
+      "delete": "Supprimer",
+      "adminDelete": "Supprimer (Admin)",
+      "deleteWarning": "Cette publication sera définitivement supprimée. Cette action est irréversible.",
+      "confirmDelete": "Supprimer"
     },
     "report": {
       "title": "Signaler la Publication",
@@ -332,14 +375,14 @@
     },
     "admin": {
       "title": "Panneau d'Administration",
-      "destroy": "Détruire le Tableau",
-      "destroyWarning": "Cela supprimera définitivement le tableau et toutes les publications. Cette action est irréversible.",
+      "destroy": "Détruire la Communauté",
+      "destroyWarning": "Cela supprimera définitivement la communauté et toutes les publications. Cette action est irréversible.",
       "cancel": "Annuler",
       "confirmDestroy": "Détruire"
     },
     "destroyed": {
-      "title": "Tableau Détruit",
-      "message": "Ce tableau a été définitivement supprimé."
+      "title": "Communauté Détruite",
+      "message": "Cette communauté a été définitivement supprimée."
     }
   }
 }

@@ -49,7 +49,7 @@ export default function MarkdownToolbar({ textareaRef, value, onChange }: Markdo
         <button
           key={tool.label}
           onClick={() => handleTool(tool.before, tool.after)}
-          className="w-7 h-7 flex-shrink-0 flex items-center justify-center text-ghost-grey/40 hover:text-ink/70 active:text-signal-green transition-colors"
+          className="w-7 h-7 flex-shrink-0 flex items-center justify-center text-ghost-grey/70 hover:text-ink/70 active:text-signal-green transition-colors"
           aria-label={tool.label}
           type="button"
         >

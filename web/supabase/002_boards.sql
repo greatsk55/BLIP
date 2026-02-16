@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS board_posts (
   board_id TEXT NOT NULL REFERENCES boards(id) ON DELETE CASCADE,
   author_name_encrypted TEXT NOT NULL,
   author_name_nonce TEXT NOT NULL,
+  title_encrypted TEXT,
+  title_nonce TEXT,
   content_encrypted TEXT NOT NULL,
   content_nonce TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),

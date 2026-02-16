@@ -56,7 +56,10 @@ export async function createBoard(
     status: 'active',
   });
 
-  if (error) return { error: 'CREATION_FAILED' };
+  if (error) {
+    console.error('[createBoard] Supabase insert error:', error.message, error.code, error.details);
+    return { error: 'CREATION_FAILED' };
+  }
 
   return { boardId, password, adminToken };
 }
@@ -166,7 +169,9 @@ export async function createPost(
   authorNameEncrypted: string,
   authorNameNonce: string,
   contentEncrypted: string,
-  contentNonce: string
+  contentNonce: string,
+  titleEncrypted?: string,
+  titleNonce?: string
 ): Promise<{ postId: string } | { error: string }> {
   const headersList = await headers();
   const ip = getClientIp(headersList);
@@ -185,20 +190,85 @@ export async function createPost(
   if (!board || board.status !== 'active') return { error: 'BOARD_NOT_FOUND' };
   if (board.auth_key_hash !== authKeyHash) return { error: 'UNAUTHORIZED' };
 
+  const insertData: Record<string, unknown> = {
+    board_id: boardId,
+    author_name_encrypted: authorNameEncrypted,
+    author_name_nonce: authorNameNonce,
+    content_encrypted: contentEncrypted,
+    content_nonce: contentNonce,
+  };
+  if (titleEncrypted && titleNonce) {
+    insertData.title_encrypted = titleEncrypted;
+    insertData.title_nonce = titleNonce;
+  }
+
   const { data, error } = await supabase
     .from('board_posts')
-    .insert({
-      board_id: boardId,
-      author_name_encrypted: authorNameEncrypted,
-      author_name_nonce: authorNameNonce,
-      content_encrypted: contentEncrypted,
-      content_nonce: contentNonce,
-    })
+    .insert(insertData)
     .select('id')
     .single();
 
   if (error || !data) return { error: 'POST_FAILED' };
   return { postId: data.id };
+}
+
+// ─── 게시글 수정 ───
+
+export async function updatePost(
+  boardId: string,
+  postId: string,
+  authKeyHash: string,
+  authorNameEncrypted: string,
+  authorNameNonce: string,
+  contentEncrypted: string,
+  contentNonce: string,
+  titleEncrypted?: string,
+  titleNonce?: string
+): Promise<{ success: boolean } | { error: string }> {
+  const headersList = await headers();
+  const ip = getClientIp(headersList);
+  const rateCheck = await checkRateLimit(`board:post:${ip}`, CREATE_POST_LIMIT);
+  if (!rateCheck.allowed) return { error: 'TOO_MANY_REQUESTS' };
+
+  const supabase = createServerSupabase();
+
+  // 인증 검증
+  const { data: board } = await supabase
+    .from('boards')
+    .select('auth_key_hash, status')
+    .eq('id', boardId)
+    .single();
+
+  if (!board || board.status !== 'active') return { error: 'BOARD_NOT_FOUND' };
+  if (board.auth_key_hash !== authKeyHash) return { error: 'UNAUTHORIZED' };
+
+  // 게시글 존재 + 블라인드 여부 확인
+  const { data: post } = await supabase
+    .from('board_posts')
+    .select('id, is_blinded')
+    .eq('id', postId)
+    .eq('board_id', boardId)
+    .single();
+
+  if (!post) return { error: 'POST_NOT_FOUND' };
+  if (post.is_blinded) return { error: 'POST_BLINDED' };
+
+  const updateData: Record<string, unknown> = {
+    author_name_encrypted: authorNameEncrypted,
+    author_name_nonce: authorNameNonce,
+    content_encrypted: contentEncrypted,
+    content_nonce: contentNonce,
+    title_encrypted: titleEncrypted ?? null,
+    title_nonce: titleNonce ?? null,
+  };
+
+  const { error } = await supabase
+    .from('board_posts')
+    .update(updateData)
+    .eq('id', postId);
+
+  if (error) return { error: 'UPDATE_FAILED' };
+  return { success: true };
 }
 
 // ─── 게시글 목록 조회 ───
@@ -214,6 +284,8 @@ export async function getPosts(
         id: string;
         authorNameEncrypted: string;
         authorNameNonce: string;
+        titleEncrypted: string | null;
+        titleNonce: string | null;
         contentEncrypted: string;
         contentNonce: string;
         createdAt: string;
@@ -248,7 +320,7 @@ export async function getPosts(
   let query = supabase
     .from('board_posts')
     .select(
-      'id, author_name_encrypted, author_name_nonce, content_encrypted, content_nonce, created_at, is_blinded, board_post_images(id, storage_path, encrypted_nonce, mime_type, size_bytes, width, height, display_order)'
+      'id, author_name_encrypted, author_name_nonce, title_encrypted, title_nonce, content_encrypted, content_nonce, created_at, is_blinded, board_post_images(id, storage_path, encrypted_nonce, mime_type, size_bytes, width, height, display_order)'
     )
     .eq('board_id', boardId)
     .order('created_at', { ascending: false })
@@ -277,6 +349,8 @@ export async function getPosts(
       id: p.id,
       authorNameEncrypted: p.author_name_encrypted,
       authorNameNonce: p.author_name_nonce,
+      titleEncrypted: p.title_encrypted ?? null,
+      titleNonce: p.title_nonce ?? null,
       contentEncrypted: p.content_encrypted,
       contentNonce: p.content_nonce,
       createdAt: p.created_at,
@@ -348,6 +422,44 @@ export async function reportPost(
     p_threshold: threshold,
   });
 
+  return { success: true };
+}
+
+// ─── 본인 게시글 삭제 ───
+
+export async function deleteOwnPost(
+  boardId: string,
+  postId: string,
+  authKeyHash: string
+): Promise<{ success: boolean; error?: string }> {
+  const headersList = await headers();
+  const ip = getClientIp(headersList);
+  const rateCheck = await checkRateLimit(`board:post:${ip}`, CREATE_POST_LIMIT);
+  if (!rateCheck.allowed) return { success: false, error: 'TOO_MANY_REQUESTS' };
+
+  const supabase = createServerSupabase();
+
+  // 게시판 인증
+  const { data: board } = await supabase
+    .from('boards')
+    .select('auth_key_hash, status')
+    .eq('id', boardId)
+    .single();
+
+  if (!board || board.status !== 'active') return { success: false, error: 'BOARD_NOT_FOUND' };
+  if (board.auth_key_hash !== authKeyHash) return { success: false, error: 'UNAUTHORIZED' };
+
+  // 게시글이 해당 게시판에 속하는지 확인
+  const { data: post } = await supabase
+    .from('board_posts')
+    .select('id')
+    .eq('id', postId)
+    .eq('board_id', boardId)
+    .single();
+
+  if (!post) return { success: false, error: 'POST_NOT_FOUND' };
+
+  await supabase.from('board_posts').delete().eq('id', postId);
   return { success: true };
 }
 

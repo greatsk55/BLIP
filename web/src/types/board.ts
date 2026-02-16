@@ -18,6 +18,8 @@ export interface BoardPost {
   boardId: string;
   authorNameEncrypted: string;
   authorNameNonce: string;
+  titleEncrypted: string | null;
+  titleNonce: string | null;
   contentEncrypted: string;
   contentNonce: string;
   createdAt: string;
@@ -30,11 +32,23 @@ export interface BoardPost {
 export interface DecryptedPost {
   id: string;
   authorName: string;
+  title: string;
   content: string;
   createdAt: string;
   isBlinded: boolean;
   isMine: boolean;
   images: DecryptedPostImage[];
+  /** 복호화 전 이미지 메타데이터 (lazy decryption용) */
+  _encryptedImages?: EncryptedPostImageMeta[];
+}
+
+/** 이미지 복호화에 필요한 최소 메타데이터 */
+export interface EncryptedPostImageMeta {
+  id: string;
+  encryptedNonce: string;
+  mimeType: string;
+  width: number | null;
+  height: number | null;
 }
 
 // ─── 이미지 ───

@@ -15,7 +15,10 @@ import { compressImage } from '@/lib/media/compress';
 import {
   getPosts,
   createPost,
+  updatePost,
   reportPost,
+  adminDeletePost,
+  deleteOwnPost,
   getBoardMeta,
 } from '@/lib/board/actions';
 import type { DecryptedPost, DecryptedPostImage, BoardStatus, ReportReason } from '@/types/board';
@@ -23,6 +26,8 @@ import type { DecryptedPost, DecryptedPostImage, BoardStatus, ReportReason } fro
 // ─── localStorage 헬퍼 ───
 
 const STORAGE_PREFIX = 'blip-board-';
+const ADMIN_PREFIX = 'blip-board-admin-';
+const USERNAME_PREFIX = 'blip-board-user-';
 
 function getSavedPassword(boardId: string): string | null {
   if (typeof window === 'undefined') return null;
@@ -39,6 +44,30 @@ function forgetPassword(boardId: string): void {
   localStorage.removeItem(`${STORAGE_PREFIX}${boardId}`);
 }
 
+function getSavedAdminToken(boardId: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(`${ADMIN_PREFIX}${boardId}`);
+}
+
+export function saveAdminTokenToStorage(boardId: string, token: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(`${ADMIN_PREFIX}${boardId}`, token);
+}
+
+function forgetAdminToken(boardId: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(`${ADMIN_PREFIX}${boardId}`);
+}
+
+function getOrCreateUsername(boardId: string): string {
+  if (typeof window === 'undefined') return generateUsername();
+  const saved = localStorage.getItem(`${USERNAME_PREFIX}${boardId}`);
+  if (saved) return saved;
+  const name = generateUsername();
+  localStorage.setItem(`${USERNAME_PREFIX}${boardId}`, name);
+  return name;
+}
+
 // ─── 타입 ───
 
 interface UseBoardOptions {
@@ -53,14 +82,19 @@ interface UseBoardReturn {
   hasMore: boolean;
   myUsername: string;
   isPasswordSaved: boolean;
+  adminToken: string | null;
 
   // 액션
-  authenticate: (password: string, remember: boolean) => Promise<{ error?: string }>;
+  authenticate: (password: string) => Promise<{ error?: string }>;
   loadMore: () => Promise<void>;
-  submitPost: (content: string, images?: File[]) => Promise<{ error?: string }>;
+  submitPost: (title: string, content: string, images?: File[]) => Promise<{ error?: string }>;
+  editPost: (postId: string, title: string, content: string) => Promise<{ error?: string }>;
+  deletePost: (postId: string, adminToken?: string) => Promise<{ error?: string }>;
   submitReport: (postId: string, reason: ReportReason) => Promise<{ error?: string }>;
   refreshPosts: () => Promise<void>;
   forgetSavedPassword: () => void;
+  saveAdminToken: (token: string) => void;
+  forgetSavedAdminToken: () => void;
   decryptPostImages: (postId: string) => Promise<void>;
 }
 
@@ -70,10 +104,11 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const [posts, setPosts] = useState<DecryptedPost[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [isPasswordSaved, setIsPasswordSaved] = useState(false);
+  const [adminToken, setAdminToken] = useState<string | null>(null);
 
   const encryptionKeyRef = useRef<Uint8Array | null>(null);
   const authKeyHashRef = useRef<string | null>(null);
-  const usernameRef = useRef(generateUsername());
+  const usernameRef = useRef(getOrCreateUsername(boardId));
   const cursorRef = useRef<string | undefined>(undefined);
   const loadingRef = useRef(false);
   // 복호화된 blob URL 추적 (unmount 시 cleanup)
@@ -86,8 +121,14 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     };
   }, []);
 
-  // 초기화: localStorage에서 저장된 비밀번호 확인
+  // 초기화: localStorage에서 저장된 비밀번호 + 관리자 토큰 확인
   useEffect(() => {
+    // 관리자 토큰 복원
+    const savedToken = getSavedAdminToken(boardId);
+    if (savedToken) {
+      setAdminToken(savedToken);
+    }
+
     const saved = getSavedPassword(boardId);
     if (saved) {
       setIsPasswordSaved(true);
@@ -170,6 +211,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
           return {
             id: p.id,
             authorName: '',
+            title: '',
             content: '',
             createdAt: p.createdAt,
             isBlinded: true,
@@ -182,6 +224,10 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
           { ciphertext: p.authorNameEncrypted, nonce: p.authorNameNonce },
           key
         );
+        const title =
+          p.titleEncrypted && p.titleNonce
+            ? decryptSymmetric({ ciphertext: p.titleEncrypted, nonce: p.titleNonce }, key)
+            : '';
         const content = decryptSymmetric(
           { ciphertext: p.contentEncrypted, nonce: p.contentNonce },
           key
@@ -190,14 +236,21 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         return {
           id: p.id,
           authorName: authorName ?? '[DECRYPTION FAILED]',
+          title: title ?? '',
           content: content ?? '[DECRYPTION FAILED]',
           createdAt: p.createdAt,
           isBlinded: false,
           isMine: authorName === usernameRef.current,
           // 이미지 메타데이터만 저장 (복호화는 lazy)
           images: [],
-          _encryptedImages: p.images,
-        } as DecryptedPost & { _encryptedImages: typeof p.images };
+          _encryptedImages: p.images.map((img) => ({
+            id: img.id,
+            encryptedNonce: img.encryptedNonce,
+            mimeType: img.mimeType,
+            width: img.width,
+            height: img.height,
+          })),
+        };
       });
 
       if (cursor) {
@@ -222,10 +275,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     const keyHash = authKeyHashRef.current;
     if (!key || !keyHash) return;
 
-    const post = posts.find((p) => p.id === postId) as
-      | (DecryptedPost & { _encryptedImages?: Array<{ id: string; encryptedNonce: string; mimeType: string; width: number | null; height: number | null }> })
-      | undefined;
-
+    const post = posts.find((p) => p.id === postId);
     if (!post?._encryptedImages || post._encryptedImages.length === 0) return;
     if (post.images.length > 0) return; // 이미 복호화됨
 
@@ -238,13 +288,12 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         );
         if (!res.ok) continue;
 
-        const nonce = res.headers.get('X-Encrypted-Nonce');
-        if (!nonce) continue;
-
         const encryptedBuffer = await res.arrayBuffer();
+
+        // imgMeta에서 직접 nonce 사용 (X-Encrypted-Nonce 헤더보다 안정적)
         const decrypted = decryptBinaryRaw(
           new Uint8Array(encryptedBuffer),
-          decodeBase64(nonce),
+          decodeBase64(imgMeta.encryptedNonce),
           key
         );
         if (!decrypted) continue;
@@ -261,7 +310,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
           height: imgMeta.height,
         });
       } catch {
-        // 개별 이미지 실패 무시
+        // 개별 이미지 복호화 실패 무시
       }
     }
 
@@ -317,9 +366,10 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   // ─── 공개 API ───
 
   const authenticate = useCallback(
-    async (password: string, remember: boolean): Promise<{ error?: string }> => {
+    async (password: string): Promise<{ error?: string }> => {
       const result = await authenticateInternal(password, false);
-      if (!result.error && remember) {
+      if (!result.error) {
+        // 인증 성공 시 항상 비밀번호 자동 저장
         savePassword(boardId, password);
         setIsPasswordSaved(true);
       }
@@ -340,16 +390,28 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   }, [boardId]);
 
   const submitPost = useCallback(
-    async (content: string, images?: File[]): Promise<{ error?: string }> => {
+    async (title: string, content: string, images?: File[]): Promise<{ error?: string }> => {
       if (!authKeyHashRef.current || !encryptionKeyRef.current) {
         return { error: 'NOT_AUTHENTICATED' };
       }
 
-      const trimmed = content.trim();
-      if (!trimmed && (!images || images.length === 0)) return { error: 'EMPTY_CONTENT' };
+      const trimmedTitle = title.trim();
+      const trimmedContent = content.trim();
+      if (!trimmedTitle && !trimmedContent && (!images || images.length === 0)) {
+        return { error: 'EMPTY_CONTENT' };
+      }
 
       const encName = encryptSymmetric(usernameRef.current, encryptionKeyRef.current);
-      const encContent = encryptSymmetric(trimmed || ' ', encryptionKeyRef.current);
+      const encContent = encryptSymmetric(trimmedContent || ' ', encryptionKeyRef.current);
+
+      // title 암호화 (비어있으면 null)
+      let titleEncrypted: string | undefined;
+      let titleNonce: string | undefined;
+      if (trimmedTitle) {
+        const encTitle = encryptSymmetric(trimmedTitle, encryptionKeyRef.current);
+        titleEncrypted = encTitle.ciphertext;
+        titleNonce = encTitle.nonce;
+      }
 
       const result = await createPost(
         boardId,
@@ -357,7 +419,9 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         encName.ciphertext,
         encName.nonce,
         encContent.ciphertext,
-        encContent.nonce
+        encContent.nonce,
+        titleEncrypted,
+        titleNonce
       );
 
       if ('error' in result) return { error: result.error };
@@ -386,7 +450,8 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       const newPost: DecryptedPost = {
         id: result.postId,
         authorName: usernameRef.current,
-        content: trimmed,
+        title: trimmedTitle,
+        content: trimmedContent,
         createdAt: new Date().toISOString(),
         isBlinded: false,
         isMine: true,
@@ -394,6 +459,79 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       };
       setPosts((prev) => [newPost, ...prev]);
 
+      return {};
+    },
+    [boardId]
+  );
+
+  const editPost = useCallback(
+    async (postId: string, title: string, content: string): Promise<{ error?: string }> => {
+      if (!authKeyHashRef.current || !encryptionKeyRef.current) {
+        return { error: 'NOT_AUTHENTICATED' };
+      }
+
+      const trimmedTitle = title.trim();
+      const trimmedContent = content.trim();
+      if (!trimmedTitle && !trimmedContent) {
+        return { error: 'EMPTY_CONTENT' };
+      }
+
+      const encName = encryptSymmetric(usernameRef.current, encryptionKeyRef.current);
+      const encContent = encryptSymmetric(trimmedContent || ' ', encryptionKeyRef.current);
+
+      let titleEncrypted: string | undefined;
+      let titleNonce: string | undefined;
+      if (trimmedTitle) {
+        const encTitle = encryptSymmetric(trimmedTitle, encryptionKeyRef.current);
+        titleEncrypted = encTitle.ciphertext;
+        titleNonce = encTitle.nonce;
+      }
+
+      const result = await updatePost(
+        boardId,
+        postId,
+        authKeyHashRef.current,
+        encName.ciphertext,
+        encName.nonce,
+        encContent.ciphertext,
+        encContent.nonce,
+        titleEncrypted,
+        titleNonce
+      );
+
+      if ('error' in result) return { error: result.error };
+
+      // 로컬 상태 업데이트
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId
+            ? { ...p, title: trimmedTitle, content: trimmedContent }
+            : p
+        )
+      );
+
+      return {};
+    },
+    [boardId]
+  );
+
+  const deletePost = useCallback(
+    async (postId: string, adminToken?: string): Promise<{ error?: string }> => {
+      let result: { success: boolean; error?: string };
+
+      if (adminToken) {
+        // 관리자 삭제
+        result = await adminDeletePost(boardId, postId, adminToken);
+      } else {
+        // 본인 삭제 (authKeyHash로 인증)
+        if (!authKeyHashRef.current) return { error: 'NOT_AUTHENTICATED' };
+        result = await deleteOwnPost(boardId, postId, authKeyHashRef.current);
+      }
+
+      if (!result.success) return { error: result.error };
+
+      // 로컬 상태에서 제거
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
       return {};
     },
     [boardId]
@@ -423,6 +561,19 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     setIsPasswordSaved(false);
   }, [boardId]);
 
+  const saveAdminTokenFn = useCallback(
+    (token: string) => {
+      saveAdminTokenToStorage(boardId, token);
+      setAdminToken(token);
+    },
+    [boardId]
+  );
+
+  const forgetSavedAdminToken = useCallback(() => {
+    forgetAdminToken(boardId);
+    setAdminToken(null);
+  }, [boardId]);
+
   const decryptPostImages = useCallback(
     async (postId: string) => {
       await decryptPostImagesInternal(postId);
@@ -438,12 +589,17 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     hasMore,
     myUsername: usernameRef.current,
     isPasswordSaved,
+    adminToken,
     authenticate,
     loadMore,
     submitPost,
+    editPost,
+    deletePost,
     submitReport,
     refreshPosts,
     forgetSavedPassword,
+    saveAdminToken: saveAdminTokenFn,
+    forgetSavedAdminToken,
     decryptPostImages,
   };
 }

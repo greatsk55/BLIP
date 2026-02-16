@@ -1,45 +1,17 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Flag } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { DecryptedPost } from '@/types/board';
-import MarkdownContent from './MarkdownContent';
-import PostImageGallery from './PostImageGallery';
 
 interface PostCardProps {
   post: DecryptedPost;
-  onReport: () => void;
-  onDecryptImages?: (postId: string) => Promise<void>;
+  onClick: () => void;
 }
 
-export default function PostCard({ post, onReport, onDecryptImages }: PostCardProps) {
+export default function PostCard({ post, onClick }: PostCardProps) {
   const t = useTranslations('Board');
-  const [showMenu, setShowMenu] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const decryptedRef = useRef(false);
 
-  // IntersectionObserver: 뷰포트 진입 시 이미지 복호화 트리거
-  useEffect(() => {
-    if (!onDecryptImages || post.isBlinded || post.images.length > 0 || decryptedRef.current) return;
-
-    const el = cardRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !decryptedRef.current) {
-          decryptedRef.current = true;
-          onDecryptImages(post.id);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [onDecryptImages, post.id, post.isBlinded, post.images.length]);
-
-  // 시간 포맷
   const timeAgo = formatTimeAgo(post.createdAt);
 
   // 블라인드 처리된 게시글
@@ -53,63 +25,74 @@ export default function PostCard({ post, onReport, onDecryptImages }: PostCardPr
     );
   }
 
+  // 본문 미리보기 (마크다운 제거, 최대 120자)
+  const preview = stripMarkdown(post.content).slice(0, 120);
+  const hasImages = post.images.length > 0 || hasEncryptedImages(post);
+
   return (
-    <div
-      ref={cardRef}
-      className={`border px-4 py-3 ${
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-full text-left border px-4 py-3 transition-colors cursor-pointer ${
         post.isMine
-          ? 'border-signal-green/10 bg-signal-green/[0.02]'
-          : 'border-ink/5 bg-ink/[0.01]'
+          ? 'border-signal-green/10 bg-signal-green/[0.02] hover:bg-signal-green/[0.04]'
+          : 'border-ink/5 bg-ink/[0.01] hover:bg-ink/[0.03]'
       }`}
     >
-      {/* 헤더: 작성자 + 시간 + 메뉴 */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <span
-            className={`font-mono text-[10px] uppercase tracking-wider ${
-              post.isMine ? 'text-signal-green' : 'text-ghost-grey/60'
-            }`}
-          >
-            {post.authorName}
-          </span>
-          <span className="font-mono text-[9px] text-ghost-grey/30">
-            {timeAgo}
-          </span>
-        </div>
-
-        {!post.isMine && (
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="p-1 text-ghost-grey/20 hover:text-glitch-red transition-colors"
-            aria-label={t('report.title')}
-          >
-            <Flag className="w-3 h-3" />
-          </button>
-        )}
+      {/* 1행: 작성자 + 시간 */}
+      <div className="flex items-center gap-2 mb-1.5">
+        <span
+          className={`font-mono text-[10px] uppercase tracking-wider ${
+            post.isMine ? 'text-signal-green' : 'text-ghost-grey/60'
+          }`}
+        >
+          {post.authorName}
+        </span>
+        <span className="font-mono text-[9px] text-ghost-grey/60">
+          {timeAgo}
+        </span>
       </div>
 
-      {/* 본문: 마크다운 렌더링 */}
-      {post.content && <MarkdownContent content={post.content} />}
+      {/* 2행: 제목 */}
+      {post.title && (
+        <p className="font-mono text-sm font-bold text-ink line-clamp-1 mb-1">
+          {post.title}
+        </p>
+      )}
 
-      {/* 이미지 갤러리 */}
-      {post.images.length > 0 && <PostImageGallery images={post.images} />}
+      {/* 3행: 본문 미리보기 */}
+      {preview && (
+        <p className="font-mono text-xs text-ink/70 leading-relaxed line-clamp-2 mb-1">
+          {preview}
+        </p>
+      )}
 
-      {/* 신고 버튼 (토글) */}
-      {showMenu && !post.isMine && (
-        <div className="mt-2 pt-2 border-t border-ink/5">
-          <button
-            onClick={() => {
-              onReport();
-              setShowMenu(false);
-            }}
-            className="font-mono text-[10px] text-glitch-red/60 hover:text-glitch-red uppercase tracking-wider transition-colors"
-          >
-            {t('report.submit')}
-          </button>
+      {/* 3행: 이미지 인디케이터 */}
+      {hasImages && (
+        <div className="flex items-center gap-1 mt-1.5">
+          <ImageIcon className="w-3 h-3 text-ghost-grey/60" />
+          <span className="font-mono text-[9px] text-ghost-grey/60 uppercase tracking-wider">
+            Image
+          </span>
         </div>
       )}
-    </div>
+    </button>
   );
+}
+
+/** 마크다운 문법 제거 → 플레인 텍스트 미리보기 */
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/!\[[^\]]*\]\(img:\d+\)/g, '') // inline image refs
+    .replace(/#{1,6}\s/g, '')           // headings
+    .replace(/\*\*(.+?)\*\*/g, '$1')    // bold
+    .replace(/\*(.+?)\*/g, '$1')        // italic
+    .replace(/`{1,3}[^`]*`{1,3}/g, '')  // code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
+    .replace(/>\s?/g, '')               // blockquote
+    .replace(/[-*+]\s/g, '')            // list
+    .replace(/\n+/g, ' ')              // newlines → space
+    .trim();
 }
 
 function formatTimeAgo(dateString: string): string {
@@ -126,4 +109,9 @@ function formatTimeAgo(dateString: string): string {
 
   const days = Math.floor(hours / 24);
   return `${days}d`;
+}
+
+/** _encryptedImages 존재 여부 (복호화 전 이미지 메타데이터) */
+function hasEncryptedImages(post: DecryptedPost): boolean {
+  return (post._encryptedImages?.length ?? 0) > 0;
 }

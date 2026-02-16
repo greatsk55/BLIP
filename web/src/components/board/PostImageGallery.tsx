@@ -16,6 +16,7 @@ interface PostImageGalleryProps {
 export default function PostImageGallery({ images }: PostImageGalleryProps) {
   const [viewerSrc, setViewerSrc] = useState<string | null>(null);
 
+
   if (images.length === 0) return null;
 
   const gridClass = getGridClass(images.length);
@@ -32,8 +33,7 @@ export default function PostImageGallery({ images }: PostImageGalleryProps) {
             <img
               src={img.objectUrl}
               alt=""
-              className="w-full h-full object-cover"
-              loading="lazy"
+              className="w-full h-auto object-contain"
               draggable={false}
             />
           </button>

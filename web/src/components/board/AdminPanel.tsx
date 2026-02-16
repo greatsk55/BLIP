@@ -55,7 +55,7 @@ export default function AdminPanel({
           </h2>
           <button
             onClick={onClose}
-            className="p-1 text-ghost-grey/40 hover:text-ghost-grey transition-colors"
+            className="p-1 text-ghost-grey/70 hover:text-ghost-grey transition-colors"
           >
             <X className="w-4 h-4" />
           </button>

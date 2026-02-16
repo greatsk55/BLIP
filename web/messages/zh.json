@@ -31,9 +31,9 @@
   },
   "CommunityBoard": {
     "label": "NEW",
-    "title": "有些对话值得保留。以加密的方式。",
-    "subtitle": "用一个密码创建加密社区公告板。<br></br>帖子以不可读的密文存储 — 服务器永远无法看到您的内容。<br></br>Markdown、图片、匿名发帖。全部端到端加密。",
-    "cta": "创建加密公告板",
+    "title": "打造你的私密社区。全程加密。",
+    "subtitle": "用一个密码创建私密社区。<br></br>帖子以不可读的密文存储 — 服务器永远无法看到您的内容。<br></br>Markdown、图片、匿名发帖。全部端到端加密。",
+    "cta": "创建私密社区",
     "features": {
       "password": {
         "title": "密码 = 钥匙",
@@ -60,7 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
-      "board": "加密公告板",
+      "board": "私密社区",
       "privacy": "隐私政策",
       "terms": "使用条款",
       "updates": "更新日志"
@@ -300,6 +300,10 @@
       "10": {
         "title": "社区论坛",
         "content": "BLIP社区论坛是加密的群组空间，帖子以密文形式存储在我们的数据库中。虽然我们无法阅读帖子内容，但您同意不将论坛用于分发非法材料、骚扰或任何被禁止的活动。帖子可能会根据社区举报自动被屏蔽。论坛管理员可以删除帖子并永久销毁论坛。在收到有效的法律请求后，我们将删除与指定论坛相关的加密数据——但我们无法提供其解密内容。"
+      },
+      "11": {
+        "title": "论坛管理员义务",
+        "content": "创建社区论坛即表示您承担管理员角色，并接受对论坛的全部管理责任。管理员必须: (1) 积极监控和管理论坛，防止非法内容、骚扰、垃圾信息及其他被禁止的活动; (2) 及时响应用户举报，采取适当措施，包括删除帖子或限制用户; (3) 安全保管管理员令牌——BLIP无法恢复或重新发放丢失的令牌。如果管理员令牌丢失，必须立即向BLIP运营团队报告。收到报告后，该论坛将被关闭，管理员需要创建新论坛并迁移社区; (4) 遵守与论坛内用户生成内容相关的所有适用法律。BLIP仅提供加密和基础设施。由于所有内容均为端到端加密且BLIP无法读取，管理员对其论坛内的内容和活动承担全部责任。BLIP不对管理员运营的论坛中发布的内容所引起的任何损害、法律问题或纠纷承担责任。"
       }
     }
   },
@@ -313,30 +317,48 @@
   },
   "Board": {
     "create": {
-      "title": "论坛已创建",
-      "subtitle": "创建加密论坛",
-      "createButton": "创建论坛",
-      "namePlaceholder": "论坛名称",
-      "password": "论坛密码",
+      "title": "社区已创建",
+      "subtitle": "创建私密社区",
+      "createButton": "创建社区",
+      "namePlaceholder": "社区名称",
+      "password": "社区密码",
       "adminToken": "管理员令牌",
       "adminTokenWarning": "请保存此令牌 — 无法恢复",
       "shareLink": "分享链接",
-      "enter": "进入论坛"
+      "enter": "进入社区"
     },
     "header": {
       "encrypted": "端到端加密",
       "admin": "管理员面板",
-      "forgetPassword": "删除已保存的密码"
+      "forgetPassword": "删除已保存的密码",
+      "forgetPasswordConfirm": "此设备上保存的密码将被删除。下次访问时需要重新输入密码。",
+      "cancel": "取消",
+      "confirmForget": "删除",
+      "registerAdmin": "注册管理员令牌",
+      "adminTokenPlaceholder": "粘贴管理员令牌",
+      "confirmRegister": "注册"
     },
     "post": {
       "placeholder": "写点什么...（支持Markdown）",
       "submit": "发布",
+      "compose": "发新帖",
+      "detail": "帖子",
       "empty": "暂无帖子",
+      "writeFirst": "写下第一篇帖子",
       "refresh": "刷新",
       "attachImage": "添加图片",
       "maxImages": "最多4张",
       "imageTooLarge": "图片太大",
-      "uploading": "上传中..."
+      "uploading": "上传中...",
+      "titlePlaceholder": "标题（可选）",
+      "insertInline": "插入正文",
+      "edit": "编辑",
+      "editTitle": "编辑帖子",
+      "save": "保存",
+      "delete": "删除",
+      "adminDelete": "删除（管理员）",
+      "deleteWarning": "此帖子将被永久删除，无法恢复。",
+      "confirmDelete": "删除"
     },
     "report": {
       "title": "举报帖子",
@@ -353,14 +375,14 @@
     },
     "admin": {
       "title": "管理员面板",
-      "destroy": "销毁论坛",
-      "destroyWarning": "这将永久删除论坛和所有帖子。此操作不可撤销。",
+      "destroy": "销毁社区",
+      "destroyWarning": "这将永久删除社区和所有帖子。此操作不可撤销。",
       "cancel": "取消",
       "confirmDestroy": "销毁"
     },
     "destroyed": {
-      "title": "论坛已销毁",
-      "message": "此论坛已被永久删除。"
+      "title": "社区已销毁",
+      "message": "此社区已被永久删除。"
     }
   }
 }

@@ -31,9 +31,9 @@
   },
   "CommunityBoard": {
     "label": "NUEVO",
-    "title": "Algunas conversaciones merecen quedarse. Cifradas.",
-    "subtitle": "Crea un tablón comunitario cifrado con una sola contraseña.<br></br>Las publicaciones se almacenan como texto cifrado ilegible — el servidor nunca puede ver tu contenido.<br></br>Markdown, imágenes, publicación anónima. Todo cifrado de extremo a extremo.",
-    "cta": "Crear Tablón Cifrado",
+    "title": "Crea tu propia comunidad privada. Cifrada.",
+    "subtitle": "Crea una comunidad privada con una sola contraseña.<br></br>Las publicaciones se almacenan como texto cifrado ilegible — el servidor nunca puede ver tu contenido.<br></br>Markdown, imágenes, publicación anónima. Todo cifrado de extremo a extremo.",
+    "cta": "Crear Comunidad Privada",
     "features": {
       "password": {
         "title": "Contraseña = Llave",
@@ -60,7 +60,7 @@
       "about": "About",
       "howItWorks": "How it Works",
       "faq": "FAQ",
-      "board": "Tablón Cifrado",
+      "board": "Comunidad Privada",
       "privacy": "Privacidad",
       "terms": "Términos",
       "updates": "Novedades"
@@ -300,6 +300,10 @@
       "10": {
         "title": "Tablones Comunitarios",
         "content": "Los Tablones Comunitarios de BLIP son espacios grupales cifrados donde las publicaciones se almacenan como texto cifrado en nuestra base de datos. Aunque no podemos leer el contenido de las publicaciones, aceptas no usar los tablones para distribuir material ilegal, acoso ni ninguna actividad prohibida. Las publicaciones pueden ser ocultadas automáticamente basándose en reportes de la comunidad. Los administradores del tablón pueden eliminar publicaciones y destruir tablones permanentemente. Al recibir una solicitud legal válida, eliminaremos los datos cifrados asociados al tablón especificado—aunque no podemos proporcionar su contenido descifrado."
+      },
+      "11": {
+        "title": "Obligaciones del Administrador del Tablón",
+        "content": "Al crear un Tablón Comunitario, asumes el rol de administrador y aceptas la responsabilidad total de gestión. Los administradores deben: (1) monitorear y gestionar activamente su tablón para prevenir contenido ilegal, acoso, spam y otras actividades prohibidas; (2) responder rápidamente a los reportes de usuarios y tomar medidas apropiadas, incluyendo la eliminación de publicaciones o la restricción de usuarios; (3) almacenar de forma segura el token de administrador—BLIP no puede recuperar ni reemitir tokens perdidos. Si el token de administrador se pierde, debes reportarlo inmediatamente al equipo de operaciones de BLIP. Una vez recibido el reporte, el tablón será cerrado y el administrador deberá crear un nuevo tablón para migrar la comunidad; (4) cumplir con todas las leyes aplicables relacionadas con el contenido generado por usuarios dentro de su tablón. BLIP solo proporciona cifrado e infraestructura. Dado que todo el contenido está cifrado de extremo a extremo y es ilegible por BLIP, el administrador asume la responsabilidad exclusiva del contenido y la actividad dentro de su tablón. BLIP no es responsable de ningún daño, problema legal o disputa que surja del contenido publicado en tablones gestionados por administradores."
       }
     }
   },
@@ -313,30 +317,48 @@
   },
   "Board": {
     "create": {
-      "title": "TABLÓN CREADO",
-      "subtitle": "Crear Tablón Cifrado",
-      "createButton": "Crear Tablón",
-      "namePlaceholder": "Nombre del tablón",
-      "password": "Contraseña del Tablón",
+      "title": "COMUNIDAD CREADA",
+      "subtitle": "Crear Comunidad Privada",
+      "createButton": "Crear Comunidad",
+      "namePlaceholder": "Nombre de la comunidad",
+      "password": "Contraseña de la Comunidad",
       "adminToken": "Token de Administrador",
       "adminTokenWarning": "Guarda este token — no se puede recuperar",
       "shareLink": "Enlace para Compartir",
-      "enter": "Entrar al Tablón"
+      "enter": "Entrar a la Comunidad"
     },
     "header": {
       "encrypted": "Cifrado E2E",
       "admin": "Panel de Administración",
-      "forgetPassword": "Olvidar contraseña guardada"
+      "forgetPassword": "Olvidar contraseña guardada",
+      "forgetPasswordConfirm": "Se eliminará la contraseña guardada en este dispositivo. Deberá ingresarla nuevamente en su próxima visita.",
+      "cancel": "Cancelar",
+      "confirmForget": "Eliminar",
+      "registerAdmin": "Registrar token de administrador",
+      "adminTokenPlaceholder": "Pegar token de administrador",
+      "confirmRegister": "Registrar"
     },
     "post": {
       "placeholder": "Escribe algo... (Markdown compatible)",
       "submit": "Publicar",
+      "compose": "Nueva publicación",
+      "detail": "Publicación",
       "empty": "Aún no hay publicaciones",
+      "writeFirst": "Escribe la primera publicación",
       "refresh": "Actualizar",
       "attachImage": "Adjuntar imagen",
       "maxImages": "Máximo 4 imágenes",
       "imageTooLarge": "Imagen demasiado grande",
-      "uploading": "Subiendo..."
+      "uploading": "Subiendo...",
+      "titlePlaceholder": "Título (opcional)",
+      "insertInline": "Insertar en contenido",
+      "edit": "Editar",
+      "editTitle": "Editar Publicación",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "adminDelete": "Eliminar (Admin)",
+      "deleteWarning": "Esta publicación se eliminará permanentemente. No se puede deshacer.",
+      "confirmDelete": "Eliminar"
     },
     "report": {
       "title": "Reportar Publicación",
@@ -353,14 +375,14 @@
     },
     "admin": {
       "title": "Panel de Administración",
-      "destroy": "Destruir Tablón",
-      "destroyWarning": "Esto eliminará permanentemente el tablón y todas las publicaciones. No se puede deshacer.",
+      "destroy": "Destruir Comunidad",
+      "destroyWarning": "Esto eliminará permanentemente la comunidad y todas las publicaciones. No se puede deshacer.",
       "cancel": "Cancelar",
       "confirmDestroy": "Destruir"
     },
     "destroyed": {
-      "title": "Tablón Destruido",
-      "message": "Este tablón ha sido eliminado permanentemente."
+      "title": "Comunidad Destruida",
+      "message": "Esta comunidad ha sido eliminada permanentemente."
     }
   }
 }

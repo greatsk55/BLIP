@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
+import CommunityBoard from "@/components/CommunityBoard";
 import Philosophy from "@/components/Philosophy";
 import Footer from "@/components/Footer";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -44,6 +45,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Hero />
       <Problem />
       <Solution />
+      <CommunityBoard />
       <Philosophy />
       <Footer />
     </main>

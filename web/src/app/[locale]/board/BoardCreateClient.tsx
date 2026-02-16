@@ -7,6 +7,7 @@ import { MessageSquarePlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { createBoard, updateBoardName } from '@/lib/board/actions';
 import { deriveKeysFromPassword, hashAuthKey, encryptSymmetric } from '@/lib/crypto';
+import { saveAdminTokenToStorage } from '@/hooks/useBoard';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import BoardCreatedView from '@/components/board/BoardCreatedView';
 
@@ -55,6 +56,9 @@ export default function BoardCreateClient() {
       setLoading(false);
       return;
     }
+
+    // 관리자 토큰을 localStorage에 자동 저장
+    saveAdminTokenToStorage(result.boardId, result.adminToken);
 
     setCreateResult(result);
     setLoading(false);
