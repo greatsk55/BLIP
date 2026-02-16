@@ -31,6 +31,8 @@ Pero la mayoría de las conversaciones en la vida son solo **charlas rápidas qu
 - **Cero persistencia** — Irrecuperable después de terminar
 - **Cero identidad** — Sin cuentas, amigos ni perfiles
 - **100% basado en consenso** — Existe solo mientras todos los participantes estén de acuerdo
+- **Auto-destrucción** — Solo los mensajes más recientes permanecen visibles; los antiguos se destruyen en tiempo real
+- **Protección contra capturas** — Detecta intentos de captura de pantalla y grabación, difuminando los mensajes al instante
 
 ## Cómo funciona
 
@@ -71,9 +73,11 @@ Este servicio intencionalmente **NO** hace lo siguiente:
 ## Stack tecnológico
 
 - Comunicación en tiempo real basada en WebSocket
-- Cifrado de extremo a extremo (E2E)
+- Cifrado de extremo a extremo (E2E — Curve25519 ECDH + XSalsa20-Poly1305)
 - El servidor solo actúa como relay
 - Al cerrar la sala: irrecuperable tanto en servidor como en cliente
+- Auto-destrucción: los mensajes fuera de la ventana visible se eliminan al instante con liberación de blob URL
+- Protección contra capturas: detección de cambio de pestaña, atajos de teclado y menú contextual para difuminar mensajes
 
 ## Apoyo
 

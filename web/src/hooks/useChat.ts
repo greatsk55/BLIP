@@ -33,6 +33,23 @@ function generateUUID(): string {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
+/**
+ * 화면에 유지할 최대 메시지 수.
+ * 맥락이 보이지 않도록 최근 N개만 남기고 오래된 메시지를 파쇄한다.
+ */
+const MAX_VISIBLE_MESSAGES = 4;
+
+/** 메시지 배열을 MAX_VISIBLE_MESSAGES 이하로 유지하며, 제거되는 미디어 blob URL 해제 */
+function limitMessages(messages: DecryptedMessage[]): DecryptedMessage[] {
+  if (messages.length <= MAX_VISIBLE_MESSAGES) return messages;
+  const removed = messages.slice(0, messages.length - MAX_VISIBLE_MESSAGES);
+  removed.forEach((m) => {
+    if (m.mediaUrl) URL.revokeObjectURL(m.mediaUrl);
+    if (m.mediaThumbnail) URL.revokeObjectURL(m.mediaThumbnail);
+  });
+  return messages.slice(-MAX_VISIBLE_MESSAGES);
+}
+
 interface UseChatOptions {
   roomId: string;
   password: string;
@@ -92,26 +109,28 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         },
       });
 
-      // 내 메시지는 바로 표시
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: messageId,
-          senderId: myIdRef.current,
-          senderName: myUsernameRef.current,
-          content: content.trim(),
-          timestamp: Date.now(),
-          isMine: true,
-          type: 'text',
-        },
-      ]);
+      // 내 메시지는 바로 표시 (최대 N개 유지)
+      setMessages((prev) =>
+        limitMessages([
+          ...prev,
+          {
+            id: messageId,
+            senderId: myIdRef.current,
+            senderName: myUsernameRef.current,
+            content: content.trim(),
+            timestamp: Date.now(),
+            isMine: true,
+            type: 'text',
+          },
+        ])
+      );
     },
     []
   );
 
   // 미디어 메시지 추가 (useWebRTC에서 호출)
   const addMediaMessage = useCallback((message: DecryptedMessage) => {
-    setMessages((prev) => [...prev, message]);
+    setMessages((prev) => limitMessages([...prev, message]));
   }, []);
 
   // 전송 진행률 업데이트 (useWebRTC에서 호출)
@@ -200,18 +219,20 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           if (isMounted) setStatus('chatting');
 
           // 시스템 메시지: 상대방 입장
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: generateUUID(),
-              senderId: 'system',
-              senderName: 'SYSTEM',
-              content: `${payload.payload.username} CONNECTED`,
-              timestamp: Date.now(),
-              isMine: false,
-              type: 'text',
-            },
-          ]);
+          setMessages((prev) =>
+            limitMessages([
+              ...prev,
+              {
+                id: generateUUID(),
+                senderId: 'system',
+                senderName: 'SYSTEM',
+                content: `${payload.payload.username} CONNECTED`,
+                timestamp: Date.now(),
+                isMine: false,
+                type: 'text',
+              },
+            ])
+          );
         });
 
         // 5. 암호화된 메시지 수신
@@ -225,18 +246,20 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           );
 
           if (decrypted) {
-            setMessages((prev) => [
-              ...prev,
-              {
-                id: msg.id,
-                senderId: msg.senderId,
-                senderName: msg.senderName,
-                content: decrypted,
-                timestamp: msg.timestamp,
-                isMine: false,
-                type: 'text',
-              },
-            ]);
+            setMessages((prev) =>
+              limitMessages([
+                ...prev,
+                {
+                  id: msg.id,
+                  senderId: msg.senderId,
+                  senderName: msg.senderName,
+                  content: decrypted,
+                  timestamp: msg.timestamp,
+                  isMine: false,
+                  type: 'text',
+                },
+              ])
+            );
             onMessageReceivedRef.current?.(msg.senderName);
           }
         });

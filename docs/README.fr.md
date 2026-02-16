@@ -31,6 +31,8 @@ Mais la plupart des conversations dans la vie ne sont que des **échanges rapide
 - **Zéro persistance** — Irrécupérable après la fin
 - **Zéro identité** — Pas de comptes, d'amis ni de profils
 - **100% basé sur le consentement** — N'existe que tant que tous les participants sont d'accord
+- **Auto-destruction** — Seuls les derniers messages restent visibles ; les anciens sont détruits en temps réel
+- **Protection contre les captures** — Détecte les tentatives de capture d'écran et d'enregistrement, floutant instantanément les messages
 
 ## Comment ça marche
 
@@ -71,9 +73,11 @@ Ce service ne fait intentionnellement **PAS** ce qui suit :
 ## Stack technique
 
 - Communication en temps réel basée sur WebSocket
-- Chiffrement de bout en bout (E2E)
+- Chiffrement de bout en bout (E2E — Curve25519 ECDH + XSalsa20-Poly1305)
 - Le serveur n'agit que comme relais
 - À la fermeture du salon : irrécupérable côté serveur et client
+- Auto-destruction : les messages hors de la fenêtre visible sont supprimés instantanément avec libération des blob URL
+- Protection contre les captures : détection de changement d'onglet, raccourcis clavier et menu contextuel pour flouter les messages
 
 ## Soutien
 

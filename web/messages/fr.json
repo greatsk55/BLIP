@@ -24,6 +24,14 @@
       "title": "Complete Destruction",
       "description": "À part vous et le destinataire, même nous ne pouvons pas le voir."
     },
+    "autoshred": {
+      "title": "Auto-Shred",
+      "description": "Seuls les derniers messages restent à l'écran. Les anciens sont détruits en temps réel — pas de défilement, pas de contexte."
+    },
+    "captureGuard": {
+      "title": "Capture Guard",
+      "description": "Les tentatives de capture d'écran et d'enregistrement sont détectées. Les messages sont floutés instantanément — rien à capturer."
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100% Open Source. Vous pouvez vérifier avec le code que nous n'espionnons jamais vos conversations."
@@ -91,7 +99,7 @@
           "1": "Salons détruits immédiatement lorsque tous les participants partent",
           "2": "Notifications push du navigateur pour les messages entrants",
           "3": "Limitation de création de salons (anti-abus)",
-          "4": "Tableau communautaire avec publications chiffrées"
+          "4": "Communauté privée avec publications chiffrées"
         }
       },
       "3": {
@@ -250,8 +258,8 @@
         "content": "Nous pouvons mettre à jour cette politique pour refléter des changements dans nos pratiques ou pour la conformité légale. Les changements importants seront publiés sur cette page. Comme nous ne collectons pas d'adresses e-mail, nous ne pouvons pas envoyer de notifications—veuillez consulter cette page périodiquement. Pour toute question, visitez notre dépôt GitHub."
       },
       "9": {
-        "title": "Tableaux Communautaires",
-        "content": "Les Tableaux Communautaires BLIP stockent des publications chiffrées dans notre base de données. Tout le contenu des publications et les noms d'auteurs sont chiffrés côté client avec XSalsa20-Poly1305 avant le stockage—le serveur ne détient que du texte chiffré illisible. Des empreintes de signalants (hash anonymisé des métadonnées de connexion) sont conservées pour empêcher les signalements en double. Si vous choisissez de sauvegarder le mot de passe de votre tableau dans votre navigateur, il est stocké uniquement dans le localStorage de votre appareil—jamais transmis à nos serveurs. Les données du tableau peuvent être supprimées définitivement par l'administrateur à tout moment."
+        "title": "Communauté Privée",
+        "content": "Les Communautés Privées BLIP stockent des publications chiffrées dans notre base de données. Tout le contenu des publications et les noms d'auteurs sont chiffrés côté client avec XSalsa20-Poly1305 avant le stockage—le serveur ne détient que du texte chiffré illisible. Des empreintes de signalants (hash anonymisé des métadonnées de connexion) sont conservées pour empêcher les signalements en double. Si vous choisissez de sauvegarder le mot de passe de votre communauté dans votre navigateur, il est stocké uniquement dans le localStorage de votre appareil—jamais transmis à nos serveurs. Les données de la communauté peuvent être supprimées définitivement par l'administrateur à tout moment."
       }
     }
   },
@@ -298,12 +306,12 @@
         "content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de BLIP après les modifications constitue l'acceptation des conditions mises à jour. Ces conditions sont régies par les lois de la République de Corée. Les litiges seront soumis à la juridiction exclusive du Tribunal du District Central de Séoul."
       },
       "10": {
-        "title": "Tableaux Communautaires",
-        "content": "Les Tableaux Communautaires BLIP sont des espaces de groupe chiffrés où les publications sont stockées sous forme de texte chiffré dans notre base de données. Bien que nous ne puissions pas lire le contenu des publications, vous acceptez de ne pas utiliser les tableaux pour distribuer du matériel illégal, harceler ou toute activité interdite. Les publications peuvent être masquées automatiquement sur la base des signalements de la communauté. Les administrateurs de tableau peuvent supprimer des publications et détruire définitivement les tableaux. Lors de la réception d'une demande légale valide, nous supprimerons les données chiffrées associées au tableau spécifié—bien que nous ne puissions pas fournir leur contenu déchiffré."
+        "title": "Communauté Privée",
+        "content": "Les Communautés Privées BLIP sont des espaces de groupe chiffrés où les publications sont stockées sous forme de texte chiffré dans notre base de données. Bien que nous ne puissions pas lire le contenu des publications, vous acceptez de ne pas utiliser les communautés pour distribuer du matériel illégal, harceler ou toute activité interdite. Les publications peuvent être masquées automatiquement sur la base des signalements de la communauté. Les administrateurs de la communauté peuvent supprimer des publications et détruire définitivement les communautés. Lors de la réception d'une demande légale valide, nous supprimerons les données chiffrées associées à la communauté spécifiée—bien que nous ne puissions pas fournir leur contenu déchiffré."
       },
       "11": {
-        "title": "Obligations de l'Administrateur de Tableau",
-        "content": "En créant un Tableau Communautaire, vous assumez le rôle d'administrateur et acceptez l'entière responsabilité de gestion. Les administrateurs doivent : (1) surveiller et gérer activement leur tableau pour prévenir le contenu illégal, le harcèlement, le spam et autres activités interdites ; (2) répondre rapidement aux signalements des utilisateurs et prendre les mesures appropriées, y compris la suppression de publications ou la restriction d'utilisateurs ; (3) conserver en toute sécurité le jeton d'administrateur — BLIP ne peut pas récupérer ni réémettre les jetons perdus. En cas de perte du jeton d'administrateur, vous devez le signaler immédiatement à l'équipe d'exploitation BLIP. Dès réception du signalement, le tableau sera fermé et l'administrateur devra créer un nouveau tableau pour migrer la communauté ; (4) se conformer à toutes les lois applicables concernant le contenu généré par les utilisateurs au sein de leur tableau. BLIP fournit uniquement le chiffrement et l'infrastructure. Étant donné que tout le contenu est chiffré de bout en bout et illisible par BLIP, l'administrateur assume l'entière responsabilité du contenu et de l'activité au sein de son tableau. BLIP n'est pas responsable des dommages, problèmes juridiques ou litiges découlant du contenu publié sur les tableaux gérés par les administrateurs."
+        "title": "Obligations de l'Administrateur de Communauté",
+        "content": "En créant une Communauté Privée, vous assumez le rôle d'administrateur et acceptez l'entière responsabilité de gestion. Les administrateurs doivent : (1) surveiller et gérer activement leur communauté pour prévenir le contenu illégal, le harcèlement, le spam et autres activités interdites ; (2) répondre rapidement aux signalements des utilisateurs et prendre les mesures appropriées, y compris la suppression de publications ou la restriction d'utilisateurs ; (3) conserver en toute sécurité le jeton d'administrateur — BLIP ne peut pas récupérer ni réémettre les jetons perdus. En cas de perte du jeton d'administrateur, vous devez le signaler immédiatement à l'équipe d'exploitation BLIP. Dès réception du signalement, la communauté sera fermée et l'administrateur devra créer une nouvelle communauté pour migrer les membres ; (4) se conformer à toutes les lois applicables concernant le contenu généré par les utilisateurs au sein de leur communauté. BLIP fournit uniquement le chiffrement et l'infrastructure. Étant donné que tout le contenu est chiffré de bout en bout et illisible par BLIP, l'administrateur assume l'entière responsabilité du contenu et de l'activité au sein de sa communauté. BLIP n'est pas responsable des dommages, problèmes juridiques ou litiges découlant du contenu publié sur les communautés gérées par les administrateurs."
       }
     }
   },
@@ -312,8 +320,8 @@
     "description": "Chat jetable visible uniquement par vous et votre interlocuteur. Sans compte. Sans trace. Sans historique. Conversations privées qui disparaissent.",
     "roomTitle": "BLIP - Rejoignez un chat privé",
     "roomDescription": "Vous êtes invité à un chat privé visible uniquement par les participants. Rejoignez instantanément, sans compte.",
-    "boardTitle": "BLIP - Tableau Privé",
-    "boardDescription": "Rejoignez un tableau communautaire visible uniquement par les participants."
+    "boardTitle": "BLIP - Communauté Privée",
+    "boardDescription": "Rejoignez une communauté privée chiffrée visible uniquement par les membres."
   },
   "Board": {
     "create": {

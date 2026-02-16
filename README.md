@@ -31,6 +31,8 @@ But most conversations in life are just **quick talks that don't need to last**.
 - **Zero persistence** — Unrecoverable after it ends
 - **Zero identity** — No accounts, friends, or profiles
 - **100% consent-based** — Exists only while all parties agree
+- **Auto-shred** — Only the last few messages remain visible; older ones are destroyed in real time
+- **Capture guard** — Screenshot and screen-recording attempts are detected and messages are blurred instantly
 
 ## How It Works
 
@@ -71,9 +73,11 @@ This service intentionally does **NOT** do the following:
 ## Tech Stack
 
 - WebSocket-based real-time communication
-- End-to-End Encryption (E2E)
+- End-to-End Encryption (E2E — Curve25519 ECDH + XSalsa20-Poly1305)
 - Server acts only as a relay
 - On room close: unrecoverable on both server and client
+- Auto-shred: messages beyond the visible window are destroyed with blob URLs released
+- Capture protection: visibility change, keyboard shortcut, and context-menu detection
 
 ## Support
 

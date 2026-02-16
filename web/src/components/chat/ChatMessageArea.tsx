@@ -8,6 +8,8 @@ import SystemMessage from './SystemMessage';
 interface ChatMessageAreaProps {
   messages: DecryptedMessage[];
   onImageClick?: (src: string) => void;
+  /** 캡처 감지 상태 — true이면 메시지를 블러 처리 */
+  screenCaptured?: boolean;
 }
 
 export interface ChatMessageAreaHandle {
@@ -15,7 +17,7 @@ export interface ChatMessageAreaHandle {
 }
 
 const ChatMessageArea = forwardRef<ChatMessageAreaHandle, ChatMessageAreaProps>(
-  function ChatMessageArea({ messages, onImageClick }, ref) {
+  function ChatMessageArea({ messages, onImageClick, screenCaptured }, ref) {
     const bottomRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -67,7 +69,7 @@ const ChatMessageArea = forwardRef<ChatMessageAreaHandle, ChatMessageAreaProps>(
     return (
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto px-3 sm:px-4 py-4 overscroll-none touch-pan-y"
+        className="relative flex-1 overflow-y-auto px-3 sm:px-4 py-4 overscroll-none touch-pan-y select-none"
         style={{ WebkitOverflowScrolling: 'touch' }}
         role="log"
         aria-live="polite"
@@ -80,12 +82,24 @@ const ChatMessageArea = forwardRef<ChatMessageAreaHandle, ChatMessageAreaProps>(
           </div>
         )}
 
-        {messages.map((msg) =>
-          msg.senderId === 'system' ? (
-            <SystemMessage key={msg.id} content={msg.content} />
-          ) : (
-            <MessageBubble key={msg.id} message={msg} onImageClick={onImageClick} />
-          )
+        {/* 캡처 감지 시 메시지 영역 블러 */}
+        <div className={screenCaptured ? 'blur-xl transition-[filter] duration-100' : 'transition-[filter] duration-300'}>
+          {messages.map((msg) =>
+            msg.senderId === 'system' ? (
+              <SystemMessage key={msg.id} content={msg.content} />
+            ) : (
+              <MessageBubble key={msg.id} message={msg} onImageClick={onImageClick} />
+            )
+          )}
+        </div>
+
+        {/* 캡처 감지 경고 오버레이 */}
+        {screenCaptured && (
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="font-mono text-xs sm:text-sm text-signal-red/80 tracking-[0.3em] uppercase animate-pulse">
+              ⚠ CAPTURE DETECTED ⚠
+            </div>
+          </div>
         )}
 
         <div ref={bottomRef} />

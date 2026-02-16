@@ -24,6 +24,14 @@
       "title": "Complete Destruction",
       "description": "Except for you and the recipient, even we cannot see it."
     },
+    "autoshred": {
+      "title": "Auto-Shred",
+      "description": "Only the last few messages stay on screen. Older ones are destroyed in real time — no scrollback, no context."
+    },
+    "captureGuard": {
+      "title": "Capture Guard",
+      "description": "Screenshot and screen-recording attempts are detected. Messages blur instantly — nothing to capture."
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100% Open Source. You can verify with the code that we never spy on your conversations."
@@ -91,7 +99,7 @@
           "1": "Rooms destroyed immediately when all participants leave",
           "2": "Browser push notifications for incoming messages",
           "3": "Rate limiting for room creation (anti-abuse)",
-          "4": "Community board feature with encrypted posts"
+          "4": "Private community feature with encrypted posts"
         }
       },
       "3": {
@@ -250,8 +258,8 @@
         "content": "We may update this policy to reflect changes in our practices or for legal compliance. Significant changes will be posted on this page. Since we don't collect email addresses, we cannot send notifications—please check this page periodically. For questions, visit our GitHub repository."
       },
       "9": {
-        "title": "Community Boards",
-        "content": "BLIP Community Boards store encrypted posts in our database. All post content and author names are encrypted client-side using XSalsa20-Poly1305 before storage—the server holds only unreadable ciphertext. Report fingerprints (anonymized hash of connection metadata) are retained to prevent duplicate reports. If you choose to save your board password in your browser, it is stored in localStorage on your device only—never transmitted to our servers. Board data can be permanently deleted by the board administrator at any time."
+        "title": "Community",
+        "content": "BLIP Community stores encrypted posts in our database. All post content and author names are encrypted client-side using XSalsa20-Poly1305 before storage—the server holds only unreadable ciphertext. Report fingerprints (anonymized hash of connection metadata) are retained to prevent duplicate reports. If you choose to save your community password in your browser, it is stored in localStorage on your device only—never transmitted to our servers. Community data can be permanently deleted by the community administrator at any time."
       }
     }
   },
@@ -298,12 +306,12 @@
         "content": "We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea. Disputes shall be subject to the exclusive jurisdiction of the Seoul Central District Court."
       },
       "10": {
-        "title": "Community Boards",
-        "content": "BLIP Community Boards are encrypted group spaces where posts are stored as ciphertext in our database. While we cannot read post content, you agree not to use boards for distributing illegal material, harassment, or any prohibited activity. Posts may be blinded automatically based on community reports. Board administrators can delete posts and destroy boards permanently. Upon receiving a valid legal request, we will delete the encrypted data associated with the specified board—though we cannot provide its decrypted content."
+        "title": "Community",
+        "content": "BLIP Community spaces are encrypted group spaces where posts are stored as ciphertext in our database. While we cannot read post content, you agree not to use communities for distributing illegal material, harassment, or any prohibited activity. Posts may be blinded automatically based on community reports. Community administrators can delete posts and destroy communities permanently. Upon receiving a valid legal request, we will delete the encrypted data associated with the specified community—though we cannot provide its decrypted content."
       },
       "11": {
-        "title": "Board Administrator Obligations",
-        "content": "By creating a Community Board, you assume the role of administrator and accept full management responsibility. Administrators must: (1) actively monitor and manage their board to prevent illegal content, harassment, spam, and other prohibited activities; (2) promptly respond to user reports and take appropriate action including post deletion or user restriction; (3) securely store the admin token—BLIP cannot recover or reissue lost tokens. If the admin token is lost, you must immediately report it to the BLIP operations team. Upon receiving the report, the board will be closed and the administrator must create a new board to migrate the community; (4) comply with all applicable laws regarding user-generated content within their board. BLIP provides encryption and infrastructure only. Since all content is end-to-end encrypted and unreadable by BLIP, the administrator bears sole responsibility for the content and activity within their board. BLIP is not liable for any damages, legal issues, or disputes arising from content posted on administrator-managed boards."
+        "title": "Community Administrator Obligations",
+        "content": "By creating a Community, you assume the role of administrator and accept full management responsibility. Administrators must: (1) actively monitor and manage their community to prevent illegal content, harassment, spam, and other prohibited activities; (2) promptly respond to user reports and take appropriate action including post deletion or user restriction; (3) securely store the admin token—BLIP cannot recover or reissue lost tokens. If the admin token is lost, you must immediately report it to the BLIP operations team. Upon receiving the report, the community will be closed and the administrator must create a new community to migrate members; (4) comply with all applicable laws regarding user-generated content within their community. BLIP provides encryption and infrastructure only. Since all content is end-to-end encrypted and unreadable by BLIP, the administrator bears sole responsibility for the content and activity within their community. BLIP is not liable for any damages, legal issues, or disputes arising from content posted on administrator-managed communities."
       }
     }
   },
@@ -312,8 +320,8 @@
     "description": "Disposable chat only you and your partner can see. No accounts. No traces. No history. Private conversations that disappear.",
     "roomTitle": "BLIP - Join a Private Chat",
     "roomDescription": "You've been invited to a private chat only participants can read. Join instantly, no account needed.",
-    "boardTitle": "BLIP - Private Board",
-    "boardDescription": "Join a private community board only participants can see."
+    "boardTitle": "BLIP - Private Community",
+    "boardDescription": "Join a private encrypted community only members can see."
   },
   "Board": {
     "create": {

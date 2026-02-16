@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Zap, EyeOff, Bomb, Code } from "lucide-react";
+import { Zap, EyeOff, Bomb, Code, Timer, ShieldAlert } from "lucide-react";
 
 export default function Solution() {
   const t = useTranslations("Solution");
@@ -19,6 +19,14 @@ export default function Solution() {
     {
       key: "destruction",
       icon: <Bomb className="w-8 h-8 text-glitch-red" />,
+    },
+    {
+      key: "autoshred",
+      icon: <Timer className="w-8 h-8 text-signal-green" />,
+    },
+    {
+      key: "captureGuard",
+      icon: <ShieldAlert className="w-8 h-8 text-glitch-red" />,
     },
     {
       key: "opensource",

@@ -6,6 +6,7 @@ import { useChat } from '@/hooks/useChat';
 import { useWebRTC } from '@/hooks/useWebRTC';
 import { useNotification } from '@/hooks/useNotification';
 import { useVisualViewport } from '@/hooks/useVisualViewport';
+import { useScreenProtection } from '@/hooks/useScreenProtection';
 import { verifyPassword, getRoomStatus, updateParticipantCount } from '@/lib/room/actions';
 import { compressImage, createImageThumbnail } from '@/lib/media/compress';
 import { createVideoThumbnail, getMediaType } from '@/lib/media/thumbnail';
@@ -29,6 +30,7 @@ interface ChatRoomProps {
 export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoomProps) {
   const router = useRouter();
   useVisualViewport();
+  const screenCaptured = useScreenProtection();
   const { notifyMessage, requestPermission } = useNotification();
   const [password, setPassword] = useState<string | null>(initialPassword ?? null);
   const [viewState, setViewState] = useState<'password' | 'created' | 'chat' | 'destroyed'>(
@@ -238,6 +240,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
         ref={messageAreaRef}
         messages={chat.messages}
         onImageClick={setViewerImage}
+        screenCaptured={screenCaptured}
       />
 
       <ChatInput
