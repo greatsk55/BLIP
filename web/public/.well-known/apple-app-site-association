@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "TEAM_ID.com.blip.app",
+        "appID": "79E459QQT6.com.bakkum.blip",
         "paths": ["/board/*", "/room/*", "/*/board/*", "/*/room/*"]
       }
     ]
