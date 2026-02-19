@@ -78,6 +78,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
     myId: chat.myId,
     onMediaReceived: handleMediaReceived,
     onTransferProgress: chat.updateTransferProgress,
+    setWebrtcHandlers: chat.setWebrtcHandlers,
   });
 
   // 파일 전송 핸들러

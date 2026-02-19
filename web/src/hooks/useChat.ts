@@ -56,6 +56,12 @@ interface UseChatOptions {
   onMessageReceived?: (senderName: string) => void;
 }
 
+export type WebRTCSignalingHandlers = {
+  onOffer: (raw: any) => void;
+  onAnswer: (raw: any) => void;
+  onIce: (raw: any) => void;
+};
+
 interface UseChatReturn {
   messages: DecryptedMessage[];
   status: ChatStatus;
@@ -71,6 +77,8 @@ interface UseChatReturn {
   sharedSecret: Uint8Array | null;
   isInitiator: boolean;
   myId: string;
+  /** useWebRTC가 시그널링 콜백을 등록하는 setter */
+  setWebrtcHandlers: (handlers: WebRTCSignalingHandlers | null) => void;
 }
 
 export function useChat({ roomId, password, onMessageReceived }: UseChatOptions): UseChatReturn {
@@ -86,8 +94,15 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const myUsernameRef = useRef(generateUsername());
   const myIdRef = useRef(generateUUID());
+  const selfTrackedRef = useRef(false);
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
+
+  // WebRTC 시그널링 포워딩 — subscribe 전에 등록, ref 콜백으로 useWebRTC에 전달
+  const webrtcHandlersRef = useRef<WebRTCSignalingHandlers | null>(null);
+  const setWebrtcHandlers = useCallback((handlers: WebRTCSignalingHandlers | null) => {
+    webrtcHandlersRef.current = handlers;
+  }, []);
 
   const sendMessage = useCallback(
     (content: string) => {
@@ -168,6 +183,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
 
     keyPairRef.current = null;
     sharedSecretRef.current = null;
+    selfTrackedRef.current = false;
     setSharedSecretState(null);
     setStatus('destroyed');
   }, []);
@@ -200,21 +216,24 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         channelRef.current = channel;
 
         // 4. 공개키 교환 수신
-        channel.on('broadcast', { event: 'key_exchange' }, (payload) => {
+        channel.on('broadcast', { event: 'key_exchange' }, (raw) => {
           if (!isMounted || !keyPairRef.current) return;
 
           // 이미 키 교환 완료 → 3번째 사용자의 key_exchange 무시
           if (sharedSecretRef.current) return;
 
-          const peerPublicKey = stringToPublicKey(payload.payload.publicKey);
+          const msg = raw?.payload ?? raw;
+          if (!msg?.publicKey) return;
+
+          const peerPublicKey = stringToPublicKey(msg.publicKey);
           const shared = computeSharedSecret(peerPublicKey, keyPairRef.current.secretKey);
           sharedSecretRef.current = shared;
           setSharedSecretState(shared);
 
           // userId 비교로 WebRTC initiator 결정 (양쪽 동일한 결과)
-          setIsInitiator(myIdRef.current < payload.payload.userId);
+          setIsInitiator(myIdRef.current < msg.userId);
 
-          setPeerUsername(payload.payload.username);
+          setPeerUsername(msg.username);
           setPeerConnected(true);
           if (isMounted) setStatus('chatting');
 
@@ -226,7 +245,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
                 id: generateUUID(),
                 senderId: 'system',
                 senderName: 'SYSTEM',
-                content: `${payload.payload.username} CONNECTED`,
+                content: `${msg.username} CONNECTED`,
                 timestamp: Date.now(),
                 isMine: false,
                 type: 'text',
@@ -236,10 +255,12 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
 
         // 5. 암호화된 메시지 수신
-        channel.on('broadcast', { event: 'message' }, (payload) => {
+        channel.on('broadcast', { event: 'message' }, (raw) => {
           if (!isMounted || !sharedSecretRef.current) return;
 
-          const msg = payload.payload;
+          const msg = raw?.payload ?? raw;
+          if (!msg?.ciphertext) return;
+
           const decrypted = decryptMessage(
             { ciphertext: msg.ciphertext, nonce: msg.nonce } as EncryptedPayload,
             sharedSecretRef.current
@@ -290,6 +311,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         // 7. Presence로 접속자 추적 + DB 상태 동기화
         channel.on('presence', { event: 'sync' }, () => {
           if (!isMounted) return;
+          // track() 완료 전 초기 sync(0명)에서 방 파쇄 방지
+          if (!selfTrackedRef.current) return;
           const state = channel.presenceState();
           const users = Object.values(state).flat();
           const peer = users.find(
@@ -338,7 +361,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
 
         // presence.leave: 네트워크 끊김 등 user_left 브로드캐스트 못 받았을 때 fallback
         channel.on('presence', { event: 'leave' }, () => {
-          if (!isMounted) return;
+          if (!isMounted || !selfTrackedRef.current) return;
           const state = channel.presenceState();
           const users = Object.values(state).flat();
 
@@ -363,7 +386,20 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           }
         });
 
-        // 8. 채널 구독 + Presence 등록
+        // 8. WebRTC 시그널링 이벤트 (subscribe 전에 등록해야 수신 가능)
+        channel.on('broadcast', { event: 'webrtc_offer' }, (raw) => {
+          console.log('[Chat→WebRTC] offer forwarding, handler set:', !!webrtcHandlersRef.current);
+          webrtcHandlersRef.current?.onOffer(raw);
+        });
+        channel.on('broadcast', { event: 'webrtc_answer' }, (raw) => {
+          console.log('[Chat→WebRTC] answer forwarding, handler set:', !!webrtcHandlersRef.current);
+          webrtcHandlersRef.current?.onAnswer(raw);
+        });
+        channel.on('broadcast', { event: 'webrtc_ice' }, (raw) => {
+          webrtcHandlersRef.current?.onIce(raw);
+        });
+
+        // 9. 채널 구독 + Presence 등록
         await channel.subscribe(async (status) => {
           if (status === 'SUBSCRIBED' && isMounted) {
             // Presence에 자신 등록
@@ -373,6 +409,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
               publicKey: publicKeyToString(keyPair.publicKey),
               joinedAt: Date.now(),
             });
+            selfTrackedRef.current = true;
 
             // 공개키 브로드캐스트 (Presence sync보다 빠른 교환)
             await channel.send({
@@ -416,6 +453,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
       // 키 메모리 정리
       keyPairRef.current = null;
       sharedSecretRef.current = null;
+      selfTrackedRef.current = false;
     };
   }, [roomId, password]);
 
@@ -474,5 +512,6 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
     sharedSecret: sharedSecretState,
     isInitiator,
     myId: myIdRef.current,
+    setWebrtcHandlers,
   };
 }

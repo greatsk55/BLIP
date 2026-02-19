@@ -49,9 +49,31 @@ export default function MediaBubble({ message, onImageClick }: MediaBubbleProps)
           src={message.mediaUrl}
           controls
           playsInline
-          preload="metadata"
+          preload="auto"
           className="max-w-[280px] sm:max-w-[320px] max-h-[400px] rounded-sm"
-          onError={() => setVideoError(true)}
+          onLoadedMetadata={(e) => {
+            const v = e.currentTarget;
+            console.log('[MediaBubble] Video metadata:', {
+              duration: v.duration,
+              videoWidth: v.videoWidth,
+              videoHeight: v.videoHeight,
+              readyState: v.readyState,
+            });
+          }}
+          onCanPlay={() => console.log('[MediaBubble] Video canPlay')}
+          onError={(e) => {
+            const video = e.currentTarget;
+            const err = video.error;
+            console.error('[MediaBubble] Video error:', {
+              code: err?.code,
+              message: err?.message,
+              src: message.mediaUrl?.slice(0, 60),
+              mimeType: message.mediaMetadata?.mimeType,
+              networkState: video.networkState,
+              readyState: video.readyState,
+            });
+            setVideoError(true);
+          }}
         />
       )}
 

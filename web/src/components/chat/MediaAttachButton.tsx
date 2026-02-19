@@ -48,7 +48,7 @@ export default function MediaAttachButton({ onFileSelected, disabled }: MediaAtt
       <button
         onClick={handleClick}
         disabled={disabled}
-        className="w-12 h-12 flex-shrink-0 flex items-center justify-center border border-ink/10 text-ink/30 hover:text-ink/60 hover:border-ink/20 active:text-ink/80 disabled:opacity-20 disabled:hover:text-ink/30 disabled:hover:border-ink/10 transition-all"
+        className="w-12 h-12 flex-shrink-0 flex items-center justify-center border border-ink/10 text-ink/40 hover:text-ink/60 hover:border-ink/20 active:text-ink/80 disabled:opacity-50 disabled:hover:text-ink/40 disabled:hover:border-ink/10 transition-all"
         aria-label="Attach media"
       >
         <Paperclip className="w-5 h-5" />

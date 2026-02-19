@@ -142,11 +142,20 @@ export async function updateParticipantCount(
   const supabase = createServerSupabase();
 
   if (count === 0) {
-    // 모든 사람이 나감 → 방 파쇄
-    await supabase
+    // 'waiting' 상태(아무도 진입한 적 없음)에서는 파쇄하지 않음
+    // → Presence sync가 track() 전에 발생하여 0명으로 호출되는 race condition 방지
+    const { data: room } = await supabase
       .from('rooms')
-      .update({ status: 'destroyed', participant_count: 0 })
-      .eq('id', roomId);
+      .select('status')
+      .eq('id', roomId)
+      .single();
+
+    if (room && room.status === 'active') {
+      await supabase
+        .from('rooms')
+        .update({ status: 'destroyed', participant_count: 0 })
+        .eq('id', roomId);
+    }
   } else {
     await supabase
       .from('rooms')

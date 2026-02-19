@@ -6,6 +6,7 @@ import { splitIntoChunks, reassembleChunks, computeChecksum, verifyChecksum, CHU
 import { compressImage } from '@/lib/media/compress';
 import { createVideoThumbnail, getMediaType, validateFileSize } from '@/lib/media/thumbnail';
 import type { FileTransferHeader, DecryptedMessage, MediaMetadata } from '@/types/chat';
+import type { WebRTCSignalingHandlers } from '@/hooks/useChat';
 
 // DataChannel 바이너리 프로토콜 타입
 const PACKET_HEADER = 0x01;
@@ -29,12 +30,14 @@ export type WebRTCState = 'idle' | 'connecting' | 'connected' | 'failed' | 'clos
 
 interface UseWebRTCOptions {
   enabled: boolean;
-  channel: any; // Supabase RealtimeChannel
+  channel: any; // Supabase RealtimeChannel (send 전용)
   sharedSecret: Uint8Array | null;
   isInitiator: boolean;
   myId: string;
   onMediaReceived: (message: Omit<DecryptedMessage, 'isMine'>) => void;
   onTransferProgress: (transferId: string, progress: number) => void;
+  /** useChat이 subscribe 전에 등록한 시그널링 핸들러 setter */
+  setWebrtcHandlers: (handlers: WebRTCSignalingHandlers | null) => void;
 }
 
 interface UseWebRTCReturn {
@@ -51,6 +54,7 @@ export function useWebRTC({
   myId,
   onMediaReceived,
   onTransferProgress,
+  setWebrtcHandlers,
 }: UseWebRTCOptions): UseWebRTCReturn {
   const [webrtcState, setWebrtcState] = useState<WebRTCState>('idle');
 
@@ -220,17 +224,38 @@ export function useWebRTC({
     const pendingSignals: { type: string; payload: any }[] = [];
     let pcReady = false;
 
+    // Supabase broadcast payload 추출 — 중첩 깊이에 상관없이 ciphertext를 찾음
+    // self: false 설정으로 자기 자신의 브로드캐스트는 수신하지 않으므로 senderId 체크 불필요
+    function extractCrypto(raw: any): { ciphertext: string; nonce: string } | null {
+      // ciphertext가 나올 때까지 .payload 를 최대 3단계 unwrap
+      let obj = raw;
+      for (let i = 0; i < 3; i++) {
+        if (obj?.ciphertext && obj?.nonce) return obj;
+        if (obj?.payload !== undefined) obj = obj.payload;
+        else break;
+      }
+      if (obj?.ciphertext && obj?.nonce) return obj;
+      return null;
+    }
+
     // --- 시그널링 핸들러 ---
     async function processOffer(payload: any) {
-      const msg = payload.payload;
-      if (msg.senderId === myId || !sharedSecretRef.current || !pcRef.current) return;
+      if (!sharedSecretRef.current || !pcRef.current) {
+        log('processOffer SKIPPED — no pc or no secret');
+        return;
+      }
+      const crypto = extractCrypto(payload);
+      if (!crypto) {
+        logError('processOffer — failed to extract ciphertext/nonce from payload');
+        return;
+      }
 
       try {
-        const decrypted = decryptMessage(
-          { ciphertext: msg.ciphertext, nonce: msg.nonce },
-          sharedSecretRef.current
-        );
-        if (!decrypted) return;
+        const decrypted = decryptMessage(crypto, sharedSecretRef.current);
+        if (!decrypted) {
+          logError('processOffer — decryption failed');
+          return;
+        }
 
         const offer = JSON.parse(decrypted);
         log('Received offer, setting remote description');
@@ -247,7 +272,6 @@ export function useWebRTC({
           type: 'broadcast',
           event: 'webrtc_answer',
           payload: {
-            senderId: myId,
             ciphertext: encrypted.ciphertext,
             nonce: encrypted.nonce,
           },
@@ -259,15 +283,22 @@ export function useWebRTC({
     }
 
     async function processAnswer(payload: any) {
-      const msg = payload.payload;
-      if (msg.senderId === myId || !sharedSecretRef.current || !pcRef.current) return;
+      if (!sharedSecretRef.current || !pcRef.current) {
+        log('processAnswer SKIPPED — no pc or no secret');
+        return;
+      }
+      const crypto = extractCrypto(payload);
+      if (!crypto) {
+        logError('processAnswer — failed to extract ciphertext/nonce');
+        return;
+      }
 
       try {
-        const decrypted = decryptMessage(
-          { ciphertext: msg.ciphertext, nonce: msg.nonce },
-          sharedSecretRef.current
-        );
-        if (!decrypted) return;
+        const decrypted = decryptMessage(crypto, sharedSecretRef.current);
+        if (!decrypted) {
+          logError('processAnswer — decryption failed');
+          return;
+        }
 
         log('Received answer, setting remote description');
         await pcRef.current.setRemoteDescription(JSON.parse(decrypted));
@@ -277,14 +308,12 @@ export function useWebRTC({
     }
 
     async function processIce(payload: any) {
-      const msg = payload.payload;
-      if (msg.senderId === myId || !sharedSecretRef.current || !pcRef.current) return;
+      if (!sharedSecretRef.current || !pcRef.current) return;
+      const crypto = extractCrypto(payload);
+      if (!crypto) return;
 
       try {
-        const decrypted = decryptMessage(
-          { ciphertext: msg.ciphertext, nonce: msg.nonce },
-          sharedSecretRef.current
-        );
+        const decrypted = decryptMessage(crypto, sharedSecretRef.current);
         if (!decrypted) return;
 
         await pcRef.current.addIceCandidate(new RTCIceCandidate(JSON.parse(decrypted)));
@@ -307,10 +336,13 @@ export function useWebRTC({
       else pendingSignals.push({ type: 'ice', payload });
     }
 
-    // ★ 리스너를 먼저 등록 (async 전에)
-    channel.on('broadcast', { event: 'webrtc_offer' }, handleOffer);
-    channel.on('broadcast', { event: 'webrtc_answer' }, handleAnswer);
-    channel.on('broadcast', { event: 'webrtc_ice' }, handleIce);
+    // ★ useChat이 subscribe 전에 등록한 시그널링 핸들러에 콜백 연결
+    setWebrtcHandlers({
+      onOffer: handleOffer,
+      onAnswer: handleAnswer,
+      onIce: handleIce,
+    });
+    log('Signaling handlers registered via useChat forwarding');
 
     async function initWebRTC() {
       // 1. TURN 크레덴셜 가져오기
@@ -355,7 +387,6 @@ export function useWebRTC({
             type: 'broadcast',
             event: 'webrtc_ice',
             payload: {
-              senderId: myId,
               ciphertext: encrypted.ciphertext,
               nonce: encrypted.nonce,
             },
@@ -404,7 +435,6 @@ export function useWebRTC({
           type: 'broadcast',
           event: 'webrtc_offer',
           payload: {
-            senderId: myId,
             ciphertext: encrypted.ciphertext,
             nonce: encrypted.nonce,
           },
@@ -417,6 +447,8 @@ export function useWebRTC({
 
     return () => {
       isMounted = false;
+      // 시그널링 핸들러 해제
+      setWebrtcHandlers(null);
       // PeerConnection 정리
       if (dcRef.current) {
         dcRef.current.close();
@@ -427,7 +459,7 @@ export function useWebRTC({
         pcRef.current = null;
       }
     };
-  }, [enabled, channel, sharedSecret, isInitiator, myId, setupDataChannel]);
+  }, [enabled, channel, sharedSecret, isInitiator, myId, setupDataChannel, setWebrtcHandlers]);
 
   // 파일 전송
   const sendFile = useCallback(async (file: File, transferId: string): Promise<string | null> => {
