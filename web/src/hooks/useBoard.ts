@@ -404,6 +404,8 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     for (let i = 0; i < files.length; i++) {
       try {
         const mediaType = getMediaType(files[i].type);
+        if (!mediaType) continue; // 지원하지 않는 파일 형식 건너뛰기
+
         let buffer: Uint8Array;
         let width = 0;
         let height = 0;

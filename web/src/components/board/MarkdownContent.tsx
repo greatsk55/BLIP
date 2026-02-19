@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Play as PlayIcon } from 'lucide-react';
 import type { Components } from 'react-markdown';
 import type { DecryptedPostImage } from '@/types/board';
 import ImageViewer from '@/components/chat/ImageViewer';
@@ -18,9 +19,11 @@ const IMG_SCHEME_RE = /^img:(\d+)$/;
 
 export default function MarkdownContent({ content, images }: MarkdownContentProps) {
   const [viewerSrc, setViewerSrc] = useState<string | null>(null);
+  const [viewerIsVideo, setViewerIsVideo] = useState(false);
 
-  const handleImageClick = useCallback((src: string) => {
+  const handleMediaClick = useCallback((src: string, isVideo: boolean) => {
     setViewerSrc(src);
+    setViewerIsVideo(isVideo);
   }, []);
 
   const components = useMemo<Components>(() => ({
@@ -93,7 +96,7 @@ export default function MarkdownContent({ content, images }: MarkdownContentProp
       <h3 className="text-sm font-bold text-ink mt-2 mb-1">{children}</h3>
     ),
     p: ({ children }) => <p className="my-1">{children}</p>,
-    // img:N 스킴 → 인라인 이미지, 그 외 외부 URL 차단
+    // img:N 스킴 → 인라인 이미지/동영상, 그 외 외부 URL 차단
     img: ({ src, alt }) => {
       if (!src || typeof src !== 'string') return null;
       const match = IMG_SCHEME_RE.exec(src);
@@ -103,17 +106,44 @@ export default function MarkdownContent({ content, images }: MarkdownContentProp
       const image = images?.[index];
       if (!image) return null;
 
+      const isVideo = image.mimeType.startsWith('video/');
+
+      if (isVideo) {
+        return (
+          <span className="block my-3">
+            <button
+              type="button"
+              onClick={() => handleMediaClick(image.objectUrl, true)}
+              className="relative inline-block max-w-[280px] sm:max-w-[360px] cursor-pointer"
+            >
+              <video
+                src={image.objectUrl}
+                className="max-w-full max-h-[400px] rounded-sm border border-ink/10"
+                muted
+                playsInline
+                preload="metadata"
+              />
+              <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span className="w-10 h-10 rounded-full bg-void-black/60 flex items-center justify-center">
+                  <PlayIcon className="w-5 h-5 text-white" />
+                </span>
+              </span>
+            </button>
+          </span>
+        );
+      }
+
       return (
         <span className="block my-3">
           <button
             type="button"
-            onClick={() => handleImageClick(image.objectUrl)}
-            className="block max-w-full cursor-zoom-in"
+            onClick={() => handleMediaClick(image.objectUrl, false)}
+            className="inline-block max-w-[280px] sm:max-w-[360px] cursor-zoom-in"
           >
             <img
               src={image.objectUrl}
               alt={alt ?? ''}
-              className="max-w-full h-auto rounded-sm border border-ink/10"
+              className="max-w-full max-h-[400px] rounded-sm border border-ink/10"
               style={{ objectFit: 'contain' }}
               draggable={false}
             />
@@ -121,7 +151,7 @@ export default function MarkdownContent({ content, images }: MarkdownContentProp
         </span>
       );
     },
-  }), [images, handleImageClick]);
+  }), [images, handleMediaClick]);
 
   return (
     <>
@@ -139,7 +169,24 @@ export default function MarkdownContent({ content, images }: MarkdownContentProp
           {content}
         </ReactMarkdown>
       </div>
-      <ImageViewer src={viewerSrc} onClose={() => setViewerSrc(null)} />
+      {viewerSrc && !viewerIsVideo && (
+        <ImageViewer src={viewerSrc} onClose={() => setViewerSrc(null)} />
+      )}
+      {viewerSrc && viewerIsVideo && (
+        <div
+          className="fixed inset-0 z-200 bg-void-black/95 flex items-center justify-center"
+          onClick={() => setViewerSrc(null)}
+        >
+          <video
+            src={viewerSrc}
+            className="max-w-full max-h-full"
+            controls
+            autoPlay
+            playsInline
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, Film } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { DecryptedPost } from '@/types/board';
 
@@ -27,7 +27,7 @@ export default function PostCard({ post, onClick }: PostCardProps) {
 
   // 본문 미리보기 (마크다운 제거, 최대 120자)
   const preview = stripMarkdown(post.content).slice(0, 120);
-  const hasImages = post.images.length > 0 || hasEncryptedImages(post);
+  const mediaInfo = getMediaInfo(post);
 
   return (
     <button
@@ -67,12 +67,16 @@ export default function PostCard({ post, onClick }: PostCardProps) {
         </p>
       )}
 
-      {/* 3행: 이미지 인디케이터 */}
-      {hasImages && (
+      {/* 3행: 미디어 인디케이터 */}
+      {mediaInfo.hasMedia && (
         <div className="flex items-center gap-1 mt-1.5">
-          <ImageIcon className="w-3 h-3 text-ghost-grey/60" />
+          {mediaInfo.hasVideo ? (
+            <Film className="w-3 h-3 text-ghost-grey/60" />
+          ) : (
+            <ImageIcon className="w-3 h-3 text-ghost-grey/60" />
+          )}
           <span className="font-mono text-[9px] text-ghost-grey/60 uppercase tracking-wider">
-            Image
+            {mediaInfo.hasVideo ? 'Video' : 'Image'}
           </span>
         </div>
       )}
@@ -111,7 +115,13 @@ function formatTimeAgo(dateString: string): string {
   return `${days}d`;
 }
 
-/** _encryptedImages 존재 여부 (복호화 전 이미지 메타데이터) */
-function hasEncryptedImages(post: DecryptedPost): boolean {
-  return (post._encryptedImages?.length ?? 0) > 0;
+/** 미디어 정보 판별: 이미지/동영상 여부 */
+function getMediaInfo(post: DecryptedPost): { hasMedia: boolean; hasVideo: boolean } {
+  const allMedia = [
+    ...post.images,
+    ...(post._encryptedImages ?? []),
+  ];
+  if (allMedia.length === 0) return { hasMedia: false, hasVideo: false };
+  const hasVideo = allMedia.some((m) => m.mimeType.startsWith('video/'));
+  return { hasMedia: true, hasVideo };
 }
