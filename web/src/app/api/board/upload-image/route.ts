@@ -5,8 +5,9 @@ import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 // IP당 분당 10회
 const UPLOAD_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
-// 암호화 후 최대 크기 (5MB + 암호화 오버헤드)
-const MAX_ENCRYPTED_SIZE = 6 * 1024 * 1024;
+// 암호화 후 최대 크기
+const MAX_IMAGE_ENCRYPTED_SIZE = 6 * 1024 * 1024;   // 이미지: 6MB
+const MAX_VIDEO_ENCRYPTED_SIZE = 50 * 1024 * 1024;   // 동영상: 50MB
 
 /**
  * POST /api/board/upload-image
@@ -45,8 +46,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    if (file.size > MAX_ENCRYPTED_SIZE) {
-      return NextResponse.json({ error: 'File too large' }, { status: 413 });
+    const isVideo = mimeType?.startsWith('video/');
+    const maxSize = isVideo ? MAX_VIDEO_ENCRYPTED_SIZE : MAX_IMAGE_ENCRYPTED_SIZE;
+    if (file.size > maxSize) {
+      return NextResponse.json(
+        { error: isVideo ? 'Video too large (max 50MB)' : 'Image too large (max 6MB)' },
+        { status: 413 }
+      );
     }
 
     const supabase = createServerSupabase();

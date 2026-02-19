@@ -12,6 +12,7 @@ import {
 import { decodeBase64 } from 'tweetnacl-util';
 import { generateUsername } from '@/lib/username';
 import { compressImage } from '@/lib/media/compress';
+import { getMediaType, createVideoThumbnail } from '@/lib/media/thumbnail';
 import {
   getPosts,
   createPost,
@@ -308,7 +309,24 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       if (cursor) {
         setPosts((prev) => [...prev, ...decrypted]);
       } else {
-        setPosts(decrypted);
+        // refresh 시 이미 복호화된 이미지 바이트 보존
+        setPosts((prev) => {
+          if (prev.length === 0) return decrypted;
+          const oldImageMap = new Map<string, DecryptedPostImage[]>();
+          for (const p of prev) {
+            if (p.images.length > 0) {
+              oldImageMap.set(p.id, p.images);
+            }
+          }
+          if (oldImageMap.size === 0) return decrypted;
+          return decrypted.map((post) => {
+            const cached = oldImageMap.get(post.id);
+            if (cached && cached.length > 0 && post.images.length === 0) {
+              return { ...post, images: cached };
+            }
+            return post;
+          });
+        });
       }
 
       setHasMore(result.hasMore);
@@ -375,7 +393,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     }
   }
 
-  // ─── 이미지 업로드 ───
+  // ─── 미디어 업로드 (이미지 + 동영상) ───
 
   async function uploadImages(
     postId: string,
@@ -385,9 +403,28 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   ): Promise<void> {
     for (let i = 0; i < files.length; i++) {
       try {
-        // 압축
-        const { blob, width, height } = await compressImage(files[i]);
-        const buffer = new Uint8Array(await blob.arrayBuffer());
+        const mediaType = getMediaType(files[i].type);
+        let buffer: Uint8Array;
+        let width = 0;
+        let height = 0;
+
+        if (mediaType === 'video') {
+          // 동영상: 압축 없이 raw 바이트 암호화
+          buffer = new Uint8Array(await files[i].arrayBuffer());
+          try {
+            const { metadata } = await createVideoThumbnail(files[i]);
+            width = metadata.width;
+            height = metadata.height;
+          } catch {
+            // 메타데이터 추출 실패 시 0으로 유지
+          }
+        } else {
+          // 이미지: 압축 후 암호화
+          const compressed = await compressImage(files[i]);
+          buffer = new Uint8Array(await compressed.blob.arrayBuffer());
+          width = compressed.width;
+          height = compressed.height;
+        }
 
         // 암호화
         const encrypted = encryptBinary(buffer, key);
@@ -395,12 +432,12 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
 
         // FormData
         const formData = new FormData();
-        formData.append('file', new Blob([new Uint8Array(ciphertextBytes)]), 'image.enc');
+        formData.append('file', new Blob([new Uint8Array(ciphertextBytes)]), 'media.enc');
         formData.append('boardId', boardId);
         formData.append('postId', postId);
         formData.append('authKeyHash', keyHash);
         formData.append('nonce', encrypted.nonce);
-        formData.append('mimeType', files[i].type || 'image/jpeg');
+        formData.append('mimeType', files[i].type || 'application/octet-stream');
         formData.append('width', String(width));
         formData.append('height', String(height));
         formData.append('displayOrder', String(i));
@@ -410,7 +447,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
           body: formData,
         });
       } catch {
-        // 개별 이미지 업로드 실패 무시 (게시글은 이미 생성됨)
+        // 개별 미디어 업로드 실패 무시 (게시글은 이미 생성됨)
       }
     }
   }

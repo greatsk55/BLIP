@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { ArrowLeft, ImagePlus, ImageDown, X, Send } from 'lucide-react';
+import { ArrowLeft, Paperclip, ImageDown, X, Send, Play } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import MarkdownToolbar from './MarkdownToolbar';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { getMediaType, validateFileSize } from '@/lib/media/thumbnail';
 
-const MAX_IMAGES = 4;
+const MAX_MEDIA = 4;
 
 interface PostComposerProps {
   /** 편집 모드: 기존 게시글 데이터 전달 */
@@ -49,7 +49,7 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
   }, [canSubmit, title, content, images, isEditMode, onSubmit, previews, onBack]);
 
   const handleImageSelect = useCallback(() => {
-    if (images.length >= MAX_IMAGES) return;
+    if (images.length >= MAX_MEDIA) return;
     fileInputRef.current?.click();
   }, [images.length]);
 
@@ -58,7 +58,7 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
       const files = Array.from(e.target.files ?? []);
       if (files.length === 0) return;
 
-      const remaining = MAX_IMAGES - images.length;
+      const remaining = MAX_MEDIA - images.length;
       const toAdd = files.slice(0, remaining);
 
       const validFiles: File[] = [];
@@ -66,7 +66,7 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
 
       for (const file of toAdd) {
         const mediaType = getMediaType(file.type);
-        if (mediaType !== 'image') continue;
+        if (!mediaType) continue;
 
         const { valid } = validateFileSize(file);
         if (!valid) continue;
@@ -189,14 +189,31 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
       {/* 이미지 미리보기 + 인라인 삽입 (편집 모드에서는 숨김) */}
       {!isEditMode && previews.length > 0 && (
         <div className="flex-shrink-0 flex gap-2 px-4 py-3 border-t border-ink/10 overflow-x-auto">
-          {previews.map((url, i) => (
+          {previews.map((url, i) => {
+            const isVideo = getMediaType(images[i]?.type ?? '') === 'video';
+            return (
             <div key={url} className="relative flex-shrink-0 w-20 h-20 group">
-              <img
-                src={url}
-                alt=""
-                className="w-full h-full object-cover rounded-sm"
-                draggable={false}
-              />
+              {isVideo ? (
+                <div className="relative w-full h-full">
+                  <video
+                    src={url}
+                    className="w-full h-full object-cover rounded-sm"
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <Play className="w-6 h-6 text-white/80 drop-shadow-md" />
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={url}
+                  alt=""
+                  className="w-full h-full object-cover rounded-sm"
+                  draggable={false}
+                />
+              )}
               {/* 삭제 버튼 */}
               <button
                 onClick={() => removeImage(i)}
@@ -216,7 +233,8 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
                 <span className="font-mono text-[8px] uppercase tracking-wider">Insert</span>
               </button>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -225,19 +243,19 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
         <div className="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-t border-ink/10 pb-[env(safe-area-inset-bottom)]">
           <button
             onClick={handleImageSelect}
-            disabled={images.length >= MAX_IMAGES}
+            disabled={images.length >= MAX_MEDIA}
             className="flex items-center gap-2 px-3 py-1.5 text-ghost-grey/70 hover:text-signal-green disabled:opacity-20 transition-colors"
             aria-label={t('post.attachImage')}
             type="button"
           >
-            <ImagePlus className="w-4 h-4" />
+            <Paperclip className="w-4 h-4" />
             <span className="font-mono text-[10px] uppercase tracking-wider">
               {t('post.attachImage')}
             </span>
           </button>
           {images.length > 0 && (
             <span className="font-mono text-[9px] text-ghost-grey/60 uppercase tracking-wider">
-              {images.length}/{MAX_IMAGES}
+              {images.length}/{MAX_MEDIA}
             </span>
           )}
         </div>
@@ -247,7 +265,7 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,video/*"
           multiple
           onChange={handleFileChange}
           className="hidden"
