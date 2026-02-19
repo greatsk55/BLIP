@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.blip.app",
+        "paths": ["/board/*", "/room/*", "/*/board/*", "/*/room/*"]
+      }
+    ]
+  }
+}
