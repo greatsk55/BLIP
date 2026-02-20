@@ -47,5 +47,23 @@
 	<true/>
 	<key>FlutterDeepLinkingEnabled</key>
 	<true/>
+	<!-- Privacy - Usage Descriptions -->
+	<key>NSCameraUsageDescription</key>
+	<string>Used to capture photos and videos for sharing in chat</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used for voice and video communication</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to select photos and videos for sharing in chat</string>
+	<!-- AdMob App ID -->
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2005178297837902~6566480446</string>
+	<!-- SKAdNetwork (iOS 14+) -->
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 </dict>
 </plist>

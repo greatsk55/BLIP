@@ -5,6 +5,7 @@ import 'package:blip/l10n/app_localizations.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/media/media_processor.dart';
+import '../../../../core/services/ad_service.dart';
 import '../../domain/models/board_post.dart';
 import 'markdown_toolbar.dart';
 
@@ -178,6 +179,9 @@ class _PostComposerState extends State<PostComposer> {
         _error = error;
       });
     } else {
+      // 전면광고 (N번에 1번)
+      await AdService.instance.maybeShowInterstitial();
+      if (!mounted) return;
       Navigator.of(context).pop(true);
     }
   }

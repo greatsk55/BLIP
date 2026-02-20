@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Play } from 'lucide-react';
 import type { DecryptedPostImage } from '@/types/board';
 import ImageViewer from '@/components/chat/ImageViewer';
+import VideoThumbnailPreview from './VideoThumbnailPreview';
 
 interface PostImageGalleryProps {
   images: DecryptedPostImage[];
@@ -50,20 +50,7 @@ export default function PostImageGallery({ images }: PostImageGalleryProps) {
               style={{ aspectRatio: ratio }}
             >
               {isVideo ? (
-                <div className="relative w-full h-full">
-                  <video
-                    src={img.objectUrl}
-                    className="w-full h-full object-contain"
-                    muted
-                    playsInline
-                    preload="metadata"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-10 h-10 rounded-full bg-void-black/60 flex items-center justify-center">
-                      <Play className="w-5 h-5 text-white" />
-                    </div>
-                  </div>
-                </div>
+                <VideoThumbnailPreview objectUrl={img.objectUrl} />
               ) : (
                 <img
                   src={img.objectUrl}

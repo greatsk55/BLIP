@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -237,7 +238,13 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
           boardName: boardState.boardName ?? l10n.boardTitle,
           hasAdminToken: boardState.adminToken != null,
           isPasswordSaved: boardState.isPasswordSaved,
-          onBack: () => Navigator.of(context).pop(),
+          onBack: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              GoRouter.of(context).go('/');
+            }
+          },
           onRefresh: () => ref
               .read(boardNotifierProvider(widget.boardId).notifier)
               .refreshPosts(),

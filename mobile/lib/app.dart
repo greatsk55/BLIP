@@ -19,6 +19,9 @@ import 'features/settings/providers/locale_provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+/// 딥링크 ID 검증: 영숫자 6~32자만 허용 (injection 방지)
+final _validIdPattern = RegExp(r'^[a-zA-Z0-9]{6,32}$');
+
 final _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/',
@@ -63,6 +66,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/room/:roomId',
       parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final roomId = state.pathParameters['roomId'];
+        if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
+        return null;
+      },
       builder: (context, state) => ChatScreen(
         roomId: state.pathParameters['roomId']!,
         initialPassword: state.extra as String?,
@@ -77,6 +85,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/board/:boardId',
       parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final boardId = state.pathParameters['boardId'];
+        if (boardId == null || !_validIdPattern.hasMatch(boardId)) return '/';
+        return null;
+      },
       builder: (context, state) => BoardScreen(
         boardId: state.pathParameters['boardId']!,
       ),
@@ -91,7 +104,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/:locale/room/:roomId',
       parentNavigatorKey: _rootNavigatorKey,
-      redirect: (context, state) => '/room/${state.pathParameters['roomId']}',
+      redirect: (context, state) {
+        final roomId = state.pathParameters['roomId'];
+        if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
+        return '/room/$roomId';
+      },
     ),
     GoRoute(
       path: '/:locale/board/create',
@@ -101,7 +118,11 @@ final _router = GoRouter(
     GoRoute(
       path: '/:locale/board/:boardId',
       parentNavigatorKey: _rootNavigatorKey,
-      redirect: (context, state) => '/board/${state.pathParameters['boardId']}',
+      redirect: (context, state) {
+        final boardId = state.pathParameters['boardId'];
+        if (boardId == null || !_validIdPattern.hasMatch(boardId)) return '/';
+        return '/board/$boardId';
+      },
     ),
   ],
 );

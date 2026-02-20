@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/crypto/crypto.dart';
+import '../../../core/media/media_processor.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_board.dart';
@@ -460,6 +463,7 @@ class BoardNotifier extends StateNotifier<BoardState> {
     if (post.images.isNotEmpty || post.encryptedImages.isEmpty) return;
 
     final decryptedImages = <DecryptedPostImage>[];
+    final tempDir = await getTemporaryDirectory();
 
     for (final meta in post.encryptedImages) {
       final mediaResult = await _api.getBoardMedia(
@@ -475,12 +479,29 @@ class BoardNotifier extends StateNotifier<BoardState> {
       );
       if (decrypted == null) continue;
 
+      // 동영상이면 0.5초 프레임 썸네일 추출
+      Uint8List? thumbnailBytes;
+      if (meta.mimeType.startsWith('video/')) {
+        final tempFile = File(
+          '${tempDir.path}/blip_board_thumb_${meta.id}.mp4',
+        );
+        try {
+          await tempFile.writeAsBytes(decrypted);
+          thumbnailBytes = await generateVideoThumbnail(tempFile.path);
+        } catch (_) {
+          // 썸네일 실패해도 동영상 자체는 표시
+        } finally {
+          tempFile.delete().ignore();
+        }
+      }
+
       decryptedImages.add(DecryptedPostImage(
         id: meta.id,
         bytes: decrypted,
         mimeType: meta.mimeType,
         width: meta.width,
         height: meta.height,
+        thumbnailBytes: thumbnailBytes,
       ));
     }
 

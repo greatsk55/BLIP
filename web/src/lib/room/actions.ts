@@ -134,11 +134,14 @@ export async function getRoomStatus(
 
 /**
  * 방 참여자 수 업데이트
+ * authKeyHash 검증 필수 — 방 비밀번호를 모르면 조작 불가
  */
 export async function updateParticipantCount(
   roomId: string,
-  count: number
+  count: number,
+  authKeyHash: string
 ): Promise<void> {
+  if (!authKeyHash) return;
   const supabase = createServerSupabase();
 
   if (count === 0) {
@@ -146,31 +149,37 @@ export async function updateParticipantCount(
     // → Presence sync가 track() 전에 발생하여 0명으로 호출되는 race condition 방지
     const { data: room } = await supabase
       .from('rooms')
-      .select('status')
+      .select('status, auth_key_hash')
       .eq('id', roomId)
       .single();
 
-    if (room && room.status === 'active') {
+    if (!room || room.auth_key_hash !== authKeyHash) return;
+
+    if (room.status === 'active') {
       await supabase
         .from('rooms')
         .update({ status: 'destroyed', participant_count: 0 })
         .eq('id', roomId);
     }
   } else {
+    // 인증 검증을 WHERE 절에 포함 — 불일치 시 0행 업데이트 (무시)
     await supabase
       .from('rooms')
       .update({
         participant_count: count,
         status: count > 0 ? 'active' : 'waiting',
       })
-      .eq('id', roomId);
+      .eq('id', roomId)
+      .eq('auth_key_hash', authKeyHash);
   }
 }
 
 /**
  * 방 삭제 (파쇄)
+ * authKeyHash 검증 필수 — 방 비밀번호를 모르면 삭제 불가
  */
-export async function destroyRoom(roomId: string): Promise<void> {
+export async function destroyRoom(roomId: string, authKeyHash: string): Promise<void> {
+  if (!authKeyHash) return;
   const supabase = createServerSupabase();
-  await supabase.from('rooms').delete().eq('id', roomId);
+  await supabase.from('rooms').delete().eq('id', roomId).eq('auth_key_hash', authKeyHash);
 }

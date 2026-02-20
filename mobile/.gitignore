@@ -54,7 +54,13 @@ app.*.map.json
 *.keystore
 key.properties
 
-# Firebase (보안 — API 키 포함)
+# Firebase (보안 — 프로젝트 설정 + API 키 포함)
+firebase.json
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
+
+# Fastlane (전체 제외)
+**/fastlane/
+Gemfile
+Gemfile.lock

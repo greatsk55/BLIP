@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -373,9 +374,15 @@ class _ChatHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // 뒤로가기
+          // 뒤로가기 (딥링크로 진입 시 홈으로)
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                GoRouter.of(context).go('/');
+              }
+            },
             child: Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Icon(Icons.arrow_back, size: 20,

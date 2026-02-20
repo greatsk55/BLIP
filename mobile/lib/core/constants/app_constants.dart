@@ -33,4 +33,22 @@ class AppConstants {
 
   // ─── Supabase Realtime ───
   static const int eventsPerSecond = 10;
+
+  // ─── AdMob ───
+  static const String admobBannerAndroid =
+      'ca-app-pub-2005178297837902/5096661695';
+  static const String admobBannerIos =
+      'ca-app-pub-2005178297837902/3028901557';
+  // 전면광고
+  static const String admobInterstitialAndroid =
+      'ca-app-pub-2005178297837902/4595357994';
+  static const String admobInterstitialIos =
+      'ca-app-pub-2005178297837902/1704211599';
+  // 전면광고 표시 빈도 (N번에 1번)
+  static const int interstitialFrequency = 3;
+  // 오프닝(앱 오픈) 광고
+  static const String admobAppOpenAndroid =
+      'ca-app-pub-2005178297837902/1063307095';
+  static const String admobAppOpenIos =
+      'ca-app-pub-2005178297837902/6350033614';
 }

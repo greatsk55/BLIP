@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
     }
 
-    const { roomId } = await request.json();
+    const { roomId, authKeyHash } = await request.json();
 
     if (!roomId || typeof roomId !== 'string') {
       return NextResponse.json({ error: 'Missing roomId' }, { status: 400 });
@@ -33,12 +33,17 @@ export async function POST(request: Request) {
 
     const { data: room } = await supabase
       .from('rooms')
-      .select('participant_count, status')
+      .select('participant_count, status, auth_key_hash')
       .eq('id', roomId)
       .single();
 
     if (!room || room.status === 'destroyed') {
       return NextResponse.json({ ok: true });
+    }
+
+    // authKeyHash 검증 — 방 비밀번호를 모르면 조작 불가
+    if (!authKeyHash || room.auth_key_hash !== authKeyHash) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const newCount = Math.max(0, (room.participant_count ?? 1) - 1);

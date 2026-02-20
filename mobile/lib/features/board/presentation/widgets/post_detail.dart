@@ -325,18 +325,20 @@ class _MarkdownContent extends StatelessWidget {
         if (index == null || index >= images.length) return const SizedBox.shrink();
 
         final image = images[index];
-        final isVideo = image.mimeType.startsWith('video/');
 
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: GestureDetector(
-            onTap: isVideo
+            onTap: image.isVideo
                 ? () => _openVideoPlayer(context, image)
                 : () => _openImageViewer(context, image),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: isVideo
-                  ? _InlineVideoPlaceholder(isDark: isDark)
+              child: image.isVideo
+                  ? _VideoPreview(
+                      thumbnailBytes: image.thumbnailBytes,
+                      isDark: isDark,
+                    )
                   : Image.memory(
                       image.bytes,
                       fit: BoxFit.contain,
@@ -382,40 +384,55 @@ class _MarkdownContent extends StatelessWidget {
   }
 }
 
-/// 인라인 동영상 플레이스홀더
-class _InlineVideoPlaceholder extends StatelessWidget {
+/// 동영상 썸네일 프리뷰 (인라인 + 갤러리 공용)
+/// thumbnailBytes가 있으면 0.5초 프레임 이미지, 없으면 플레이스홀더
+class _VideoPreview extends StatelessWidget {
+  final Uint8List? thumbnailBytes;
   final bool isDark;
 
-  const _InlineVideoPlaceholder({required this.isDark});
+  const _VideoPreview({
+    this.thumbnailBytes,
+    this.isDark = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 160,
-      color: isDark ? Colors.grey[800] : Colors.grey[300],
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          const Center(
-            child: Icon(Icons.videocam, size: 32, color: Colors.white54),
-          ),
-          Center(
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.play_arrow,
-                size: 24,
-                color: Colors.white,
-              ),
+    final dark = isDark || Theme.of(context).brightness == Brightness.dark;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // 썸네일 또는 플레이스홀더
+        if (thumbnailBytes != null)
+          Image.memory(
+            thumbnailBytes!,
+            fit: BoxFit.cover,
+          )
+        else
+          Container(
+            color: dark ? Colors.grey[800] : Colors.grey[300],
+            child: const Center(
+              child: Icon(Icons.videocam, size: 32, color: Colors.white54),
             ),
           ),
-        ],
-      ),
+
+        // 재생 버튼 오버레이
+        Center(
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.5),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.play_arrow,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -482,7 +499,7 @@ class _MediaGallery extends StatelessWidget {
               width: itemWidth,
               height: itemWidth,
               child: isVideo
-                  ? _VideoThumbnail(bytes: media.bytes)
+                  ? _VideoPreview(thumbnailBytes: media.thumbnailBytes)
                   : Image.memory(media.bytes, fit: BoxFit.cover),
             ),
           ),
@@ -519,44 +536,6 @@ class _MediaGallery extends StatelessWidget {
   }
 }
 
-/// 동영상 썸네일 (갤러리 내)
-class _VideoThumbnail extends StatelessWidget {
-  final Uint8List bytes;
-
-  const _VideoThumbnail({required this.bytes});
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Container(
-          color: isDark ? Colors.grey[800] : Colors.grey[300],
-          child: const Center(
-            child: Icon(Icons.videocam, size: 32, color: Colors.white54),
-          ),
-        ),
-        Center(
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.5),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.play_arrow,
-              size: 24,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 /// 상세보기 헤더
 class _DetailHeader extends StatelessWidget {

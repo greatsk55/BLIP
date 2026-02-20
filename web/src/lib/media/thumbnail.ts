@@ -97,6 +97,50 @@ function captureVideoFrame(video: HTMLVideoElement): Promise<Blob> {
 }
 
 /**
+ * blob URL에서 0.5초 프레임 추출 (복호화된 동영상용)
+ * board PostDetail / PostImageGallery에서 사용
+ */
+export function extractVideoFrameFromUrl(objectUrl: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
+
+    video.onloadedmetadata = () => {
+      video.currentTime = Math.min(VIDEO_THUMBNAIL_TIME, video.duration / 2);
+    };
+
+    video.onseeked = () => {
+      try {
+        const ratio = Math.min(
+          VIDEO_THUMBNAIL_MAX / video.videoWidth,
+          VIDEO_THUMBNAIL_MAX / video.videoHeight,
+          1
+        );
+        const w = Math.round(video.videoWidth * ratio);
+        const h = Math.round(video.videoHeight * ratio);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('No 2D context')); return; }
+
+        ctx.drawImage(video, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.6));
+      } catch (e) {
+        reject(e);
+      }
+    };
+
+    video.onerror = () => reject(new Error('Failed to load video for thumbnail'));
+    video.src = objectUrl;
+  });
+}
+
+/**
  * MIME 타입으로 미디어 종류 판별
  */
 export function getMediaType(mimeType: string): 'image' | 'video' | null {

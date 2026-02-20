@@ -2,7 +2,8 @@
     <application
         android:label="blip"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -42,6 +43,10 @@
                 <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPattern="/../board/.*"/>
             </intent-filter>
         </activity>
+        <!-- AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2005178297837902~9761830864"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

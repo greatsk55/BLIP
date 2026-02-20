@@ -8,7 +8,9 @@ node_modules/
 .next/
 out/
 
-*.md
+*PLAN*
+*plan*
+analytics-strategy.md
 
 # Build
 dist/

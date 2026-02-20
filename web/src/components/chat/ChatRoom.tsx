@@ -8,6 +8,7 @@ import { useNotification } from '@/hooks/useNotification';
 import { useVisualViewport } from '@/hooks/useVisualViewport';
 import { useScreenProtection } from '@/hooks/useScreenProtection';
 import { verifyPassword, getRoomStatus, updateParticipantCount } from '@/lib/room/actions';
+import { deriveKeysFromPassword, hashAuthKey } from '@/lib/crypto';
 import { compressImage, createImageThumbnail } from '@/lib/media/compress';
 import { createVideoThumbnail, getMediaType } from '@/lib/media/thumbnail';
 import type { ChatStatus, DecryptedMessage } from '@/types/chat';
@@ -153,9 +154,13 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
     setShowLeaveModal(false);
     webrtc.cleanup();
     chat.disconnect();
-    await updateParticipantCount(roomId, 0);
+    if (password) {
+      const { authKey } = await deriveKeysFromPassword(password, roomId);
+      const authHash = await hashAuthKey(authKey);
+      await updateParticipantCount(roomId, 0, authHash);
+    }
     setViewState('destroyed');
-  }, [chat, webrtc, roomId]);
+  }, [chat, webrtc, roomId, password]);
 
   // 비밀번호 입력 처리 (참여자)
   const handlePasswordSubmit = useCallback(async (inputPassword: string) => {

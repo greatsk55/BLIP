@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/widgets/banner_ad_widget.dart';
 
 /// 바텀 네비게이션 Shell (3탭: 홈 / 채팅 / 커뮤니티)
 class MainShell extends ConsumerWidget {
@@ -23,7 +24,12 @@ class MainShell extends ConsumerWidget {
         isDark ? AppColors.borderDark : AppColors.borderLight;
 
     return Scaffold(
-      body: navigationShell,
+      body: Column(
+        children: [
+          Expanded(child: navigationShell),
+          const BannerAdWidget(),
+        ],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(top: BorderSide(color: borderColor)),

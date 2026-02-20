@@ -10,6 +10,7 @@ class DecryptedPostImage {
   final String mimeType;
   final int? width;
   final int? height;
+  final Uint8List? thumbnailBytes; // 동영상 0.5초 프레임 썸네일
 
   const DecryptedPostImage({
     required this.id,
@@ -17,7 +18,10 @@ class DecryptedPostImage {
     required this.mimeType,
     this.width,
     this.height,
+    this.thumbnailBytes,
   });
+
+  bool get isVideo => mimeType.startsWith('video/');
 }
 
 /// 암호화된 이미지 메타데이터 (lazy decryption용)

@@ -9,6 +9,8 @@ import {
   decryptMessage,
   publicKeyToString,
   stringToPublicKey,
+  deriveKeysFromPassword,
+  hashAuthKey,
 } from '@/lib/crypto';
 import { generateUsername } from '@/lib/username';
 import { updateParticipantCount } from '@/lib/room/actions';
@@ -95,6 +97,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const myUsernameRef = useRef(generateUsername());
   const myIdRef = useRef(generateUUID());
   const selfTrackedRef = useRef(false);
+  const authKeyHashRef = useRef<string | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
 
@@ -202,6 +205,11 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
 
     async function init() {
       try {
+        // 방 인증용 authKeyHash 파생 (API 호출 인증에 사용)
+        const { authKey } = await deriveKeysFromPassword(password, roomId);
+        const authHash = await hashAuthKey(authKey);
+        authKeyHashRef.current = authHash;
+
         // ECDH 키쌍 생성 (랜덤)
         // 양쪽 모두 같은 비밀번호를 사용하므로 seed 기반이 아닌
         // 랜덤 키쌍으로 Perfect Forward Secrecy 보장
@@ -304,7 +312,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           }
 
           // DB 방 파쇄
-          updateParticipantCount(roomId, 0).catch(() => {});
+          if (authKeyHashRef.current) {
+            updateParticipantCount(roomId, 0, authKeyHashRef.current).catch(() => {});
+          }
           setStatus('destroyed');
         });
 
@@ -320,7 +330,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           ) as any;
 
           // DB participant_count + status 업데이트
-          updateParticipantCount(roomId, users.length).catch(() => {});
+          if (authKeyHashRef.current) {
+            updateParticipantCount(roomId, users.length, authKeyHashRef.current).catch(() => {});
+          }
 
           // 3명 이상 → 후발 참여자 자동 퇴장
           if (users.length > 2) {
@@ -365,7 +377,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           const state = channel.presenceState();
           const users = Object.values(state).flat();
 
-          updateParticipantCount(roomId, users.length).catch(() => {});
+          if (authKeyHashRef.current) {
+            updateParticipantCount(roomId, users.length, authKeyHashRef.current).catch(() => {});
+          }
 
           // 혼자 남음 + 이전에 상대방이 있었던 경우 → 즉시 폭파
           if (users.length <= 1 && sharedSecretRef.current) {
@@ -381,7 +395,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
               channelRef.current = null;
             }
 
-            updateParticipantCount(roomId, 0).catch(() => {});
+            if (authKeyHashRef.current) {
+              updateParticipantCount(roomId, 0, authKeyHashRef.current).catch(() => {});
+            }
             setStatus('destroyed');
           }
         });
@@ -453,6 +469,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
       // 키 메모리 정리
       keyPairRef.current = null;
       sharedSecretRef.current = null;
+      authKeyHashRef.current = null;
       selfTrackedRef.current = false;
     };
   }, [roomId, password]);
@@ -466,7 +483,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
     const handlePageLeave = () => {
       // 1. sendBeacon으로 DB 업데이트 (페이지 unload 중에도 전송 보장)
       const blob = new Blob(
-        [JSON.stringify({ roomId })],
+        [JSON.stringify({ roomId, authKeyHash: authKeyHashRef.current })],
         { type: 'application/json' }
       );
       navigator.sendBeacon('/api/room/leave', blob);

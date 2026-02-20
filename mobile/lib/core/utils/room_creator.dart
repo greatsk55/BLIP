@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../network/api_client.dart';
+import '../services/ad_service.dart';
 import '../storage/local_storage_service.dart';
 import '../storage/models/saved_room.dart';
 
@@ -38,6 +39,9 @@ class RoomCreator {
         ),
         password,
       );
+
+      // 전면광고 (N번에 1번)
+      await AdService.instance.maybeShowInterstitial();
 
       if (!context.mounted) return false;
       context.push('/room/$roomId', extra: password);
