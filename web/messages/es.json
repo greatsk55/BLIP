@@ -65,9 +65,9 @@
     "easterEgg": "Esta página también podría desaparecer pronto.",
     "supportProtocol": "Apoyar el Protocolo",
     "links": {
-      "about": "About",
-      "howItWorks": "How it Works",
-      "faq": "FAQ",
+      "about": "Acerca de",
+      "howItWorks": "Cómo funciona",
+      "faq": "Preguntas frecuentes",
       "board": "Comunidad Privada",
       "privacy": "Privacidad",
       "terms": "Términos",
@@ -110,48 +110,48 @@
           "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
           "2": "Creación de salas con un clic y enlaces compartibles",
           "3": "Sin cuenta requerida — totalmente anónimo",
-          "4": "Soporte para 6 idiomas (EN, KO, JA, ZH, ES, FR)",
+          "4": "Soporte para 8 idiomas (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
           "5": "Código 100% abierto"
         }
       }
     }
   },
   "About": {
-    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
-    "subtitle": "BLIP Service Philosophy",
+    "title": "En la era de la eternidad digital,<br></br>diseñamos el 'olvido'.",
+    "subtitle": "Filosofía del servicio BLIP",
     "section1": {
-      "title": "The Right to be Forgotten",
-      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+      "title": "El derecho al olvido",
+      "description": "Un mundo donde todo se almacena permanentemente en la nube es aterrador. Tus pequeñas bromas, preocupaciones secretas y emociones fugaces deberían dispersarse en el aire, no quedarse en un disco duro frío de un centro de datos."
     },
     "section2": {
-      "title": "True E2EE (End-to-End Encryption)",
-      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+      "title": "E2EE real (cifrado de extremo a extremo)",
+      "description": "BLIP solo 'entrega' tu conversación; no puede 'descifrarla'. Las claves de cifrado solo existen en tu dispositivo y el del destinatario. El servidor es solo un conducto por el que fluyen datos cifrados."
     },
-    "closing": "Communicate without traces. Be free."
+    "closing": "Comunícate sin dejar rastro. Sé libre."
   },
   "HowItWorks": {
-    "title": "Don't Trust.<br></br>Verify.",
-    "subtitle": "Technical Architecture",
+    "title": "No confíes.<br></br>Verifica.",
+    "subtitle": "Arquitectura técnica",
     "description": "La seguridad de BLIP no es magia. Son matemáticas verificables y tecnología transparente.",
     "steps": {
       "1": {
-        "title": "1. Local Key Generation",
-        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+        "title": "1. Generación local de claves",
+        "description": "En el momento en que creas una sala de chat, se genera una clave de cifrado desechable en tu navegador. Esta clave nunca se envía al servidor."
       },
       "2": {
-        "title": "2. Client-Side Encryption",
-        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+        "title": "2. Cifrado del lado del cliente",
+        "description": "Cada mensaje se cifra en tu dispositivo antes de enviarse. El servidor solo ve texto cifrado ilegible."
       },
       "3": {
-        "title": "3. In-Memory Transit",
-        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+        "title": "3. Tránsito en memoria",
+        "description": "Los datos transmitidos residen brevemente en la RAM (memoria volátil) y se eliminan inmediatamente tras la entrega. Como nunca se escriben en disco, la recuperación es físicamente imposible."
       }
     },
-    "opensource": "Verify Code"
+    "opensource": "Verificar código"
   },
   "FAQ": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Whatever you are curious about",
+    "title": "Preguntas frecuentes",
+    "subtitle": "Todo lo que quieras saber",
     "items": {
       "1": {
         "question": "¿Realmente no queda ningún registro?",

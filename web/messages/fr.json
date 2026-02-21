@@ -65,8 +65,8 @@
     "easterEgg": "Cette page pourrait aussi disparaître bientôt.",
     "supportProtocol": "Soutenir le Protocole",
     "links": {
-      "about": "About",
-      "howItWorks": "How it Works",
+      "about": "À propos",
+      "howItWorks": "Comment ça marche",
       "faq": "FAQ",
       "board": "Communauté Privée",
       "privacy": "Confidentialité",
@@ -110,48 +110,48 @@
           "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
           "2": "Création de salon en un clic avec liens partageables",
           "3": "Aucun compte requis — totalement anonyme",
-          "4": "Support de 6 langues (EN, KO, JA, ZH, ES, FR)",
+          "4": "Support de 8 langues (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
           "5": "Code source 100% ouvert"
         }
       }
     }
   },
   "About": {
-    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
-    "subtitle": "BLIP Service Philosophy",
+    "title": "À l'ère de l'éternité numérique,<br></br>nous concevons l'« oubli ».",
+    "subtitle": "Philosophie du service BLIP",
     "section1": {
-      "title": "The Right to be Forgotten",
-      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+      "title": "Le droit à l'oubli",
+      "description": "Un monde où tout est stocké en permanence dans le cloud est terrifiant. Vos petites blagues, vos soucis secrets et vos émotions fugaces devraient se disperser dans l'air, pas rester sur un disque dur froid dans un centre de données."
     },
     "section2": {
-      "title": "True E2EE (End-to-End Encryption)",
-      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+      "title": "Véritable E2EE (chiffrement de bout en bout)",
+      "description": "BLIP ne fait que « livrer » votre conversation ; il ne peut pas la « déchiffrer ». Les clés de chiffrement n'existent que sur votre appareil et celui du destinataire. Le serveur n'est qu'un tuyau à travers lequel transitent les données chiffrées."
     },
-    "closing": "Communicate without traces. Be free."
+    "closing": "Communiquez sans laisser de traces. Soyez libre."
   },
   "HowItWorks": {
-    "title": "Don't Trust.<br></br>Verify.",
-    "subtitle": "Technical Architecture",
+    "title": "Ne faites pas confiance.<br></br>Vérifiez.",
+    "subtitle": "Architecture technique",
     "description": "La sécurité de BLIP n'est pas de la magie. Ce sont des mathématiques vérifiables et une technologie transparente.",
     "steps": {
       "1": {
-        "title": "1. Local Key Generation",
-        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+        "title": "1. Génération locale des clés",
+        "description": "Au moment où vous créez un salon de discussion, une clé de chiffrement jetable est générée dans votre navigateur. Cette clé n'est jamais envoyée au serveur."
       },
       "2": {
-        "title": "2. Client-Side Encryption",
-        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+        "title": "2. Chiffrement côté client",
+        "description": "Chaque message est chiffré sur votre appareil avant transmission. Le serveur ne voit que du texte chiffré illisible."
       },
       "3": {
-        "title": "3. In-Memory Transit",
-        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+        "title": "3. Transit en mémoire",
+        "description": "Les données transmises résident brièvement en RAM (mémoire volatile) et sont supprimées immédiatement après livraison. Comme elles ne sont jamais écrites sur le disque, la récupération est physiquement impossible."
       }
     },
-    "opensource": "Verify Code"
+    "opensource": "Vérifier le code"
   },
   "FAQ": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Whatever you are curious about",
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce qui vous intéresse",
     "items": {
       "1": {
         "question": "Aucun enregistrement ne subsiste vraiment ?",

@@ -11,8 +11,10 @@ const supportedLocales = [
   Locale('ko'),
   Locale('ja'),
   Locale('zh'),
+  Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
   Locale('es'),
   Locale('fr'),
+  Locale('de'),
 ];
 
 final localeProvider =
@@ -29,13 +31,19 @@ class LocaleNotifier extends StateNotifier<Locale?> {
     final prefs = await SharedPreferences.getInstance();
     final code = prefs.getString(_localeKey);
     if (code != null) {
-      state = Locale(code);
+      final parts = code.split('_');
+      state = parts.length > 1
+          ? Locale.fromSubtags(languageCode: parts[0], countryCode: parts[1])
+          : Locale(parts[0]);
     }
   }
 
   Future<void> setLocale(Locale locale) async {
     state = locale;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_localeKey, locale.languageCode);
+    final key = locale.countryCode != null
+        ? '${locale.languageCode}_${locale.countryCode}'
+        : locale.languageCode;
+    await prefs.setString(_localeKey, key);
   }
 }

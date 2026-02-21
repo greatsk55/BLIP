@@ -39,7 +39,7 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.language),
             title: Text(l10n.settingsLanguage),
             subtitle: Text(_getLanguageName(
-              ref.watch(localeProvider)?.languageCode ?? 'en',
+              ref.watch(localeProvider) ?? const Locale('en'),
             )),
             onTap: () => _showLanguagePicker(context, ref),
           ),
@@ -58,7 +58,7 @@ class SettingsScreen extends ConsumerWidget {
 
   void _showLanguagePicker(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final current = ref.read(localeProvider)?.languageCode;
+    final currentLocale = ref.read(localeProvider);
 
     showModalBottomSheet(
       context: context,
@@ -72,10 +72,10 @@ class SettingsScreen extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleMedium),
             ),
             ...supportedLocales.map((locale) {
-              final code = locale.languageCode;
-              final isSelected = code == (current ?? 'en');
+              final isSelected = locale.languageCode == (currentLocale?.languageCode ?? 'en') &&
+                  locale.countryCode == currentLocale?.countryCode;
               return ListTile(
-                title: Text(_getLanguageName(code)),
+                title: Text(_getLanguageName(locale)),
                 trailing: isSelected ? const Icon(Icons.check) : null,
                 onTap: () {
                   ref.read(localeProvider.notifier).setLocale(locale);
@@ -89,14 +89,19 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  String _getLanguageName(String code) {
+  String _getLanguageName(Locale locale) {
+    final code = locale.countryCode != null
+        ? '${locale.languageCode}_${locale.countryCode}'
+        : locale.languageCode;
     return switch (code) {
       'en' => 'English',
       'ko' => '한국어',
       'ja' => '日本語',
-      'zh' => '中文',
+      'zh' => '中文（简体）',
+      'zh_TW' => '中文（繁體）',
       'es' => 'Español',
       'fr' => 'Français',
+      'de' => 'Deutsch',
       _ => code,
     };
   }

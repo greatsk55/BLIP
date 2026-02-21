@@ -110,7 +110,7 @@
           "1": "E2EE text chat (Curve25519 ECDH + XSalsa20-Poly1305)",
           "2": "One-click room creation with shareable links",
           "3": "Zero account requirement — fully anonymous",
-          "4": "6 language support (EN, KO, JA, ZH, ES, FR)",
+          "4": "8 language support (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
           "5": "100% open source codebase"
         }
       }

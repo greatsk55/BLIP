@@ -1,0 +1,408 @@
+{
+  "Hero": {
+    "title": "Reden. Dann verschwinden.",
+    "subtitle": "Keine Konten. Keine Spuren. Kein Verlauf.<br></br>Nur das Gespräch dieses Augenblicks existiert.",
+    "cta": "Klicke, um einen Chatraum zu erstellen",
+    "linkShare": "Verbinde dich perfekt mit einem einzigen Link, ohne komplizierte Verfahren.",
+    "rateLimited": "Raumerstellungslimit erreicht. Bitte versuche es später erneut.",
+    "createFailed": "Raumerstellung fehlgeschlagen. Bitte versuche es erneut."
+  },
+  "Problem": {
+    "title": "Deine Gespräche dauern zu lange.",
+    "description": "Server-Logs, Screenshots, vergessene Gruppenchats...<br></br>Nicht jedes Gespräch braucht eine Aufzeichnung. Manche sollten sich wie Rauch auflösen."
+  },
+  "Solution": {
+    "friction": {
+      "title": "0 Reibung",
+      "description": "Kein Setup. Link senden, losreden."
+    },
+    "anonymity": {
+      "title": "Totale Anonymität",
+      "description": "Wir fragen nicht, wer du bist. Kein Ausweis, kein Profil nötig."
+    },
+    "destruction": {
+      "title": "Vollständige Vernichtung",
+      "description": "Außer dir und dem Empfänger können nicht einmal wir es sehen."
+    },
+    "autoshred": {
+      "title": "Auto-Schredder",
+      "description": "Nur die letzten paar Nachrichten bleiben auf dem Bildschirm. Ältere werden in Echtzeit vernichtet — kein Zurückscrollen, kein Kontext."
+    },
+    "captureGuard": {
+      "title": "Aufnahmeschutz",
+      "description": "Screenshot- und Bildschirmaufnahme-Versuche werden erkannt. Nachrichten werden sofort unscharf — nichts zu erfassen."
+    },
+    "opensource": {
+      "title": "Transparenter Code",
+      "description": "100% Open Source. Du kannst im Code nachprüfen, dass wir deine Gespräche niemals ausspionieren."
+    }
+  },
+  "CommunityBoard": {
+    "label": "NEU",
+    "title": "Baue deine eigene private Community. Verschlüsselt.",
+    "subtitle": "Erstelle eine private Community mit einem einzigen Passwort.<br></br>Beiträge werden als unlesbarer Chiffretext gespeichert — der Server kann deine Inhalte niemals sehen.<br></br>Markdown, Bilder, anonymes Posten. Alles Ende-zu-Ende verschlüsselt.",
+    "cta": "Private Community erstellen",
+    "features": {
+      "password": {
+        "title": "Passwort = Schlüssel",
+        "description": "Ein gemeinsames Passwort verschlüsselt alles. Keine Konten, keine Registrierung. Teile das Passwort, teile den Raum."
+      },
+      "serverBlind": {
+        "title": "Server-Blind",
+        "description": "Wir speichern deine Beiträge, aber wir können sie nie lesen. Der Entschlüsselungsschlüssel verlässt nie dein Gerät."
+      },
+      "moderation": {
+        "title": "Community-Moderiert",
+        "description": "Meldesystem mit automatischer Ausblendung. Kein Admin muss Inhalte lesen, um den Raum sicher zu halten."
+      }
+    }
+  },
+  "Philosophy": {
+    "text1": "BLIP ist kein Messenger. Es ist ein Einweg-Kommunikationswerkzeug.",
+    "text2": "Wir wollen dich nicht hier behalten. Sag, was du zu sagen hast, und geh."
+  },
+  "Footer": {
+    "easterEgg": "Diese Seite könnte auch bald verschwinden.",
+    "supportProtocol": "Das Protokoll unterstützen",
+    "links": {
+      "about": "Über uns",
+      "howItWorks": "So funktioniert's",
+      "faq": "FAQ",
+      "board": "Private Community",
+      "privacy": "Datenschutz",
+      "terms": "Nutzungsbedingungen",
+      "updates": "Updates"
+    }
+  },
+  "Changelog": {
+    "title": "Neuigkeiten",
+    "subtitle": "Änderungsprotokoll",
+    "description": "Jede Verbesserung, transparent dokumentiert.",
+    "versions": {
+      "1": {
+        "version": "v1.2.0",
+        "date": "15. Februar 2026",
+        "title": "Verschlüsselte Medienübertragung",
+        "changes": {
+          "1": "Bild- & Videoübertragung über verschlüsseltes P2P (WebRTC DataChannel)",
+          "2": "TURN-only-Relay zur Vermeidung von IP-Offenlegung zwischen Teilnehmern",
+          "3": "Automatische Bildkomprimierung (max. 2048px, JPEG 80%)",
+          "4": "Vollbild-Bildbetrachter mit Pinch-to-Zoom",
+          "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
+        }
+      },
+      "2": {
+        "version": "v1.1.0",
+        "date": "10. Februar 2026",
+        "title": "Sofortige Raumvernichtung & Benachrichtigungen",
+        "changes": {
+          "1": "Räume werden sofort zerstört, wenn alle Teilnehmer gehen",
+          "2": "Browser-Push-Benachrichtigungen für eingehende Nachrichten",
+          "3": "Rate-Limiting für Raumerstellung (Anti-Missbrauch)",
+          "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
+        }
+      },
+      "3": {
+        "version": "v1.0.0",
+        "date": "1. Februar 2026",
+        "title": "Erstveröffentlichung",
+        "changes": {
+          "1": "E2EE-Textchat (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Ein-Klick-Raumerstellung mit teilbaren Links",
+          "3": "Keine Kontoerfordernis — vollständig anonym",
+          "4": "8 Sprachen unterstützt (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "100% quelloffene Codebasis"
+        }
+      }
+    }
+  },
+  "About": {
+    "title": "Im Zeitalter der digitalen Ewigkeit<br></br>gestalten wir das 'Vergessen'.",
+    "subtitle": "BLIP Servicephilosophie",
+    "section1": {
+      "title": "Das Recht auf Vergessenwerden",
+      "description": "Eine Welt, in der alles permanent in der Cloud gespeichert wird, ist beängstigend. Deine kleinen Witze, geheimen Sorgen und flüchtigen Emotionen sollten sich in der Luft auflösen, nicht auf einer kalten Festplatte in einem Rechenzentrum liegen."
+    },
+    "section2": {
+      "title": "Echte E2EE (Ende-zu-Ende-Verschlüsselung)",
+      "description": "BLIP 'liefert' dein Gespräch nur; es kann es nicht 'entschlüsseln'. Die Verschlüsselungsschlüssel existieren nur auf deinem und dem Gerät des Empfängers. Der Server ist nur eine Leitung, durch die verschlüsselte Daten fließen."
+    },
+    "closing": "Kommuniziere ohne Spuren. Sei frei."
+  },
+  "HowItWorks": {
+    "title": "Nicht vertrauen.<br></br>Überprüfen.",
+    "subtitle": "Technische Architektur",
+    "description": "BLIPs Sicherheit ist keine Magie. Es ist überprüfbare Mathematik und transparente Technologie.",
+    "steps": {
+      "1": {
+        "title": "1. Lokale Schlüsselerzeugung",
+        "description": "In dem Moment, in dem du einen Chatraum erstellst, wird ein Einweg-Verschlüsselungsschlüssel in deinem Browser erzeugt. Dieser Schlüssel wird nie an den Server gesendet."
+      },
+      "2": {
+        "title": "2. Clientseitige Verschlüsselung",
+        "description": "Jede Nachricht wird auf deinem Gerät verschlüsselt, bevor sie gesendet wird. Der Server sieht nichts als verschlüsselten Chiffretext."
+      },
+      "3": {
+        "title": "3. In-Memory-Transit",
+        "description": "Übertragene Daten verweilen kurz im RAM (flüchtiger Speicher) und werden sofort nach Zustellung gelöscht. Da sie nie auf die Festplatte geschrieben werden, ist eine Wiederherstellung physisch unmöglich."
+      }
+    },
+    "opensource": "Code überprüfen"
+  },
+  "FAQ": {
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Was auch immer dich interessiert",
+    "items": {
+      "1": {
+        "question": "Bleibt wirklich keine Aufzeichnung zurück?",
+        "answer": "Alle Gesprächsinhalte sind zu 100% Ende-zu-Ende verschlüsselt, sodass nur unlesbarer Chiffretext den Server passiert. Hosting-Systeme (Vercel, AWS usw.) können minimale Verbindungsprotokolle aufbewahren, was außerhalb unserer Kontrolle liegt — aber diese Protokolle enthalten nichts als bedeutungslose Zufallsdaten."
+      },
+      "2": {
+        "question": "Werden meine Chats bei einem Hack geleakt?",
+        "answer": "Selbst wenn der Server gehackt wird, können Hacker nur verschlüsselte Zufallszahlen sehen. Der Schlüssel zum Entsperren des Gesprächs befindet sich nur in deinem Browser-Tab."
+      },
+      "3": {
+        "question": "Kann ich Bilder und Dateien senden?",
+        "answer": "Ja! Bilder und Videos werden direkt zwischen Nutzern über verschlüsseltes P2P (WebRTC) gesendet. Der Server sieht deine Medien nie — Daten werden doppelt verschlüsselt und nur über einen TURN-Server weitergeleitet, wenn eine direkte Verbindung nicht möglich ist."
+      }
+    }
+  },
+  "Chat": {
+    "header": {
+      "exit": "VERLASSEN",
+      "online": "{count} online",
+      "e2ee": "Ende-zu-Ende verschlüsselt"
+    },
+    "input": {
+      "placeholder": "Nachricht eingeben...",
+      "send": "Senden"
+    },
+    "create": {
+      "title": "KANAL ERSTELLT",
+      "password": "ZUGANGSSCHLÜSSEL",
+      "shareLink": "Link teilen",
+      "warning": "SPEICHERE DIESEN SCHLÜSSEL. ER KANN NICHT WIEDERHERGESTELLT WERDEN.",
+      "enter": "KANAL BETRETEN"
+    },
+    "join": {
+      "title": "ZUGANGSSCHLÜSSEL EINGEBEN",
+      "connect": "VERBINDEN",
+      "invalidKey": "UNGÜLTIGER_SCHLÜSSEL",
+      "expired": "KANAL_ABGELAUFEN",
+      "full": "KANAL_VOLL"
+    },
+    "leave": {
+      "title": "KANAL VERLASSEN?",
+      "description": "Bist du sicher, dass du gehen möchtest?",
+      "lastPersonWarning": "Du bist der letzte Teilnehmer. Wenn du gehst, wird dieser Kanal unwiderruflich zerstört.",
+      "confirm": "VERLASSEN",
+      "cancel": "ABBRECHEN"
+    },
+    "destroyed": {
+      "title": "Keine Spur bleibt zurück.",
+      "subtitle": "Dieser Kanal wurde unwiderruflich zerstört.",
+      "newChat": "Neuen Kanal starten"
+    },
+    "roomFull": {
+      "title": "Kanal ist voll.",
+      "subtitle": "Dieser Kanal hat bereits 2 Teilnehmer.",
+      "newChat": "Neuen Kanal starten"
+    },
+    "media": {
+      "attachFile": "Medien anhängen",
+      "fileTooLarge": "Datei überschreitet die maximale Größe ({maxSize})",
+      "sendingFile": "Datei wird gesendet...",
+      "p2pConnecting": "Sichere P2P-Verbindung wird aufgebaut...",
+      "p2pFailed": "P2P-Verbindung fehlgeschlagen. Nur Text.",
+      "p2pConnected": "P2P-Medienkanal bereit",
+      "videoLoadFailed": "Video konnte nicht geladen werden",
+      "unsupportedType": "Nicht unterstützter Dateityp"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy by Architecture",
+    "subtitle": "Datenschutzrichtlinie",
+    "lastUpdated": "Zuletzt aktualisiert: Februar 2026",
+    "intro": "BLIP ist so konzipiert, dass es nichts über dich weiß. Das ist nicht nur eine Richtlinie — so haben wir das System gebaut. Was wir nicht sammeln können, können wir nicht preisgeben.",
+    "sections": {
+      "1": {
+        "title": "Unsere Philosophie",
+        "content": "Die meisten Datenschutzrichtlinien erklären, welche Daten Unternehmen sammeln und wie sie diese verwenden. Unsere ist anders: Wir erklären, warum wir deine Daten nicht sammeln können, selbst wenn wir es wollten. BLIPs Architektur macht Massenüberwachung technisch unmöglich."
+      },
+      "2": {
+        "title": "Daten, die wir nicht sammeln",
+        "content": "Wir sammeln nicht: Benutzerkonten, E-Mail-Adressen, Telefonnummern, Namen, Profile, Nachrichteninhalte, Chat-Verläufe, Kontaktlisten oder irgendeine Form persönlicher Identifikatoren. Deine Gespräche sind Ende-zu-Ende verschlüsselt und berühren nie unsere Datenbank. Wir können sie buchstäblich nicht lesen."
+      },
+      "3": {
+        "title": "Daten, die durchlaufen",
+        "content": "Wenn du BLIP nutzt, verarbeiten unsere Server kurzzeitig: verschlüsselte Nachrichten-Payloads (unlesbarer Chiffretext) und temporäre Verbindungsmetadaten (IP-Adressen für WebSocket-Routing). Diese Daten existieren nur im flüchtigen Speicher (RAM) und werden nie auf die Festplatte geschrieben. Wenn deine Sitzung endet, sind sie weg."
+      },
+      "4": {
+        "title": "Ende-zu-Ende-Verschlüsselung",
+        "content": "Alle Nachrichten werden auf deinem Gerät mit Curve25519 ECDH-Schlüsselaustausch und XSalsa20-Poly1305-Verschlüsselung vor der Übertragung verschlüsselt. Verschlüsselungsschlüssel werden lokal in deinem Browser generiert und nie an unsere Server gesendet. Selbst unter rechtlichem Zwang können wir keine Nachrichteninhalte liefern — wir haben sie nicht."
+      },
+      "5": {
+        "title": "Cookies & Lokaler Speicher",
+        "content": "BLIP verwendet minimalen lokalen Speicher für: Theme-Einstellungen (Dunkel-/Hellmodus), Spracheinstellungen und temporäre Verschlüsselungsschlüssel während aktiver Sitzungen. Wir verwenden keine Tracking-Cookies, Analyse-Cookies oder Drittanbieter-Werbe-Cookies. Verschlüsselungsschlüssel werden automatisch zerstört, wenn du den Browser-Tab schließt."
+      },
+      "6": {
+        "title": "Drittanbieter-Dienste",
+        "content": "BLIP nutzt Supabase für Echtzeit-WebSocket-Kommunikation (nur Nachrichtenweiterleitung, keine Speicherung). Wir zeigen möglicherweise kontextbezogene Werbung an. Werbeanbieter können eigene Cookies verwenden, die ihren Datenschutzrichtlinien unterliegen. Wir teilen nie Gesprächsdaten mit Werbetreibenden — weil wir keine haben."
+      },
+      "7": {
+        "title": "Datenschutz für Kinder",
+        "content": "BLIP ist nicht für Nutzer unter 13 Jahren bestimmt. Da wir keine persönlichen Daten sammeln, können wir das Alter nicht überprüfen. Wenn du glaubst, dass ein Kind diesen Dienst unangemessen nutzt, kontaktiere uns bitte."
+      },
+      "8": {
+        "title": "Änderungen & Kontakt",
+        "content": "Wir können diese Richtlinie aktualisieren, um Änderungen in unseren Praktiken oder für die Einhaltung gesetzlicher Vorschriften widerzuspiegeln. Wesentliche Änderungen werden auf dieser Seite veröffentlicht. Da wir keine E-Mail-Adressen sammeln, können wir keine Benachrichtigungen senden — bitte überprüfe diese Seite regelmäßig. Für Fragen besuche unser GitHub-Repository."
+      },
+      "9": {
+        "title": "Community",
+        "content": "BLIP Community speichert verschlüsselte Beiträge in unserer Datenbank. Alle Beitragsinhalte und Autorennamen werden clientseitig mit XSalsa20-Poly1305 vor der Speicherung verschlüsselt — der Server enthält nur unlesbaren Chiffretext. Melde-Fingerabdrücke (anonymisierter Hash von Verbindungsmetadaten) werden aufbewahrt, um doppelte Meldungen zu verhindern. Wenn du dein Community-Passwort in deinem Browser speicherst, wird es nur im localStorage auf deinem Gerät gespeichert — nie an unsere Server übertragen. Community-Daten können vom Community-Administrator jederzeit dauerhaft gelöscht werden."
+      }
+    }
+  },
+  "Terms": {
+    "title": "Nutzungsbedingungen",
+    "subtitle": "Allgemeine Geschäftsbedingungen",
+    "lastUpdated": "Zuletzt aktualisiert: Februar 2026",
+    "intro": "Durch die Nutzung von BLIP stimmst du diesen Bedingungen zu. Sie sind kurz, ehrlich und in einfacher Sprache geschrieben — genau wie unser Code.",
+    "sections": {
+      "1": {
+        "title": "Was BLIP ist",
+        "content": "BLIP ist ein kostenloser, quelloffener, Ende-zu-Ende verschlüsselter ephemerer Chat-Dienst. Er bietet temporäre Kommunikationskanäle, die nach Gebrauch zerstört werden. BLIP ist kein Messenger, kein soziales Netzwerk und keine Datenspeicherplattform. Es ist ein Einweg-Kommunikationswerkzeug."
+      },
+      "2": {
+        "title": "Keine Konten erforderlich",
+        "content": "BLIP funktioniert ohne Benutzerregistrierung, Anmeldedaten oder persönliche Profile. Der Zugang wird über temporäre Raum-Links und geteilte Passwörter gewährt. Du bist für die Sicherung deiner Raum-Passwörter verantwortlich — wir können sie nicht wiederherstellen."
+      },
+      "3": {
+        "title": "Akzeptable Nutzung",
+        "content": "Du stimmst zu, BLIP nicht zu verwenden für: Verbreitung illegaler Inhalte, Belästigung oder Drohungen, Übertragung von Malware, automatisierten Spam oder Missbrauch, oder jede Aktivität, die gegen geltendes Recht verstößt. Obwohl wir verschlüsselte Inhalte nicht überwachen können, behalten wir uns das Recht vor, den Zugang zu unserer Infrastruktur einzuschränken, wenn Missbrauch auf Netzwerkebene erkannt wird."
+      },
+      "4": {
+        "title": "Keine Datenwiederherstellung",
+        "content": "Nachrichten werden in keiner Datenbank gespeichert. Sobald ein Chatraum zerstört wird, sind alle Gesprächsdaten dauerhaft und unwiderruflich verloren. Das ist beabsichtigt, keine Einschränkung. Verwende BLIP nicht für Kommunikation, die du aufbewahren musst."
+      },
+      "5": {
+        "title": "Open Source",
+        "content": "BLIPs Quellcode ist öffentlich zugänglich. Du kannst die Codebasis frei einsehen, forken und dazu beitragen. Die Transparenz unseres Codes ist unsere stärkste Datenschutzgarantie. Du kannst jede Behauptung überprüfen, die wir aufstellen."
+      },
+      "6": {
+        "title": "Dienstverfügbarkeit",
+        "content": "BLIP wird auf einer 'Wie besehen'-Basis bereitgestellt. Wir geben keine Garantien für Betriebszeit, Verfügbarkeit oder unterbrechungsfreien Dienst. Wir können den Dienst jederzeit ohne vorherige Ankündigung ändern, aussetzen oder einstellen."
+      },
+      "7": {
+        "title": "Haftungsbeschränkung",
+        "content": "Im gesetzlich maximal zulässigen Umfang haften BLIP und seine Betreiber nicht für direkte, indirekte, beiläufige oder Folgeschäden, die aus deiner Nutzung des Dienstes entstehen. Dies umfasst, ist aber nicht beschränkt auf Datenverlust (der die Kernfunktion ist), Dienstunterbrechungen und unbefugten Zugriff auf deine Kommunikation."
+      },
+      "8": {
+        "title": "Geistiges Eigentum",
+        "content": "Der Name BLIP, das Logo und die Markenelemente sind geschützt. Die Service-Codebasis wird unter einer Open-Source-Lizenz veröffentlicht. Benutzergenerierte Inhalte in Chaträumen gehören den Nutzern — obwohl sie designbedingt aufhören zu existieren, nachdem der Raum zerstört wird."
+      },
+      "9": {
+        "title": "Änderungen & Geltendes Recht",
+        "content": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung von BLIP nach Änderungen stellt die Akzeptanz der aktualisierten Bedingungen dar. Diese Bedingungen unterliegen dem Recht der Republik Korea. Streitigkeiten unterliegen der ausschließlichen Zuständigkeit des Zentralen Bezirksgerichts Seoul."
+      },
+      "10": {
+        "title": "Community",
+        "content": "BLIP Community-Räume sind verschlüsselte Gruppenräume, in denen Beiträge als Chiffretext in unserer Datenbank gespeichert werden. Obwohl wir Beitragsinhalte nicht lesen können, stimmst du zu, Communities nicht zur Verbreitung illegaler Materialien, Belästigung oder verbotener Aktivitäten zu nutzen. Beiträge können basierend auf Community-Meldungen automatisch ausgeblendet werden. Community-Administratoren können Beiträge löschen und Communities dauerhaft zerstören. Bei Eingang einer gültigen rechtlichen Anfrage werden wir die verschlüsselten Daten der angegebenen Community löschen — obwohl wir deren entschlüsselten Inhalt nicht bereitstellen können."
+      },
+      "11": {
+        "title": "Pflichten des Community-Administrators",
+        "content": "Durch das Erstellen einer Community übernimmst du die Rolle des Administrators und trägst die volle Verwaltungsverantwortung. Administratoren müssen: (1) ihre Community aktiv überwachen und verwalten, um illegale Inhalte, Belästigung, Spam und andere verbotene Aktivitäten zu verhindern; (2) zeitnah auf Nutzermeldungen reagieren und angemessene Maßnahmen ergreifen, einschließlich Beitragslöschung oder Nutzerbeschränkung; (3) den Admin-Token sicher aufbewahren — BLIP kann verlorene Token nicht wiederherstellen oder neu ausstellen. Bei Verlust des Admin-Tokens musst du dies unverzüglich dem BLIP-Betriebsteam melden. Nach Eingang der Meldung wird die Community geschlossen und der Administrator muss eine neue Community erstellen, um die Mitglieder zu migrieren; (4) alle geltenden Gesetze bezüglich nutzergenerierter Inhalte in ihrer Community einhalten. BLIP stellt nur Verschlüsselung und Infrastruktur bereit. Da alle Inhalte Ende-zu-Ende verschlüsselt und für BLIP unlesbar sind, trägt der Administrator die alleinige Verantwortung für die Inhalte und Aktivitäten innerhalb seiner Community. BLIP haftet nicht für Schäden, rechtliche Probleme oder Streitigkeiten, die aus Inhalten in vom Administrator verwalteten Communities entstehen."
+      }
+    }
+  },
+  "Metadata": {
+    "title": "BLIP - Sprich. Dann verschwinde.",
+    "description": "Einweg-Chat, den nur du und dein Partner sehen können. Keine Konten. Keine Spuren. Kein Verlauf. Private Gespräche, die verschwinden.",
+    "roomTitle": "BLIP - Einem privaten Chat beitreten",
+    "roomDescription": "Du wurdest zu einem privaten Chat eingeladen, den nur Teilnehmer lesen können. Tritt sofort bei, kein Konto nötig.",
+    "boardTitle": "BLIP - Private Community",
+    "boardDescription": "Tritt einer privaten verschlüsselten Community bei, die nur Mitglieder sehen können."
+  },
+  "Board": {
+    "create": {
+      "title": "COMMUNITY ERSTELLT",
+      "subtitle": "Private Community erstellen",
+      "createButton": "Community erstellen",
+      "namePlaceholder": "Community-Name",
+      "password": "Community-Passwort",
+      "adminToken": "Admin-Token",
+      "adminTokenWarning": "Speichere diesen Token — er kann nicht wiederhergestellt werden",
+      "shareLink": "Link teilen",
+      "enter": "Community betreten"
+    },
+    "header": {
+      "encrypted": "E2E-verschlüsselt",
+      "admin": "Admin-Panel",
+      "forgetPassword": "Gespeichertes Passwort vergessen",
+      "forgetPasswordConfirm": "Das gespeicherte Passwort auf diesem Gerät wird gelöscht. Du musst beim nächsten Besuch das Passwort erneut eingeben.",
+      "cancel": "Abbrechen",
+      "confirmForget": "Löschen",
+      "registerAdmin": "Admin-Token registrieren",
+      "adminTokenPlaceholder": "Admin-Token hier einfügen",
+      "confirmRegister": "Registrieren"
+    },
+    "post": {
+      "placeholder": "Schreibe etwas... (Markdown unterstützt)",
+      "submit": "Posten",
+      "compose": "Neuer Beitrag",
+      "detail": "Beitrag",
+      "empty": "Noch keine Beiträge",
+      "writeFirst": "Schreibe den ersten Beitrag",
+      "refresh": "Aktualisieren",
+      "attachImage": "Medien anhängen",
+      "maxImages": "Max. 4 Dateien",
+      "imageTooLarge": "Datei zu groß",
+      "uploading": "Wird hochgeladen...",
+      "titlePlaceholder": "Titel (optional)",
+      "insertInline": "In Inhalt einfügen",
+      "edit": "Bearbeiten",
+      "editTitle": "Beitrag bearbeiten",
+      "save": "Speichern",
+      "delete": "Löschen",
+      "adminDelete": "Löschen (Admin)",
+      "deleteWarning": "Dieser Beitrag wird dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
+      "confirmDelete": "Löschen"
+    },
+    "report": {
+      "title": "Beitrag melden",
+      "spam": "Spam",
+      "abuse": "Missbrauch / Belästigung",
+      "illegal": "Illegaler Inhalt",
+      "other": "Sonstiges",
+      "submit": "Melden",
+      "cancel": "Abbrechen",
+      "alreadyReported": "Bereits gemeldet"
+    },
+    "blinded": {
+      "message": "Durch Community-Meldungen ausgeblendet"
+    },
+    "admin": {
+      "title": "Admin-Panel",
+      "destroy": "Community zerstören",
+      "destroyWarning": "Dies wird die Community und alle Beiträge dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirmDestroy": "Zerstören"
+    },
+    "destroyed": {
+      "title": "Community zerstört",
+      "message": "Diese Community wurde dauerhaft gelöscht."
+    },
+    "dashboard": {
+      "title": "Meine Communities",
+      "empty": "Keine gespeicherten Communities",
+      "remove": "Entfernen",
+      "removeConfirm": "Diese Community entfernen?",
+      "removeAdminWarning": "Du hast Admin-Zugang — Serverdaten werden ebenfalls gelöscht.",
+      "removeLocalOnly": "Dies entfernt sie nur von diesem Gerät.",
+      "cancel": "Abbrechen",
+      "confirmRemove": "Entfernen",
+      "admin": "Admin",
+      "destroying": "Wird gelöscht..."
+    }
+  }
+}

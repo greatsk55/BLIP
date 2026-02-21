@@ -65,9 +65,9 @@
     "easterEgg": "このページもすぐに消えるかもしれません。",
     "supportProtocol": "プロトコルを維持する",
     "links": {
-      "about": "About",
-      "howItWorks": "How it Works",
-      "faq": "FAQ",
+      "about": "サービス紹介",
+      "howItWorks": "仕組み",
+      "faq": "よくある質問",
       "board": "プライベートコミュニティ",
       "privacy": "プライバシー",
       "terms": "利用規約",
@@ -110,48 +110,48 @@
           "1": "E2EEテキストチャット（Curve25519 ECDH + XSalsa20-Poly1305）",
           "2": "リンク共有でワンクリックルーム作成",
           "3": "アカウント不要 — 完全匿名",
-          "4": "6言語対応（EN, KO, JA, ZH, ES, FR）",
+          "4": "8言語対応（EN, KO, JA, ZH, ZH-TW, ES, FR, DE）",
           "5": "100%オープンソースコードベース"
         }
       }
     }
   },
   "About": {
-    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
-    "subtitle": "BLIP Service Philosophy",
+    "title": "デジタル永遠の時代に、<br></br>私たちは「忘却」を設計します。",
+    "subtitle": "BLIPサービス哲学",
     "section1": {
-      "title": "The Right to be Forgotten",
-      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+      "title": "忘れられる権利",
+      "description": "すべてがクラウドに永久保存される世界は恐ろしいものです。あなたのちょっとした冗談、秘密の悩み、一瞬の感情は、データセンターの冷たいハードディスクではなく、空気中に散っていくべきです。"
     },
     "section2": {
-      "title": "True E2EE (End-to-End Encryption)",
-      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+      "title": "真のE2EE（エンドツーエンド暗号化）",
+      "description": "BLIPはあなたの会話を「届ける」だけで、「解読する」ことはできません。暗号化キーはあなたと相手のデバイスにのみ存在します。サーバーは暗号化されたデータが流れるパイプに過ぎません。"
     },
-    "closing": "Communicate without traces. Be free."
+    "closing": "痕跡なく、自由にコミュニケーション。"
   },
   "HowItWorks": {
-    "title": "Don't Trust.<br></br>Verify.",
-    "subtitle": "Technical Architecture",
+    "title": "信用するな。<br></br>検証せよ。",
+    "subtitle": "技術アーキテクチャ",
     "description": "BLIPのセキュリティは魔法ではありません。検証可能な数学と透明な技術です。",
     "steps": {
       "1": {
-        "title": "1. Local Key Generation",
-        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+        "title": "1. ローカル鍵生成",
+        "description": "チャットルームを作成した瞬間、使い捨ての暗号化キーがブラウザ内で生成されます。このキーはサーバーに送信されることはありません。"
       },
       "2": {
-        "title": "2. Client-Side Encryption",
-        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+        "title": "2. クライアント側暗号化",
+        "description": "すべてのメッセージは送信前にデバイス上で暗号化されます。サーバーには暗号化された暗号文しか見えません。"
       },
       "3": {
-        "title": "3. In-Memory Transit",
-        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+        "title": "3. インメモリ転送",
+        "description": "送信データはRAM（揮発性メモリ）に一時的に滞留し、配信後すぐに削除されます。ディスクに書き込まれないため、復元は物理的に不可能です。"
       }
     },
-    "opensource": "Verify Code"
+    "opensource": "コードを検証する"
   },
   "FAQ": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Whatever you are curious about",
+    "title": "よくある質問",
+    "subtitle": "気になることは何でも",
     "items": {
       "1": {
         "question": "本当にログは残らないのですか？",

@@ -59,15 +59,15 @@
   },
   "Philosophy": {
     "text1": "BLIP不是信使。它是用完即弃的通讯工具。",
-    "text2": "我们要留住你。说完就走。"
+    "text2": "我们不想留住你。说完就走。"
   },
   "Footer": {
     "easterEgg": "这个页面也可能很快消失。",
     "supportProtocol": "支持协议",
     "links": {
-      "about": "About",
-      "howItWorks": "How it Works",
-      "faq": "FAQ",
+      "about": "关于我们",
+      "howItWorks": "运作原理",
+      "faq": "常见问题",
       "board": "私密社区",
       "privacy": "隐私政策",
       "terms": "使用条款",
@@ -110,48 +110,48 @@
           "1": "E2EE文字聊天（Curve25519 ECDH + XSalsa20-Poly1305）",
           "2": "一键创建房间并分享链接",
           "3": "无需账号 — 完全匿名",
-          "4": "支持6种语言（EN, KO, JA, ZH, ES, FR）",
+          "4": "支持8种语言（EN, KO, JA, ZH, ZH-TW, ES, FR, DE）",
           "5": "100%开源代码库"
         }
       }
     }
   },
   "About": {
-    "title": "In the Age of Digital Eternity,<br></br>We Design 'Oblivion'.",
-    "subtitle": "BLIP Service Philosophy",
+    "title": "在数字永恒的时代，<br></br>我们设计「遗忘」。",
+    "subtitle": "BLIP 服务哲学",
     "section1": {
-      "title": "The Right to be Forgotten",
-      "description": "A world where everything is permanently stored in the cloud is terrifying. Your small jokes, secret worries, and fleeting emotions should scatter into the air, not sit on a cold hard drive in a data center."
+      "title": "被遗忘的权利",
+      "description": "一切都永久存储在云端的世界令人恐惧。你的小玩笑、秘密烦恼和转瞬即逝的情感，应该消散在空气中，而不是躺在数据中心冰冷的硬盘上。"
     },
     "section2": {
-      "title": "True E2EE (End-to-End Encryption)",
-      "description": "BLIP only 'delivers' your conversation; it cannot 'decrypt' it. The encryption keys exist only on your and the recipient's devices. The server is just a pipe through which encrypted data flows."
+      "title": "真正的E2EE（端到端加密）",
+      "description": "BLIP只负责「传递」你的对话，无法「解密」。加密密钥仅存在于你和对方的设备上。服务器只是加密数据流经的管道。"
     },
-    "closing": "Communicate without traces. Be free."
+    "closing": "无痕沟通。自由自在。"
   },
   "HowItWorks": {
-    "title": "Don't Trust.<br></br>Verify.",
-    "subtitle": "Technical Architecture",
+    "title": "不要信任。<br></br>去验证。",
+    "subtitle": "技术架构",
     "description": "BLIP的安全不是魔法，而是可验证的数学和透明的技术。",
     "steps": {
       "1": {
-        "title": "1. Local Key Generation",
-        "description": "The moment you create a chat room, a disposable encryption key is generated in your browser. This key is never sent to the server."
+        "title": "1. 本地密钥生成",
+        "description": "创建聊天室的瞬间，一次性加密密钥在浏览器中生成。该密钥永远不会发送到服务器。"
       },
       "2": {
-        "title": "2. Client-Side Encryption",
-        "description": "Every message is encrypted on your device before transmission. The server sees nothing but encrypted ciphertext."
+        "title": "2. 客户端加密",
+        "description": "每条消息在发送前都在你的设备上加密。服务器只能看到加密后的密文。"
       },
       "3": {
-        "title": "3. In-Memory Transit",
-        "description": "Transmitted data resides briefly in RAM (volatile memory) and is deleted immediately upon delivery. Since it's never written to disk, recovery is physically impossible."
+        "title": "3. 内存中转",
+        "description": "传输数据短暂驻留在RAM（易失性内存）中，交付后立即删除。由于从不写入磁盘，恢复在物理上不可能。"
       }
     },
-    "opensource": "Verify Code"
+    "opensource": "查看代码"
   },
   "FAQ": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Whatever you are curious about",
+    "title": "常见问题",
+    "subtitle": "你想知道的一切",
     "items": {
       "1": {
         "question": "真的不会留下任何记录吗？",
