@@ -42,6 +42,14 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
   const [showLeaveModal, setShowLeaveModal] = useState(false);
   const [viewerImage, setViewerImage] = useState<string | null>(null);
   const messageAreaRef = useRef<ChatMessageAreaHandle>(null);
+  const blobUrlsRef = useRef<Set<string>>(new Set());
+
+  // 미디어 blob URL 정리
+  useEffect(() => {
+    return () => {
+      blobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, []);
 
   // 채팅 입장 시 브라우저 알림 권한 요청
   useEffect(() => {
@@ -99,6 +107,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
       if (mediaType === 'image') {
         const thumb = await createImageThumbnail(file);
         thumbnailUrl = URL.createObjectURL(thumb.blob);
+        blobUrlsRef.current.add(thumbnailUrl);
         metadata = {
           fileName: file.name,
           mimeType: file.type,
@@ -110,6 +119,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
         try {
           const { thumbnail, metadata: videoMeta } = await createVideoThumbnail(file);
           thumbnailUrl = URL.createObjectURL(thumbnail);
+          blobUrlsRef.current.add(thumbnailUrl);
           metadata = {
             fileName: file.name,
             mimeType: file.type,
@@ -129,6 +139,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
 
       // 전송 중 메시지 (프로그레스 표시)
       const localUrl = URL.createObjectURL(file);
+      blobUrlsRef.current.add(localUrl);
       chat.addMediaMessage({
         id: transferId,
         senderId: chat.myId,

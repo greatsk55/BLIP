@@ -30,6 +30,7 @@ export type WebRTCState = 'idle' | 'connecting' | 'connected' | 'failed' | 'clos
 
 interface UseWebRTCOptions {
   enabled: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   channel: any; // Supabase RealtimeChannel (send 전용)
   sharedSecret: Uint8Array | null;
   isInitiator: boolean;
@@ -221,25 +222,25 @@ export function useWebRTC({
     let isMounted = true;
 
     // 시그널링 큐: TURN fetch 완료 전 도착한 메시지 보관
-    const pendingSignals: { type: string; payload: any }[] = [];
+    const pendingSignals: { type: string; payload: Record<string, unknown> }[] = [];
     let pcReady = false;
 
     // Supabase broadcast payload 추출 — 중첩 깊이에 상관없이 ciphertext를 찾음
     // self: false 설정으로 자기 자신의 브로드캐스트는 수신하지 않으므로 senderId 체크 불필요
-    function extractCrypto(raw: any): { ciphertext: string; nonce: string } | null {
+    function extractCrypto(raw: Record<string, unknown>): { ciphertext: string; nonce: string } | null {
       // ciphertext가 나올 때까지 .payload 를 최대 3단계 unwrap
-      let obj = raw;
+      let obj: Record<string, unknown> = raw;
       for (let i = 0; i < 3; i++) {
-        if (obj?.ciphertext && obj?.nonce) return obj;
-        if (obj?.payload !== undefined) obj = obj.payload;
+        if (obj?.ciphertext && obj?.nonce) return obj as { ciphertext: string; nonce: string };
+        if (obj?.payload !== undefined) obj = obj.payload as Record<string, unknown>;
         else break;
       }
-      if (obj?.ciphertext && obj?.nonce) return obj;
+      if (obj?.ciphertext && obj?.nonce) return obj as { ciphertext: string; nonce: string };
       return null;
     }
 
     // --- 시그널링 핸들러 ---
-    async function processOffer(payload: any) {
+    async function processOffer(payload: Record<string, unknown>) {
       if (!sharedSecretRef.current || !pcRef.current) {
         log('processOffer SKIPPED — no pc or no secret');
         return;
@@ -282,7 +283,7 @@ export function useWebRTC({
       }
     }
 
-    async function processAnswer(payload: any) {
+    async function processAnswer(payload: Record<string, unknown>) {
       if (!sharedSecretRef.current || !pcRef.current) {
         log('processAnswer SKIPPED — no pc or no secret');
         return;
@@ -307,7 +308,7 @@ export function useWebRTC({
       }
     }
 
-    async function processIce(payload: any) {
+    async function processIce(payload: Record<string, unknown>) {
       if (!sharedSecretRef.current || !pcRef.current) return;
       const crypto = extractCrypto(payload);
       if (!crypto) return;
@@ -323,15 +324,15 @@ export function useWebRTC({
     }
 
     // 시그널 도착 시: PC 준비됐으면 바로 처리, 아니면 큐에 보관
-    function handleOffer(payload: any) {
+    function handleOffer(payload: Record<string, unknown>) {
       if (pcReady) processOffer(payload);
       else pendingSignals.push({ type: 'offer', payload });
     }
-    function handleAnswer(payload: any) {
+    function handleAnswer(payload: Record<string, unknown>) {
       if (pcReady) processAnswer(payload);
       else pendingSignals.push({ type: 'answer', payload });
     }
-    function handleIce(payload: any) {
+    function handleIce(payload: Record<string, unknown>) {
       if (pcReady) processIce(payload);
       else pendingSignals.push({ type: 'ice', payload });
     }
@@ -408,12 +409,13 @@ export function useWebRTC({
 
       // 4. PC 준비 완료 → 큐에 쌓인 시그널 처리
       pcReady = true;
-      for (const signal of pendingSignals) {
+      // splice로 현재 큐만 꺼내서 처리 (처리 중 새 신호 도착 시 중복 방지)
+      const signals = pendingSignals.splice(0);
+      for (const signal of signals) {
         if (signal.type === 'offer') await processOffer(signal.payload);
         else if (signal.type === 'answer') await processAnswer(signal.payload);
         else if (signal.type === 'ice') await processIce(signal.payload);
       }
-      pendingSignals.length = 0;
 
       // 5. Initiator: DataChannel 생성 + Offer 전송
       if (isInitiator) {
@@ -431,7 +433,7 @@ export function useWebRTC({
           JSON.stringify(offer),
           sharedSecretRef.current
         );
-        channel.send({
+        channel?.send({
           type: 'broadcast',
           event: 'webrtc_offer',
           payload: {

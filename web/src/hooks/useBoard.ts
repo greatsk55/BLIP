@@ -181,12 +181,15 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const usernameRef = useRef(getOrCreateUsername(boardId));
   const cursorRef = useRef<string | undefined>(undefined);
   const loadingRef = useRef(false);
+  const isMountedRef = useRef(true);
   // 복호화된 blob URL 추적 (unmount 시 cleanup)
   const blobUrlsRef = useRef<Set<string>>(new Set());
 
   // blob URL cleanup on unmount
   useEffect(() => {
+    isMountedRef.current = true;
     return () => {
+      isMountedRef.current = false;
       blobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
     };
   }, []);
@@ -288,6 +291,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
 
     try {
       const result = await getPosts(boardId, keyHash, cursor);
+      if (!isMountedRef.current) return;
 
       if ('error' in result) return;
 
@@ -361,6 +365,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         });
       }
 
+      if (!isMountedRef.current) return;
       setHasMore(result.hasMore);
       if (result.posts.length > 0) {
         cursorRef.current = result.posts[result.posts.length - 1].id;
@@ -416,6 +421,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       }
     }
 
+    if (!isMountedRef.current) return;
     if (decryptedImages.length > 0) {
       setPosts((prev) =>
         prev.map((p) =>

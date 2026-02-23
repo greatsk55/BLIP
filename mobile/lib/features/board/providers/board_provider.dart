@@ -59,6 +59,7 @@ class BoardState {
     String? myUsername,
     bool? isPasswordSaved,
     String? adminToken,
+    bool clearAdminToken = false,
     String? errorCode,
   }) {
     return BoardState(
@@ -69,7 +70,7 @@ class BoardState {
       hasMore: hasMore ?? this.hasMore,
       myUsername: myUsername ?? this.myUsername,
       isPasswordSaved: isPasswordSaved ?? this.isPasswordSaved,
-      adminToken: adminToken ?? this.adminToken,
+      adminToken: clearAdminToken ? null : (adminToken ?? this.adminToken),
       errorCode: errorCode ?? this.errorCode,
     );
   }
@@ -539,7 +540,7 @@ class BoardNotifier extends StateNotifier<BoardState> {
   /// 관리자 토큰 삭제
   Future<void> forgetAdminToken() async {
     await _secureStorage.delete(key: '$_adminPrefix$boardId');
-    state = state.copyWith(adminToken: null);
+    state = state.copyWith(clearAdminToken: true);
   }
 
   /// 저장된 비밀번호 삭제

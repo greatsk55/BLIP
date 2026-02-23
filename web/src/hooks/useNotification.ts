@@ -48,6 +48,11 @@ export function useNotification(): UseNotificationReturn {
       if (titleIntervalRef.current) {
         clearInterval(titleIntervalRef.current);
       }
+      // AudioContext 리소스 해제
+      if (audioContextRef.current) {
+        audioContextRef.current.close().catch(() => {});
+        audioContextRef.current = null;
+      }
     };
   }, []);
 

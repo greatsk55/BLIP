@@ -22,7 +22,7 @@ export function generateRoomPassword(): string {
  * @returns "a7x2k9m3" 형태의 방 ID
  */
 export function generateRoomId(): string {
-  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
   const charset = 'abcdefghjkmnpqrstuvwxyz23456789';
   return Array.from(bytes)
     .map((b) => charset[b % charset.length])

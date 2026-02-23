@@ -52,6 +52,13 @@ function limitMessages(messages: DecryptedMessage[]): DecryptedMessage[] {
   return messages.slice(-MAX_VISIBLE_MESSAGES);
 }
 
+interface PresenceUser {
+  userId: string;
+  username: string;
+  publicKey?: string;
+  joinedAt?: number;
+}
+
 interface UseChatOptions {
   roomId: string;
   password: string;
@@ -59,9 +66,9 @@ interface UseChatOptions {
 }
 
 export type WebRTCSignalingHandlers = {
-  onOffer: (raw: any) => void;
-  onAnswer: (raw: any) => void;
-  onIce: (raw: any) => void;
+  onOffer: (raw: Record<string, unknown>) => void;
+  onAnswer: (raw: Record<string, unknown>) => void;
+  onIce: (raw: Record<string, unknown>) => void;
 };
 
 interface UseChatReturn {
@@ -90,6 +97,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const [peerConnected, setPeerConnected] = useState(false);
   const [sharedSecretState, setSharedSecretState] = useState<Uint8Array | null>(null);
   const [isInitiator, setIsInitiator] = useState(false);
+  const [channelState, setChannelState] = useState<ReturnType<typeof supabase.channel> | null>(null);
 
   const keyPairRef = useRef<KeyPair | null>(null);
   const sharedSecretRef = useRef<Uint8Array | null>(null);
@@ -173,6 +181,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
       });
       channelRef.current.unsubscribe();
       channelRef.current = null;
+      setChannelState(null);
     }
 
     // 인메모리 미디어 blob URL 해제
@@ -222,6 +231,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
 
         channelRef.current = channel;
+        setChannelState(channel);
 
         // 4. 공개키 교환 수신
         channel.on('broadcast', { event: 'key_exchange' }, (raw) => {
@@ -309,6 +319,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
             channelRef.current.untrack();
             channelRef.current.unsubscribe();
             channelRef.current = null;
+            setChannelState(null);
           }
 
           // DB 방 파쇄
@@ -326,8 +337,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           const state = channel.presenceState();
           const users = Object.values(state).flat();
           const peer = users.find(
-            (u: any) => u.userId !== myIdRef.current
-          ) as any;
+            (u) => (u as unknown as PresenceUser).userId !== myIdRef.current
+          ) as unknown as PresenceUser | undefined;
 
           // DB participant_count + status 업데이트
           if (authKeyHashRef.current) {
@@ -338,13 +349,14 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           if (users.length > 2) {
             // 가장 늦게 들어온 사용자가 자신이면 퇴장
             const sorted = [...users].sort(
-              (a: any, b: any) => (a.joinedAt ?? 0) - (b.joinedAt ?? 0)
+              (a, b) => ((a as unknown as PresenceUser).joinedAt ?? 0) - ((b as unknown as PresenceUser).joinedAt ?? 0)
             );
-            const latestUser = sorted[sorted.length - 1] as any;
+            const latestUser = sorted[sorted.length - 1] as unknown as PresenceUser | undefined;
             if (latestUser?.userId === myIdRef.current) {
               channel.untrack();
               channel.unsubscribe();
               channelRef.current = null;
+              setChannelState(null);
               keyPairRef.current = null;
               sharedSecretRef.current = null;
               if (isMounted) setStatus('room_full');
@@ -393,6 +405,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
               channelRef.current.untrack();
               channelRef.current.unsubscribe();
               channelRef.current = null;
+              setChannelState(null);
             }
 
             if (authKeyHashRef.current) {
@@ -465,6 +478,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
         channelRef.current.unsubscribe();
         channelRef.current = null;
+        setChannelState(null);
       }
       // 키 메모리 정리
       keyPairRef.current = null;
@@ -501,6 +515,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
         channelRef.current.unsubscribe();
         channelRef.current = null;
+        setChannelState(null);
       }
     };
 
@@ -525,7 +540,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
     addMediaMessage,
     updateTransferProgress,
     disconnect,
-    channel: channelRef.current,
+    channel: channelState,
     sharedSecret: sharedSecretState,
     isInitiator,
     myId: myIdRef.current,

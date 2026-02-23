@@ -6,6 +6,16 @@ import { generateRoomId, generateRoomPassword } from './password';
 import { deriveKeysFromPassword, hashAuthKey } from '@/lib/crypto';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
+/** 타이밍 공격 방어용 상수시간 문자열 비교 */
+function constantTimeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
 // IP당 1시간에 3개 방 생성
 const CREATE_ROOM_LIMIT = { windowMs: 3_600_000, maxRequests: 3 };
 // IP+방 조합당 1시간에 5회 비밀번호 시도
@@ -100,7 +110,7 @@ export async function verifyPassword(
   const { authKey } = await deriveKeysFromPassword(password, roomId);
   const authKeyHash = await hashAuthKey(authKey);
 
-  if (authKeyHash !== room.auth_key_hash) {
+  if (!constantTimeEqual(authKeyHash, room.auth_key_hash)) {
     return { valid: false, error: 'INVALID_PASSWORD' };
   }
 
@@ -145,22 +155,15 @@ export async function updateParticipantCount(
   const supabase = createServerSupabase();
 
   if (count === 0) {
-    // 'waiting' 상태(아무도 진입한 적 없음)에서는 파쇄하지 않음
-    // → Presence sync가 track() 전에 발생하여 0명으로 호출되는 race condition 방지
-    const { data: room } = await supabase
+    // 원자적 업데이트: SELECT + UPDATE 사이 race condition 제거
+    // WHERE 절에 status='active'와 auth_key_hash를 포함하여
+    // 이미 destroyed된 방이나 인증 불일치는 0행 업데이트 (무시)
+    await supabase
       .from('rooms')
-      .select('status, auth_key_hash')
+      .update({ status: 'destroyed', participant_count: 0 })
       .eq('id', roomId)
-      .single();
-
-    if (!room || room.auth_key_hash !== authKeyHash) return;
-
-    if (room.status === 'active') {
-      await supabase
-        .from('rooms')
-        .update({ status: 'destroyed', participant_count: 0 })
-        .eq('id', roomId);
-    }
+      .eq('auth_key_hash', authKeyHash)
+      .eq('status', 'active');
   } else {
     // 인증 검증을 WHERE 절에 포함 — 불일치 시 0행 업데이트 (무시)
     await supabase

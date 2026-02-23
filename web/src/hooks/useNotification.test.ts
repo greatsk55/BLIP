@@ -9,6 +9,7 @@ const mockStop = vi.fn();
 class MockAudioContext {
   state = 'running';
   resume = vi.fn();
+  close = vi.fn().mockResolvedValue(undefined);
   destination = {};
   currentTime = 0;
   createOscillator() {

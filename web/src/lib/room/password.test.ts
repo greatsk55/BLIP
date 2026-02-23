@@ -25,9 +25,9 @@ describe('generateRoomPassword', () => {
 });
 
 describe('generateRoomId', () => {
-  it('8자리 소문자+숫자이다', () => {
+  it('16자리 소문자+숫자이다 (128bit 엔트로피)', () => {
     const id = generateRoomId();
-    expect(id).toMatch(/^[a-z2-9]{8}$/);
+    expect(id).toMatch(/^[a-z2-9]{16}$/);
   });
 
   it('혼동 문자(0, o, 1, l, i)를 포함하지 않는다', () => {
