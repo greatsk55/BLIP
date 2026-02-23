@@ -21,6 +21,7 @@ import {
   adminDeletePost,
   deleteOwnPost,
   getBoardMeta,
+  updateBoardSubtitle,
 } from '@/lib/board/actions';
 import type { DecryptedPost, DecryptedPostImage, BoardStatus, ReportReason } from '@/types/board';
 
@@ -30,6 +31,7 @@ const STORAGE_PREFIX = 'blip-board-';
 const ADMIN_PREFIX = 'blip-board-admin-';
 const USERNAME_PREFIX = 'blip-board-user-';
 const NAME_PREFIX = 'blip-board-name-';
+const SUBTITLE_PREFIX = 'blip-board-subtitle-';
 
 function getSavedPassword(boardId: string): string | null {
   if (typeof window === 'undefined') return null;
@@ -82,11 +84,24 @@ function getSavedBoardName(boardId: string): string | null {
   return localStorage.getItem(`${NAME_PREFIX}${boardId}`);
 }
 
+// ─── 보드 부제목 캐시 ───
+
+export function saveBoardSubtitle(boardId: string, subtitle: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(`${SUBTITLE_PREFIX}${boardId}`, subtitle);
+}
+
+function getSavedBoardSubtitle(boardId: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(`${SUBTITLE_PREFIX}${boardId}`);
+}
+
 // ─── 저장된 커뮤니티 목록 (대시보드용) ───
 
 export interface SavedBoard {
   boardId: string;
   name: string | null;
+  subtitle: string | null;
   hasAdminToken: boolean;
 }
 
@@ -98,11 +113,12 @@ export function getSavedBoards(): SavedBoard[] {
     const key = localStorage.key(i);
     if (!key?.startsWith(STORAGE_PREFIX)) continue;
     // admin/user/name prefix 제외
-    if (key.startsWith(ADMIN_PREFIX) || key.startsWith(USERNAME_PREFIX) || key.startsWith(NAME_PREFIX)) continue;
+    if (key.startsWith(ADMIN_PREFIX) || key.startsWith(USERNAME_PREFIX) || key.startsWith(NAME_PREFIX) || key.startsWith(SUBTITLE_PREFIX)) continue;
     const boardId = key.slice(STORAGE_PREFIX.length);
     boards.push({
       boardId,
       name: getSavedBoardName(boardId),
+      subtitle: getSavedBoardSubtitle(boardId),
       hasAdminToken: !!getSavedAdminToken(boardId),
     });
   }
@@ -116,6 +132,7 @@ export function removeSavedBoard(boardId: string): void {
   localStorage.removeItem(`${ADMIN_PREFIX}${boardId}`);
   localStorage.removeItem(`${USERNAME_PREFIX}${boardId}`);
   localStorage.removeItem(`${NAME_PREFIX}${boardId}`);
+  localStorage.removeItem(`${SUBTITLE_PREFIX}${boardId}`);
 }
 
 // ─── 타입 ───
@@ -128,6 +145,7 @@ interface UseBoardReturn {
   // 상태
   status: BoardStatus;
   boardName: string | null;
+  boardSubtitle: string | null;
   posts: DecryptedPost[];
   hasMore: boolean;
   myUsername: string;
@@ -146,11 +164,13 @@ interface UseBoardReturn {
   saveAdminToken: (token: string) => void;
   forgetSavedAdminToken: () => void;
   decryptPostImages: (postId: string) => Promise<void>;
+  updateSubtitle: (subtitle: string) => Promise<{ error?: string }>;
 }
 
 export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const [status, setStatus] = useState<BoardStatus>('loading');
   const [boardName, setBoardName] = useState<string | null>(null);
+  const [boardSubtitle, setBoardSubtitle] = useState<string | null>(null);
   const [posts, setPosts] = useState<DecryptedPost[]>([]);
   const [hasMore, setHasMore] = useState(false);
   const [isPasswordSaved, setIsPasswordSaved] = useState(false);
@@ -231,6 +251,18 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
 
       // 이름 캐시 (대시보드 목록용)
       if (name) saveBoardName(boardId, name);
+
+      // 부제목 복호화 (옵셔널)
+      if (meta.encryptedSubtitle && meta.encryptedSubtitleNonce) {
+        const subtitle = decryptSymmetric(
+          { ciphertext: meta.encryptedSubtitle, nonce: meta.encryptedSubtitleNonce },
+          encryptionSeed
+        );
+        setBoardSubtitle(subtitle);
+        if (subtitle) saveBoardSubtitle(boardId, subtitle);
+      } else {
+        setBoardSubtitle(null);
+      }
 
       setStatus('browsing');
 
@@ -665,6 +697,40 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     setAdminToken(null);
   }, [boardId]);
 
+  const updateSubtitleFn = useCallback(
+    async (subtitle: string): Promise<{ error?: string }> => {
+      if (!adminToken || !encryptionKeyRef.current) {
+        return { error: 'NOT_ADMIN' };
+      }
+
+      const trimmed = subtitle.trim();
+
+      if (trimmed) {
+        const enc = encryptSymmetric(trimmed, encryptionKeyRef.current);
+        const result = await updateBoardSubtitle(
+          boardId,
+          adminToken,
+          enc.ciphertext,
+          enc.nonce
+        );
+        if (!result.success) return { error: result.error };
+        setBoardSubtitle(trimmed);
+        saveBoardSubtitle(boardId, trimmed);
+      } else {
+        // 빈 문자열 → 부제목 삭제
+        const result = await updateBoardSubtitle(boardId, adminToken);
+        if (!result.success) return { error: result.error };
+        setBoardSubtitle(null);
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem(`${SUBTITLE_PREFIX}${boardId}`);
+        }
+      }
+
+      return {};
+    },
+    [boardId, adminToken]
+  );
+
   const decryptPostImages = useCallback(
     async (postId: string) => {
       await decryptPostImagesInternal(postId);
@@ -676,6 +742,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   return {
     status,
     boardName,
+    boardSubtitle,
     posts,
     hasMore,
     myUsername: usernameRef.current,
@@ -692,5 +759,6 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     saveAdminToken: saveAdminTokenFn,
     forgetSavedAdminToken,
     decryptPostImages,
+    updateSubtitle: updateSubtitleFn,
   };
 }

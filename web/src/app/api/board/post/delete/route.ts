@@ -1,11 +1,31 @@
 import { deleteOwnPost } from '@/lib/board/actions';
+import { parseJsonBody, isString, checkOrigin } from '@/lib/api-utils';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+
+const POST_DELETE_LIMIT = { windowMs: 60_000, maxRequests: 5 };
 
 export async function POST(request: Request) {
   try {
-    const { boardId, postId, authKeyHash } = await request.json();
-    if (!boardId || !postId || !authKeyHash) {
+    if (!checkOrigin(request)) {
+      return Response.json({ success: false, error: 'FORBIDDEN' }, { status: 403 });
+    }
+
+    const ip = getClientIp(new Headers(request.headers));
+    const rateCheck = await checkRateLimit(`api:post:delete:${ip}`, POST_DELETE_LIMIT);
+    if (!rateCheck.allowed) {
+      return Response.json({ success: false, error: 'TOO_MANY_REQUESTS' }, { status: 429 });
+    }
+
+    const body = await parseJsonBody(request);
+    if (!body) {
+      return Response.json({ success: false, error: 'INVALID_JSON' }, { status: 400 });
+    }
+
+    const { boardId, postId, authKeyHash } = body;
+    if (!isString(boardId) || !isString(postId) || !isString(authKeyHash)) {
       return Response.json({ success: false, error: 'MISSING_PARAMS' }, { status: 400 });
     }
+
     const result = await deleteOwnPost(boardId, postId, authKeyHash);
     return Response.json(result);
   } catch {

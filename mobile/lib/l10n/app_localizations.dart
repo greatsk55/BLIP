@@ -1374,6 +1374,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove Admin Token'**
   String get boardAdminForgetToken;
+
+  /// Edit subtitle button
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Subtitle'**
+  String get boardAdminEditSubtitle;
+
+  /// Subtitle input placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Community subtitle (optional)'**
+  String get boardAdminSubtitlePlaceholder;
+
+  /// Save subtitle button
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get boardAdminSubtitleSave;
+
+  /// Subtitle placeholder on create form
+  ///
+  /// In en, this message translates to:
+  /// **'Subtitle (optional)'**
+  String get boardCreateSubtitlePlaceholder;
 }
 
 class _AppLocalizationsDelegate

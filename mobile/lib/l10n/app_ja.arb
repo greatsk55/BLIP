@@ -278,5 +278,10 @@
   "boardAdminRegister": "管理者トークン登録",
   "boardAdminTokenPlaceholder": "管理者トークンを入力...",
   "boardAdminConfirmRegister": "登録",
-  "boardAdminForgetToken": "管理者トークン解除"
+  "boardAdminForgetToken": "管理者トークン解除",
+
+  "boardAdminEditSubtitle": "サブタイトル編集",
+  "boardAdminSubtitlePlaceholder": "コミュニティのサブタイトル（任意）",
+  "boardAdminSubtitleSave": "保存",
+  "boardCreateSubtitlePlaceholder": "サブタイトル（任意）"
 }

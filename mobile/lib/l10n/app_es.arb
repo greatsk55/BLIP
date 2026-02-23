@@ -278,5 +278,10 @@
   "boardAdminRegister": "Registrar token de administrador",
   "boardAdminTokenPlaceholder": "Ingrese token de administrador...",
   "boardAdminConfirmRegister": "Registrar",
-  "boardAdminForgetToken": "Eliminar token de administrador"
+  "boardAdminForgetToken": "Eliminar token de administrador",
+
+  "boardAdminEditSubtitle": "Editar subtítulo",
+  "boardAdminSubtitlePlaceholder": "Subtítulo de la comunidad (opcional)",
+  "boardAdminSubtitleSave": "Guardar",
+  "boardCreateSubtitlePlaceholder": "Subtítulo (opcional)"
 }

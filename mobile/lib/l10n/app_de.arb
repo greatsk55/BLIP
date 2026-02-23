@@ -453,5 +453,14 @@
   "boardAdminConfirmRegister": "Registrieren",
   "@boardAdminConfirmRegister": { "description": "Confirm register button" },
   "boardAdminForgetToken": "Admin-Token entfernen",
-  "@boardAdminForgetToken": { "description": "Remove admin token button" }
+  "@boardAdminForgetToken": { "description": "Remove admin token button" },
+
+  "boardAdminEditSubtitle": "Untertitel bearbeiten",
+  "@boardAdminEditSubtitle": { "description": "Edit subtitle button" },
+  "boardAdminSubtitlePlaceholder": "Community-Untertitel (optional)",
+  "@boardAdminSubtitlePlaceholder": { "description": "Subtitle input placeholder" },
+  "boardAdminSubtitleSave": "Speichern",
+  "@boardAdminSubtitleSave": { "description": "Save subtitle button" },
+  "boardCreateSubtitlePlaceholder": "Untertitel (optional)",
+  "@boardCreateSubtitlePlaceholder": { "description": "Subtitle placeholder on create form" }
 }

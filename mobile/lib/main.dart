@@ -34,9 +34,8 @@ void main() async {
   // FCM 푸시 알림 초기화
   await PushService.instance.init();
 
-  // AdMob 초기화 + 오프닝 광고
+  // AdMob 초기화 (오프닝 광고는 3회차 실행부터 자동 표시)
   await AdService.instance.init();
-  AdService.instance.showInitialAppOpenAd();
 
   // 스크린샷/화면녹화 감지 채널 초기화
   ScreenshotDetector.init();

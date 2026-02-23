@@ -2,21 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
 
 /// AdMob 광고 서비스 (Singleton)
 /// - 전면광고: N번에 1번 표시
-/// - 오프닝광고: 앱 실행 / 포그라운드 복귀 시 표시
+/// - 오프닝광고: 3회차 실행부터 표시 (첫 2회는 스킵)
 class AdService with WidgetsBindingObserver {
   AdService._();
   static final AdService instance = AdService._();
+
+  static const _launchCountKey = 'ad_launch_count';
+  static const _appOpenMinLaunches = 3; // 3회차부터 App Open 광고
 
   bool _initialized = false;
   InterstitialAd? _interstitialAd;
   AppOpenAd? _appOpenAd;
   int _actionCount = 0;
   bool _isShowingAd = false;
+  int _launchCount = 0;
 
   static String get _interstitialAdUnitId => Platform.isAndroid
       ? AppConstants.admobInterstitialAndroid
@@ -30,6 +35,12 @@ class AdService with WidgetsBindingObserver {
     if (_initialized) return;
     await MobileAds.instance.initialize();
     _initialized = true;
+
+    // 런치 카운트 증가 및 저장
+    final prefs = await SharedPreferences.getInstance();
+    _launchCount = (prefs.getInt(_launchCountKey) ?? 0) + 1;
+    await prefs.setInt(_launchCountKey, _launchCount);
+
     _loadInterstitial();
     _loadAppOpenAd();
     WidgetsBinding.instance.addObserver(this);
@@ -96,9 +107,10 @@ class AdService with WidgetsBindingObserver {
     );
   }
 
-  /// 오프닝 광고 표시 (앱 실행 / 포그라운드 복귀)
+  /// 오프닝 광고 표시 — 3회차 실행부터만 표시
   void _showAppOpenAd() {
-    if (_isShowingAd) return; // 다른 광고 표시 중이면 스킵
+    if (_launchCount < _appOpenMinLaunches) return; // 첫 2회 스킵
+    if (_isShowingAd) return;
     if (_appOpenAd == null) return;
 
     final ad = _appOpenAd!;

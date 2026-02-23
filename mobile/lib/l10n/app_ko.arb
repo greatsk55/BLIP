@@ -278,5 +278,10 @@
   "boardAdminRegister": "관리자 토큰 등록",
   "boardAdminTokenPlaceholder": "관리자 토큰 입력...",
   "boardAdminConfirmRegister": "등록",
-  "boardAdminForgetToken": "관리자 토큰 해제"
+  "boardAdminForgetToken": "관리자 토큰 해제",
+
+  "boardAdminEditSubtitle": "부제목 편집",
+  "boardAdminSubtitlePlaceholder": "커뮤니티 부제목 (선택사항)",
+  "boardAdminSubtitleSave": "저장",
+  "boardCreateSubtitlePlaceholder": "부제목 (선택사항)"
 }

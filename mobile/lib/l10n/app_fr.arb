@@ -278,5 +278,10 @@
   "boardAdminRegister": "Enregistrer le jeton admin",
   "boardAdminTokenPlaceholder": "Entrez le jeton admin...",
   "boardAdminConfirmRegister": "Enregistrer",
-  "boardAdminForgetToken": "Supprimer le jeton admin"
+  "boardAdminForgetToken": "Supprimer le jeton admin",
+
+  "boardAdminEditSubtitle": "Modifier le sous-titre",
+  "boardAdminSubtitlePlaceholder": "Sous-titre de la communauté (optionnel)",
+  "boardAdminSubtitleSave": "Enregistrer",
+  "boardCreateSubtitlePlaceholder": "Sous-titre (optionnel)"
 }

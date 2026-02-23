@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 
 interface BoardHeaderProps {
   boardName: string;
+  boardSubtitle?: string | null;
   onAdmin: () => void;
   hasAdminToken: boolean;
   isPasswordSaved: boolean;
@@ -18,6 +19,7 @@ interface BoardHeaderProps {
 
 export default function BoardHeader({
   boardName,
+  boardSubtitle,
   onAdmin,
   hasAdminToken,
   isPasswordSaved,
@@ -45,9 +47,15 @@ export default function BoardHeader({
             <h1 className="font-mono text-sm text-ink uppercase tracking-wider truncate">
               {boardName}
             </h1>
-            <p className="font-mono text-[9px] text-signal-green/60 uppercase tracking-wider">
-              {t('header.encrypted')}
-            </p>
+            {boardSubtitle ? (
+              <p className="font-mono text-[10px] text-ghost-grey/60 truncate">
+                {boardSubtitle}
+              </p>
+            ) : (
+              <p className="font-mono text-[9px] text-signal-green/60 uppercase tracking-wider">
+                {t('header.encrypted')}
+              </p>
+            )}
           </div>
         </div>
 

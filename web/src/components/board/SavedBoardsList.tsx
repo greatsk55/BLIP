@@ -58,13 +58,20 @@ export default function SavedBoardsList() {
               href={`/board/${board.boardId}`}
               className="flex-1 min-w-0 flex items-center gap-2"
             >
-              <span className="font-mono text-sm text-ink truncate">
-                {board.name || board.boardId.slice(0, 8)}
-              </span>
+              <div className="min-w-0 flex-1">
+                <span className="font-mono text-sm text-ink truncate block">
+                  {board.name || board.boardId.slice(0, 8)}
+                </span>
+                {board.subtitle && (
+                  <span className="font-mono text-[10px] text-ghost-grey/50 truncate block">
+                    {board.subtitle}
+                  </span>
+                )}
+              </div>
               {board.hasAdminToken && (
-                <Shield className="w-3 h-3 text-signal-green/60 flex-shrink-0" />
+                <Shield className="w-3 h-3 text-signal-green/60 shrink-0" />
               )}
-              <ArrowRight className="w-3 h-3 text-ghost-grey/30 ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ArrowRight className="w-3 h-3 text-ghost-grey/30 ml-auto shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
 
             <button

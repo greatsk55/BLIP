@@ -659,4 +659,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => '管理者トークン解除';
+
+  @override
+  String get boardAdminEditSubtitle => 'サブタイトル編集';
+
+  @override
+  String get boardAdminSubtitlePlaceholder => 'コミュニティのサブタイトル（任意）';
+
+  @override
+  String get boardAdminSubtitleSave => '保存';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => 'サブタイトル（任意）';
 }

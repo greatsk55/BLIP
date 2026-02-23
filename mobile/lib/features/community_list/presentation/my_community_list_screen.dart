@@ -306,6 +306,19 @@ class _BoardCard extends StatelessWidget {
                                 color: isActive ? null : ghostGrey,
                               ),
                         ),
+                        if (board.boardSubtitle.isNotEmpty) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            board.boardSubtitle,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: ghostGrey.withValues(alpha: 0.7),
+                              fontFamily: 'monospace',
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                         const SizedBox(height: 4),
                         Text(
                           '${l10n.communityListJoinedAt} $dateStr',

@@ -688,4 +688,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => 'Supprimer le jeton admin';
+
+  @override
+  String get boardAdminEditSubtitle => 'Modifier le sous-titre';
+
+  @override
+  String get boardAdminSubtitlePlaceholder =>
+      'Sous-titre de la communauté (optionnel)';
+
+  @override
+  String get boardAdminSubtitleSave => 'Enregistrer';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => 'Sous-titre (optionnel)';
 }

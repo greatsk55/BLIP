@@ -5,6 +5,7 @@ import type { EncryptedPayload } from './chat';
 export interface Board {
   id: string;
   encryptedName: EncryptedPayload;
+  encryptedSubtitle?: EncryptedPayload;
   status: 'active' | 'archived' | 'destroyed';
   createdAt: string;
   maxParticipants: number;

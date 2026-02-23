@@ -1,20 +1,29 @@
 import { createServerSupabase } from '@/lib/supabase/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { parseJsonBody, isStringArray, checkOrigin } from '@/lib/api-utils';
 
 // IP당 분당 10회
 const BATCH_STATUS_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
 export async function POST(request: Request) {
   try {
+    if (!checkOrigin(request)) {
+      return Response.json({ error: 'FORBIDDEN' }, { status: 403 });
+    }
+
     const ip = getClientIp(new Headers(request.headers));
     const rateCheck = await checkRateLimit(`room:batch:${ip}`, BATCH_STATUS_LIMIT);
     if (!rateCheck.allowed) {
       return Response.json({ error: 'TOO_MANY_REQUESTS' }, { status: 429 });
     }
 
-    const { roomIds } = await request.json();
+    const body = await parseJsonBody(request);
+    if (!body) {
+      return Response.json({ error: 'INVALID_JSON' }, { status: 400 });
+    }
 
-    if (!Array.isArray(roomIds) || roomIds.length === 0 || roomIds.length > 50) {
+    const { roomIds } = body;
+    if (!isStringArray(roomIds) || roomIds.length === 0 || roomIds.length > 50) {
       return Response.json(
         { error: 'INVALID_PARAMS' },
         { status: 400 }
@@ -35,7 +44,6 @@ export async function POST(request: Request) {
     const now = new Date();
     const statuses: Record<string, string> = {};
 
-    // 존재하는 방 상태 매핑
     for (const room of rooms ?? []) {
       if (new Date(room.expires_at) < now) {
         statuses[room.id] = 'expired';
@@ -44,7 +52,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // 존재하지 않는 방은 'not_found'
     for (const id of roomIds) {
       if (!statuses[id]) {
         statuses[id] = 'not_found';

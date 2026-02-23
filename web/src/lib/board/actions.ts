@@ -88,7 +88,9 @@ export async function updateBoardName(
   boardId: string,
   authKeyHash: string,
   encryptedName: string,
-  encryptedNameNonce: string
+  encryptedNameNonce: string,
+  encryptedSubtitle?: string,
+  encryptedSubtitleNonce?: string
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = createServerSupabase();
 
@@ -101,12 +103,67 @@ export async function updateBoardName(
   if (!board) return { success: false, error: 'BOARD_NOT_FOUND' };
   if (board.auth_key_hash !== authKeyHash) return { success: false, error: 'UNAUTHORIZED' };
 
+  const updateData: Record<string, unknown> = {
+    encrypted_name: encryptedName,
+    encrypted_name_nonce: encryptedNameNonce,
+  };
+
+  if (encryptedSubtitle && encryptedSubtitleNonce) {
+    updateData.encrypted_subtitle = encryptedSubtitle;
+    updateData.encrypted_subtitle_nonce = encryptedSubtitleNonce;
+  } else {
+    updateData.encrypted_subtitle = null;
+    updateData.encrypted_subtitle_nonce = null;
+  }
+
   const { error } = await supabase
     .from('boards')
-    .update({
-      encrypted_name: encryptedName,
-      encrypted_name_nonce: encryptedNameNonce,
-    })
+    .update(updateData)
+    .eq('id', boardId);
+
+  if (error) {
+    console.error('[updateBoardName] Supabase update error:', error.message, error.code, error.details);
+    return { success: false, error: 'UPDATE_FAILED' };
+  }
+  return { success: true };
+}
+
+// ─── 부제목 업데이트 (관리자 전용) ───
+
+export async function updateBoardSubtitle(
+  boardId: string,
+  adminToken: string,
+  encryptedSubtitle?: string,
+  encryptedSubtitleNonce?: string
+): Promise<{ success: boolean; error?: string }> {
+  const headersList = await headers();
+  const ip = getClientIp(headersList);
+  const rateCheck = await checkRateLimit(`board:admin:${ip}`, ADMIN_LIMIT);
+  if (!rateCheck.allowed) return { success: false, error: 'TOO_MANY_REQUESTS' };
+
+  const supabase = createServerSupabase();
+
+  const { data: board } = await supabase
+    .from('boards')
+    .select('admin_token_hash')
+    .eq('id', boardId)
+    .single();
+
+  if (!board) return { success: false, error: 'BOARD_NOT_FOUND' };
+
+  const tokenHash = await hashString(adminToken);
+  if (tokenHash !== board.admin_token_hash) {
+    return { success: false, error: 'INVALID_ADMIN_TOKEN' };
+  }
+
+  const updateData: Record<string, unknown> = {
+    encrypted_subtitle: encryptedSubtitle ?? null,
+    encrypted_subtitle_nonce: encryptedSubtitleNonce ?? null,
+  };
+
+  const { error } = await supabase
+    .from('boards')
+    .update(updateData)
     .eq('id', boardId);
 
   if (error) return { success: false, error: 'UPDATE_FAILED' };
@@ -156,6 +213,8 @@ export async function getBoardMeta(
   | {
       encryptedName: string;
       encryptedNameNonce: string;
+      encryptedSubtitle: string | null;
+      encryptedSubtitleNonce: string | null;
       status: string;
       reportThreshold: number;
     }
@@ -164,7 +223,7 @@ export async function getBoardMeta(
   const supabase = createServerSupabase();
   const { data: board, error } = await supabase
     .from('boards')
-    .select('auth_key_hash, encrypted_name, encrypted_name_nonce, status, report_threshold')
+    .select('auth_key_hash, encrypted_name, encrypted_name_nonce, encrypted_subtitle, encrypted_subtitle_nonce, status, report_threshold')
     .eq('id', boardId)
     .single();
 
@@ -174,6 +233,8 @@ export async function getBoardMeta(
   return {
     encryptedName: board.encrypted_name,
     encryptedNameNonce: board.encrypted_name_nonce,
+    encryptedSubtitle: board.encrypted_subtitle ?? null,
+    encryptedSubtitleNonce: board.encrypted_subtitle_nonce ?? null,
     status: board.status,
     reportThreshold: board.report_threshold,
   };

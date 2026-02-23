@@ -6,6 +6,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import 'core/constants/app_theme.dart';
 import 'core/security/security_overlay.dart';
+import 'features/splash/presentation/splash_screen.dart';
 import 'features/home/presentation/home_screen.dart';
 import 'features/chat/presentation/chat_screen.dart';
 import 'features/board/presentation/board_screen.dart';
@@ -24,8 +25,14 @@ final _validIdPattern = RegExp(r'^[a-zA-Z0-9]{6,32}$');
 
 final _router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: '/splash',
   routes: [
+    // ── 스플래시 (브랜드 인트로) ──
+    GoRoute(
+      path: '/splash',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const SplashScreen(),
+    ),
     // ── 바텀 네비게이션 Shell (3탭) ──
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

@@ -96,7 +96,7 @@ export async function POST(request: Request) {
 
     if (uploadError) {
       console.error('[Board Upload] Storage error:', uploadError.message);
-      return NextResponse.json({ error: 'Upload failed', detail: uploadError.message }, { status: 500 });
+      return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
     }
 
     // DB 기록
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       console.error('[Board Upload] DB error:', dbError?.message);
       // DB 실패 시 Storage 정리
       await supabase.storage.from('board-images').remove([storagePath]);
-      return NextResponse.json({ error: 'Record failed', detail: dbError?.message }, { status: 500 });
+      return NextResponse.json({ error: 'Record failed' }, { status: 500 });
     }
 
     return NextResponse.json({ imageId: imageRecord.id });

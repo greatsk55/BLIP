@@ -689,4 +689,16 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => 'Admin-Token entfernen';
+
+  @override
+  String get boardAdminEditSubtitle => 'Untertitel bearbeiten';
+
+  @override
+  String get boardAdminSubtitlePlaceholder => 'Community-Untertitel (optional)';
+
+  @override
+  String get boardAdminSubtitleSave => 'Speichern';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => 'Untertitel (optional)';
 }

@@ -652,6 +652,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => '移除管理员令牌';
+
+  @override
+  String get boardAdminEditSubtitle => '编辑副标题';
+
+  @override
+  String get boardAdminSubtitlePlaceholder => '社区副标题（可选）';
+
+  @override
+  String get boardAdminSubtitleSave => '保存';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => '副标题（可选）';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1302,4 +1314,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get boardAdminForgetToken => '移除管理員權杖';
+
+  @override
+  String get boardAdminEditSubtitle => '編輯副標題';
+
+  @override
+  String get boardAdminSubtitlePlaceholder => '社群副標題（選填）';
+
+  @override
+  String get boardAdminSubtitleSave => '儲存';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => '副標題（選填）';
 }

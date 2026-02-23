@@ -684,4 +684,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => 'Eliminar token de administrador';
+
+  @override
+  String get boardAdminEditSubtitle => 'Editar subtítulo';
+
+  @override
+  String get boardAdminSubtitlePlaceholder =>
+      'Subtítulo de la comunidad (opcional)';
+
+  @override
+  String get boardAdminSubtitleSave => 'Guardar';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => 'Subtítulo (opcional)';
 }

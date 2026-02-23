@@ -99,12 +99,32 @@ class ApiClient {
     required String authKeyHash,
     required String encryptedName,
     required String encryptedNameNonce,
+    String? encryptedSubtitle,
+    String? encryptedSubtitleNonce,
   }) async {
     final response = await _dio.post('/api/board/update-name', data: {
       'boardId': boardId,
       'authKeyHash': authKeyHash,
       'encryptedName': encryptedName,
       'encryptedNameNonce': encryptedNameNonce,
+      if (encryptedSubtitle != null) 'encryptedSubtitle': encryptedSubtitle,
+      if (encryptedSubtitleNonce != null) 'encryptedSubtitleNonce': encryptedSubtitleNonce,
+    });
+    return response.data;
+  }
+
+  /// 관리자: 부제목 업데이트
+  Future<Map<String, dynamic>> updateBoardSubtitle({
+    required String boardId,
+    required String adminToken,
+    String? encryptedSubtitle,
+    String? encryptedSubtitleNonce,
+  }) async {
+    final response = await _dio.post('/api/board/admin/update-subtitle', data: {
+      'boardId': boardId,
+      'adminToken': adminToken,
+      if (encryptedSubtitle != null) 'encryptedSubtitle': encryptedSubtitle,
+      if (encryptedSubtitleNonce != null) 'encryptedSubtitleNonce': encryptedSubtitleNonce,
     });
     return response.data;
   }

@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Trash2, AlertTriangle } from 'lucide-react';
+import { X, Trash2, AlertTriangle, Type } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { destroyBoard } from '@/lib/board/actions';
 
 interface AdminPanelProps {
   boardId: string;
   adminToken: string;
+  currentSubtitle?: string | null;
+  onUpdateSubtitle: (subtitle: string) => Promise<{ error?: string }>;
   onClose: () => void;
   onPostDeleted: (postId: string) => void;
   onBoardDestroyed: () => void;
@@ -17,6 +19,8 @@ interface AdminPanelProps {
 export default function AdminPanel({
   boardId,
   adminToken,
+  currentSubtitle,
+  onUpdateSubtitle,
   onClose,
   onPostDeleted,
   onBoardDestroyed,
@@ -24,6 +28,9 @@ export default function AdminPanel({
   const t = useTranslations('Board');
   const [showDestroyConfirm, setShowDestroyConfirm] = useState(false);
   const [destroying, setDestroying] = useState(false);
+  const [showSubtitleEdit, setShowSubtitleEdit] = useState(false);
+  const [subtitleValue, setSubtitleValue] = useState(currentSubtitle ?? '');
+  const [subtitleSaving, setSubtitleSaving] = useState(false);
 
   const handleDestroy = async () => {
     setDestroying(true);
@@ -63,6 +70,72 @@ export default function AdminPanel({
 
         {!showDestroyConfirm ? (
           <div className="space-y-3">
+            {/* 부제목 편집 */}
+            {!showSubtitleEdit ? (
+              <button
+                onClick={() => setShowSubtitleEdit(true)}
+                className="w-full flex items-center gap-3 px-4 py-3 border border-ink/10 text-ink hover:border-signal-green/30 transition-colors"
+              >
+                <Type className="w-4 h-4" />
+                <span className="font-mono text-xs uppercase tracking-wider">
+                  {t('admin.editSubtitle')}
+                </span>
+                {currentSubtitle && (
+                  <span className="ml-auto font-mono text-[10px] text-ghost-grey/50 truncate max-w-[120px]">
+                    {currentSubtitle}
+                  </span>
+                )}
+              </button>
+            ) : (
+              <div className="border border-ink/10 p-4">
+                <label className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-wider mb-2 block">
+                  {t('admin.subtitleLabel')}
+                </label>
+                <input
+                  type="text"
+                  value={subtitleValue}
+                  onChange={(e) => setSubtitleValue(e.target.value)}
+                  placeholder={t('admin.subtitlePlaceholder')}
+                  maxLength={100}
+                  className="w-full px-3 py-2 bg-transparent border border-ink/10 text-ink font-mono text-xs placeholder:text-ghost-grey/30 focus:border-signal-green/50 focus:outline-none mb-3"
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      void (async () => {
+                        setSubtitleSaving(true);
+                        await onUpdateSubtitle(subtitleValue);
+                        setSubtitleSaving(false);
+                        setShowSubtitleEdit(false);
+                      })();
+                    }
+                  }}
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setSubtitleValue(currentSubtitle ?? '');
+                      setShowSubtitleEdit(false);
+                    }}
+                    className="flex-1 min-h-[36px] px-3 py-2 border border-ink/10 text-ghost-grey font-mono text-[10px] uppercase tracking-wider"
+                  >
+                    {t('admin.cancel')}
+                  </button>
+                  <button
+                    onClick={async () => {
+                      setSubtitleSaving(true);
+                      await onUpdateSubtitle(subtitleValue);
+                      setSubtitleSaving(false);
+                      setShowSubtitleEdit(false);
+                    }}
+                    disabled={subtitleSaving}
+                    className="flex-1 min-h-[36px] px-3 py-2 border border-signal-green text-signal-green font-mono text-[10px] uppercase tracking-wider hover:bg-signal-green hover:text-void-black transition-all disabled:opacity-50"
+                  >
+                    {subtitleSaving ? '...' : t('admin.subtitleSave')}
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* 게시판 파쇄 */}
             <button
               onClick={() => setShowDestroyConfirm(true)}

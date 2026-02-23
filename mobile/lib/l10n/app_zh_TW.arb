@@ -453,5 +453,14 @@
   "boardAdminConfirmRegister": "註冊",
   "@boardAdminConfirmRegister": { "description": "Confirm register button" },
   "boardAdminForgetToken": "移除管理員權杖",
-  "@boardAdminForgetToken": { "description": "Remove admin token button" }
+  "@boardAdminForgetToken": { "description": "Remove admin token button" },
+
+  "boardAdminEditSubtitle": "編輯副標題",
+  "@boardAdminEditSubtitle": { "description": "Edit subtitle button" },
+  "boardAdminSubtitlePlaceholder": "社群副標題（選填）",
+  "@boardAdminSubtitlePlaceholder": { "description": "Subtitle input placeholder" },
+  "boardAdminSubtitleSave": "儲存",
+  "@boardAdminSubtitleSave": { "description": "Save subtitle button" },
+  "boardCreateSubtitlePlaceholder": "副標題（選填）",
+  "@boardCreateSubtitlePlaceholder": { "description": "Subtitle placeholder on create form" }
 }

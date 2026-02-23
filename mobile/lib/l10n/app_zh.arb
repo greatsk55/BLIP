@@ -278,5 +278,10 @@
   "boardAdminRegister": "注册管理员令牌",
   "boardAdminTokenPlaceholder": "输入管理员令牌...",
   "boardAdminConfirmRegister": "注册",
-  "boardAdminForgetToken": "移除管理员令牌"
+  "boardAdminForgetToken": "移除管理员令牌",
+
+  "boardAdminEditSubtitle": "编辑副标题",
+  "boardAdminSubtitlePlaceholder": "社区副标题（可选）",
+  "boardAdminSubtitleSave": "保存",
+  "boardCreateSubtitlePlaceholder": "副标题（可选）"
 }

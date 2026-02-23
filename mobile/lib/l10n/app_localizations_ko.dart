@@ -661,4 +661,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get boardAdminForgetToken => '관리자 토큰 해제';
+
+  @override
+  String get boardAdminEditSubtitle => '부제목 편집';
+
+  @override
+  String get boardAdminSubtitlePlaceholder => '커뮤니티 부제목 (선택사항)';
+
+  @override
+  String get boardAdminSubtitleSave => '저장';
+
+  @override
+  String get boardCreateSubtitlePlaceholder => '부제목 (선택사항)';
 }

@@ -29,6 +29,7 @@ enum BoardStatus {
 class BoardState {
   final BoardStatus status;
   final String? boardName;
+  final String? boardSubtitle;
   final List<DecryptedPost> posts;
   final bool hasMore;
   final String myUsername;
@@ -39,6 +40,7 @@ class BoardState {
   const BoardState({
     this.status = BoardStatus.loading,
     this.boardName,
+    this.boardSubtitle,
     this.posts = const [],
     this.hasMore = false,
     this.myUsername = '',
@@ -50,6 +52,8 @@ class BoardState {
   BoardState copyWith({
     BoardStatus? status,
     String? boardName,
+    String? boardSubtitle,
+    bool clearSubtitle = false,
     List<DecryptedPost>? posts,
     bool? hasMore,
     String? myUsername,
@@ -60,6 +64,7 @@ class BoardState {
     return BoardState(
       status: status ?? this.status,
       boardName: boardName ?? this.boardName,
+      boardSubtitle: clearSubtitle ? null : (boardSubtitle ?? this.boardSubtitle),
       posts: posts ?? this.posts,
       hasMore: hasMore ?? this.hasMore,
       myUsername: myUsername ?? this.myUsername,
@@ -171,9 +176,22 @@ class BoardNotifier extends StateNotifier<BoardState> {
         _encryptionKey!,
       );
 
+      // 부제목 복호화 (옵셔널)
+      String? subtitle;
+      final encSubtitle = meta['encryptedSubtitle'] as String?;
+      final encSubtitleNonce = meta['encryptedSubtitleNonce'] as String?;
+      if (encSubtitle != null && encSubtitleNonce != null) {
+        subtitle = decryptSymmetric(
+          EncryptedPayload(ciphertext: encSubtitle, nonce: encSubtitleNonce),
+          _encryptionKey!,
+        );
+      }
+
       state = state.copyWith(
         status: BoardStatus.browsing,
         boardName: name,
+        boardSubtitle: subtitle,
+        clearSubtitle: subtitle == null,
       );
 
       // 커뮤니티 리스트에 저장
@@ -181,6 +199,7 @@ class BoardNotifier extends StateNotifier<BoardState> {
       LocalStorageService().saveBoard(SavedBoard(
         boardId: boardId,
         boardName: name ?? '',
+        boardSubtitle: subtitle ?? '',
         joinedAt: now,
         lastAccessedAt: now,
       ));
@@ -527,6 +546,50 @@ class BoardNotifier extends StateNotifier<BoardState> {
   Future<void> forgetSavedPassword() async {
     await _secureStorage.delete(key: '$_storagePrefix$boardId');
     state = state.copyWith(isPasswordSaved: false);
+  }
+
+  /// 부제목 업데이트 (관리자)
+  Future<String?> updateSubtitle(String subtitle) async {
+    if (state.adminToken == null || _encryptionKey == null) {
+      return 'NOT_ADMIN';
+    }
+
+    final trimmed = subtitle.trim();
+
+    if (trimmed.isNotEmpty) {
+      final enc = encryptSymmetric(trimmed, _encryptionKey!);
+      final result = await _api.updateBoardSubtitle(
+        boardId: boardId,
+        adminToken: state.adminToken!,
+        encryptedSubtitle: enc.ciphertext,
+        encryptedSubtitleNonce: enc.nonce,
+      );
+      if (result['error'] != null) return result['error'] as String;
+      state = state.copyWith(boardSubtitle: trimmed);
+      // 로컬 캐시 업데이트
+      final storage = LocalStorageService();
+      final boards = await storage.getSavedBoards();
+      final idx = boards.indexWhere((b) => b.boardId == boardId);
+      if (idx >= 0) {
+        await storage.saveBoard(boards[idx].copyWith(boardSubtitle: trimmed));
+      }
+    } else {
+      // 빈 문자열 → 부제목 삭제
+      final result = await _api.updateBoardSubtitle(
+        boardId: boardId,
+        adminToken: state.adminToken!,
+      );
+      if (result['error'] != null) return result['error'] as String;
+      state = state.copyWith(clearSubtitle: true);
+      final storage = LocalStorageService();
+      final boards = await storage.getSavedBoards();
+      final idx = boards.indexWhere((b) => b.boardId == boardId);
+      if (idx >= 0) {
+        await storage.saveBoard(boards[idx].copyWith(boardSubtitle: ''));
+      }
+    }
+
+    return null;
   }
 
   /// 커뮤니티 파쇄 (관리자)

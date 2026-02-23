@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS boards (
   admin_token_hash TEXT NOT NULL,
   encrypted_name TEXT NOT NULL,
   encrypted_name_nonce TEXT NOT NULL,
+  encrypted_subtitle TEXT,
+  encrypted_subtitle_nonce TEXT,
   max_participants INT DEFAULT 100,
   report_threshold INT DEFAULT 3,
   created_at TIMESTAMPTZ DEFAULT NOW(),
