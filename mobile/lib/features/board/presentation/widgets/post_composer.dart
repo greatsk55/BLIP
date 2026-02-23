@@ -276,6 +276,8 @@ class _PostComposerState extends State<PostComposer> {
               child: TextField(
                 controller: _titleController,
                 maxLength: 200,
+                autocorrect: false,
+                enableSuggestions: false,
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: 'monospace',
@@ -319,6 +321,8 @@ class _PostComposerState extends State<PostComposer> {
                   expands: true,
                   textAlignVertical: TextAlignVertical.top,
                   autofocus: true,
+                  autocorrect: false,
+                  enableSuggestions: false,
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'monospace',

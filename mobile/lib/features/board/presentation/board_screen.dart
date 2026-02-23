@@ -108,6 +108,9 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
             TextField(
               controller: _passwordController,
               textAlign: TextAlign.center,
+              autocorrect: false,
+              enableSuggestions: false,
+              textCapitalization: TextCapitalization.none,
               style: const TextStyle(
                 fontSize: 24,
                 letterSpacing: 4,
@@ -236,6 +239,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
         // BoardHeader (AppBar 대체)
         BoardHeader(
           boardName: boardState.boardName ?? l10n.boardTitle,
+          boardSubtitle: boardState.boardSubtitle,
           hasAdminToken: boardState.adminToken != null,
           isPasswordSaved: boardState.isPasswordSaved,
           onBack: () {
@@ -321,6 +325,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
   }
 
   void _showAdminPanel() {
+    final boardState = ref.read(boardNotifierProvider(widget.boardId));
     AdminPanelDialog.show(
       context,
       onForgetToken: () => ref
@@ -329,6 +334,10 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
       onDestroyBoard: () => ref
           .read(boardNotifierProvider(widget.boardId).notifier)
           .destroyBoard(),
+      currentSubtitle: boardState.boardSubtitle,
+      onUpdateSubtitle: (subtitle) => ref
+          .read(boardNotifierProvider(widget.boardId).notifier)
+          .updateSubtitle(subtitle),
     );
   }
 

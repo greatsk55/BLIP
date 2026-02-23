@@ -22,6 +22,7 @@ class BoardCreateScreen extends StatefulWidget {
 
 class _BoardCreateScreenState extends State<BoardCreateScreen> {
   final _nameController = TextEditingController();
+  final _subtitleController = TextEditingController();
   final _api = ApiClient();
   bool _loading = false;
   String? _error;
@@ -32,6 +33,7 @@ class _BoardCreateScreenState extends State<BoardCreateScreen> {
   @override
   void dispose() {
     _nameController.dispose();
+    _subtitleController.dispose();
     super.dispose();
   }
 
@@ -68,11 +70,23 @@ class _BoardCreateScreenState extends State<BoardCreateScreen> {
       final encName = encryptSymmetric(name, derived.encryptionSeed);
       final authKeyHash = hashAuthKey(derived.authKey);
 
+      // 부제목 암호화 (입력한 경우만)
+      final subtitle = _subtitleController.text.trim();
+      String? encSubtitleCiphertext;
+      String? encSubtitleNonce;
+      if (subtitle.isNotEmpty) {
+        final encSubtitle = encryptSymmetric(subtitle, derived.encryptionSeed);
+        encSubtitleCiphertext = encSubtitle.ciphertext;
+        encSubtitleNonce = encSubtitle.nonce;
+      }
+
       final updateResult = await _api.updateBoardName(
         boardId: boardId,
         authKeyHash: authKeyHash,
         encryptedName: encName.ciphertext,
         encryptedNameNonce: encName.nonce,
+        encryptedSubtitle: encSubtitleCiphertext,
+        encryptedSubtitleNonce: encSubtitleNonce,
       );
 
       if (updateResult['success'] != true) {
@@ -98,6 +112,7 @@ class _BoardCreateScreenState extends State<BoardCreateScreen> {
       await LocalStorageService().saveBoard(SavedBoard(
         boardId: boardId,
         boardName: name,
+        boardSubtitle: subtitle,
         joinedAt: now,
         lastAccessedAt: now,
       ));
@@ -128,6 +143,7 @@ class _BoardCreateScreenState extends State<BoardCreateScreen> {
     }
     return _CreateForm(
       nameController: _nameController,
+      subtitleController: _subtitleController,
       loading: _loading,
       error: _error,
       onCreate: _create,
@@ -153,12 +169,14 @@ class _CreateResult {
 
 class _CreateForm extends StatelessWidget {
   final TextEditingController nameController;
+  final TextEditingController subtitleController;
   final bool loading;
   final String? error;
   final VoidCallback onCreate;
 
   const _CreateForm({
     required this.nameController,
+    required this.subtitleController,
     required this.loading,
     this.error,
     required this.onCreate,
@@ -211,6 +229,8 @@ class _CreateForm extends StatelessWidget {
                   controller: nameController,
                   textAlign: TextAlign.center,
                   maxLength: 50,
+                  autocorrect: false,
+                  enableSuggestions: false,
                   style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 18,
@@ -234,6 +254,40 @@ class _CreateForm extends StatelessWidget {
                     ),
                   ),
                   autofocus: true,
+                  onSubmitted: (_) => onCreate(),
+                ),
+
+                const SizedBox(height: 16),
+
+                // 부제목 입력 (옵셔널)
+                TextField(
+                  controller: subtitleController,
+                  textAlign: TextAlign.center,
+                  maxLength: 100,
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 14,
+                    letterSpacing: 1,
+                    color: isDark ? Colors.white70 : Colors.black54,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: l10n.boardCreateSubtitlePlaceholder,
+                    hintStyle: TextStyle(
+                      fontFamily: 'monospace',
+                      color: ghostGrey.withValues(alpha: 0.3),
+                    ),
+                    counterText: '',
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: signalGreen.withValues(alpha: 0.5)),
+                    ),
+                  ),
                   onSubmitted: (_) => onCreate(),
                 ),
 

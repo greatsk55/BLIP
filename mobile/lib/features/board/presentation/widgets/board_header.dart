@@ -7,6 +7,7 @@ import '../../../../core/constants/app_colors.dart';
 /// web: BoardHeader.tsx 동일 UX
 class BoardHeader extends StatelessWidget {
   final String boardName;
+  final String? boardSubtitle;
   final bool hasAdminToken;
   final bool isPasswordSaved;
   final VoidCallback onBack;
@@ -18,6 +19,7 @@ class BoardHeader extends StatelessWidget {
   const BoardHeader({
     super.key,
     required this.boardName,
+    this.boardSubtitle,
     required this.hasAdminToken,
     required this.isPasswordSaved,
     required this.onBack,
@@ -73,21 +75,35 @@ class BoardHeader extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.lock, size: 10, color: signalGreen),
-                      const SizedBox(width: 4),
-                      Text(
-                        l10n.boardHeaderEncrypted,
-                        style: TextStyle(
-                          fontSize: 9,
-                          fontFamily: 'monospace',
-                          color: signalGreen.withValues(alpha: 0.6),
-                          letterSpacing: 1,
-                        ),
+                  if (boardSubtitle != null && boardSubtitle!.isNotEmpty)
+                    Text(
+                      boardSubtitle!,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontFamily: 'monospace',
+                        color: isDark
+                            ? AppColors.ghostGreyDark.withValues(alpha: 0.6)
+                            : AppColors.ghostGreyLight.withValues(alpha: 0.6),
                       ),
-                    ],
-                  ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  else
+                    Row(
+                      children: [
+                        Icon(Icons.lock, size: 10, color: signalGreen),
+                        const SizedBox(width: 4),
+                        Text(
+                          l10n.boardHeaderEncrypted,
+                          style: TextStyle(
+                            fontSize: 9,
+                            fontFamily: 'monospace',
+                            color: signalGreen.withValues(alpha: 0.6),
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -147,6 +163,9 @@ class BoardHeader extends StatelessWidget {
         content: TextField(
           controller: controller,
           autofocus: true,
+          autocorrect: false,
+          enableSuggestions: false,
+          textCapitalization: TextCapitalization.none,
           style: const TextStyle(
             fontSize: 14,
             fontFamily: 'monospace',
