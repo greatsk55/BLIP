@@ -329,11 +329,20 @@
       "subtitle": "Crear Comunidad Privada",
       "createButton": "Crear Comunidad",
       "namePlaceholder": "Nombre de la comunidad",
+      "subtitlePlaceholder": "Subtítulo (opcional)",
       "password": "Contraseña de la Comunidad",
       "adminToken": "Token de Administrador",
       "adminTokenWarning": "Guarda este token — no se puede recuperar",
       "shareLink": "Enlace para Compartir",
-      "enter": "Entrar a la Comunidad"
+      "enter": "Entrar a la Comunidad",
+      "confirmInfo": "Entendido"
+    },
+    "join": {
+      "joinButton": "Unirse",
+      "title": "Unirse a una Comunidad",
+      "idPlaceholder": "ID de Comunidad",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "También puedes ingresar la contraseña después de unirte"
     },
     "header": {
       "encrypted": "Cifrado E2E",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "Panel de Administración",
+      "editSubtitle": "Editar subtítulo",
+      "subtitleLabel": "Subtítulo de la comunidad",
+      "subtitlePlaceholder": "Introduce un subtítulo para esta comunidad",
+      "subtitleSave": "Guardar",
       "destroy": "Destruir Comunidad",
       "destroyWarning": "Esto eliminará permanentemente la comunidad y todas las publicaciones. No se puede deshacer.",
       "cancel": "Cancelar",

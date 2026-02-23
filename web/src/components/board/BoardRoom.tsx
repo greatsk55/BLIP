@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { useBoard } from '@/hooks/useBoard';
-import { createBoard } from '@/lib/board/actions';
-import { deriveKeysFromPassword, encryptSymmetric } from '@/lib/crypto';
+import { getCreatedInfo } from '@/app/[locale]/board/BoardCreateClient';
 import PasswordEntry from '@/components/chat/PasswordEntry';
 import RoomDestroyedOverlay from '@/components/chat/RoomDestroyedOverlay';
-import BoardCreatedView from './BoardCreatedView';
+import CopyButton from '@/components/shared/CopyButton';
 import BoardHeader from './BoardHeader';
 import PostList from './PostList';
 import PostDetail from './PostDetail';
@@ -20,10 +21,10 @@ type BoardView = 'list' | 'detail' | 'compose' | 'edit';
 
 interface BoardRoomProps {
   boardId: string;
-  isCreator: boolean;
 }
 
-export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
+export default function BoardRoom({ boardId }: BoardRoomProps) {
+  const t = useTranslations('Board');
   const router = useRouter();
   const board = useBoard({ boardId });
 
@@ -36,15 +37,18 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
     ? board.posts.find((p) => p.id === selectedPostId) ?? null
     : null;
 
-  // 생성 모드 상태
-  const [createData, setCreateData] = useState<{
-    boardId: string;
-    password: string;
-    adminToken: string;
-  } | null>(null);
-
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
+
+  // 생성 직후 안내 모달
+  const [createdInfo, setCreatedInfo] = useState<{ password: string; adminToken: string } | null>(null);
+
+  useEffect(() => {
+    const info = getCreatedInfo(boardId);
+    if (info) {
+      setCreatedInfo(info);
+    }
+  }, [boardId]);
 
   // 신고 모달
   const [reportTarget, setReportTarget] = useState<string | null>(null);
@@ -64,20 +68,6 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
     setView('list');
     setSelectedPostId(null);
   }, []);
-
-  // ─── 게시판 생성 핸들러 ───
-
-  const handleCreate = useCallback(async (boardName: string) => {
-    const result = await createBoard('', '');
-
-    if ('error' in result) return;
-
-    const { encryptionSeed } = await deriveKeysFromPassword(result.password, result.boardId);
-    const encName = encryptSymmetric(boardName, encryptionSeed);
-
-    setCreateData(result);
-    board.saveAdminToken(result.adminToken);
-  }, [board]);
 
   // ─── 비밀번호 입력 핸들러 ───
 
@@ -166,20 +156,6 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
     return <RoomDestroyedOverlay reason="destroyed" />;
   }
 
-  // 게시판 생성 완료 화면
-  if (isCreator && createData) {
-    return (
-      <BoardCreatedView
-        boardId={createData.boardId}
-        password={createData.password}
-        adminToken={createData.adminToken}
-        onEnter={() => {
-          router.push(`/board/${createData.boardId}`);
-        }}
-      />
-    );
-  }
-
   // 비밀번호 입력
   if (board.status === 'password_required') {
     return (
@@ -210,6 +186,7 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
       {view === 'list' && (
         <BoardHeader
           boardName={board.boardName ?? 'PRIVATE COMMUNITY'}
+          boardSubtitle={board.boardSubtitle}
           onAdmin={() => setShowAdminPanel(true)}
           hasAdminToken={!!board.adminToken}
           isPasswordSaved={board.isPasswordSaved}
@@ -269,6 +246,8 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
         <AdminPanel
           boardId={boardId}
           adminToken={board.adminToken}
+          currentSubtitle={board.boardSubtitle}
+          onUpdateSubtitle={board.updateSubtitle}
           onClose={() => setShowAdminPanel(false)}
           onPostDeleted={() => {
             board.refreshPosts();
@@ -278,6 +257,81 @@ export default function BoardRoom({ boardId, isCreator }: BoardRoomProps) {
           }}
         />
       )}
+
+      {/* 생성 직후 비밀번호/토큰 안내 모달 */}
+      <AnimatePresence>
+        {createdInfo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 px-6"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-sm bg-void-black border border-signal-green/20 p-6"
+            >
+              <p className="font-mono text-xs text-signal-green uppercase tracking-[0.3em] mb-6 text-center">
+                {t('create.title')}
+              </p>
+
+              {/* 비밀번호 */}
+              <div className="mb-4">
+                <p className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-widest mb-2">
+                  {t('create.password')}
+                </p>
+                <div className="flex items-center gap-2 bg-ink/[0.03] border border-signal-green/20 px-4 py-3">
+                  <span className="font-mono text-lg text-ink tracking-[0.3em] flex-1">
+                    {createdInfo.password}
+                  </span>
+                  <CopyButton text={createdInfo.password} />
+                </div>
+              </div>
+
+              {/* 관리자 토큰 */}
+              <div className="mb-4">
+                <p className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-widest mb-2">
+                  {t('create.adminToken')}
+                </p>
+                <div className="flex items-center gap-2 bg-ink/[0.03] border border-glitch-red/20 px-3 py-3">
+                  <span className="font-mono text-[10px] text-ghost-grey break-all flex-1">
+                    {createdInfo.adminToken}
+                  </span>
+                  <CopyButton text={createdInfo.adminToken} />
+                </div>
+                <p className="font-mono text-[9px] text-glitch-red/50 uppercase tracking-wider mt-1">
+                  {t('create.adminTokenWarning')}
+                </p>
+              </div>
+
+              {/* 공유 링크 */}
+              <div className="mb-6">
+                <p className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-widest mb-2">
+                  {t('create.shareLink')}
+                </p>
+                <div className="flex items-center gap-2 bg-ink/[0.03] border border-ink/10 px-3 py-3">
+                  <span className="font-mono text-[11px] text-ghost-grey break-all flex-1">
+                    {typeof window !== 'undefined' ? `${window.location.origin}/board/${boardId}` : ''}
+                  </span>
+                  <CopyButton
+                    text={typeof window !== 'undefined' ? `${window.location.origin}/board/${boardId}` : ''}
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={() => setCreatedInfo(null)}
+                className="w-full min-h-[44px] px-6 py-3 bg-transparent border border-signal-green text-signal-green hover:bg-signal-green hover:text-void-black active:bg-signal-green active:text-void-black transition-all duration-300 rounded-none font-mono text-xs uppercase tracking-wider"
+              >
+                {t('create.confirmInfo')}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

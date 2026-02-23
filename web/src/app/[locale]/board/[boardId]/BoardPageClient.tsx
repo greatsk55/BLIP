@@ -7,5 +7,5 @@ interface BoardPageClientProps {
 }
 
 export default function BoardPageClient({ boardId }: BoardPageClientProps) {
-  return <BoardRoom boardId={boardId} isCreator={false} />;
+  return <BoardRoom boardId={boardId} />;
 }

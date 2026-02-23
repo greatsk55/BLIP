@@ -329,11 +329,20 @@
       "subtitle": "Créer une Communauté Privée",
       "createButton": "Créer la Communauté",
       "namePlaceholder": "Nom de la communauté",
+      "subtitlePlaceholder": "Sous-titre (optionnel)",
       "password": "Mot de passe de la Communauté",
       "adminToken": "Jeton Administrateur",
       "adminTokenWarning": "Sauvegardez ce jeton — il ne peut pas être récupéré",
       "shareLink": "Lien de Partage",
-      "enter": "Entrer dans la Communauté"
+      "enter": "Entrer dans la Communauté",
+      "confirmInfo": "Compris"
+    },
+    "join": {
+      "joinButton": "Rejoindre",
+      "title": "Rejoindre une Communauté",
+      "idPlaceholder": "ID de Communauté",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "Vous pouvez aussi entrer le mot de passe après avoir rejoint"
     },
     "header": {
       "encrypted": "Chiffrement E2E",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "Panneau d'Administration",
+      "editSubtitle": "Modifier le sous-titre",
+      "subtitleLabel": "Sous-titre de la communauté",
+      "subtitlePlaceholder": "Saisissez un sous-titre pour cette communauté",
+      "subtitleSave": "Enregistrer",
       "destroy": "Détruire la Communauté",
       "destroyWarning": "Cela supprimera définitivement la communauté et toutes les publications. Cette action est irréversible.",
       "cancel": "Annuler",

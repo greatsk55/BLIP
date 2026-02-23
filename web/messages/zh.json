@@ -329,11 +329,20 @@
       "subtitle": "创建私密社区",
       "createButton": "创建社区",
       "namePlaceholder": "社区名称",
+      "subtitlePlaceholder": "副标题（可选）",
       "password": "社区密码",
       "adminToken": "管理员令牌",
       "adminTokenWarning": "请保存此令牌 — 无法恢复",
       "shareLink": "分享链接",
-      "enter": "进入社区"
+      "enter": "进入社区",
+      "confirmInfo": "确认"
+    },
+    "join": {
+      "joinButton": "加入社区",
+      "title": "加入社区",
+      "idPlaceholder": "社区 ID",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "也可以进入后再输入密码"
     },
     "header": {
       "encrypted": "端到端加密",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "管理员面板",
+      "editSubtitle": "编辑副标题",
+      "subtitleLabel": "社区副标题",
+      "subtitlePlaceholder": "输入社区副标题",
+      "subtitleSave": "保存",
       "destroy": "销毁社区",
       "destroyWarning": "这将永久删除社区和所有帖子。此操作不可撤销。",
       "cancel": "取消",

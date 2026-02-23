@@ -329,11 +329,20 @@
       "subtitle": "プライベートコミュニティを作成",
       "createButton": "コミュニティを作成",
       "namePlaceholder": "コミュニティ名",
+      "subtitlePlaceholder": "サブタイトル（任意）",
       "password": "コミュニティパスワード",
       "adminToken": "管理者トークン",
       "adminTokenWarning": "このトークンを保存してください — 復元できません",
       "shareLink": "共有リンク",
-      "enter": "コミュニティに入る"
+      "enter": "コミュニティに入る",
+      "confirmInfo": "確認"
+    },
+    "join": {
+      "joinButton": "コミュニティに参加",
+      "title": "コミュニティに参加する",
+      "idPlaceholder": "コミュニティID",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "パスワードなしでも入場後に入力可能"
     },
     "header": {
       "encrypted": "E2E暗号化",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "管理者パネル",
+      "editSubtitle": "サブタイトル編集",
+      "subtitleLabel": "コミュニティサブタイトル",
+      "subtitlePlaceholder": "コミュニティのサブタイトルを入力",
+      "subtitleSave": "保存",
       "destroy": "コミュニティを破棄",
       "destroyWarning": "コミュニティとすべての投稿が永久に削除されます。元に戻せません。",
       "cancel": "キャンセル",

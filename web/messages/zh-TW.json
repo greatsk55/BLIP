@@ -329,11 +329,20 @@
       "subtitle": "建立私密社群",
       "createButton": "建立社群",
       "namePlaceholder": "社群名稱",
+      "subtitlePlaceholder": "副標題（選填）",
       "password": "社群密碼",
       "adminToken": "管理員令牌",
       "adminTokenWarning": "請保存此令牌——無法恢復",
       "shareLink": "分享連結",
-      "enter": "進入社群"
+      "enter": "進入社群",
+      "confirmInfo": "確認"
+    },
+    "join": {
+      "joinButton": "加入社群",
+      "title": "加入社群",
+      "idPlaceholder": "社群 ID",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "也可以進入後再輸入密碼"
     },
     "header": {
       "encrypted": "E2E 加密",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "管理員面板",
+      "editSubtitle": "編輯副標題",
+      "subtitleLabel": "社群副標題",
+      "subtitlePlaceholder": "輸入社群副標題",
+      "subtitleSave": "儲存",
       "destroy": "銷毀社群",
       "destroyWarning": "這將永久刪除社群及所有文章。此操作無法復原。",
       "cancel": "取消",

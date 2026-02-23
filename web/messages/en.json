@@ -329,11 +329,20 @@
       "subtitle": "Create Private Community",
       "createButton": "Create Community",
       "namePlaceholder": "Community name",
+      "subtitlePlaceholder": "Subtitle (optional)",
       "password": "Community Password",
       "adminToken": "Admin Token",
       "adminTokenWarning": "Save this token — it cannot be recovered",
       "shareLink": "Share Link",
-      "enter": "Enter Community"
+      "enter": "Enter Community",
+      "confirmInfo": "Got it"
+    },
+    "join": {
+      "joinButton": "Join Community",
+      "title": "Join a Community",
+      "idPlaceholder": "Community ID",
+      "passwordPlaceholder": "XXXX-XXXX",
+      "passwordOptional": "You can also enter password after joining"
     },
     "header": {
       "encrypted": "E2E Encrypted",
@@ -383,6 +392,10 @@
     },
     "admin": {
       "title": "Admin Panel",
+      "editSubtitle": "Edit Subtitle",
+      "subtitleLabel": "Community Subtitle",
+      "subtitlePlaceholder": "Enter a subtitle for this community",
+      "subtitleSave": "Save",
       "destroy": "Destroy Community",
       "destroyWarning": "This will permanently delete the community and all posts. This cannot be undone.",
       "cancel": "Cancel",
