@@ -41,6 +41,14 @@ function generateUUID(): string {
  */
 const MAX_VISIBLE_MESSAGES = 4;
 
+/**
+ * Presence leave 후 방 파쇄까지 대기 시간 (ms).
+ * 모바일 앱이 사진 선택 등으로 일시적으로 백그라운드 전환 시
+ * WebSocket이 끊겨 presence leave가 발생하지만, 복귀하면 재접속됨.
+ * 이 grace period 내에 peer가 복귀하면 파쇄를 취소한다.
+ */
+const PRESENCE_LEAVE_GRACE_MS = 60_000;
+
 /** 메시지 배열을 MAX_VISIBLE_MESSAGES 이하로 유지하며, 제거되는 미디어 blob URL 해제 */
 function limitMessages(messages: DecryptedMessage[]): DecryptedMessage[] {
   if (messages.length <= MAX_VISIBLE_MESSAGES) return messages;
@@ -108,6 +116,15 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const authKeyHashRef = useRef<string | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
+
+  // Presence leave grace period 타이머 (모바일 백그라운드 전환 허용)
+  const peerLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearPeerLeaveTimer = useCallback(() => {
+    if (peerLeaveTimerRef.current) {
+      clearTimeout(peerLeaveTimerRef.current);
+      peerLeaveTimerRef.current = null;
+    }
+  }, []);
 
   // WebRTC 시그널링 포워딩 — subscribe 전에 등록, ref 콜백으로 useWebRTC에 전달
   const webrtcHandlersRef = useRef<WebRTCSignalingHandlers | null>(null);
@@ -310,6 +327,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         // 6. 상대방 퇴장 감지 → 즉시 방 폭파 (양쪽 모두 파쇄)
         channel.on('broadcast', { event: 'user_left' }, () => {
           if (!isMounted) return;
+          // 명시적 퇴장 → grace period 타이머 취소 (즉시 파쇄)
+          clearPeerLeaveTimer();
 
           // 메시지 전체 삭제 + 상태 초기화
           setMessages([]);
@@ -369,6 +388,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
           }
 
           if (peer) {
+            // 상대방 복귀 감지 → presence leave grace period 타이머 취소
+            clearPeerLeaveTimer();
             setPeerConnected(true);
             setPeerUsername(peer.username);
 
@@ -388,6 +409,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
 
         // presence.leave: 네트워크 끊김 등 user_left 브로드캐스트 못 받았을 때 fallback
+        // 모바일 앱이 사진 선택 등으로 일시적 백그라운드 전환 시 WebSocket이 끊겨
+        // presence leave가 발생하므로, grace period를 두어 복귀를 기다린다.
         channel.on('presence', { event: 'leave' }, () => {
           if (!isMounted || !selfTrackedRef.current) return;
           const state = channel.presenceState();
@@ -397,25 +420,39 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
             updateParticipantCount(roomId, users.length, authKeyHashRef.current).catch(() => {});
           }
 
-          // 혼자 남음 + 이전에 상대방이 있었던 경우 → 즉시 폭파
+          // 혼자 남음 + 이전에 상대방이 있었던 경우
+          // → grace period 후 파쇄 (모바일 사진 선택 등 일시적 이탈 허용)
           if (users.length <= 1 && sharedSecretRef.current) {
-            setMessages([]);
-            setPeerConnected(false);
-            setPeerUsername(null);
-            sharedSecretRef.current = null;
-            keyPairRef.current = null;
+            clearPeerLeaveTimer();
+            peerLeaveTimerRef.current = setTimeout(() => {
+              if (!isMounted) return;
 
-            if (channelRef.current) {
-              channelRef.current.untrack();
-              channelRef.current.unsubscribe();
-              channelRef.current = null;
-              setChannelState(null);
-            }
+              // Grace period 후 presence 재확인 — 이미 복귀했을 수 있음
+              if (channelRef.current) {
+                const currentState = channelRef.current.presenceState();
+                const currentUsers = Object.values(currentState).flat();
+                if (currentUsers.length > 1) return; // peer 복귀 → 파쇄 취소
+              }
 
-            if (authKeyHashRef.current) {
-              updateParticipantCount(roomId, 0, authKeyHashRef.current).catch(() => {});
-            }
-            setStatus('destroyed');
+              setMessages([]);
+              setPeerConnected(false);
+              setPeerUsername(null);
+              sharedSecretRef.current = null;
+              keyPairRef.current = null;
+
+              if (channelRef.current) {
+                channelRef.current.untrack();
+                channelRef.current.unsubscribe();
+                channelRef.current = null;
+                setChannelState(null);
+              }
+
+              if (authKeyHashRef.current) {
+                updateParticipantCount(roomId, 0, authKeyHashRef.current).catch(() => {});
+              }
+              peerLeaveTimerRef.current = null;
+              setStatus('destroyed');
+            }, PRESENCE_LEAVE_GRACE_MS);
           }
         });
 
@@ -467,6 +504,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
 
     return () => {
       isMounted = false;
+      clearPeerLeaveTimer();
       if (channelRef.current) {
         const ch = channelRef.current;
         channelRef.current = null;
