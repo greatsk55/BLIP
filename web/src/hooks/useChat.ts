@@ -216,6 +216,7 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
       try {
         // 방 인증용 authKeyHash 파생 (API 호출 인증에 사용)
         const { authKey } = await deriveKeysFromPassword(password, roomId);
+        if (!isMounted) return;
         const authHash = await hashAuthKey(authKey);
         authKeyHashRef.current = authHash;
 
@@ -224,6 +225,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         // 랜덤 키쌍으로 Perfect Forward Secrecy 보장
         const keyPair = generateKeyPair();
         keyPairRef.current = keyPair;
+
+        // StrictMode double-invocation 방어 — cleanup이 이미 실행됐으면 중단
+        if (!isMounted) return;
 
         // 3. Supabase 채널 구독
         const channel = supabase.channel(`room:${roomId}`, {
@@ -417,11 +421,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
 
         // 8. WebRTC 시그널링 이벤트 (subscribe 전에 등록해야 수신 가능)
         channel.on('broadcast', { event: 'webrtc_offer' }, (raw) => {
-          console.log('[Chat→WebRTC] offer forwarding, handler set:', !!webrtcHandlersRef.current);
           webrtcHandlersRef.current?.onOffer(raw);
         });
         channel.on('broadcast', { event: 'webrtc_answer' }, (raw) => {
-          console.log('[Chat→WebRTC] answer forwarding, handler set:', !!webrtcHandlersRef.current);
           webrtcHandlersRef.current?.onAnswer(raw);
         });
         channel.on('broadcast', { event: 'webrtc_ice' }, (raw) => {
@@ -429,8 +431,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
         });
 
         // 9. 채널 구독 + Presence 등록
-        await channel.subscribe(async (status) => {
-          if (status === 'SUBSCRIBED' && isMounted) {
+        channel.subscribe(async (subscribeStatus) => {
+          if (subscribeStatus === 'SUBSCRIBED' && isMounted) {
             // Presence에 자신 등록
             await channel.track({
               userId: myIdRef.current,
@@ -452,6 +454,8 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
             });
 
             setStatus('chatting');
+          } else if (subscribeStatus === 'TIMED_OUT' || subscribeStatus === 'CHANNEL_ERROR') {
+            if (isMounted) setStatus('error');
           }
         });
       } catch {
@@ -464,11 +468,15 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
     return () => {
       isMounted = false;
       if (channelRef.current) {
+        const ch = channelRef.current;
+        channelRef.current = null;
+        setChannelState(null);
+
         // Presence에서 명시적으로 나가기 (상대방에게 즉시 leave 이벤트)
-        channelRef.current.untrack();
+        ch.untrack();
 
         // 퇴장 알림
-        channelRef.current.send({
+        ch.send({
           type: 'broadcast',
           event: 'user_left',
           payload: {
@@ -476,9 +484,9 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
             username: myUsernameRef.current,
           },
         });
-        channelRef.current.unsubscribe();
-        channelRef.current = null;
-        setChannelState(null);
+        ch.unsubscribe();
+        // Supabase 내부 채널 목록에서도 제거 (StrictMode 좀비 방지)
+        supabase.removeChannel(ch);
       }
       // 키 메모리 정리
       keyPairRef.current = null;
