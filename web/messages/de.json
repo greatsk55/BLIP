@@ -182,7 +182,9 @@
       "password": "ZUGANGSSCHLÜSSEL",
       "shareLink": "Link teilen",
       "warning": "SPEICHERE DIESEN SCHLÜSSEL. ER KANN NICHT WIEDERHERGESTELLT WERDEN.",
-      "enter": "KANAL BETRETEN"
+      "enter": "KANAL BETRETEN",
+      "includeKeyInLink": "Schlüssel im Link einbetten",
+      "includeKeyWarning": "Jeder mit diesem Link kann ohne Schlüssel beitreten"
     },
     "join": {
       "title": "ZUGANGSSCHLÜSSEL EINGEBEN",

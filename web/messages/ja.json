@@ -182,7 +182,9 @@
       "password": "ACCESS KEY",
       "shareLink": "共有リンク",
       "warning": "このキーを保存してください。復元できません。",
-      "enter": "チャンネルに入る"
+      "enter": "チャンネルに入る",
+      "includeKeyInLink": "リンクにキーを含める",
+      "includeKeyWarning": "このリンクを知っている人はキーなしで入室できます"
     },
     "join": {
       "title": "ENTER ACCESS KEY",

@@ -182,7 +182,9 @@
       "password": "ACCESS KEY",
       "shareLink": "Lien de partage",
       "warning": "SAUVEGARDEZ CETTE CLÉ. ELLE NE PEUT PAS ÊTRE RÉCUPÉRÉE.",
-      "enter": "ENTRER DANS LE CANAL"
+      "enter": "ENTRER DANS LE CANAL",
+      "includeKeyInLink": "Inclure la clé dans le lien",
+      "includeKeyWarning": "Toute personne ayant ce lien peut entrer sans clé"
     },
     "join": {
       "title": "ENTER ACCESS KEY",

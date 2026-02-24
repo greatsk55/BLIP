@@ -35,7 +35,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
   const { notifyMessage, requestPermission } = useNotification();
   const [password, setPassword] = useState<string | null>(initialPassword ?? null);
   const [viewState, setViewState] = useState<'password' | 'created' | 'chat' | 'destroyed'>(
-    isCreator ? 'created' : 'password'
+    isCreator ? 'created' : initialPassword ? 'chat' : 'password'
   );
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
