@@ -182,7 +182,9 @@
       "password": "ACCESS KEY",
       "shareLink": "分享链接",
       "warning": "请保存此密钥。无法恢复。",
-      "enter": "进入频道"
+      "enter": "进入频道",
+      "includeKeyInLink": "在链接中包含密钥",
+      "includeKeyWarning": "拥有此链接的人无需密钥即可进入"
     },
     "join": {
       "title": "ENTER ACCESS KEY",

@@ -182,7 +182,9 @@
       "password": "存取金鑰",
       "shareLink": "分享連結",
       "warning": "請保存此金鑰。金鑰無法恢復。",
-      "enter": "進入頻道"
+      "enter": "進入頻道",
+      "includeKeyInLink": "在連結中包含金鑰",
+      "includeKeyWarning": "擁有此連結的人無需金鑰即可進入"
     },
     "join": {
       "title": "輸入存取金鑰",

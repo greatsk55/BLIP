@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import CopyButton from '@/components/shared/CopyButton';
@@ -18,9 +19,14 @@ export default function RoomCreatedView({
   peerConnected,
 }: RoomCreatedViewProps) {
   const t = useTranslations('Chat');
-  const shareUrl = typeof window !== 'undefined'
+  const [includeKey, setIncludeKey] = useState(true);
+
+  const baseUrl = typeof window !== 'undefined'
     ? `${window.location.origin}${window.location.pathname}`
     : '';
+  const shareUrl = includeKey
+    ? `${baseUrl}#k=${encodeURIComponent(password)}`
+    : baseUrl;
 
   return (
     <div className="h-dvh bg-void-black flex items-center justify-center px-6 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] overflow-y-auto">
@@ -62,7 +68,7 @@ export default function RoomCreatedView({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mb-6"
+          className="mb-4"
         >
           <p className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-widest mb-3">
             {t('create.shareLink')}
@@ -74,6 +80,48 @@ export default function RoomCreatedView({
             <CopyButton text={shareUrl} />
           </div>
         </motion.div>
+
+        {/* 비밀번호 포함 토글 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="mb-2"
+        >
+          <label className="inline-flex items-center gap-3 cursor-pointer select-none">
+            <button
+              type="button"
+              role="switch"
+              aria-checked={includeKey}
+              onClick={() => setIncludeKey(!includeKey)}
+              className={`relative w-9 h-5 rounded-full transition-colors duration-200 ${
+                includeKey ? 'bg-signal-green/80' : 'bg-ink/20'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-void-black transition-transform duration-200 ${
+                  includeKey ? 'translate-x-4' : 'translate-x-0'
+                }`}
+              />
+            </button>
+            <span className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-wider">
+              {t('create.includeKeyInLink')}
+            </span>
+          </label>
+        </motion.div>
+
+        {/* 비밀번호 포함 시 주의사항 */}
+        {includeKey && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="font-mono text-[10px] text-ghost-grey/40 uppercase tracking-wider mb-6"
+          >
+            {t('create.includeKeyWarning')}
+          </motion.p>
+        )}
+
+        {!includeKey && <div className="mb-6" />}
 
         {/* 경고 */}
         <motion.p

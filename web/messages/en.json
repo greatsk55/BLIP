@@ -182,7 +182,9 @@
       "password": "ACCESS KEY",
       "shareLink": "Share link",
       "warning": "SAVE THIS KEY. IT CANNOT BE RECOVERED.",
-      "enter": "ENTER CHANNEL"
+      "enter": "ENTER CHANNEL",
+      "includeKeyInLink": "Include key in link",
+      "includeKeyWarning": "Anyone with this link can enter without a key"
     },
     "join": {
       "title": "ENTER ACCESS KEY",

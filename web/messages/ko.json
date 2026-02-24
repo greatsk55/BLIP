@@ -182,7 +182,9 @@
       "password": "ACCESS KEY",
       "shareLink": "공유 링크",
       "warning": "이 비밀번호를 저장하세요. 복구할 수 없습니다.",
-      "enter": "채팅방 입장"
+      "enter": "채팅방 입장",
+      "includeKeyInLink": "링크에 비밀번호 포함",
+      "includeKeyWarning": "이 링크를 가진 사람은 비밀번호 없이 입장할 수 있습니다"
     },
     "join": {
       "title": "ENTER ACCESS KEY",
