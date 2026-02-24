@@ -13,27 +13,43 @@ export default function RoomPageClient({ roomId }: RoomPageClientProps) {
   const [roomExists, setRoomExists] = useState<boolean | null>(null);
   const [roomError, setRoomError] = useState<string | null>(null);
 
-  // URL fragment에서 비밀번호 추출
-  // #p=XXXX-XXXX → 방 생성자 (RoomCreatedView 표시)
-  // #k=XXXX-XXXX → 링크로 참여 (자동 검증 후 바로 채팅 입장)
-  // fragment는 서버로 전송되지 않으므로 서버 로그에 남지 않음
+  // URL에서 비밀번호 추출 (fragment 우선, query parameter 폴백)
+  // #p= 또는 ?p= → 방 생성자 (RoomCreatedView 표시)
+  // #k= 또는 ?k= → 링크로 참여 (자동 검증 후 바로 채팅 입장)
+  // fragment(#)는 서버로 전송되지 않아 가장 안전
+  // query(?)는 메신저/SNS 공유 시 fragment 유실 대비 폴백
   const [creatorPassword, setCreatorPassword] = useState<string | undefined>(undefined);
   const [linkPassword, setLinkPassword] = useState<string | undefined>(undefined);
   const [linkVerified, setLinkVerified] = useState(false);
   const [hashParsed, setHashParsed] = useState(false);
 
   useEffect(() => {
+    let p: string | null = null;
+    let k: string | null = null;
+
+    // 1순위: URL fragment (#k=...) — 서버로 전송되지 않으므로 가장 안전
     const hash = window.location.hash;
     if (hash) {
-      const params = new URLSearchParams(hash.slice(1));
-      const p = params.get('p');
-      const k = params.get('k');
-      if (p) {
-        setCreatorPassword(decodeURIComponent(p));
-      } else if (k) {
-        setLinkPassword(decodeURIComponent(k));
-      }
-      // fragment 즉시 제거 (브라우저 히스토리에서도 숨김)
+      const hashParams = new URLSearchParams(hash.slice(1));
+      p = hashParams.get('p');
+      k = hashParams.get('k');
+    }
+
+    // 2순위: query parameter (?k=...) — 메신저/SNS 공유 시 fragment 유실 대비
+    if (!p && !k) {
+      const searchParams = new URLSearchParams(window.location.search);
+      p = searchParams.get('p');
+      k = searchParams.get('k');
+    }
+
+    if (p) {
+      setCreatorPassword(decodeURIComponent(p));
+    } else if (k) {
+      setLinkPassword(decodeURIComponent(k));
+    }
+
+    // fragment + query parameter 모두 즉시 제거 (브라우저 히스토리에서도 숨김)
+    if (hash || window.location.search.includes('k=') || window.location.search.includes('p=')) {
       window.history.replaceState(null, '', window.location.pathname);
     }
     setHashParsed(true);
