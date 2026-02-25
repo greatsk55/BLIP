@@ -8,6 +8,13 @@ const withNextIntl = createNextIntlPlugin(
 const nextConfig = {
   async headers() {
     return [
+      // AASA: Apple Universal Links — Content-Type must be application/json
+      {
+        source: '/.well-known/apple-app-site-association',
+        headers: [
+          { key: 'Content-Type', value: 'application/json' },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [

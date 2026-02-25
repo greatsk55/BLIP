@@ -4,7 +4,10 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.bakkum.blip",
-      "sha256_cert_fingerprints": ["33:F0:FD:0A:A6:26:0F:EE:63:05:78:31:F9:AF:92:2C:DD:25:62:2B:30:08:8C:89:C2:87:F8:83:03:69:98:2B"]
+      "sha256_cert_fingerprints": [
+        "33:F0:FD:0A:A6:26:0F:EE:63:05:78:31:F9:AF:92:2C:DD:25:62:2B:30:08:8C:89:C2:87:F8:83:03:69:98:2B",
+        "AD:C8:B0:70:50:39:BE:8C:81:6E:4B:24:FE:65:AA:AD:31:62:71:61:DA:9D:A6:F9:FC:29:A8:EF:80:20:EA:E6"
+      ]
     }
   }
 ]
