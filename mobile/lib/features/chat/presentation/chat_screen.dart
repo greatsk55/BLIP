@@ -6,6 +6,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 import '../providers/chat_provider.dart';
+import '../providers/webrtc_provider.dart';
 import 'widgets/password_entry.dart';
 import 'widgets/room_created_view.dart';
 import 'widgets/chat_room_view.dart';
@@ -47,14 +48,43 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    debugPrint('[ChatScreen] lifecycle: $state');
+    if (_password == null) return;
+    final params = (roomId: widget.roomId, password: _password!);
+    final notifier = ref.read(chatNotifierProvider(params).notifier);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        debugPrint('[ChatScreen] resumed → reconnectPresence()');
+        notifier.reconnectPresence();
+        break;
+      case AppLifecycleState.paused:
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        break;
+    }
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // 백그라운드 전환 시 ChatNotifier가 dispose → 자동 cleanup
+  void deactivate() {
+    // ref.invalidate()는 dispose()에서 호출하면 이미 Element가 unmount 중이라
+    // "Cannot use ref after disposed" 에러 발생 → deactivate()에서 호출
+    if (_password != null) {
+      final params = (roomId: widget.roomId, password: _password!);
+      ref.invalidate(webRtcNotifierProvider(params));
+      ref.invalidate(chatNotifierProvider(params));
+    }
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    debugPrint('[ChatScreen] dispose called');
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void _onPasswordVerified(String password) {

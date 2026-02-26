@@ -1,5 +1,6 @@
-import 'dart:typed_data';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -85,6 +86,11 @@ class ChatNotifier extends StateNotifier<ChatState> {
   Uint8List? _sharedSecret;
   bool _selfTracked = false;
 
+  /// 10분 비활성 시 방 자동 파쇄 타이머
+  /// 메시지 송수신 또는 키 교환 시 리셋
+  static const _inactivityTimeout = Duration(minutes: 10);
+  Timer? _inactivityTimer;
+
   /// WebRTC 연결에 필요한 값 외부 노출
   RealtimeChannel? get channel => _channel;
   Uint8List? get sharedSecret => _sharedSecret;
@@ -122,6 +128,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
       // 3. 채널 구독 시작
       _channel!.subscribe((status, [error]) async {
+        debugPrint('[Chat] subscribe callback: status=$status, error=$error');
         if (status == RealtimeSubscribeStatus.subscribed) {
           // Presence에 자신 등록
           await _channel!.track({
@@ -182,6 +189,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
       // userId 비교로 WebRTC initiator 결정
       final isInit = state.myId.compareTo(userIdStr) < 0;
 
+      _resetInactivityTimer();
+
       state = state.copyWith(
         peerUsername: usernameStr,
         peerConnected: true,
@@ -216,6 +225,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       );
 
       if (decrypted != null) {
+        _resetInactivityTimer();
         state = state.copyWith(
           messages: _limitMessages([
             ...state.messages,
@@ -261,9 +271,9 @@ class ChatNotifier extends StateNotifier<ChatState> {
     // Presence 동기화
     _channel!.onPresenceSync((_) {
       if (!mounted) return;
-      // track() 완료 전 초기 sync(0명)에서 방 파쇄 방지
       if (!_selfTracked) return;
       final users = _getAllPresences();
+      debugPrint('[Chat] presenceSync: ${users.length} users');
 
       // DB participant_count 업데이트
       _api.updateParticipantCount(roomId, users.length).catchError((_) {});
@@ -308,17 +318,17 @@ class ChatNotifier extends StateNotifier<ChatState> {
       }
     });
 
-    // Presence leave: 네트워크 끊김 fallback
-    _channel!.onPresenceLeave((_) {
+    // Presence leave: participant_count만 업데이트
+    // 방 파쇄는 오직 명시적 EXIT('user_left' broadcast)로만 처리
+    // Presence leave는 일시적 이탈(사진 선택, 네트워크 끊김 등)일 수 있으므로
+    // 방 파쇄 트리거로 사용하지 않음
+    _channel!.onPresenceLeave((payload) {
       if (!mounted || !_selfTracked) return;
-      final users = _getAllPresences();
-
-      _api.updateParticipantCount(roomId, users.length).catchError((_) {});
-
-      // 혼자 남음 + 이전에 상대방이 있었던 경우 → 즉시 폭파
-      if (users.length <= 1 && _sharedSecret != null) {
-        _destroyLocally();
-      }
+      debugPrint('[Chat] presenceLeave: left=${payload.leftPresences.length}, '
+          'remaining=${payload.currentPresences.length}');
+      _api
+          .updateParticipantCount(roomId, payload.currentPresences.length)
+          .catchError((_) {});
     });
   }
 
@@ -327,6 +337,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
     if (_channel == null || _sharedSecret == null || content.trim().isEmpty) {
       return;
     }
+
+    _resetInactivityTimer();
 
     final encrypted = encryptMessage(content.trim(), _sharedSecret!);
     final messageId = const Uuid().v4();
@@ -362,6 +374,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
   /// 미디어 메시지 추가/교체 (WebRTC에서 호출)
   /// 동일 ID가 이미 있으면 교체 (HEADER→DONE 업데이트), 없으면 추가
   void addMediaMessage(DecryptedMessage message) {
+    _resetInactivityTimer();
     final idx = state.messages.indexWhere((m) => m.id == message.id);
     final List<DecryptedMessage> updated;
     if (idx >= 0) {
@@ -384,6 +397,45 @@ class ChatNotifier extends StateNotifier<ChatState> {
             : msg;
       }).toList(),
     );
+  }
+
+  /// 앱 복귀 시 Presence 재등록
+  /// 백그라운드 동안 WebSocket이 끊겨 Presence가 해제된 경우 복구
+  /// 채널이 아직 재연결 중일 수 있으므로 최대 3회 재시도
+  Future<void> reconnectPresence() async {
+    if (_channel == null || !mounted) return;
+
+    final trackData = {
+      'userId': state.myId,
+      'username': state.myUsername,
+      'publicKey': _keyPair != null
+          ? publicKeyToString(_keyPair!.publicKey)
+          : '',
+      'joinedAt': DateTime.now().millisecondsSinceEpoch,
+    };
+
+    for (var attempt = 0; attempt < 3; attempt++) {
+      try {
+        await _channel!.track(trackData);
+        _selfTracked = true;
+        return;
+      } catch (_) {
+        // 채널이 아직 재연결 중 → 대기 후 재시도
+        if (attempt < 2) {
+          await Future.delayed(const Duration(seconds: 2));
+          if (!mounted || _channel == null) return;
+        }
+      }
+    }
+  }
+
+  /// 비활성 타이머 리셋 (메시지 송수신, 키 교환 시 호출)
+  void _resetInactivityTimer() {
+    _inactivityTimer?.cancel();
+    _inactivityTimer = Timer(_inactivityTimeout, () {
+      if (!mounted) return;
+      _destroyLocally();
+    });
   }
 
   /// 명시적 퇴장 (EXIT 버튼)
@@ -410,8 +462,10 @@ class ChatNotifier extends StateNotifier<ChatState> {
     );
   }
 
-  /// 내부 파쇄 (상대방 퇴장 또는 presence leave)
+  /// 내부 파쇄 (상대방 퇴장 또는 비활성 타이머)
   void _destroyLocally() {
+    debugPrint('[Chat] _destroyLocally called');
+    debugPrint(StackTrace.current.toString());
     _cleanup();
     _api.updateParticipantCount(roomId, 0).catchError((_) {});
     state = state.copyWith(
@@ -425,6 +479,8 @@ class ChatNotifier extends StateNotifier<ChatState> {
   /// 채널 정리
   void _cleanup() {
     _selfTracked = false;
+    _inactivityTimer?.cancel();
+    _inactivityTimer = null;
     if (_channel != null) {
       _channel!.untrack();
       _channel!.unsubscribe();
@@ -453,10 +509,17 @@ class ChatNotifier extends StateNotifier<ChatState> {
 }
 
 /// ChatNotifier Provider (roomId + password 기반)
+/// keepAlive: ImagePicker 등 시스템 다이얼로그로 인한 임시 background 전환 시
+/// dispose 방지. ChatScreen.dispose()에서 명시적으로 invalidate.
 final chatNotifierProvider = StateNotifierProvider.autoDispose
     .family<ChatNotifier, ChatState, ({String roomId, String password})>(
-  (ref, params) => ChatNotifier(
-    roomId: params.roomId,
-    password: params.password,
-  ),
+  (ref, params) {
+    final link = ref.keepAlive();
+    final notifier = ChatNotifier(
+      roomId: params.roomId,
+      password: params.password,
+    );
+    ref.onDispose(() => link.close());
+    return notifier;
+  },
 );

@@ -79,6 +79,10 @@ This service intentionally does **NOT** do the following:
 - Auto-shred: messages beyond the visible window are destroyed with blob URLs released
 - Capture protection: visibility change, keyboard shortcut, and context-menu detection
 
+## Download
+
+<a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" width="200"></a>
+
 ## Support
 
 If you like this project, buy me a coffee!

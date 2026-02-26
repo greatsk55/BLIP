@@ -419,11 +419,34 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatRoomFull => '방이 가득 찼습니다';
 
   @override
-  String get chatCreatedTitle => '방이 생성되었습니다';
+  String get chatCreatedTitle => '채널 생성 완료';
+
+  @override
+  String get chatCreatedWarning => '이 키를 저장하세요. 복구할 수 없습니다.';
+
+  @override
+  String get chatAccessKey => '접속 키';
+
+  @override
+  String get chatShareLink => '공유 링크';
+
+  @override
+  String get chatPeerConnected => '상대방 접속됨';
 
   @override
   String chatShareMessage(String link, String password) {
     return 'BLIP 채팅에 참여하세요!\n\n$link\n비밀번호: $password';
+  }
+
+  @override
+  String get chatIncludeKey => '링크에 비밀번호 포함';
+
+  @override
+  String get chatIncludeKeyWarning => '이 링크를 가진 누구나 비밀번호 입력 없이 참여할 수 있습니다';
+
+  @override
+  String chatShareMessageLinkOnly(String link) {
+    return 'BLIP 채팅에 참여하세요!\n\n$link';
   }
 
   @override
@@ -673,4 +696,89 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get boardCreateSubtitlePlaceholder => '부제목 (선택사항)';
+
+  @override
+  String get termsAgree => '이용약관에 동의합니다';
+
+  @override
+  String get termsAgreeLink => '이용약관';
+
+  @override
+  String get termsMustAgree => '계속하려면 이용약관에 동의해야 합니다.';
+
+  @override
+  String get termsViewInChat => '이용약관';
+
+  @override
+  String get termsTitle => '이용약관';
+
+  @override
+  String get termsLastUpdated => '최종 수정일: 2026년 2월';
+
+  @override
+  String get termsIntro =>
+      'BLIP을 사용하면 이 약관에 동의하게 됩니다. 우리 코드처럼—짧고, 정직하고, 평이한 언어로 작성했습니다.';
+
+  @override
+  String get termsSection1Title => 'BLIP이란';
+
+  @override
+  String get termsSection1Content =>
+      'BLIP은 무료 오픈소스 종단간 암호화 일회용 채팅 서비스입니다. 사용 후 파기되는 임시 통신 채널을 제공합니다. BLIP은 메신저, 소셜 네트워크, 데이터 저장 플랫폼이 아닙니다. 쓰고 버리는 통신 도구입니다.';
+
+  @override
+  String get termsSection2Title => '계정 불필요';
+
+  @override
+  String get termsSection2Content =>
+      'BLIP은 회원가입, 로그인 자격 증명, 개인 프로필 없이 운영됩니다. 임시 채팅방 링크와 공유 비밀번호를 통해 접근할 수 있습니다. 채팅방 비밀번호 관리는 사용자의 책임입니다—복구할 수 없습니다.';
+
+  @override
+  String get termsSection3Title => '허용되는 사용';
+
+  @override
+  String get termsSection3Content =>
+      '다음 목적으로 BLIP을 사용하지 않을 것에 동의합니다: 불법 콘텐츠 배포, 괴롭힘이나 위협, 악성 소프트웨어 전송, 자동화된 스팸 또는 남용, 관련 법률을 위반하는 활동.';
+
+  @override
+  String get termsSection4Title => '데이터 복구 불가';
+
+  @override
+  String get termsSection4Content =>
+      '메시지는 어떤 데이터베이스에도 저장되지 않습니다. 채팅방이 파기되면 모든 대화 데이터는 영구적이고 비가역적으로 소실됩니다. 이것은 제한이 아니라 설계입니다.';
+
+  @override
+  String get termsSection5Title => '오픈 소스';
+
+  @override
+  String get termsSection5Content =>
+      'BLIP의 소스 코드는 공개되어 있습니다. 코드를 검사, 포크, 기여할 수 있습니다. 코드의 투명성이 프라이버시에 대한 가장 강력한 보장입니다.';
+
+  @override
+  String get termsSection6Title => '서비스 가용성';
+
+  @override
+  String get termsSection6Content =>
+      'BLIP은 \'있는 그대로\' 제공됩니다. 가동 시간, 가용성, 중단 없는 서비스를 보장하지 않습니다. 사전 통지 없이 서비스를 수정, 중단, 중지할 수 있습니다.';
+
+  @override
+  String get termsSection7Title => '책임의 제한';
+
+  @override
+  String get termsSection7Content =>
+      '법률이 허용하는 최대 범위 내에서, BLIP과 운영자는 서비스 사용으로 인한 직접적, 간접적, 부수적, 결과적 손해에 대해 책임을 지지 않습니다.';
+
+  @override
+  String get termsSection8Title => '지적 재산권';
+
+  @override
+  String get termsSection8Content =>
+      'BLIP 이름, 로고, 브랜드 자산은 보호됩니다. 서비스 코드베이스는 오픈소스 라이선스로 공개됩니다. 채팅방의 사용자 생성 콘텐츠는 사용자에게 귀속됩니다.';
+
+  @override
+  String get termsSection9Title => '변경 사항 및 준거법';
+
+  @override
+  String get termsSection9Content =>
+      '이 약관은 언제든지 수정될 수 있습니다. 변경 후 BLIP의 계속적인 사용은 수정된 약관에 대한 동의로 간주됩니다. 이 약관은 대한민국 법률에 의해 규율됩니다.';
 }

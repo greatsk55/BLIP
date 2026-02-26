@@ -686,13 +686,16 @@ class WebRtcNotifier extends StateNotifier<WebRtcState> {
 /// ChatNotifier에 의존 (channel + sharedSecret)
 /// peerConnected를 select 감시 → true가 되면 provider 재생성 →
 /// 이 시점에 sharedSecret이 있으므로 _init()이 정상 작동
+/// keepAlive: ImagePicker 등 임시 background 전환 시 dispose 방지
 final webRtcNotifierProvider = StateNotifierProvider.autoDispose
     .family<WebRtcNotifier, WebRtcState, ({String roomId, String password})>(
   (ref, params) {
+    final link = ref.keepAlive();
     // peerConnected 변경 시에만 재생성 (메시지 수신으로는 재생성 안 함)
     ref.watch(chatNotifierProvider(params).select((s) => s.peerConnected));
     final chatNotifier =
         ref.read(chatNotifierProvider(params).notifier);
+    ref.onDispose(() => link.close());
     return WebRtcNotifier(chatNotifier: chatNotifier);
   },
 );

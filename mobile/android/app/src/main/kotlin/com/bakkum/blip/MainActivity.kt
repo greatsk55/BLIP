@@ -46,11 +46,16 @@ class MainActivity : FlutterActivity() {
 
         // Android 14+ (API 34): ScreenCaptureCallback으로 스크린샷 감지
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            registerScreenCaptureCallback(mainExecutor, object : Activity.ScreenCaptureCallback {
-                override fun onScreenCaptured() {
-                    screenshotMethodChannel?.invokeMethod("onScreenshot", null)
-                }
-            })
+            try {
+                registerScreenCaptureCallback(mainExecutor, object : Activity.ScreenCaptureCallback {
+                    override fun onScreenCaptured() {
+                        screenshotMethodChannel?.invokeMethod("onScreenshot", null)
+                    }
+                })
+            } catch (e: Exception) {
+                // 권한 없거나 에뮬레이터 등에서 실패 시 무시
+                android.util.Log.w("MainActivity", "ScreenCaptureCallback registration failed", e)
+            }
         }
     }
 }

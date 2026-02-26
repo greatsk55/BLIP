@@ -79,6 +79,10 @@ BLIP不是即时通讯工具。
 - 自动粉碎：超出显示范围的消息随blob URL释放立即删除
 - 截图防护：标签切换、快捷键、右键菜单检测后模糊处理消息
 
+## 下载
+
+<a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="在 Google Play 上获取" width="200"></a>
+
 ## 支持
 
 如果您喜欢这个项目，请我喝杯咖啡吧！

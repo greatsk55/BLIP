@@ -416,11 +416,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatRoomFull => '房间已满';
 
   @override
-  String get chatCreatedTitle => '房间已创建';
+  String get chatCreatedTitle => '频道已创建';
+
+  @override
+  String get chatCreatedWarning => '请保存此密钥，无法恢复。';
+
+  @override
+  String get chatAccessKey => '访问密钥';
+
+  @override
+  String get chatShareLink => '分享链接';
+
+  @override
+  String get chatPeerConnected => '对方已连接';
 
   @override
   String chatShareMessage(String link, String password) {
     return '加入我的BLIP聊天！\n\n$link\n密码: $password';
+  }
+
+  @override
+  String get chatIncludeKey => '在链接中包含密码';
+
+  @override
+  String get chatIncludeKeyWarning => '任何拥有此链接的人都可以无需输入密码直接加入';
+
+  @override
+  String chatShareMessageLinkOnly(String link) {
+    return '加入我的BLIP聊天！\n\n$link';
   }
 
   @override
@@ -664,6 +687,85 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get boardCreateSubtitlePlaceholder => '副标题（可选）';
+
+  @override
+  String get termsAgree => '我同意使用条款';
+
+  @override
+  String get termsAgreeLink => '使用条款';
+
+  @override
+  String get termsMustAgree => '继续前请同意使用条款。';
+
+  @override
+  String get termsViewInChat => '使用条款';
+
+  @override
+  String get termsTitle => '使用条款';
+
+  @override
+  String get termsLastUpdated => '最后更新：2026年2月';
+
+  @override
+  String get termsIntro => '使用BLIP即表示你同意这些条款。像我们的代码一样——简短、诚实、用简明语言编写。';
+
+  @override
+  String get termsSection1Title => 'BLIP是什么';
+
+  @override
+  String get termsSection1Content =>
+      'BLIP是一个免费的开源端到端加密临时聊天服务。它提供使用后即销毁的临时通信频道。';
+
+  @override
+  String get termsSection2Title => '无需账户';
+
+  @override
+  String get termsSection2Content => 'BLIP无需用户注册、登录凭证或个人资料。通过临时房间链接和共享密码即可访问。';
+
+  @override
+  String get termsSection3Title => '可接受的使用';
+
+  @override
+  String get termsSection3Content =>
+      '你同意不将BLIP用于：分发非法内容、骚扰或威胁、传播恶意软件、自动垃圾信息或滥用，或任何违反法律的活动。';
+
+  @override
+  String get termsSection4Title => '数据不可恢复';
+
+  @override
+  String get termsSection4Content =>
+      '消息不存储在任何数据库中。聊天室销毁后，所有对话数据将永久不可逆地丢失。这是设计特性，不是限制。';
+
+  @override
+  String get termsSection5Title => '开源';
+
+  @override
+  String get termsSection5Content => 'BLIP的源代码是公开的。代码的透明性是我们对隐私最有力的保证。';
+
+  @override
+  String get termsSection6Title => '服务可用性';
+
+  @override
+  String get termsSection6Content => 'BLIP按\'原样\'提供。我们不保证正常运行时间、可用性或不间断服务。';
+
+  @override
+  String get termsSection7Title => '责任限制';
+
+  @override
+  String get termsSection7Content =>
+      '在法律允许的最大范围内，BLIP及其运营者不对因使用服务而产生的任何损害承担责任。';
+
+  @override
+  String get termsSection8Title => '知识产权';
+
+  @override
+  String get termsSection8Content => 'BLIP的名称、标志和品牌资产受到保护。服务代码库以开源许可证发布。';
+
+  @override
+  String get termsSection9Title => '变更与适用法律';
+
+  @override
+  String get termsSection9Content => '我们保留随时修改这些条款的权利。在变更后继续使用BLIP即表示接受更新后的条款。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1078,11 +1180,34 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get chatRoomFull => '房間已滿';
 
   @override
-  String get chatCreatedTitle => '房間已建立';
+  String get chatCreatedTitle => '頻道已建立';
+
+  @override
+  String get chatCreatedWarning => '請儲存此金鑰，無法恢復。';
+
+  @override
+  String get chatAccessKey => '存取金鑰';
+
+  @override
+  String get chatShareLink => '分享連結';
+
+  @override
+  String get chatPeerConnected => '對方已連線';
 
   @override
   String chatShareMessage(String link, String password) {
     return '加入我的 BLIP 聊天！\n\n$link\n密碼：$password';
+  }
+
+  @override
+  String get chatIncludeKey => '在連結中包含密碼';
+
+  @override
+  String get chatIncludeKeyWarning => '任何擁有此連結的人都可以無需輸入密碼直接加入';
+
+  @override
+  String chatShareMessageLinkOnly(String link) {
+    return '加入我的 BLIP 聊天！\n\n$link';
   }
 
   @override
@@ -1326,4 +1451,83 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get boardCreateSubtitlePlaceholder => '副標題（選填）';
+
+  @override
+  String get termsAgree => '我同意使用條款';
+
+  @override
+  String get termsAgreeLink => '使用條款';
+
+  @override
+  String get termsMustAgree => '繼續前請同意使用條款。';
+
+  @override
+  String get termsViewInChat => '使用條款';
+
+  @override
+  String get termsTitle => '使用條款';
+
+  @override
+  String get termsLastUpdated => '最後更新：2026年2月';
+
+  @override
+  String get termsIntro => '使用BLIP即表示你同意這些條款。它們簡短、誠實，以簡單的語言撰寫——就像我們的程式碼一樣。';
+
+  @override
+  String get termsSection1Title => 'BLIP是什麼';
+
+  @override
+  String get termsSection1Content =>
+      'BLIP是一個免費的開源端對端加密臨時聊天服務。它提供使用後即銷毀的臨時通訊頻道。';
+
+  @override
+  String get termsSection2Title => '無需帳戶';
+
+  @override
+  String get termsSection2Content => 'BLIP無需用戶註冊、登入憑證或個人資料。透過臨時房間連結和共享密碼即可存取。';
+
+  @override
+  String get termsSection3Title => '可接受的使用';
+
+  @override
+  String get termsSection3Content =>
+      '你同意不將BLIP用於：散布非法內容、騷擾或威脅、傳播惡意軟體、自動垃圾訊息或濫用，或任何違反法律的活動。';
+
+  @override
+  String get termsSection4Title => '資料不可復原';
+
+  @override
+  String get termsSection4Content =>
+      '訊息不儲存在任何資料庫中。聊天室銷毀後，所有對話資料將永久不可逆地遺失。這是設計特性，不是限制。';
+
+  @override
+  String get termsSection5Title => '開源';
+
+  @override
+  String get termsSection5Content => 'BLIP的原始碼是公開的。程式碼的透明性是我們對隱私最有力的保證。';
+
+  @override
+  String get termsSection6Title => '服務可用性';
+
+  @override
+  String get termsSection6Content => 'BLIP按\'現況\'提供。我們不保證正常運作時間、可用性或不中斷服務。';
+
+  @override
+  String get termsSection7Title => '責任限制';
+
+  @override
+  String get termsSection7Content =>
+      '在法律允許的最大範圍內，BLIP及其營運者不對因使用服務而產生的任何損害承擔責任。';
+
+  @override
+  String get termsSection8Title => '智慧財產權';
+
+  @override
+  String get termsSection8Content => 'BLIP的名稱、標誌和品牌資產受到保護。服務程式碼庫以開源授權發布。';
+
+  @override
+  String get termsSection9Title => '變更與準據法';
+
+  @override
+  String get termsSection9Content => '我們保留隨時修改這些條款的權利。在變更後繼續使用BLIP即表示接受更新後的條款。';
 }

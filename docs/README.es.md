@@ -79,6 +79,10 @@ Este servicio intencionalmente **NO** hace lo siguiente:
 - Auto-destrucción: los mensajes fuera de la ventana visible se eliminan al instante con liberación de blob URL
 - Protección contra capturas: detección de cambio de pestaña, atajos de teclado y menú contextual para difuminar mensajes
 
+## Descargar
+
+<a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Disponible en Google Play" width="200"></a>
+
 ## Apoyo
 
 Si te gusta este proyecto, ¡invítame un café!

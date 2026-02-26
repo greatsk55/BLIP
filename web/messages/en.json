@@ -80,6 +80,19 @@
     "description": "Every improvement, tracked transparently.",
     "versions": {
       "1": {
+        "version": "v1.3.0",
+        "date": "February 26, 2026",
+        "title": "Mobile App & Stability",
+        "changes": {
+          "1": "Android mobile app launched (Google Play Store)",
+          "2": "Deep link support — open chat rooms directly from shared links in the app",
+          "3": "One-click entry — include password in link for instant connection",
+          "4": "60-second reconnection grace period — rooms aren't destroyed immediately on exit",
+          "5": "Community dashboard & video attachments in posts",
+          "6": "10 language support (+German, Traditional Chinese)"
+        }
+      },
+      "2": {
         "version": "v1.2.0",
         "date": "February 15, 2026",
         "title": "Encrypted Media Transfer",
@@ -91,7 +104,7 @@
           "5": "File integrity verification with SHA-256 checksums"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.1.0",
         "date": "February 10, 2026",
         "title": "Instant Room Destruction & Notifications",
@@ -102,7 +115,7 @@
           "4": "Private community feature with encrypted posts"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.0.0",
         "date": "February 1, 2026",
         "title": "Initial Release",
@@ -168,6 +181,11 @@
     }
   },
   "Chat": {
+    "terms": {
+      "agree": "I agree to the <terms>Terms of Service</terms>",
+      "mustAgree": "You must agree to the Terms of Service to continue.",
+      "viewInChat": "Terms"
+    },
     "header": {
       "exit": "EXIT",
       "online": "{count} online",
@@ -269,6 +287,7 @@
     "title": "Terms of Use",
     "subtitle": "Terms of Service",
     "lastUpdated": "Last updated: February 2026",
+    "close": "CLOSE",
     "intro": "By using BLIP, you agree to these terms. They're short, honest, and written in plain language—just like our code.",
     "sections": {
       "1": {

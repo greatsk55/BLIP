@@ -7,6 +7,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 import '../../../core/utils/room_creator.dart';
+import '../../chat/presentation/widgets/terms_confirm_dialog.dart';
 import '../providers/chat_list_provider.dart';
 
 /// 내 채팅방 리스트 화면
@@ -90,9 +91,12 @@ class MyChatListScreen extends ConsumerWidget {
             ListTile(
               leading: Icon(Icons.add_circle_outline, color: signalGreen),
               title: Text(l10n.chatListCreateNew),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(ctx);
-                RoomCreator.createAndNavigate(context);
+                final agreed = await TermsConfirmDialog.show(context);
+                if (agreed && context.mounted) {
+                  RoomCreator.createAndNavigate(context);
+                }
               },
             ),
             ListTile(
@@ -200,6 +204,8 @@ class _EmptyStateState extends State<_EmptyState> {
 
   Future<void> _createRoom() async {
     if (_creating) return;
+    final agreed = await TermsConfirmDialog.show(context);
+    if (!agreed || !mounted) return;
     setState(() => _creating = true);
     try {
       await RoomCreator.createAndNavigate(context);

@@ -8,6 +8,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/room_creator.dart';
+import '../../../core/utils/terms_label_builder.dart';
 import '../../settings/providers/theme_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -20,6 +21,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with TickerProviderStateMixin {
   bool _creating = false;
+  bool _termsAgreed = false;
+  bool _termsError = false;
 
   // ── 애니메이션 컨트롤러 ──
   late final AnimationController _vanishController;
@@ -84,6 +87,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   Future<void> _createRoom() async {
     if (_creating) return;
+    if (!_termsAgreed) {
+      setState(() => _termsError = true);
+      return;
+    }
     setState(() => _creating = true);
 
     try {
@@ -212,7 +219,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 32),
+
+          // 이용약관 동의 체크박스
+          FadeTransition(
+            opacity: _ctaFade,
+            child: GestureDetector(
+              onTap: () => setState(() {
+                _termsAgreed = !_termsAgreed;
+                _termsError = false;
+              }),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Checkbox(
+                      value: _termsAgreed,
+                      onChanged: (v) => setState(() {
+                        _termsAgreed = v ?? false;
+                        _termsError = false;
+                      }),
+                      activeColor: signalGreen,
+                      side: BorderSide(color: ghostGrey),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  ...buildTermsLabel(
+                    context: context,
+                    fullText: l10n.termsAgree,
+                    linkText: l10n.termsAgreeLink,
+                    textColor: ghostGrey,
+                    linkColor: signalGreen,
+                    fontSize: 12,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // 이용약관 미동의 에러
+          if (_termsError)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                l10n.termsMustAgree,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'monospace',
+                  color: AppColors.glitchRed,
+                ),
+              ),
+            ),
+
+          const SizedBox(height: 16),
 
           // Create Room CTA
           FadeTransition(

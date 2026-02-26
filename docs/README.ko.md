@@ -79,6 +79,10 @@ BLIP은 메신저가 아닙니다.
 - 자동 파쇄: 화면 밖 메시지는 blob URL 해제와 함께 즉시 삭제
 - 캡처 방지: 탭 전환·단축키·우클릭 감지로 메시지 블러 처리
 
+## 다운로드
+
+<a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play에서 다운로드" width="200"></a>
+
 ## 후원
 
 이 프로젝트가 마음에 드셨다면 커피 한 잔 사주세요!

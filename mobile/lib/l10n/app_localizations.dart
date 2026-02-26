@@ -910,14 +910,56 @@ abstract class AppLocalizations {
   /// Room created title
   ///
   /// In en, this message translates to:
-  /// **'Room Created'**
+  /// **'CHANNEL CREATED'**
   String get chatCreatedTitle;
+
+  /// Warning about saving access key
+  ///
+  /// In en, this message translates to:
+  /// **'SAVE THIS KEY. IT CANNOT BE RECOVERED.'**
+  String get chatCreatedWarning;
+
+  /// Access key label
+  ///
+  /// In en, this message translates to:
+  /// **'ACCESS KEY'**
+  String get chatAccessKey;
+
+  /// Share link label
+  ///
+  /// In en, this message translates to:
+  /// **'SHARE LINK'**
+  String get chatShareLink;
+
+  /// Peer connected status
+  ///
+  /// In en, this message translates to:
+  /// **'PEER CONNECTED'**
+  String get chatPeerConnected;
 
   /// Share message with link
   ///
   /// In en, this message translates to:
   /// **'Join my BLIP chat!\n\n{link}\nPassword: {password}'**
   String chatShareMessage(String link, String password);
+
+  /// Toggle label for including password in shared link
+  ///
+  /// In en, this message translates to:
+  /// **'Include password in link'**
+  String get chatIncludeKey;
+
+  /// Warning when password is included in link
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone with this link can join without entering a password'**
+  String get chatIncludeKeyWarning;
+
+  /// Share message with link only (password embedded)
+  ///
+  /// In en, this message translates to:
+  /// **'Join my BLIP chat!\n\n{link}'**
+  String chatShareMessageLinkOnly(String link);
 
   /// Waiting for peer
   ///
@@ -1398,6 +1440,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subtitle (optional)'**
   String get boardCreateSubtitlePlaceholder;
+
+  /// Terms agreement checkbox label
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the Terms of Service'**
+  String get termsAgree;
+
+  /// Clickable terms link text
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsAgreeLink;
+
+  /// Terms agreement required error
+  ///
+  /// In en, this message translates to:
+  /// **'You must agree to the Terms of Service to continue.'**
+  String get termsMustAgree;
+
+  /// Terms button in chat header
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get termsViewInChat;
+
+  /// Terms dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsTitle;
+
+  /// Terms last updated date
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: February 2026'**
+  String get termsLastUpdated;
+
+  /// Terms introduction
+  ///
+  /// In en, this message translates to:
+  /// **'By using BLIP, you agree to these terms. They\'re short, honest, and written in plain language—just like our code.'**
+  String get termsIntro;
+
+  /// Terms section 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'What BLIP Is'**
+  String get termsSection1Title;
+
+  /// Terms section 1 content
+  ///
+  /// In en, this message translates to:
+  /// **'BLIP is a free, open-source, end-to-end encrypted ephemeral chat service. It provides temporary communication channels that are destroyed after use. BLIP is not a messenger, social network, or data storage platform. It\'s a disposable communication tool.'**
+  String get termsSection1Content;
+
+  /// Terms section 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'No Accounts Required'**
+  String get termsSection2Title;
+
+  /// Terms section 2 content
+  ///
+  /// In en, this message translates to:
+  /// **'BLIP operates without user registration, login credentials, or personal profiles. Access is granted through temporary room links and shared passwords. You are responsible for safeguarding your room passwords—we cannot recover them.'**
+  String get termsSection2Content;
+
+  /// Terms section 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptable Use'**
+  String get termsSection3Title;
+
+  /// Terms section 3 content
+  ///
+  /// In en, this message translates to:
+  /// **'You agree not to use BLIP for: distributing illegal content, harassment or threats, transmission of malware, automated spam or abuse, or any activity that violates applicable law. While we cannot monitor encrypted content, we reserve the right to restrict access to our infrastructure if abuse is detected at the network level.'**
+  String get termsSection3Content;
+
+  /// Terms section 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'No Data Recovery'**
+  String get termsSection4Title;
+
+  /// Terms section 4 content
+  ///
+  /// In en, this message translates to:
+  /// **'Messages are not stored in any database. Once a chat room is destroyed, all conversation data is permanently and irreversibly lost. This is by design, not a limitation. Do not use BLIP for communications that you need to preserve.'**
+  String get termsSection4Content;
+
+  /// Terms section 5 title
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source'**
+  String get termsSection5Title;
+
+  /// Terms section 5 content
+  ///
+  /// In en, this message translates to:
+  /// **'BLIP\'s source code is publicly available. You are free to inspect, fork, and contribute to the codebase. The transparency of our code is our strongest guarantee of privacy. You can verify every claim we make.'**
+  String get termsSection5Content;
+
+  /// Terms section 6 title
+  ///
+  /// In en, this message translates to:
+  /// **'Service Availability'**
+  String get termsSection6Title;
+
+  /// Terms section 6 content
+  ///
+  /// In en, this message translates to:
+  /// **'BLIP is provided on an \'as-is\' basis. We make no guarantees of uptime, availability, or uninterrupted service. We may modify, suspend, or discontinue the service at any time without prior notice.'**
+  String get termsSection6Content;
+
+  /// Terms section 7 title
+  ///
+  /// In en, this message translates to:
+  /// **'Limitation of Liability'**
+  String get termsSection7Title;
+
+  /// Terms section 7 content
+  ///
+  /// In en, this message translates to:
+  /// **'To the maximum extent permitted by law, BLIP and its operators shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of the service.'**
+  String get termsSection7Content;
+
+  /// Terms section 8 title
+  ///
+  /// In en, this message translates to:
+  /// **'Intellectual Property'**
+  String get termsSection8Title;
+
+  /// Terms section 8 content
+  ///
+  /// In en, this message translates to:
+  /// **'The BLIP name, logo, and brand assets are protected. The service codebase is released under an open-source license. User-generated content in chat rooms belongs to the users—though by design, it ceases to exist after the room is destroyed.'**
+  String get termsSection8Content;
+
+  /// Terms section 9 title
+  ///
+  /// In en, this message translates to:
+  /// **'Changes & Governing Law'**
+  String get termsSection9Title;
+
+  /// Terms section 9 content
+  ///
+  /// In en, this message translates to:
+  /// **'We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea.'**
+  String get termsSection9Content;
 }
 
 class _AppLocalizationsDelegate

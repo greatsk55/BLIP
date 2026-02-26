@@ -33,13 +33,22 @@ class AdService with WidgetsBindingObserver {
 
   Future<void> init() async {
     if (_initialized) return;
-    await MobileAds.instance.initialize();
+    try {
+      await MobileAds.instance.initialize();
+    } catch (e) {
+      debugPrint('[BLIP] MobileAds init failed: $e');
+      return; // AdMob 실패 시 광고 기능 비활성 상태로 유지
+    }
     _initialized = true;
 
     // 런치 카운트 증가 및 저장
-    final prefs = await SharedPreferences.getInstance();
-    _launchCount = (prefs.getInt(_launchCountKey) ?? 0) + 1;
-    await prefs.setInt(_launchCountKey, _launchCount);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _launchCount = (prefs.getInt(_launchCountKey) ?? 0) + 1;
+      await prefs.setInt(_launchCountKey, _launchCount);
+    } catch (e) {
+      debugPrint('[BLIP] SharedPreferences failed: $e');
+    }
 
     _loadInterstitial();
     _loadAppOpenAd();

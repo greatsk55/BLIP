@@ -80,6 +80,19 @@
     "description": "Cada mejora, registrada de forma transparente.",
     "versions": {
       "1": {
+        "version": "v1.3.0",
+        "date": "26 de febrero de 2026",
+        "title": "Aplicación móvil y estabilidad",
+        "changes": {
+          "1": "Aplicación Android lanzada (Google Play Store)",
+          "2": "Deep links — abre salas de chat directamente desde enlaces compartidos en la app",
+          "3": "Entrada con un clic — incluir contraseña en el enlace para conexión instantánea",
+          "4": "Período de gracia de 60 segundos — las salas no se destruyen inmediatamente al salir",
+          "5": "Panel de comunidades y soporte de video en publicaciones",
+          "6": "Soporte para 10 idiomas (+alemán, chino tradicional)"
+        }
+      },
+      "2": {
         "version": "v1.2.0",
         "date": "15 de febrero de 2026",
         "title": "Transferencia de medios cifrada",
@@ -91,7 +104,7 @@
           "5": "Verificación de integridad con sumas SHA-256"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.1.0",
         "date": "10 de febrero de 2026",
         "title": "Destrucción instantánea y notificaciones",
@@ -102,7 +115,7 @@
           "4": "Comunidad privada con publicaciones cifradas"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.0.0",
         "date": "1 de febrero de 2026",
         "title": "Lanzamiento inicial",
@@ -168,6 +181,11 @@
     }
   },
   "Chat": {
+    "terms": {
+      "agree": "Acepto los <terms>Términos de Servicio</terms>",
+      "mustAgree": "Debes aceptar los Términos de Servicio para continuar.",
+      "viewInChat": "Términos"
+    },
     "header": {
       "exit": "EXIT",
       "online": "{count} en línea",
@@ -269,6 +287,7 @@
     "title": "Términos de Uso",
     "subtitle": "Términos del Servicio",
     "lastUpdated": "Última actualización: febrero 2026",
+    "close": "CERRAR",
     "intro": "Al usar BLIP, aceptas estos términos. Son cortos, honestos y escritos en lenguaje claro—como nuestro código.",
     "sections": {
       "1": {

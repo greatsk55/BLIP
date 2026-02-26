@@ -17,6 +17,7 @@ import '../../providers/chat_provider.dart';
 import '../../providers/webrtc_provider.dart';
 import 'message_bubble.dart';
 import 'leave_confirm_dialog.dart';
+import 'terms_dialog.dart';
 
 /// 실제 채팅 화면 (메시지 목록 + 입력)
 /// ChatNotifier (Riverpod)와 연동된 E2EE 채팅 UI
@@ -425,6 +426,15 @@ class _ChatHeader extends StatelessWidget {
                 style: TextStyle(color: signalGreen, fontSize: 12),
               ),
             ),
+          // 이용약관 버튼
+          IconButton(
+            onPressed: () => TermsDialog.show(context),
+            icon: Icon(Icons.description_outlined, size: 18,
+              color: isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight),
+            tooltip: l10n.termsViewInChat,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          ),
           TextButton(
             onPressed: onExit,
             child: Text(

@@ -80,6 +80,19 @@
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
       "1": {
+        "version": "v1.3.0",
+        "date": "26 février 2026",
+        "title": "Application mobile et stabilité",
+        "changes": {
+          "1": "Application Android lancée (Google Play Store)",
+          "2": "Liens profonds — ouvrir les salons directement depuis les liens partagés dans l'app",
+          "3": "Entrée en un clic — inclure le mot de passe dans le lien pour connexion instantanée",
+          "4": "Période de grâce de 60 secondes — les salons ne sont pas détruits immédiatement à la sortie",
+          "5": "Tableau de bord communautaire et vidéos dans les publications",
+          "6": "Support de 10 langues (+allemand, chinois traditionnel)"
+        }
+      },
+      "2": {
         "version": "v1.2.0",
         "date": "15 février 2026",
         "title": "Transfert de médias chiffré",
@@ -91,7 +104,7 @@
           "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.1.0",
         "date": "10 février 2026",
         "title": "Destruction instantanée et notifications",
@@ -102,7 +115,7 @@
           "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.0.0",
         "date": "1er février 2026",
         "title": "Version initiale",
@@ -168,6 +181,11 @@
     }
   },
   "Chat": {
+    "terms": {
+      "agree": "J'accepte les <terms>Conditions d'Utilisation</terms>",
+      "mustAgree": "Vous devez accepter les Conditions d'Utilisation pour continuer.",
+      "viewInChat": "Conditions"
+    },
     "header": {
       "exit": "EXIT",
       "online": "{count} en ligne",
@@ -269,6 +287,7 @@
     "title": "Conditions d'Utilisation",
     "subtitle": "Conditions Générales",
     "lastUpdated": "Dernière mise à jour : février 2026",
+    "close": "FERMER",
     "intro": "En utilisant BLIP, vous acceptez ces conditions. Elles sont courtes, honnêtes et rédigées en langage clair—tout comme notre code.",
     "sections": {
       "1": {

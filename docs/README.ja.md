@@ -79,6 +79,10 @@ BLIPはメッセンジャーではありません。
 - 自動シュレッダー：表示範囲外のメッセージはblob URL解放と共に即削除
 - キャプチャ防止：タブ切替・ショートカット・右クリック検知でメッセージぼかし処理
 
+## ダウンロード
+
+<a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Playで入手" width="200"></a>
+
 ## サポート
 
 このプロジェクトが気に入ったら、コーヒーをおごってください！

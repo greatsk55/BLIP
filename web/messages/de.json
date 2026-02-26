@@ -80,6 +80,19 @@
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
       "1": {
+        "version": "v1.3.0",
+        "date": "26. Februar 2026",
+        "title": "Mobile App & Stabilität",
+        "changes": {
+          "1": "Android-App veröffentlicht (Google Play Store)",
+          "2": "Deep-Links — Chaträume direkt über geteilte Links in der App öffnen",
+          "3": "Ein-Klick-Eintritt — Passwort im Link für sofortige Verbindung",
+          "4": "60-Sekunden-Karenzzeit — Räume werden nicht sofort beim Verlassen zerstört",
+          "5": "Community-Dashboard & Videoanlagen in Beiträgen",
+          "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
+        }
+      },
+      "2": {
         "version": "v1.2.0",
         "date": "15. Februar 2026",
         "title": "Verschlüsselte Medienübertragung",
@@ -91,7 +104,7 @@
           "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.1.0",
         "date": "10. Februar 2026",
         "title": "Sofortige Raumvernichtung & Benachrichtigungen",
@@ -102,7 +115,7 @@
           "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.0.0",
         "date": "1. Februar 2026",
         "title": "Erstveröffentlichung",
@@ -168,6 +181,11 @@
     }
   },
   "Chat": {
+    "terms": {
+      "agree": "Ich stimme den <terms>Nutzungsbedingungen</terms> zu",
+      "mustAgree": "Sie müssen den Nutzungsbedingungen zustimmen, um fortzufahren.",
+      "viewInChat": "AGB"
+    },
     "header": {
       "exit": "VERLASSEN",
       "online": "{count} online",
@@ -269,6 +287,7 @@
     "title": "Nutzungsbedingungen",
     "subtitle": "Allgemeine Geschäftsbedingungen",
     "lastUpdated": "Zuletzt aktualisiert: Februar 2026",
+    "close": "SCHLIEßEN",
     "intro": "Durch die Nutzung von BLIP stimmst du diesen Bedingungen zu. Sie sind kurz, ehrlich und in einfacher Sprache geschrieben — genau wie unser Code.",
     "sections": {
       "1": {

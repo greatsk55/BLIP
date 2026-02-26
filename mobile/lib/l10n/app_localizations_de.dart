@@ -438,11 +438,36 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatRoomFull => 'Raum ist voll';
 
   @override
-  String get chatCreatedTitle => 'Raum erstellt';
+  String get chatCreatedTitle => 'KANAL ERSTELLT';
+
+  @override
+  String get chatCreatedWarning =>
+      'SPEICHERN SIE DIESEN SCHLÜSSEL. ER KANN NICHT WIEDERHERGESTELLT WERDEN.';
+
+  @override
+  String get chatAccessKey => 'ZUGANGSSCHLÜSSEL';
+
+  @override
+  String get chatShareLink => 'LINK TEILEN';
+
+  @override
+  String get chatPeerConnected => 'PARTNER VERBUNDEN';
 
   @override
   String chatShareMessage(String link, String password) {
     return 'Tritt meinem BLIP-Chat bei!\n\n$link\nPasswort: $password';
+  }
+
+  @override
+  String get chatIncludeKey => 'Passwort im Link einbetten';
+
+  @override
+  String get chatIncludeKeyWarning =>
+      'Jeder mit diesem Link kann ohne Passworteingabe beitreten';
+
+  @override
+  String chatShareMessageLinkOnly(String link) {
+    return 'Tritt meinem BLIP-Chat bei!\n\n$link';
   }
 
   @override
@@ -701,4 +726,90 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get boardCreateSubtitlePlaceholder => 'Untertitel (optional)';
+
+  @override
+  String get termsAgree => 'Ich stimme den Nutzungsbedingungen zu';
+
+  @override
+  String get termsAgreeLink => 'Nutzungsbedingungen';
+
+  @override
+  String get termsMustAgree =>
+      'Sie müssen den Nutzungsbedingungen zustimmen, um fortzufahren.';
+
+  @override
+  String get termsViewInChat => 'AGB';
+
+  @override
+  String get termsTitle => 'Nutzungsbedingungen';
+
+  @override
+  String get termsLastUpdated => 'Zuletzt aktualisiert: Februar 2026';
+
+  @override
+  String get termsIntro =>
+      'Durch die Nutzung von BLIP stimmst du diesen Bedingungen zu. Sie sind kurz, ehrlich und in einfacher Sprache geschrieben — genau wie unser Code.';
+
+  @override
+  String get termsSection1Title => 'Was ist BLIP';
+
+  @override
+  String get termsSection1Content =>
+      'BLIP ist ein kostenloser, quelloffener, Ende-zu-Ende verschlüsselter ephemerer Chat-Service. Er bietet temporäre Kommunikationskanäle, die nach der Nutzung zerstört werden.';
+
+  @override
+  String get termsSection2Title => 'Kein Konto erforderlich';
+
+  @override
+  String get termsSection2Content =>
+      'BLIP funktioniert ohne Registrierung, Anmeldedaten oder persönliche Profile. Der Zugang erfolgt über temporäre Raumlinks und gemeinsame Passwörter.';
+
+  @override
+  String get termsSection3Title => 'Akzeptable Nutzung';
+
+  @override
+  String get termsSection3Content =>
+      'Du stimmst zu, BLIP nicht für folgendes zu nutzen: Verbreitung illegaler Inhalte, Belästigung, Malware-Übertragung, automatisierten Spam oder gesetzeswidrige Aktivitäten.';
+
+  @override
+  String get termsSection4Title => 'Keine Datenwiederherstellung';
+
+  @override
+  String get termsSection4Content =>
+      'Nachrichten werden in keiner Datenbank gespeichert. Sobald ein Chatraum zerstört wird, sind alle Daten dauerhaft verloren. Dies ist beabsichtigt, keine Einschränkung.';
+
+  @override
+  String get termsSection5Title => 'Open Source';
+
+  @override
+  String get termsSection5Content =>
+      'Der Quellcode von BLIP ist öffentlich verfügbar. Die Transparenz unseres Codes ist unsere stärkste Datenschutzgarantie.';
+
+  @override
+  String get termsSection6Title => 'Dienstverfügbarkeit';
+
+  @override
+  String get termsSection6Content =>
+      'BLIP wird \'wie besehen\' bereitgestellt. Wir garantieren keine Betriebszeit, Verfügbarkeit oder unterbrechungsfreien Dienst.';
+
+  @override
+  String get termsSection7Title => 'Haftungsbeschränkung';
+
+  @override
+  String get termsSection7Content =>
+      'Im gesetzlich zulässigen Rahmen haften BLIP und seine Betreiber nicht für Schäden, die aus der Nutzung des Dienstes entstehen.';
+
+  @override
+  String get termsSection8Title => 'Geistiges Eigentum';
+
+  @override
+  String get termsSection8Content =>
+      'Der Name, das Logo und die Markenzeichen von BLIP sind geschützt. Der Service-Quellcode wird unter einer Open-Source-Lizenz veröffentlicht.';
+
+  @override
+  String get termsSection9Title => 'Änderungen und anwendbares Recht';
+
+  @override
+  String get termsSection9Content =>
+      'Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung von BLIP nach Änderungen gilt als Zustimmung zu den aktualisierten Bedingungen.';
 }

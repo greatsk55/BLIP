@@ -78,10 +78,19 @@ final _router = GoRouter(
         if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
         return null;
       },
-      builder: (context, state) => ChatScreen(
-        roomId: state.pathParameters['roomId']!,
-        initialPassword: state.extra as String?,
-      ),
+      builder: (context, state) {
+        // 딥링크: extra(앱 내부) > ?k=(쿼리) > #(프래그먼트) 순으로 비밀번호 추출
+        final passwordFromExtra = state.extra as String?;
+        final passwordFromQuery = state.uri.queryParameters['k'];
+        final fragment = state.uri.fragment;
+        final passwordFromFragment =
+            fragment.isNotEmpty ? Uri.decodeComponent(fragment) : null;
+        return ChatScreen(
+          roomId: state.pathParameters['roomId']!,
+          initialPassword:
+              passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment,
+        );
+      },
     ),
     // /board/create가 /board/:boardId 보다 위에 있어야 'create'가 boardId로 매칭되지 않음
     GoRoute(
@@ -114,6 +123,11 @@ final _router = GoRouter(
       redirect: (context, state) {
         final roomId = state.pathParameters['roomId'];
         if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
+        // ?k= query param 또는 #fragment 유지 (비밀번호 포함 딥링크)
+        final k = state.uri.queryParameters['k'];
+        final fragment = state.uri.fragment;
+        if (k != null) return '/room/$roomId?k=$k';
+        if (fragment.isNotEmpty) return '/room/$roomId#$fragment';
         return '/room/$roomId';
       },
     ),

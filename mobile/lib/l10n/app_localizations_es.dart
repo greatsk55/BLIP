@@ -433,11 +433,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatRoomFull => 'La sala está llena';
 
   @override
-  String get chatCreatedTitle => 'Sala Creada';
+  String get chatCreatedTitle => 'CANAL CREADO';
+
+  @override
+  String get chatCreatedWarning => 'GUARDA ESTA CLAVE. NO SE PUEDE RECUPERAR.';
+
+  @override
+  String get chatAccessKey => 'CLAVE DE ACCESO';
+
+  @override
+  String get chatShareLink => 'ENLACE PARA COMPARTIR';
+
+  @override
+  String get chatPeerConnected => 'PAR CONECTADO';
 
   @override
   String chatShareMessage(String link, String password) {
     return '¡Únete a mi chat de BLIP!\n\n$link\nContraseña: $password';
+  }
+
+  @override
+  String get chatIncludeKey => 'Incluir contraseña en el enlace';
+
+  @override
+  String get chatIncludeKeyWarning =>
+      'Cualquiera con este enlace puede unirse sin ingresar contraseña';
+
+  @override
+  String chatShareMessageLinkOnly(String link) {
+    return '¡Únete a mi chat de BLIP!\n\n$link';
   }
 
   @override
@@ -697,4 +721,90 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get boardCreateSubtitlePlaceholder => 'Subtítulo (opcional)';
+
+  @override
+  String get termsAgree => 'Acepto los Términos de Servicio';
+
+  @override
+  String get termsAgreeLink => 'Términos de Servicio';
+
+  @override
+  String get termsMustAgree =>
+      'Debes aceptar los Términos de Servicio para continuar.';
+
+  @override
+  String get termsViewInChat => 'Términos';
+
+  @override
+  String get termsTitle => 'Términos de Uso';
+
+  @override
+  String get termsLastUpdated => 'Última actualización: febrero 2026';
+
+  @override
+  String get termsIntro =>
+      'Al usar BLIP, aceptas estos términos. Son cortos, honestos y escritos en lenguaje claro—como nuestro código.';
+
+  @override
+  String get termsSection1Title => 'Qué es BLIP';
+
+  @override
+  String get termsSection1Content =>
+      'BLIP es un servicio de chat efímero gratuito, de código abierto y con cifrado de extremo a extremo. Proporciona canales de comunicación temporales que se destruyen después de su uso.';
+
+  @override
+  String get termsSection2Title => 'Sin cuentas necesarias';
+
+  @override
+  String get termsSection2Content =>
+      'BLIP funciona sin registro de usuario, credenciales de inicio de sesión ni perfiles personales. El acceso se otorga a través de enlaces temporales y contraseñas compartidas.';
+
+  @override
+  String get termsSection3Title => 'Uso aceptable';
+
+  @override
+  String get termsSection3Content =>
+      'Aceptas no usar BLIP para: distribuir contenido ilegal, acoso o amenazas, transmisión de malware, spam automatizado o cualquier actividad que viole la ley.';
+
+  @override
+  String get termsSection4Title => 'Sin recuperación de datos';
+
+  @override
+  String get termsSection4Content =>
+      'Los mensajes no se almacenan en ninguna base de datos. Una vez destruida la sala, todos los datos se pierden permanentemente. Esto es por diseño, no una limitación.';
+
+  @override
+  String get termsSection5Title => 'Código abierto';
+
+  @override
+  String get termsSection5Content =>
+      'El código fuente de BLIP está disponible públicamente. La transparencia de nuestro código es nuestra mayor garantía de privacidad.';
+
+  @override
+  String get termsSection6Title => 'Disponibilidad del servicio';
+
+  @override
+  String get termsSection6Content =>
+      'BLIP se proporciona \"tal cual\". No garantizamos tiempo de actividad, disponibilidad o servicio ininterrumpido.';
+
+  @override
+  String get termsSection7Title => 'Limitación de responsabilidad';
+
+  @override
+  String get termsSection7Content =>
+      'En la máxima medida permitida por la ley, BLIP y sus operadores no serán responsables de ningún daño derivado del uso del servicio.';
+
+  @override
+  String get termsSection8Title => 'Propiedad intelectual';
+
+  @override
+  String get termsSection8Content =>
+      'El nombre, logotipo y activos de marca de BLIP están protegidos. El código del servicio se publica bajo licencia de código abierto.';
+
+  @override
+  String get termsSection9Title => 'Cambios y ley aplicable';
+
+  @override
+  String get termsSection9Content =>
+      'Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de BLIP después de los cambios constituye aceptación de los términos actualizados.';
 }
