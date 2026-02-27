@@ -9,14 +9,6 @@ export default function MonetagAds() {
 
   return (
     <>
-      {/* Push Notification — 전체 페이지 */}
-      <Script
-        id="monetag-push"
-        src="https://quge5.com/88/tag.min.js"
-        data-zone="214867"
-        strategy="afterInteractive"
-      />
-
       {/* PopUnder — 채팅방 제외 (클릭 잦아서 UX 저하) */}
       {!isChatRoom && (
         <Script
