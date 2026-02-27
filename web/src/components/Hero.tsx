@@ -162,9 +162,9 @@ export default function Hero() {
         className="mt-6"
       >
         <img
-          src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+          src="/google-play-badge.svg"
           alt="Get it on Google Play"
-          className="h-14 md:h-16"
+          className="h-12 md:h-14"
         />
       </motion.a>
 

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 53.333">
+  <rect width="180" height="53.333" rx="5" fill="#000"/>
+  <rect x="0.75" y="0.75" width="178.5" height="51.833" rx="4.25" fill="none" stroke="#a6a6a6" stroke-width="0.75"/>
+  <!-- Google Play Triangle -->
+  <defs>
+    <linearGradient id="a" x1="14.5" y1="10" x2="27" y2="26.667" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00A0FF"/>
+      <stop offset=".3" stop-color="#00A1FF"/>
+      <stop offset=".5" stop-color="#00BEFF"/>
+      <stop offset="1" stop-color="#00E3FF"/>
+    </linearGradient>
+    <linearGradient id="b" x1="30" y1="26.667" x2="13" y2="26.667" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE000"/>
+      <stop offset=".4" stop-color="#FFBD00"/>
+      <stop offset=".8" stop-color="#FFA500"/>
+      <stop offset="1" stop-color="#FF9C00"/>
+    </linearGradient>
+    <linearGradient id="c" x1="22" y1="30" x2="10" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF3A44"/>
+      <stop offset="1" stop-color="#C31162"/>
+    </linearGradient>
+    <linearGradient id="d" x1="10" y1="5" x2="18" y2="16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#32A071"/>
+      <stop offset=".1" stop-color="#2DA771"/>
+      <stop offset=".5" stop-color="#15CF74"/>
+      <stop offset="1" stop-color="#06E775"/>
+    </linearGradient>
+  </defs>
+  <path d="M13.5 11.2a2.4 2.4 0 00-.55 1.68v27.58a2.4 2.4 0 00.55 1.68l.09.08L28 27.1v-.45L13.59 11.12z" fill="url(#a)"/>
+  <path d="M32.8 31.93l-4.8-4.83v-.45l4.8-4.83.11.06 5.69 3.23c1.62.92 1.62 2.43 0 3.36l-5.69 3.23z" fill="url(#b)"/>
+  <path d="M33 31.87L28 26.87 13.5 42.14a1.88 1.88 0 002.41.07l17-9.68" fill="url(#c)"/>
+  <path d="M33 21.87l-17-9.68a1.88 1.88 0 00-2.41.07L28 26.87z" fill="url(#d)"/>
+  <!-- Text -->
+  <text fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="7" x="46" y="16" letter-spacing=".3">GET IT ON</text>
+  <text fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="bold" font-size="16" x="46" y="37">Google Play</text>
+</svg>
