@@ -17,8 +17,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t('boardTitle'),
       description: t('boardDescription'),
-      url: siteConfig.url,
+      url: `${siteConfig.url}/${locale}/board`,
       siteName: siteConfig.name,
+      images: [{
+        url: `/api/og?locale=${locale}`,
+        width: 1200,
+        height: 630,
+        alt: t('boardTitle'),
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('boardTitle'),
+      description: t('boardDescription'),
     },
   };
 }

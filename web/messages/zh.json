@@ -342,7 +342,19 @@
     "roomTitle": "BLIP - 加入私密聊天",
     "roomDescription": "您被邀请加入仅参与者可见的私密聊天。无需账号，即刻加入。",
     "boardTitle": "BLIP - 私密社区",
-    "boardDescription": "加入仅成员可见的私密加密社区。"
+    "boardDescription": "加入仅成员可见的私密加密社区。",
+    "aboutTitle": "关于 BLIP",
+    "aboutDescription": "BLIP 诞生的原因。消失对话背后的理念与愿景。",
+    "faqTitle": "常见问题",
+    "faqDescription": "关于 BLIP 的常见问题解答。安全、隐私和使用方法。",
+    "howItWorksTitle": "工作原理",
+    "howItWorksDescription": "三步了解 BLIP 的工作原理。创建链接、聊天、自动销毁。",
+    "privacyTitle": "隐私政策",
+    "privacyDescription": "BLIP 的隐私政策。了解数据收集、存储和删除政策。",
+    "termsTitle": "服务条款",
+    "termsDescription": "BLIP 服务条款。使用前请务必阅读。",
+    "updatesTitle": "更新日志",
+    "updatesDescription": "查看 BLIP 的最新更新和变更。"
   },
   "Board": {
     "create": {

@@ -342,7 +342,19 @@
     "roomTitle": "BLIP - Join a Private Chat",
     "roomDescription": "You've been invited to a private chat only participants can read. Join instantly, no account needed.",
     "boardTitle": "BLIP - Private Community",
-    "boardDescription": "Join a private encrypted community only members can see."
+    "boardDescription": "Join a private encrypted community only members can see.",
+    "aboutTitle": "About BLIP",
+    "aboutDescription": "Why BLIP exists. The philosophy and vision behind ephemeral conversations.",
+    "faqTitle": "Frequently Asked Questions",
+    "faqDescription": "Common questions about BLIP answered. Security, privacy, and how to use it.",
+    "howItWorksTitle": "How It Works",
+    "howItWorksDescription": "Learn how BLIP works in 3 simple steps. Create a link, chat, auto-shred.",
+    "privacyTitle": "Privacy Policy",
+    "privacyDescription": "BLIP's privacy policy. Learn about data collection, storage, and deletion.",
+    "termsTitle": "Terms of Service",
+    "termsDescription": "BLIP terms of service. Please review before using the service.",
+    "updatesTitle": "Updates",
+    "updatesDescription": "See the latest updates and changes to BLIP."
   },
   "Board": {
     "create": {

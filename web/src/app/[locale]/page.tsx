@@ -12,26 +12,38 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: siteConfig.name,
-    description: t('description'),
-    url: `${siteConfig.url}/${locale}`,
-    applicationCategory: 'CommunicationApplication',
-    operatingSystem: 'Any',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: siteConfig.name,
+      description: t('description'),
+      url: `${siteConfig.url}/${locale}`,
+      applicationCategory: 'CommunicationApplication',
+      operatingSystem: 'Any',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      featureList: [
+        'End-to-end encryption',
+        'No account required',
+        'Ephemeral messages',
+        'Zero data retention',
+      ],
     },
-    featureList: [
-      'End-to-end encryption',
-      'No account required',
-      'Ephemeral messages',
-      'Zero data retention',
-    ],
-  };
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: `${siteConfig.url}/favicon-96x96.png`,
+      sameAs: [
+        'https://github.com/greatsk55/BLIP',
+      ],
+    },
+  ];
 
   return (
     <main className="bg-void-black min-h-screen text-white">

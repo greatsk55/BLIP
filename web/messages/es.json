@@ -342,7 +342,19 @@
     "roomTitle": "BLIP - Únete a un chat privado",
     "roomDescription": "Has sido invitado a un chat privado visible solo para los participantes. Únete al instante, sin cuenta.",
     "boardTitle": "BLIP - Comunidad Privada",
-    "boardDescription": "Únete a una comunidad privada cifrada visible solo para los miembros."
+    "boardDescription": "Únete a una comunidad privada cifrada visible solo para los miembros.",
+    "aboutTitle": "Acerca de BLIP",
+    "aboutDescription": "Por qué existe BLIP. La filosofía y visión detrás de las conversaciones efímeras.",
+    "faqTitle": "Preguntas Frecuentes",
+    "faqDescription": "Preguntas frecuentes sobre BLIP. Seguridad, privacidad y cómo usarlo.",
+    "howItWorksTitle": "Cómo Funciona",
+    "howItWorksDescription": "Aprende cómo funciona BLIP en 3 pasos simples. Crear enlace, chatear, destrucción automática.",
+    "privacyTitle": "Política de Privacidad",
+    "privacyDescription": "Política de privacidad de BLIP. Información sobre recopilación, almacenamiento y eliminación de datos.",
+    "termsTitle": "Términos de Servicio",
+    "termsDescription": "Términos de servicio de BLIP. Revísalos antes de usar el servicio.",
+    "updatesTitle": "Actualizaciones",
+    "updatesDescription": "Consulta las últimas actualizaciones y cambios de BLIP."
   },
   "Board": {
     "create": {

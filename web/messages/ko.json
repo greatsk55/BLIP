@@ -342,7 +342,19 @@
     "roomTitle": "BLIP - 비공개 채팅에 초대되었습니다",
     "roomDescription": "오직 참여자만 볼 수 있는 비공개 채팅방에 초대되었습니다. 계정 없이 바로 참여하세요.",
     "boardTitle": "BLIP - 비공개 커뮤니티",
-    "boardDescription": "참여자만 볼 수 있는 비공개 커뮤니티에 참여하세요."
+    "boardDescription": "참여자만 볼 수 있는 비공개 커뮤니티에 참여하세요.",
+    "aboutTitle": "BLIP 소개",
+    "aboutDescription": "BLIP이 만들어진 이유. 사라지는 대화를 위한 철학과 비전.",
+    "faqTitle": "자주 묻는 질문",
+    "faqDescription": "BLIP에 대해 자주 묻는 질문과 답변. 보안, 개인정보, 사용 방법까지.",
+    "howItWorksTitle": "작동 방식",
+    "howItWorksDescription": "BLIP이 어떻게 작동하는지 3단계로 알아보세요. 링크 생성, 대화, 자동 파쇄.",
+    "privacyTitle": "개인정보 처리방침",
+    "privacyDescription": "BLIP의 개인정보 처리방침. 데이터 수집, 보관, 삭제 정책을 확인하세요.",
+    "termsTitle": "이용약관",
+    "termsDescription": "BLIP 서비스 이용약관. 사용 전 반드시 확인해주세요.",
+    "updatesTitle": "업데이트 내역",
+    "updatesDescription": "BLIP의 최신 업데이트와 변경 사항을 확인하세요."
   },
   "Board": {
     "create": {

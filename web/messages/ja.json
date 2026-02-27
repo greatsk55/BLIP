@@ -342,7 +342,19 @@
     "roomTitle": "BLIP - プライベートチャットに参加",
     "roomDescription": "参加者だけが閲覧できるプライベートチャットに招待されました。アカウント不要で即参加。",
     "boardTitle": "BLIP - プライベートコミュニティ",
-    "boardDescription": "参加者だけが閲覧できるプライベートコミュニティに参加しましょう。"
+    "boardDescription": "参加者だけが閲覧できるプライベートコミュニティに参加しましょう。",
+    "aboutTitle": "BLIPについて",
+    "aboutDescription": "BLIPが生まれた理由。消える会話のための哲学とビジョン。",
+    "faqTitle": "よくある質問",
+    "faqDescription": "BLIPに関するよくある質問と回答。セキュリティ、プライバシー、使い方まで。",
+    "howItWorksTitle": "仕組み",
+    "howItWorksDescription": "BLIPの仕組みを3ステップで紹介。リンク作成、チャット、自動破棄。",
+    "privacyTitle": "プライバシーポリシー",
+    "privacyDescription": "BLIPのプライバシーポリシー。データの収集、保管、削除について。",
+    "termsTitle": "利用規約",
+    "termsDescription": "BLIPの利用規約。ご利用前に必ずご確認ください。",
+    "updatesTitle": "アップデート",
+    "updatesDescription": "BLIPの最新アップデートと変更点をご確認ください。"
   },
   "Board": {
     "create": {
