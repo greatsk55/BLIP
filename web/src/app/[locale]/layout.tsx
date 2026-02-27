@@ -6,8 +6,8 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import { routing } from '@/i18n/routing';
-import Script from 'next/script';
 import { siteConfig } from '@/lib/seo/config';
+import MonetagAds from '@/components/MonetagAds';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -102,18 +102,12 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="214867"
-          strategy="afterInteractive"
-        />
-      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-signal-green selection:text-void-black bg-void-black transition-colors duration-300`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <ScrollToTop />
             {children}
+            <MonetagAds />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
