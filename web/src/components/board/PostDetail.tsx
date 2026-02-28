@@ -4,9 +4,11 @@ import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { ArrowLeft, Flag, Pencil, Trash2 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useTranslations } from 'next-intl';
-import type { DecryptedPost } from '@/types/board';
+import type { DecryptedPost, DecryptedComment, ReportReason } from '@/types/board';
 import MarkdownContent from './MarkdownContent';
 import PostImageGallery from './PostImageGallery';
+import CommentList from './CommentList';
+import CommentComposer from './CommentComposer';
 
 /** 본문에서 참조된 이미지 인덱스 추출 */
 const INLINE_IMG_RE = /!\[[^\]]*\]\(img:(\d+)\)/g;
@@ -19,6 +21,18 @@ interface PostDetailProps {
   onDelete: (postId: string) => Promise<{ error?: string }>;
   onAdminDelete?: (postId: string) => Promise<{ error?: string }>;
   onDecryptImages?: (postId: string) => Promise<void>;
+  // 댓글 관련
+  comments: DecryptedComment[];
+  commentsHasMore: boolean;
+  commentsLoading: boolean;
+  onLoadComments: (postId: string) => Promise<void>;
+  onLoadMoreComments: (postId: string) => Promise<void>;
+  onSubmitComment: (postId: string, content: string, images?: File[]) => Promise<{ error?: string }>;
+  onDeleteComment: (commentId: string, postId: string, adminToken?: string) => Promise<{ error?: string }>;
+  onReportComment: (commentId: string, reason: ReportReason) => Promise<{ error?: string }>;
+  onDecryptCommentImages: (commentId: string, postId: string) => Promise<void>;
+  onOpenCommentReport: (commentId: string) => void;
+  adminToken?: string;
 }
 
 export default function PostDetail({
@@ -29,6 +43,17 @@ export default function PostDetail({
   onDelete,
   onAdminDelete,
   onDecryptImages,
+  comments,
+  commentsHasMore,
+  commentsLoading,
+  onLoadComments,
+  onLoadMoreComments,
+  onSubmitComment,
+  onDeleteComment,
+  onReportComment,
+  onDecryptCommentImages,
+  onOpenCommentReport,
+  adminToken,
 }: PostDetailProps) {
   const t = useTranslations('Board');
   const decryptedRef = useRef(false);
@@ -102,9 +127,9 @@ export default function PostDetail({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* 헤더 */}
-      <div className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 border-b border-ink/10 bg-void-black/90 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-ink/10 bg-void-black/90 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
@@ -161,6 +186,8 @@ export default function PostDetail({
         </div>
       </div>
 
+      {/* 스크롤 영역: 본문 + 댓글 목록 */}
+      <div className="flex-1 overflow-y-auto">
       {/* 게시글 본문 */}
       <article className="px-4 py-6">
         {/* 작성자 + 시간 */}
@@ -198,6 +225,29 @@ export default function PostDetail({
           </div>
         )}
       </article>
+
+      {/* 댓글 영역 */}
+      <CommentList
+        postId={post.id}
+        comments={comments}
+        hasMore={commentsHasMore}
+        loading={commentsLoading}
+        onLoadComments={onLoadComments}
+        onLoadMore={onLoadMoreComments}
+        onDeleteComment={onDeleteComment}
+        onReportComment={onReportComment}
+        onDecryptImages={onDecryptCommentImages}
+        onOpenReport={onOpenCommentReport}
+        adminToken={adminToken}
+      />
+
+      </div>
+
+      {/* 댓글 입력 (하단 고정) */}
+      <CommentComposer
+        postId={post.id}
+        onSubmit={onSubmitComment}
+      />
 
       {/* 삭제 확인 모달 */}
       {showDeleteConfirm && (

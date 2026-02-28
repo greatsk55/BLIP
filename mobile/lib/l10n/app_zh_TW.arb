@@ -475,6 +475,18 @@
   "@boardAdminSubtitlePlaceholder": { "description": "Subtitle input placeholder" },
   "boardAdminSubtitleSave": "儲存",
   "@boardAdminSubtitleSave": { "description": "Save subtitle button" },
+  "boardAdminRotateInviteCode": "重新產生邀請連結",
+  "@boardAdminRotateInviteCode": { "description": "Rotate invite code button" },
+  "boardAdminRotateInviteCodeDesc": "產生新的邀請連結。先前分享的連結將失效，但不會影響已加入的成員。",
+  "@boardAdminRotateInviteCodeDesc": { "description": "Invite code rotation description" },
+  "boardAdminNewInviteCode": "新邀請連結",
+  "@boardAdminNewInviteCode": { "description": "New invite code label" },
+  "boardAdminOldLinksInvalidated": "所有先前的邀請連結已失效",
+  "@boardAdminOldLinksInvalidated": { "description": "Warning after invite code rotation" },
+  "boardAdminExistingMembersUnaffected": "現有成員可繼續正常使用",
+  "@boardAdminExistingMembersUnaffected": { "description": "Reassurance after invite code rotation" },
+  "boardAdminInviteLinkCopied": "邀請連結已複製",
+  "@boardAdminInviteLinkCopied": { "description": "Snackbar after copying invite link" },
   "boardCreateSubtitlePlaceholder": "副標題（選填）",
   "@boardCreateSubtitlePlaceholder": { "description": "Subtitle placeholder on create form" },
 
@@ -502,5 +514,13 @@
   "termsSection8Title": "智慧財產權",
   "termsSection8Content": "BLIP的名稱、標誌和品牌資產受到保護。服務程式碼庫以開源授權發布。",
   "termsSection9Title": "變更與準據法",
-  "termsSection9Content": "我們保留隨時修改這些條款的權利。在變更後繼續使用BLIP即表示接受更新後的條款。"
+  "termsSection9Content": "我們保留隨時修改這些條款的權利。在變更後繼續使用BLIP即表示接受更新後的條款。",
+
+  "boardCommentTitle": "留言",
+  "boardCommentPlaceholder": "寫一則留言...",
+  "boardCommentSubmit": "傳送",
+  "boardCommentEmpty": "尚無留言",
+  "boardCommentWriteFirst": "寫下第一則留言",
+  "boardCommentLoadMore": "載入更多",
+  "boardCommentAttachImage": "圖片"
 }

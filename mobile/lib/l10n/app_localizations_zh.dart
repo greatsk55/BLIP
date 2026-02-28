@@ -686,6 +686,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get boardAdminSubtitleSave => '保存';
 
   @override
+  String get boardAdminRotateInviteCode => '重新生成邀请链接';
+
+  @override
+  String get boardAdminRotateInviteCodeDesc => '生成新的邀请链接。之前分享的链接将失效，但不会影响已加入的成员。';
+
+  @override
+  String get boardAdminNewInviteCode => '新邀请链接';
+
+  @override
+  String get boardAdminOldLinksInvalidated => '之前的链接已失效。';
+
+  @override
+  String get boardAdminExistingMembersUnaffected => '现有成员不受影响。';
+
+  @override
+  String get boardAdminInviteLinkCopied => '邀请链接已复制！';
+
+  @override
   String get boardCreateSubtitlePlaceholder => '副标题（可选）';
 
   @override
@@ -1448,6 +1466,24 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get boardAdminSubtitleSave => '儲存';
+
+  @override
+  String get boardAdminRotateInviteCode => '重新產生邀請連結';
+
+  @override
+  String get boardAdminRotateInviteCodeDesc => '產生新的邀請連結。先前分享的連結將失效，但不會影響已加入的成員。';
+
+  @override
+  String get boardAdminNewInviteCode => '新邀請連結';
+
+  @override
+  String get boardAdminOldLinksInvalidated => '先前的連結已失效。';
+
+  @override
+  String get boardAdminExistingMembersUnaffected => '現有成員不受影響。';
+
+  @override
+  String get boardAdminInviteLinkCopied => '邀請連結已複製！';
 
   @override
   String get boardCreateSubtitlePlaceholder => '副標題（選填）';

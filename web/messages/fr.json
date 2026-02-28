@@ -80,6 +80,17 @@
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "28 février 2026",
+        "title": "Système de codes d'invitation",
+        "changes": {
+          "1": "Codes d'invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
+          "2": "Rotation du code d'invitation dans le panneau d'administration — invalider les anciens liens sans affecter les membres existants",
+          "3": "Séparation du code d'invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
+          "4": "Prise en charge des liens profonds pour les codes d'invitation dans l'application mobile"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "26 février 2026",
         "title": "Application mobile et stabilité",
@@ -92,7 +103,7 @@
           "6": "Support de 10 langues (+allemand, chinois traditionnel)"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "15 février 2026",
         "title": "Transfert de médias chiffré",
@@ -104,7 +115,7 @@
           "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "10 février 2026",
         "title": "Destruction instantanée et notifications",
@@ -115,7 +126,7 @@
           "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "1er février 2026",
         "title": "Version initiale",
@@ -367,6 +378,8 @@
       "adminToken": "Jeton Administrateur",
       "adminTokenWarning": "Sauvegardez ce jeton — il ne peut pas être récupéré",
       "shareLink": "Lien de Partage",
+      "inviteLink": "Lien d'invitation (sans mot de passe)",
+      "inviteLinkHint": "Toute personne avec ce lien peut rejoindre sans mot de passe",
       "enter": "Entrer dans la Communauté",
       "confirmInfo": "Compris"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "Sous-titre de la communauté",
       "subtitlePlaceholder": "Saisissez un sous-titre pour cette communauté",
       "subtitleSave": "Enregistrer",
+      "rotateInviteCode": "Régénérer le lien d'invitation",
+      "rotateInviteCodeDesc": "Génère un nouveau lien d'invitation. Les liens partagés précédemment ne fonctionneront plus, mais les membres existants ne sont pas affectés.",
+      "newInviteCode": "Nouveau lien d'invitation",
+      "oldLinksInvalidated": "Tous les liens d'invitation précédents ont été invalidés",
+      "existingMembersUnaffected": "Les membres existants peuvent continuer à utiliser la communauté normalement",
       "destroy": "Détruire la Communauté",
       "destroyWarning": "Cela supprimera définitivement la communauté et toutes les publications. Cette action est irréversible.",
       "cancel": "Annuler",
@@ -449,6 +467,20 @@
       "confirmRemove": "Supprimer",
       "admin": "Admin",
       "destroying": "Suppression..."
+    },
+    "comment": {
+      "title": "Commentaires",
+      "placeholder": "Écrire un commentaire...",
+      "submit": "Envoyer",
+      "empty": "Aucun commentaire",
+      "writeFirst": "Écrivez le premier commentaire",
+      "loadMore": "Charger plus",
+      "delete": "Supprimer",
+      "adminDelete": "Supprimer (Admin)",
+      "deleteWarning": "Supprimer ce commentaire ?",
+      "confirmDelete": "Supprimer",
+      "attachImage": "Image",
+      "maxImages": "Max 2"
     }
   }
 }

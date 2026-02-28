@@ -2,15 +2,17 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Trash2, AlertTriangle, Type } from 'lucide-react';
+import { X, Trash2, AlertTriangle, Type, Link2, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { destroyBoard } from '@/lib/board/actions';
+import CopyButton from '@/components/shared/CopyButton';
 
 interface AdminPanelProps {
   boardId: string;
   adminToken: string;
   currentSubtitle?: string | null;
   onUpdateSubtitle: (subtitle: string) => Promise<{ error?: string }>;
+  onRotateInviteCode: () => Promise<{ inviteCode?: string; error?: string }>;
   onClose: () => void;
   onPostDeleted: (postId: string) => void;
   onBoardDestroyed: () => void;
@@ -21,6 +23,7 @@ export default function AdminPanel({
   adminToken,
   currentSubtitle,
   onUpdateSubtitle,
+  onRotateInviteCode,
   onClose,
   onPostDeleted,
   onBoardDestroyed,
@@ -31,6 +34,19 @@ export default function AdminPanel({
   const [showSubtitleEdit, setShowSubtitleEdit] = useState(false);
   const [subtitleValue, setSubtitleValue] = useState(currentSubtitle ?? '');
   const [subtitleSaving, setSubtitleSaving] = useState(false);
+
+  // 초대 코드 관리
+  const [rotating, setRotating] = useState(false);
+  const [newInviteCode, setNewInviteCode] = useState<string | null>(null);
+
+  const handleRotateInviteCode = async () => {
+    setRotating(true);
+    const result = await onRotateInviteCode();
+    setRotating(false);
+    if (result.inviteCode) {
+      setNewInviteCode(result.inviteCode);
+    }
+  };
 
   const handleDestroy = async () => {
     setDestroying(true);
@@ -135,6 +151,58 @@ export default function AdminPanel({
                 </div>
               </div>
             )}
+
+            {/* 초대 코드 관리 */}
+            <div className="border border-ink/10 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Link2 className="w-4 h-4 text-ink" />
+                <span className="font-mono text-xs text-ink uppercase tracking-wider">
+                  {t('admin.rotateInviteCode')}
+                </span>
+              </div>
+              <p className="font-mono text-[10px] text-ghost-grey/50 leading-relaxed mb-3">
+                {t('admin.rotateInviteCodeDesc')}
+              </p>
+
+              {!newInviteCode ? (
+                <button
+                  onClick={handleRotateInviteCode}
+                  disabled={rotating}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-signal-green/30 text-signal-green font-mono text-[10px] uppercase tracking-wider hover:bg-signal-green/5 transition-colors disabled:opacity-50"
+                >
+                  {rotating ? (
+                    <RefreshCw className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <RefreshCw className="w-3 h-3" />
+                  )}
+                  {t('admin.rotateInviteCode')}
+                </button>
+              ) : (
+                <div>
+                  <p className="font-mono text-[10px] text-signal-green/60 uppercase tracking-wider mb-2">
+                    {t('admin.newInviteCode')}
+                  </p>
+                  <div className="flex items-center gap-2 bg-ink/[0.03] border border-signal-green/15 px-3 py-2 mb-2">
+                    <span className="font-mono text-[11px] text-ghost-grey break-all flex-1">
+                      {typeof window !== 'undefined'
+                        ? `${window.location.origin}/board/${boardId}#k=${encodeURIComponent(newInviteCode)}`
+                        : ''}
+                    </span>
+                    <CopyButton
+                      text={typeof window !== 'undefined'
+                        ? `${window.location.origin}/board/${boardId}#k=${encodeURIComponent(newInviteCode)}`
+                        : ''}
+                    />
+                  </div>
+                  <p className="font-mono text-[9px] text-glitch-red/50 uppercase tracking-wider mb-1">
+                    {t('admin.oldLinksInvalidated')}
+                  </p>
+                  <p className="font-mono text-[9px] text-signal-green/40 uppercase tracking-wider">
+                    {t('admin.existingMembersUnaffected')}
+                  </p>
+                </div>
+              )}
+            </div>
 
             {/* 게시판 파쇄 */}
             <button

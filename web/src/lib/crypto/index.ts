@@ -29,3 +29,11 @@ export { encryptMessage } from './encrypt';
 export { decryptMessage } from './decrypt';
 export { encryptFileChunk, decryptFileChunk } from './file';
 export { encryptSymmetric, decryptSymmetric, encryptBinary, decryptBinaryRaw } from './symmetric';
+export {
+  generateInviteCode,
+  deriveWrappingKey,
+  wrapEncryptionKey,
+  unwrapEncryptionKey,
+  hashEncryptionKeyForAuth,
+  hashInviteCode,
+} from './invite';

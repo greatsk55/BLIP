@@ -107,29 +107,59 @@ class PostCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
 
-              // 이미지 인디케이터
-              if (post.encryptedImages.isNotEmpty && !post.isBlinded) ...[
+              // 미디어 + 댓글 수 인디케이터
+              if ((!post.isBlinded &&
+                      post.encryptedImages.isNotEmpty) ||
+                  post.commentCount > 0) ...[
                 const SizedBox(height: 6),
                 Row(
                   children: [
-                    Icon(
-                      Icons.image_outlined,
-                      size: 14,
-                      color: isDark
-                          ? AppColors.ghostGreyDark
-                          : AppColors.ghostGreyLight,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${post.encryptedImages.length}',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontFamily: 'monospace',
+                    // 이미지 인디케이터
+                    if (post.encryptedImages.isNotEmpty &&
+                        !post.isBlinded) ...[
+                      Icon(
+                        Icons.image_outlined,
+                        size: 14,
                         color: isDark
                             ? AppColors.ghostGreyDark
                             : AppColors.ghostGreyLight,
                       ),
-                    ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${post.encryptedImages.length}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontFamily: 'monospace',
+                          color: isDark
+                              ? AppColors.ghostGreyDark
+                              : AppColors.ghostGreyLight,
+                        ),
+                      ),
+                    ],
+                    // 댓글 수 인디케이터
+                    if (post.commentCount > 0) ...[
+                      if (post.encryptedImages.isNotEmpty &&
+                          !post.isBlinded)
+                        const SizedBox(width: 10),
+                      Icon(
+                        Icons.chat_bubble_outline,
+                        size: 14,
+                        color: isDark
+                            ? AppColors.ghostGreyDark
+                            : AppColors.ghostGreyLight,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${post.commentCount}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontFamily: 'monospace',
+                          color: isDark
+                              ? AppColors.ghostGreyDark
+                              : AppColors.ghostGreyLight,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ],

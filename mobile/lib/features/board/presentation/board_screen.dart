@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/ad_service.dart';
 import '../domain/models/board_post.dart';
 import '../providers/board_provider.dart';
 import 'widgets/post_list.dart';
@@ -187,12 +188,13 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
         return const Center(child: CircularProgressIndicator());
       }
 
+      final notifier =
+          ref.read(boardNotifierProvider(widget.boardId).notifier);
+
       return PostDetail(
         post: freshPost,
         onBack: () => setState(() => _selectedPost = null),
-        onDecryptImages: (postId) => ref
-            .read(boardNotifierProvider(widget.boardId).notifier)
-            .decryptPostImages(postId),
+        onDecryptImages: (postId) => notifier.decryptPostImages(postId),
         onEdit: freshPost.isMine
             ? () => _showComposer(
                   editPostId: freshPost.id,
@@ -202,9 +204,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
             : null,
         onDelete: freshPost.isMine
             ? (postId) async {
-                final err = await ref
-                    .read(boardNotifierProvider(widget.boardId).notifier)
-                    .deletePost(postId);
+                final err = await notifier.deletePost(postId);
                 if (err == null && mounted) {
                   setState(() => _selectedPost = null);
                 }
@@ -213,9 +213,8 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
             : null,
         onAdminDelete: boardState.adminToken != null && !freshPost.isMine
             ? (postId) async {
-                final err = await ref
-                    .read(boardNotifierProvider(widget.boardId).notifier)
-                    .deletePost(postId, adminToken: boardState.adminToken);
+                final err = await notifier.deletePost(postId,
+                    adminToken: boardState.adminToken);
                 if (err == null && mounted) {
                   setState(() => _selectedPost = null);
                 }
@@ -225,11 +224,33 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
         onReport: !freshPost.isMine
             ? () => ReportDialog.show(
                   context,
-                  onSubmit: (reason) => ref
-                      .read(boardNotifierProvider(widget.boardId).notifier)
-                      .submitReport(freshPost.id, reason),
+                  onSubmit: (reason) =>
+                      notifier.submitReport(freshPost.id, reason),
                 )
             : null,
+        // 댓글 props
+        comments: boardState.comments[freshPost.id] ?? const [],
+        commentsHasMore: boardState.commentsHasMore[freshPost.id] ?? false,
+        commentsLoading: boardState.commentsLoading,
+        onLoadComments: () => notifier.loadComments(freshPost.id),
+        onLoadMoreComments: () => notifier.loadMoreComments(freshPost.id),
+        onSubmitComment: (content, {media}) =>
+            notifier.submitComment(freshPost.id, content, media: media),
+        onDeleteComment: (commentId) =>
+            notifier.deleteComment(commentId, freshPost.id),
+        onAdminDeleteComment:
+            boardState.adminToken != null
+                ? (commentId) => notifier.deleteComment(
+                    commentId, freshPost.id,
+                    adminToken: boardState.adminToken)
+                : null,
+        onReportComment: (commentId) => ReportDialog.show(
+              context,
+              onSubmit: (reason) =>
+                  notifier.submitCommentReport(commentId, reason),
+            ),
+        onDecryptCommentImages: (commentId) =>
+            notifier.decryptCommentImages(commentId, freshPost.id),
       );
     }
 
@@ -266,7 +287,15 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
             onRefresh: () => ref
                 .read(boardNotifierProvider(widget.boardId).notifier)
                 .refreshPosts(),
-            onPostClick: (post) => setState(() => _selectedPost = post),
+            onPostClick: (post) async {
+              // 글 조회 5번에 1번 전면광고
+              await AdService.instance.maybeShowInterstitial(
+                key: 'post_view',
+                frequency: 5,
+              );
+              if (!mounted) return;
+              setState(() => _selectedPost = post);
+            },
           ),
         ),
 
@@ -328,6 +357,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
     final boardState = ref.read(boardNotifierProvider(widget.boardId));
     AdminPanelDialog.show(
       context,
+      boardId: widget.boardId,
       onForgetToken: () => ref
           .read(boardNotifierProvider(widget.boardId).notifier)
           .forgetAdminToken(),
@@ -338,6 +368,9 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
       onUpdateSubtitle: (subtitle) => ref
           .read(boardNotifierProvider(widget.boardId).notifier)
           .updateSubtitle(subtitle),
+      onRotateInviteCode: () => ref
+          .read(boardNotifierProvider(widget.boardId).notifier)
+          .rotateInviteCode(),
     );
   }
 

@@ -8,8 +8,14 @@ import {
   decryptSymmetric,
   encryptBinary,
   decryptBinaryRaw,
+  generateInviteCode,
+  deriveWrappingKey,
+  wrapEncryptionKey,
+  unwrapEncryptionKey,
+  hashEncryptionKeyForAuth,
+  hashInviteCode,
 } from '@/lib/crypto';
-import { decodeBase64 } from 'tweetnacl-util';
+import { decodeBase64, encodeBase64 } from 'tweetnacl-util';
 import { generateUsername } from '@/lib/username';
 import { compressImage } from '@/lib/media/compress';
 import { getMediaType, createVideoThumbnail } from '@/lib/media/thumbnail';
@@ -22,8 +28,16 @@ import {
   deleteOwnPost,
   getBoardMeta,
   updateBoardSubtitle,
+  getComments,
+  createComment,
+  deleteOwnComment,
+  reportComment,
+  adminDeleteComment,
+  joinBoardViaInviteCode,
+  rotateInviteCode as rotateInviteCodeAction,
+  updateEncryptionKeyAuthHash,
 } from '@/lib/board/actions';
-import type { DecryptedPost, DecryptedPostImage, BoardStatus, ReportReason } from '@/types/board';
+import type { DecryptedPost, DecryptedPostImage, DecryptedComment, BoardStatus, ReportReason } from '@/types/board';
 
 // ─── localStorage 헬퍼 ───
 
@@ -32,6 +46,8 @@ const ADMIN_PREFIX = 'blip-board-admin-';
 const USERNAME_PREFIX = 'blip-board-user-';
 const NAME_PREFIX = 'blip-board-name-';
 const SUBTITLE_PREFIX = 'blip-board-subtitle-';
+const ENCRYPTION_KEY_PREFIX = 'blip-board-key-';
+const EAUTH_PREFIX = 'blip-board-eauth-';
 
 function getSavedPassword(boardId: string): string | null {
   if (typeof window === 'undefined') return null;
@@ -61,6 +77,28 @@ export function saveAdminTokenToStorage(boardId: string, token: string): void {
 function forgetAdminToken(boardId: string): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(`${ADMIN_PREFIX}${boardId}`);
+}
+
+function getSavedEncryptionKey(boardId: string): Uint8Array | null {
+  if (typeof window === 'undefined') return null;
+  const saved = localStorage.getItem(`${ENCRYPTION_KEY_PREFIX}${boardId}`);
+  if (!saved) return null;
+  try { return decodeBase64(saved); } catch { return null; }
+}
+
+function saveEncryptionKey(boardId: string, key: Uint8Array): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(`${ENCRYPTION_KEY_PREFIX}${boardId}`, encodeBase64(key));
+}
+
+function getSavedEAuth(boardId: string): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(`${EAUTH_PREFIX}${boardId}`);
+}
+
+function saveEAuth(boardId: string, eauth: string): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(`${EAUTH_PREFIX}${boardId}`, eauth);
 }
 
 function getOrCreateUsername(boardId: string): string {
@@ -108,21 +146,29 @@ export interface SavedBoard {
 /** localStorage에서 저장된 커뮤니티 목록을 반환 */
 export function getSavedBoards(): SavedBoard[] {
   if (typeof window === 'undefined') return [];
-  const boards: SavedBoard[] = [];
+  const boardIds = new Set<string>();
+  // 보조 prefix 목록 (boardId 추출 대상에서 제외)
+  const auxiliaryPrefixes = [ADMIN_PREFIX, USERNAME_PREFIX, NAME_PREFIX, SUBTITLE_PREFIX, EAUTH_PREFIX];
+
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (!key?.startsWith(STORAGE_PREFIX)) continue;
-    // admin/user/name prefix 제외
-    if (key.startsWith(ADMIN_PREFIX) || key.startsWith(USERNAME_PREFIX) || key.startsWith(NAME_PREFIX) || key.startsWith(SUBTITLE_PREFIX)) continue;
-    const boardId = key.slice(STORAGE_PREFIX.length);
-    boards.push({
-      boardId,
-      name: getSavedBoardName(boardId),
-      subtitle: getSavedBoardSubtitle(boardId),
-      hasAdminToken: !!getSavedAdminToken(boardId),
-    });
+    if (auxiliaryPrefixes.some((p) => key.startsWith(p))) continue;
+
+    // password key (blip-board-{id}) 또는 encryption key (blip-board-key-{id})
+    if (key.startsWith(ENCRYPTION_KEY_PREFIX)) {
+      boardIds.add(key.slice(ENCRYPTION_KEY_PREFIX.length));
+    } else {
+      boardIds.add(key.slice(STORAGE_PREFIX.length));
+    }
   }
-  return boards;
+
+  return Array.from(boardIds).map((boardId) => ({
+    boardId,
+    name: getSavedBoardName(boardId),
+    subtitle: getSavedBoardSubtitle(boardId),
+    hasAdminToken: !!getSavedAdminToken(boardId),
+  }));
 }
 
 /** 커뮤니티의 모든 로컬 데이터를 삭제 */
@@ -133,6 +179,8 @@ export function removeSavedBoard(boardId: string): void {
   localStorage.removeItem(`${USERNAME_PREFIX}${boardId}`);
   localStorage.removeItem(`${NAME_PREFIX}${boardId}`);
   localStorage.removeItem(`${SUBTITLE_PREFIX}${boardId}`);
+  localStorage.removeItem(`${ENCRYPTION_KEY_PREFIX}${boardId}`);
+  localStorage.removeItem(`${EAUTH_PREFIX}${boardId}`);
 }
 
 // ─── 타입 ───
@@ -152,6 +200,11 @@ interface UseBoardReturn {
   isPasswordSaved: boolean;
   adminToken: string | null;
 
+  // 댓글 상태
+  commentsMap: Record<string, DecryptedComment[]>;
+  commentsHasMore: Record<string, boolean>;
+  commentsLoading: boolean;
+
   // 액션
   authenticate: (password: string) => Promise<{ error?: string }>;
   loadMore: () => Promise<void>;
@@ -165,6 +218,17 @@ interface UseBoardReturn {
   forgetSavedAdminToken: () => void;
   decryptPostImages: (postId: string) => Promise<void>;
   updateSubtitle: (subtitle: string) => Promise<{ error?: string }>;
+
+  // 초대 코드
+  rotateInviteCode: () => Promise<{ inviteCode?: string; error?: string }>;
+
+  // 댓글 액션
+  loadComments: (postId: string) => Promise<void>;
+  loadMoreComments: (postId: string) => Promise<void>;
+  submitComment: (postId: string, content: string, images?: File[]) => Promise<{ error?: string }>;
+  deleteComment: (commentId: string, postId: string, adminToken?: string) => Promise<{ error?: string }>;
+  submitCommentReport: (commentId: string, reason: ReportReason) => Promise<{ error?: string }>;
+  decryptCommentImages: (commentId: string, postId: string) => Promise<void>;
 }
 
 export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
@@ -175,6 +239,12 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const [hasMore, setHasMore] = useState(false);
   const [isPasswordSaved, setIsPasswordSaved] = useState(false);
   const [adminToken, setAdminToken] = useState<string | null>(null);
+
+  // ─── 댓글 상태 ───
+  const [commentsMap, setCommentsMap] = useState<Record<string, DecryptedComment[]>>({});
+  const [commentsHasMore, setCommentsHasMore] = useState<Record<string, boolean>>({});
+  const [commentsLoading, setCommentsLoading] = useState(false);
+  const commentCursorsRef = useRef<Record<string, string | undefined>>({});
 
   const encryptionKeyRef = useRef<Uint8Array | null>(null);
   const authKeyHashRef = useRef<string | null>(null);
@@ -194,7 +264,153 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     };
   }, []);
 
-  // 초기화: localStorage에서 저장된 비밀번호 + 관리자 토큰 확인
+  // ─── URL fragment에서 초대 코드 파싱 ───
+  // Room의 RoomPageClient.tsx 패턴 재활용
+  function parseInviteCodeFromUrl(): string | null {
+    if (typeof window === 'undefined') return null;
+    let k: string | null = null;
+
+    // 1순위: fragment (#k=...)
+    const hash = window.location.hash;
+    if (hash) {
+      const hashParams = new URLSearchParams(hash.slice(1));
+      k = hashParams.get('k');
+    }
+
+    // 2순위: query parameter (?k=...)
+    if (!k) {
+      const searchParams = new URLSearchParams(window.location.search);
+      k = searchParams.get('k');
+    }
+
+    // URL에서 즉시 제거 (보안)
+    if (k) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+
+    return k ? decodeURIComponent(k) : null;
+  }
+
+  // ─── 초대 코드로 인증 ───
+  async function authenticateWithInviteCode(inviteCode: string): Promise<{ error?: string }> {
+    try {
+      // 1. 초대 코드 해시 → 서버 검증 → wrapped key 반환
+      const codeHash = await hashInviteCode(inviteCode);
+      const joinResult = await joinBoardViaInviteCode(boardId, codeHash);
+
+      if ('error' in joinResult) {
+        return { error: joinResult.error };
+      }
+
+      // 2. wrapping key 유도 → encryptionSeed unwrap
+      const wrappingKey = await deriveWrappingKey(inviteCode, boardId);
+      const encryptionSeed = unwrapEncryptionKey(
+        joinResult.wrappedEncryptionKey,
+        joinResult.wrappedKeyNonce,
+        wrappingKey
+      );
+
+      if (!encryptionSeed) {
+        return { error: 'UNWRAP_FAILED' };
+      }
+
+      // 3. encryptionKey 기반 인증 해시 유도
+      const eAuthHash = await hashEncryptionKeyForAuth(encryptionSeed);
+
+      // 4. 서버 인증 (eAuthHash로)
+      const meta = await getBoardMeta(boardId, eAuthHash);
+
+      if ('error' in meta) {
+        return { error: meta.error };
+      }
+
+      if (meta.status === 'destroyed') {
+        setStatus('destroyed');
+        return { error: 'BOARD_DESTROYED' };
+      }
+
+      // 5. 인증 성공 → 키 저장
+      encryptionKeyRef.current = encryptionSeed;
+      authKeyHashRef.current = eAuthHash;
+
+      saveEncryptionKey(boardId, encryptionSeed);
+      saveEAuth(boardId, eAuthHash);
+
+      // 6. 이름 복호화
+      const name = decryptSymmetric(
+        { ciphertext: meta.encryptedName, nonce: meta.encryptedNameNonce },
+        encryptionSeed
+      );
+      setBoardName(name);
+      if (name) saveBoardName(boardId, name);
+
+      if (meta.encryptedSubtitle && meta.encryptedSubtitleNonce) {
+        const subtitle = decryptSymmetric(
+          { ciphertext: meta.encryptedSubtitle, nonce: meta.encryptedSubtitleNonce },
+          encryptionSeed
+        );
+        setBoardSubtitle(subtitle);
+        if (subtitle) saveBoardSubtitle(boardId, subtitle);
+      }
+
+      setStatus('browsing');
+      await loadPostsInternal(eAuthHash, encryptionSeed);
+
+      return {};
+    } catch {
+      return { error: 'INVITE_CODE_FAILED' };
+    }
+  }
+
+  // ─── 저장된 encryptionKey로 인증 ───
+  async function authenticateWithKey(
+    encryptionSeed: Uint8Array,
+    eAuthHash: string
+  ): Promise<{ error?: string }> {
+    try {
+      const meta = await getBoardMeta(boardId, eAuthHash);
+
+      if ('error' in meta) {
+        // 저장된 키가 무효 → 삭제
+        localStorage.removeItem(`${ENCRYPTION_KEY_PREFIX}${boardId}`);
+        localStorage.removeItem(`${EAUTH_PREFIX}${boardId}`);
+        return { error: meta.error };
+      }
+
+      if (meta.status === 'destroyed') {
+        setStatus('destroyed');
+        return { error: 'BOARD_DESTROYED' };
+      }
+
+      encryptionKeyRef.current = encryptionSeed;
+      authKeyHashRef.current = eAuthHash;
+
+      const name = decryptSymmetric(
+        { ciphertext: meta.encryptedName, nonce: meta.encryptedNameNonce },
+        encryptionSeed
+      );
+      setBoardName(name);
+      if (name) saveBoardName(boardId, name);
+
+      if (meta.encryptedSubtitle && meta.encryptedSubtitleNonce) {
+        const subtitle = decryptSymmetric(
+          { ciphertext: meta.encryptedSubtitle, nonce: meta.encryptedSubtitleNonce },
+          encryptionSeed
+        );
+        setBoardSubtitle(subtitle);
+        if (subtitle) saveBoardSubtitle(boardId, subtitle);
+      }
+
+      setStatus('browsing');
+      await loadPostsInternal(eAuthHash, encryptionSeed);
+
+      return {};
+    } catch {
+      return { error: 'KEY_AUTH_FAILED' };
+    }
+  }
+
+  // 초기화: 3가지 인증 경로 (직접 키 → 비밀번호 → 초대 코드)
   useEffect(() => {
     // 관리자 토큰 복원
     const savedToken = getSavedAdminToken(boardId);
@@ -202,14 +418,37 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       setAdminToken(savedToken);
     }
 
-    const saved = getSavedPassword(boardId);
-    if (saved) {
-      setIsPasswordSaved(true);
-      // 자동 인증 시도
-      void authenticateInternal(saved, true);
-    } else {
+    async function initAuth() {
+      // 1순위: 저장된 encryptionKey (초대코드로 참여한 멤버)
+      const savedKey = getSavedEncryptionKey(boardId);
+      const savedEAuth = getSavedEAuth(boardId);
+      if (savedKey && savedEAuth) {
+        const result = await authenticateWithKey(savedKey, savedEAuth);
+        if (!result.error) return;
+        // 키 인증 실패 → 다음 경로로
+      }
+
+      // 2순위: 저장된 비밀번호 (password로 참여한 멤버)
+      const savedPassword = getSavedPassword(boardId);
+      if (savedPassword) {
+        setIsPasswordSaved(true);
+        const result = await authenticateInternal(savedPassword, true);
+        if (!result.error) return;
+        // 비밀번호 인증 실패 → 다음 경로로
+      }
+
+      // 3순위: URL fragment 초대 코드 (#k=...)
+      const inviteCode = parseInviteCodeFromUrl();
+      if (inviteCode) {
+        const result = await authenticateWithInviteCode(inviteCode);
+        if (!result.error) return;
+        // 초대 코드 인증 실패 → 비밀번호 입력으로
+      }
+
       setStatus('password_required');
     }
+
+    void initAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardId]);
 
@@ -244,6 +483,14 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       // 인증 성공
       encryptionKeyRef.current = encryptionSeed;
       authKeyHashRef.current = keyHash;
+
+      // encryptionKey + eAuth도 저장 (초대 코드 갱신 후에도 접속 유지)
+      saveEncryptionKey(boardId, encryptionSeed);
+      const eAuthHash = await hashEncryptionKeyForAuth(encryptionSeed);
+      saveEAuth(boardId, eAuthHash);
+
+      // 레거시 마이그레이션: 서버에 encryption_key_auth_hash 설정
+      void updateEncryptionKeyAuthHash(boardId, keyHash, eAuthHash);
 
       // 게시판 이름 복호화
       const name = decryptSymmetric(
@@ -330,6 +577,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
           createdAt: p.createdAt,
           isBlinded: false,
           isMine: authorName === usernameRef.current,
+          commentCount: p.commentCount ?? 0,
           // 이미지 메타데이터만 저장 (복호화는 lazy)
           images: [],
           _encryptedImages: p.images.map((img) => ({
@@ -437,7 +685,8 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     postId: string,
     files: File[],
     key: Uint8Array,
-    keyHash: string
+    keyHash: string,
+    commentId?: string
   ): Promise<void> {
     for (let i = 0; i < files.length; i++) {
       try {
@@ -474,7 +723,11 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         const formData = new FormData();
         formData.append('file', new Blob([new Uint8Array(ciphertextBytes)]), 'media.enc');
         formData.append('boardId', boardId);
-        formData.append('postId', postId);
+        if (commentId) {
+          formData.append('commentId', commentId);
+        } else {
+          formData.append('postId', postId);
+        }
         formData.append('authKeyHash', keyHash);
         formData.append('nonce', encrypted.nonce);
         formData.append('mimeType', files[i].type || 'application/octet-stream');
@@ -745,6 +998,308 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     [posts, boardId]
   );
 
+  // ─── 댓글 로드 ───
+
+  const loadCommentsInternal = useCallback(
+    async (postId: string, cursor?: string) => {
+      const key = encryptionKeyRef.current;
+      const keyHash = authKeyHashRef.current;
+      if (!key || !keyHash) return;
+
+      setCommentsLoading(true);
+      try {
+        const result = await getComments(boardId, postId, keyHash, cursor);
+        if (!isMountedRef.current) return;
+        if ('error' in result) return;
+
+        const decrypted: DecryptedComment[] = result.comments.map((c) => {
+          if (c.isBlinded) {
+            return {
+              id: c.id,
+              postId: c.postId,
+              authorName: '',
+              content: '',
+              createdAt: c.createdAt,
+              isBlinded: true,
+              isMine: false,
+              images: [],
+            };
+          }
+
+          const authorName = decryptSymmetric(
+            { ciphertext: c.authorNameEncrypted, nonce: c.authorNameNonce },
+            key
+          );
+          const content = decryptSymmetric(
+            { ciphertext: c.contentEncrypted, nonce: c.contentNonce },
+            key
+          );
+
+          return {
+            id: c.id,
+            postId: c.postId,
+            authorName: authorName ?? '[DECRYPTION FAILED]',
+            content: content ?? '[DECRYPTION FAILED]',
+            createdAt: c.createdAt,
+            isBlinded: false,
+            isMine: authorName === usernameRef.current,
+            images: [],
+            _encryptedImages: c.images.map((img) => ({
+              id: img.id,
+              encryptedNonce: img.encryptedNonce,
+              mimeType: img.mimeType,
+              width: img.width,
+              height: img.height,
+            })),
+          };
+        });
+
+        setCommentsMap((prev) => ({
+          ...prev,
+          [postId]: cursor ? [...(prev[postId] ?? []), ...decrypted] : decrypted,
+        }));
+        setCommentsHasMore((prev) => ({ ...prev, [postId]: result.hasMore }));
+        if (result.comments.length > 0) {
+          commentCursorsRef.current[postId] = result.comments[result.comments.length - 1].id;
+        }
+      } finally {
+        if (isMountedRef.current) setCommentsLoading(false);
+      }
+    },
+    [boardId]
+  );
+
+  const loadComments = useCallback(
+    async (postId: string) => {
+      commentCursorsRef.current[postId] = undefined;
+      await loadCommentsInternal(postId);
+    },
+    [loadCommentsInternal]
+  );
+
+  const loadMoreComments = useCallback(
+    async (postId: string) => {
+      await loadCommentsInternal(postId, commentCursorsRef.current[postId]);
+    },
+    [loadCommentsInternal]
+  );
+
+  // ─── 댓글 작성 ───
+
+  const submitComment = useCallback(
+    async (postId: string, content: string, images?: File[]): Promise<{ error?: string }> => {
+      if (!authKeyHashRef.current || !encryptionKeyRef.current) {
+        return { error: 'NOT_AUTHENTICATED' };
+      }
+
+      const trimmed = content.trim();
+      if (!trimmed && (!images || images.length === 0)) {
+        return { error: 'EMPTY_CONTENT' };
+      }
+
+      const encName = encryptSymmetric(usernameRef.current, encryptionKeyRef.current);
+      const encContent = encryptSymmetric(trimmed || ' ', encryptionKeyRef.current);
+
+      const result = await createComment(
+        boardId,
+        postId,
+        authKeyHashRef.current,
+        encName.ciphertext,
+        encName.nonce,
+        encContent.ciphertext,
+        encContent.nonce
+      );
+
+      if ('error' in result) return { error: result.error };
+
+      // 이미지 업로드
+      if (images && images.length > 0) {
+        await uploadImages(
+          postId,
+          images,
+          encryptionKeyRef.current,
+          authKeyHashRef.current,
+          result.commentId
+        );
+      }
+
+      // 로컬 미리보기 이미지
+      const localImages: DecryptedPostImage[] = (images ?? []).map((file, i) => ({
+        id: `local-comment-${i}`,
+        objectUrl: URL.createObjectURL(file),
+        mimeType: file.type,
+        width: null,
+        height: null,
+      }));
+      localImages.forEach((img) => blobUrlsRef.current.add(img.objectUrl));
+
+      const newComment: DecryptedComment = {
+        id: result.commentId,
+        postId,
+        authorName: usernameRef.current,
+        content: trimmed,
+        createdAt: new Date().toISOString(),
+        isBlinded: false,
+        isMine: true,
+        images: localImages,
+      };
+
+      setCommentsMap((prev) => ({
+        ...prev,
+        [postId]: [...(prev[postId] ?? []), newComment],
+      }));
+
+      // 게시글의 commentCount 증가
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId ? { ...p, commentCount: (p.commentCount ?? 0) + 1 } : p
+        )
+      );
+
+      return {};
+    },
+    [boardId]
+  );
+
+  // ─── 댓글 삭제 ───
+
+  const deleteCommentFn = useCallback(
+    async (commentId: string, postId: string, token?: string): Promise<{ error?: string }> => {
+      let result: { success: boolean; error?: string };
+
+      if (token) {
+        result = await adminDeleteComment(boardId, commentId, token);
+      } else {
+        if (!authKeyHashRef.current) return { error: 'NOT_AUTHENTICATED' };
+        result = await deleteOwnComment(boardId, commentId, authKeyHashRef.current);
+      }
+
+      if (!result.success) return { error: result.error };
+
+      // 로컬 상태에서 제거
+      setCommentsMap((prev) => ({
+        ...prev,
+        [postId]: (prev[postId] ?? []).filter((c) => c.id !== commentId),
+      }));
+
+      // commentCount 감소
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId ? { ...p, commentCount: Math.max(0, (p.commentCount ?? 0) - 1) } : p
+        )
+      );
+
+      return {};
+    },
+    [boardId]
+  );
+
+  // ─── 댓글 신고 ───
+
+  const submitCommentReport = useCallback(
+    async (commentId: string, reason: ReportReason): Promise<{ error?: string }> => {
+      if (!authKeyHashRef.current) return { error: 'NOT_AUTHENTICATED' };
+      const result = await reportComment(boardId, commentId, authKeyHashRef.current, reason);
+      if (!result.success) return { error: result.error };
+      return {};
+    },
+    [boardId]
+  );
+
+  // ─── 댓글 이미지 복호화 (lazy) ───
+
+  // ─── 초대 코드 갱신 (관리자) ───
+
+  const rotateInviteCodeFn = useCallback(
+    async (): Promise<{ inviteCode?: string; error?: string }> => {
+      if (!adminToken || !encryptionKeyRef.current) {
+        return { error: 'NOT_ADMIN' };
+      }
+
+      try {
+        // 새 초대 코드 생성
+        const newInviteCode = generateInviteCode();
+        const newCodeHash = await hashInviteCode(newInviteCode);
+
+        // encryptionSeed를 새 코드로 wrap
+        const newWrappingKey = await deriveWrappingKey(newInviteCode, boardId);
+        const wrapped = wrapEncryptionKey(encryptionKeyRef.current, newWrappingKey);
+
+        // 서버에 저장
+        const result = await rotateInviteCodeAction(
+          boardId,
+          adminToken,
+          newCodeHash,
+          wrapped.ciphertext,
+          wrapped.nonce
+        );
+
+        if (!result.success) return { error: result.error };
+
+        return { inviteCode: newInviteCode };
+      } catch {
+        return { error: 'ROTATE_FAILED' };
+      }
+    },
+    [boardId, adminToken]
+  );
+
+  const decryptCommentImagesFn = useCallback(
+    async (commentId: string, postId: string) => {
+      const key = encryptionKeyRef.current;
+      const keyHash = authKeyHashRef.current;
+      if (!key || !keyHash) return;
+
+      const comments = commentsMap[postId] ?? [];
+      const comment = comments.find((c) => c.id === commentId);
+      if (!comment?._encryptedImages || comment._encryptedImages.length === 0) return;
+      if (comment.images.length > 0) return;
+
+      const decryptedImages: DecryptedPostImage[] = [];
+
+      for (const imgMeta of comment._encryptedImages) {
+        try {
+          const res = await fetch(
+            `/api/board/image?imageId=${imgMeta.id}&authKeyHash=${encodeURIComponent(keyHash)}`
+          );
+          if (!res.ok) continue;
+
+          const encryptedBuffer = await res.arrayBuffer();
+          const decrypted = decryptBinaryRaw(
+            new Uint8Array(encryptedBuffer),
+            decodeBase64(imgMeta.encryptedNonce),
+            key
+          );
+          if (!decrypted) continue;
+
+          const blob = new Blob([new Uint8Array(decrypted)], { type: imgMeta.mimeType });
+          const objectUrl = URL.createObjectURL(blob);
+          blobUrlsRef.current.add(objectUrl);
+
+          decryptedImages.push({
+            id: imgMeta.id,
+            objectUrl,
+            mimeType: imgMeta.mimeType,
+            width: imgMeta.width,
+            height: imgMeta.height,
+          });
+        } catch {
+          // 개별 이미지 복호화 실패 무시
+        }
+      }
+
+      if (!isMountedRef.current || decryptedImages.length === 0) return;
+
+      setCommentsMap((prev) => ({
+        ...prev,
+        [postId]: (prev[postId] ?? []).map((c) =>
+          c.id === commentId ? { ...c, images: decryptedImages } : c
+        ),
+      }));
+    },
+    [commentsMap, boardId]
+  );
+
   return {
     status,
     boardName,
@@ -754,6 +1309,12 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     myUsername: usernameRef.current,
     isPasswordSaved,
     adminToken,
+
+    // 댓글 상태
+    commentsMap,
+    commentsHasMore,
+    commentsLoading,
+
     authenticate,
     loadMore,
     submitPost,
@@ -766,5 +1327,14 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     forgetSavedAdminToken,
     decryptPostImages,
     updateSubtitle: updateSubtitleFn,
+    rotateInviteCode: rotateInviteCodeFn,
+
+    // 댓글 액션
+    loadComments,
+    loadMoreComments,
+    submitComment,
+    deleteComment: deleteCommentFn,
+    submitCommentReport,
+    decryptCommentImages: decryptCommentImagesFn,
   };
 }

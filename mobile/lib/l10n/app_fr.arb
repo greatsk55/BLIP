@@ -290,6 +290,12 @@
   "boardAdminEditSubtitle": "Modifier le sous-titre",
   "boardAdminSubtitlePlaceholder": "Sous-titre de la communauté (optionnel)",
   "boardAdminSubtitleSave": "Enregistrer",
+  "boardAdminRotateInviteCode": "Régénérer le lien d'invitation",
+  "boardAdminRotateInviteCodeDesc": "Génère un nouveau lien d'invitation. Les liens partagés précédemment ne fonctionneront plus, mais les membres existants ne sont pas affectés.",
+  "boardAdminNewInviteCode": "Nouveau lien d'invitation",
+  "boardAdminOldLinksInvalidated": "Tous les liens d'invitation précédents ont été invalidés",
+  "boardAdminExistingMembersUnaffected": "Les membres existants peuvent continuer à utiliser la communauté normalement",
+  "boardAdminInviteLinkCopied": "Lien d'invitation copié",
   "boardCreateSubtitlePlaceholder": "Sous-titre (optionnel)",
 
   "termsAgree": "J'accepte les Conditions d'Utilisation",
@@ -316,5 +322,13 @@
   "termsSection8Title": "Propriété intellectuelle",
   "termsSection8Content": "Le nom, le logo et les actifs de marque BLIP sont protégés. Le code du service est publié sous licence open source.",
   "termsSection9Title": "Modifications et loi applicable",
-  "termsSection9Content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de BLIP après les modifications constitue l'acceptation des conditions mises à jour."
+  "termsSection9Content": "Nous nous réservons le droit de modifier ces conditions à tout moment. L'utilisation continue de BLIP après les modifications constitue l'acceptation des conditions mises à jour.",
+
+  "boardCommentTitle": "Commentaires",
+  "boardCommentPlaceholder": "Écrire un commentaire...",
+  "boardCommentSubmit": "Envoyer",
+  "boardCommentEmpty": "Aucun commentaire",
+  "boardCommentWriteFirst": "Écrivez le premier commentaire",
+  "boardCommentLoadMore": "Charger plus",
+  "boardCommentAttachImage": "Image"
 }

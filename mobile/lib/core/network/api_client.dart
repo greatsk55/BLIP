@@ -260,13 +260,142 @@ class ApiClient {
     return response.data;
   }
 
+  // ─── Board Invite API ───
+
+  /// 초대 코드로 참여 (wrapped key 반환)
+  Future<Map<String, dynamic>> joinBoardViaInviteCode({
+    required String boardId,
+    required String inviteCodeHash,
+  }) async {
+    final response = await _dio.post('/api/board/join-invite', data: {
+      'boardId': boardId,
+      'inviteCodeHash': inviteCodeHash,
+    });
+    return response.data;
+  }
+
+  /// 관리자: 초대 코드 갱신
+  Future<Map<String, dynamic>> rotateInviteCode({
+    required String boardId,
+    required String adminToken,
+    required String newInviteCodeHash,
+    required String newWrappedKey,
+    required String newWrappedNonce,
+  }) async {
+    final response = await _dio.post('/api/board/admin/rotate-invite', data: {
+      'boardId': boardId,
+      'adminToken': adminToken,
+      'newInviteCodeHash': newInviteCodeHash,
+      'newWrappedKey': newWrappedKey,
+      'newWrappedNonce': newWrappedNonce,
+    });
+    return response.data;
+  }
+
+  /// 레거시 마이그레이션: encryptionKeyAuthHash 설정
+  Future<Map<String, dynamic>> updateEncryptionKeyAuthHash({
+    required String boardId,
+    required String authKeyHash,
+    required String encryptionKeyAuthHash,
+  }) async {
+    final response = await _dio.post('/api/board/update-eauth', data: {
+      'boardId': boardId,
+      'authKeyHash': authKeyHash,
+      'encryptionKeyAuthHash': encryptionKeyAuthHash,
+    });
+    return response.data;
+  }
+
+  // ─── Board Comment API ───
+
+  Future<Map<String, dynamic>> getComments({
+    required String boardId,
+    required String postId,
+    required String authKeyHash,
+    String? cursor,
+    int limit = 50,
+  }) async {
+    final response = await _dio.post('/api/board/comments', data: {
+      'boardId': boardId,
+      'postId': postId,
+      'authKeyHash': authKeyHash,
+      if (cursor != null) 'cursor': cursor,
+      'limit': limit,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> createComment({
+    required String boardId,
+    required String postId,
+    required String authKeyHash,
+    required String authorNameEncrypted,
+    required String authorNameNonce,
+    required String contentEncrypted,
+    required String contentNonce,
+  }) async {
+    final response = await _dio.post('/api/board/comment/create', data: {
+      'boardId': boardId,
+      'postId': postId,
+      'authKeyHash': authKeyHash,
+      'authorNameEncrypted': authorNameEncrypted,
+      'authorNameNonce': authorNameNonce,
+      'contentEncrypted': contentEncrypted,
+      'contentNonce': contentNonce,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> deleteComment({
+    required String boardId,
+    required String commentId,
+    required String authKeyHash,
+  }) async {
+    final response = await _dio.post('/api/board/comment/delete', data: {
+      'boardId': boardId,
+      'commentId': commentId,
+      'authKeyHash': authKeyHash,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> reportComment({
+    required String boardId,
+    required String commentId,
+    required String authKeyHash,
+    required String reason,
+  }) async {
+    final response = await _dio.post('/api/board/comment/report', data: {
+      'boardId': boardId,
+      'commentId': commentId,
+      'authKeyHash': authKeyHash,
+      'reason': reason,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> adminDeleteComment({
+    required String boardId,
+    required String commentId,
+    required String adminToken,
+  }) async {
+    final response = await _dio.post('/api/board/admin/delete-comment', data: {
+      'boardId': boardId,
+      'commentId': commentId,
+      'adminToken': adminToken,
+    });
+    return response.data;
+  }
+
   // ─── Board Media API ───
 
   /// 게시판 미디어 업로드 (E2EE 암호화 바이너리 → FormData)
+  /// postId 또는 commentId 중 하나 필수
   Future<Map<String, dynamic>> uploadBoardMedia({
     required Uint8List encryptedFile,
     required String boardId,
-    required String postId,
+    String? postId,
+    String? commentId,
     required String authKeyHash,
     required String nonce,
     required String mimeType,
@@ -277,7 +406,8 @@ class ApiClient {
     final formData = FormData.fromMap({
       'file': MultipartFile.fromBytes(encryptedFile, filename: 'media.enc'),
       'boardId': boardId,
-      'postId': postId,
+      if (postId != null) 'postId': postId,
+      if (commentId != null) 'commentId': commentId,
       'authKeyHash': authKeyHash,
       'nonce': nonce,
       'mimeType': mimeType,

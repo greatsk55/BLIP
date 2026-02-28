@@ -80,6 +80,17 @@
     "description": "Every improvement, tracked transparently.",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "February 28, 2026",
+        "title": "Board Invite Code System",
+        "changes": {
+          "1": "Rotatable invite codes for boards — share a link that auto-joins without password",
+          "2": "Invite code rotation in admin panel — invalidate old links while existing members keep access",
+          "3": "Separated invite code (shareable) from encryption key (immutable) for stronger security",
+          "4": "Mobile app deep link support for board invite codes"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "February 26, 2026",
         "title": "Mobile App & Stability",
@@ -92,7 +103,7 @@
           "6": "10 language support (+German, Traditional Chinese)"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "February 15, 2026",
         "title": "Encrypted Media Transfer",
@@ -104,7 +115,7 @@
           "5": "File integrity verification with SHA-256 checksums"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "February 10, 2026",
         "title": "Instant Room Destruction & Notifications",
@@ -115,7 +126,7 @@
           "4": "Private community feature with encrypted posts"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "February 1, 2026",
         "title": "Initial Release",
@@ -367,6 +378,8 @@
       "adminToken": "Admin Token",
       "adminTokenWarning": "Save this token — it cannot be recovered",
       "shareLink": "Share Link",
+      "inviteLink": "Invite Link (No password required)",
+      "inviteLinkHint": "Anyone with this link can join without a password",
       "enter": "Enter Community",
       "confirmInfo": "Got it"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "Community Subtitle",
       "subtitlePlaceholder": "Enter a subtitle for this community",
       "subtitleSave": "Save",
+      "rotateInviteCode": "Regenerate Invite Link",
+      "rotateInviteCodeDesc": "Generate a new invite link. Previously shared links will stop working, but existing members are not affected.",
+      "newInviteCode": "New Invite Link",
+      "oldLinksInvalidated": "All previous invite links have been invalidated",
+      "existingMembersUnaffected": "Existing members can continue using the community as usual",
       "destroy": "Destroy Community",
       "destroyWarning": "This will permanently delete the community and all posts. This cannot be undone.",
       "cancel": "Cancel",
@@ -449,6 +467,20 @@
       "confirmRemove": "Remove",
       "admin": "Admin",
       "destroying": "Deleting..."
+    },
+    "comment": {
+      "title": "Comments",
+      "placeholder": "Write a comment...",
+      "submit": "Send",
+      "empty": "No comments yet",
+      "writeFirst": "Write the first comment",
+      "loadMore": "Load more",
+      "delete": "Delete",
+      "adminDelete": "Delete (Admin)",
+      "deleteWarning": "Delete this comment?",
+      "confirmDelete": "Delete",
+      "attachImage": "Image",
+      "maxImages": "Max 2"
     }
   }
 }

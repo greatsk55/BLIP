@@ -475,6 +475,18 @@
   "@boardAdminSubtitlePlaceholder": { "description": "Subtitle input placeholder" },
   "boardAdminSubtitleSave": "Save",
   "@boardAdminSubtitleSave": { "description": "Save subtitle button" },
+  "boardAdminRotateInviteCode": "Regenerate Invite Link",
+  "@boardAdminRotateInviteCode": { "description": "Rotate invite code button" },
+  "boardAdminRotateInviteCodeDesc": "Generate a new invite link. Previously shared links will stop working, but existing members are not affected.",
+  "@boardAdminRotateInviteCodeDesc": { "description": "Invite code rotation description" },
+  "boardAdminNewInviteCode": "New Invite Link",
+  "@boardAdminNewInviteCode": { "description": "New invite code label" },
+  "boardAdminOldLinksInvalidated": "All previous invite links have been invalidated",
+  "@boardAdminOldLinksInvalidated": { "description": "Warning after invite code rotation" },
+  "boardAdminExistingMembersUnaffected": "Existing members can continue using the community as usual",
+  "@boardAdminExistingMembersUnaffected": { "description": "Reassurance after invite code rotation" },
+  "boardAdminInviteLinkCopied": "Invite link copied",
+  "@boardAdminInviteLinkCopied": { "description": "Snackbar after copying invite link" },
   "boardCreateSubtitlePlaceholder": "Subtitle (optional)",
   "@boardCreateSubtitlePlaceholder": { "description": "Subtitle placeholder on create form" },
 
@@ -527,5 +539,13 @@
   "termsSection9Title": "Changes & Governing Law",
   "@termsSection9Title": { "description": "Terms section 9 title" },
   "termsSection9Content": "We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea.",
-  "@termsSection9Content": { "description": "Terms section 9 content" }
+  "@termsSection9Content": { "description": "Terms section 9 content" },
+
+  "boardCommentTitle": "Comments",
+  "boardCommentPlaceholder": "Write a comment...",
+  "boardCommentSubmit": "Send",
+  "boardCommentEmpty": "No comments yet",
+  "boardCommentWriteFirst": "Write the first comment",
+  "boardCommentLoadMore": "Load more",
+  "boardCommentAttachImage": "Image"
 }

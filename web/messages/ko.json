@@ -80,6 +80,17 @@
     "description": "모든 개선 사항을 투명하게 기록합니다.",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "2026년 2월 28일",
+        "title": "보드 초대 코드 시스템",
+        "changes": {
+          "1": "보드 초대 코드 — 비밀번호 없이 링크로 자동 입장",
+          "2": "관리자 패널에서 초대 코드 갱신 — 이전 링크 무효화, 기존 멤버 영향 없음",
+          "3": "초대 코드(공유용)와 암호화 키(불변) 분리로 보안 강화",
+          "4": "모바일 앱 보드 초대 코드 딥링크 지원"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "2026년 2월 26일",
         "title": "모바일 앱 & 안정성 개선",
@@ -92,7 +103,7 @@
           "6": "10개 언어 지원 (+독일어, 번체 중국어)"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "2026년 2월 15일",
         "title": "암호화된 미디어 전송",
@@ -104,7 +115,7 @@
           "5": "SHA-256 체크섬으로 파일 무결성 검증"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "2026년 2월 10일",
         "title": "즉시 방 파쇄 & 알림",
@@ -115,7 +126,7 @@
           "4": "암호화된 게시글의 프라이빗 커뮤니티 기능"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "2026년 2월 1일",
         "title": "첫 출시",
@@ -367,6 +378,8 @@
       "adminToken": "관리자 토큰",
       "adminTokenWarning": "이 토큰을 저장하세요 — 복구할 수 없습니다",
       "shareLink": "공유 링크",
+      "inviteLink": "초대 링크 (비밀번호 불필요)",
+      "inviteLinkHint": "이 링크로 비밀번호 없이 참여 가능",
       "enter": "커뮤니티 입장",
       "confirmInfo": "확인"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "커뮤니티 부제목",
       "subtitlePlaceholder": "커뮤니티 부제목을 입력하세요",
       "subtitleSave": "저장",
+      "rotateInviteCode": "초대 링크 재생성",
+      "rotateInviteCodeDesc": "새 초대 링크를 생성합니다. 이전에 공유된 링크는 더 이상 작동하지 않지만, 이미 참여한 멤버에게는 영향이 없습니다.",
+      "newInviteCode": "새 초대 링크",
+      "oldLinksInvalidated": "이전 초대 링크는 모두 무효화되었습니다",
+      "existingMembersUnaffected": "기존 멤버는 영향 없이 계속 이용 가능합니다",
       "destroy": "커뮤니티 폭파",
       "destroyWarning": "커뮤니티와 모든 게시물이 영구적으로 삭제됩니다. 되돌릴 수 없습니다.",
       "cancel": "취소",
@@ -449,6 +467,20 @@
       "confirmRemove": "제거",
       "admin": "관리자",
       "destroying": "삭제 중..."
+    },
+    "comment": {
+      "title": "댓글",
+      "placeholder": "댓글을 입력하세요...",
+      "submit": "전송",
+      "empty": "댓글이 없습니다",
+      "writeFirst": "첫 댓글을 작성하세요",
+      "loadMore": "더 보기",
+      "delete": "삭제",
+      "adminDelete": "삭제 (관리자)",
+      "deleteWarning": "이 댓글을 삭제하시겠습니까?",
+      "confirmDelete": "삭제",
+      "attachImage": "이미지",
+      "maxImages": "최대 2개"
     }
   }
 }

@@ -80,6 +80,17 @@
     "description": "每一項改進，透明追蹤。",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "2026年2月28日",
+        "title": "社群邀請碼系統",
+        "changes": {
+          "1": "社群邀請碼 — 無需密碼，透過連結自動加入",
+          "2": "管理面板中更新邀請碼 — 舊連結失效，不影響現有成員",
+          "3": "邀請碼（可分享）與加密金鑰（不可變）分離，增強安全性",
+          "4": "行動應用程式支援社群邀請碼深層連結"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "行動應用程式與穩定性提升",
@@ -92,7 +103,7 @@
           "6": "10種語言支援（+德語、繁體中文）"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "加密媒體傳輸",
@@ -104,7 +115,7 @@
           "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即時房間銷毀與通知",
@@ -115,7 +126,7 @@
           "4": "加密文章的私密社群功能"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "首次發布",
@@ -367,6 +378,8 @@
       "adminToken": "管理員令牌",
       "adminTokenWarning": "請保存此令牌——無法恢復",
       "shareLink": "分享連結",
+      "inviteLink": "邀請連結（無需密碼）",
+      "inviteLinkHint": "透過此連結無需密碼即可加入",
       "enter": "進入社群",
       "confirmInfo": "確認"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "社群副標題",
       "subtitlePlaceholder": "輸入社群副標題",
       "subtitleSave": "儲存",
+      "rotateInviteCode": "重新產生邀請連結",
+      "rotateInviteCodeDesc": "產生新的邀請連結。先前分享的連結將失效，但不會影響已加入的成員。",
+      "newInviteCode": "新邀請連結",
+      "oldLinksInvalidated": "所有先前的邀請連結已失效",
+      "existingMembersUnaffected": "現有成員可繼續正常使用",
       "destroy": "銷毀社群",
       "destroyWarning": "這將永久刪除社群及所有文章。此操作無法復原。",
       "cancel": "取消",
@@ -449,6 +467,20 @@
       "confirmRemove": "移除",
       "admin": "管理員",
       "destroying": "刪除中..."
+    },
+    "comment": {
+      "title": "留言",
+      "placeholder": "寫一則留言...",
+      "submit": "傳送",
+      "empty": "尚無留言",
+      "writeFirst": "寫下第一則留言",
+      "loadMore": "載入更多",
+      "delete": "刪除",
+      "adminDelete": "刪除（管理員）",
+      "deleteWarning": "刪除此留言？",
+      "confirmDelete": "刪除",
+      "attachImage": "圖片",
+      "maxImages": "最多2張"
     }
   }
 }

@@ -9,3 +9,6 @@ export 'file.dart';
 
 // 게시판 (대칭키 기반)
 export 'symmetric.dart';
+
+// 초대 코드 (게시판 인증 분리)
+export 'invite.dart';

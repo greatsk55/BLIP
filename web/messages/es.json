@@ -80,6 +80,17 @@
     "description": "Cada mejora, registrada de forma transparente.",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "28 de febrero de 2026",
+        "title": "Sistema de códigos de invitación",
+        "changes": {
+          "1": "Códigos de invitación para tableros — unirse automáticamente con un enlace sin contraseña",
+          "2": "Rotación de código de invitación en el panel de administración — invalidar enlaces antiguos sin afectar a miembros existentes",
+          "3": "Separación del código de invitación (compartible) y la clave de cifrado (inmutable) para mayor seguridad",
+          "4": "Soporte de deep links para códigos de invitación en la app móvil"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "26 de febrero de 2026",
         "title": "Aplicación móvil y estabilidad",
@@ -92,7 +103,7 @@
           "6": "Soporte para 10 idiomas (+alemán, chino tradicional)"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "15 de febrero de 2026",
         "title": "Transferencia de medios cifrada",
@@ -104,7 +115,7 @@
           "5": "Verificación de integridad con sumas SHA-256"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "10 de febrero de 2026",
         "title": "Destrucción instantánea y notificaciones",
@@ -115,7 +126,7 @@
           "4": "Comunidad privada con publicaciones cifradas"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "1 de febrero de 2026",
         "title": "Lanzamiento inicial",
@@ -367,6 +378,8 @@
       "adminToken": "Token de Administrador",
       "adminTokenWarning": "Guarda este token — no se puede recuperar",
       "shareLink": "Enlace para Compartir",
+      "inviteLink": "Enlace de Invitación (sin contraseña)",
+      "inviteLinkHint": "Cualquiera con este enlace puede unirse sin contraseña",
       "enter": "Entrar a la Comunidad",
       "confirmInfo": "Entendido"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "Subtítulo de la comunidad",
       "subtitlePlaceholder": "Introduce un subtítulo para esta comunidad",
       "subtitleSave": "Guardar",
+      "rotateInviteCode": "Regenerar enlace de invitación",
+      "rotateInviteCodeDesc": "Genera un nuevo enlace de invitación. Los enlaces compartidos anteriormente dejarán de funcionar, pero los miembros existentes no se verán afectados.",
+      "newInviteCode": "Nuevo enlace de invitación",
+      "oldLinksInvalidated": "Todos los enlaces de invitación anteriores han sido invalidados",
+      "existingMembersUnaffected": "Los miembros existentes pueden seguir usando la comunidad con normalidad",
       "destroy": "Destruir Comunidad",
       "destroyWarning": "Esto eliminará permanentemente la comunidad y todas las publicaciones. No se puede deshacer.",
       "cancel": "Cancelar",
@@ -449,6 +467,20 @@
       "confirmRemove": "Eliminar",
       "admin": "Admin",
       "destroying": "Eliminando..."
+    },
+    "comment": {
+      "title": "Comentarios",
+      "placeholder": "Escribe un comentario...",
+      "submit": "Enviar",
+      "empty": "Sin comentarios aún",
+      "writeFirst": "Escribe el primer comentario",
+      "loadMore": "Cargar más",
+      "delete": "Eliminar",
+      "adminDelete": "Eliminar (Admin)",
+      "deleteWarning": "¿Eliminar este comentario?",
+      "confirmDelete": "Eliminar",
+      "attachImage": "Imagen",
+      "maxImages": "Máximo 2"
     }
   }
 }

@@ -475,6 +475,18 @@
   "@boardAdminSubtitlePlaceholder": { "description": "Subtitle input placeholder" },
   "boardAdminSubtitleSave": "Speichern",
   "@boardAdminSubtitleSave": { "description": "Save subtitle button" },
+  "boardAdminRotateInviteCode": "Einladungslink neu generieren",
+  "@boardAdminRotateInviteCode": { "description": "Rotate invite code button" },
+  "boardAdminRotateInviteCodeDesc": "Erstellt einen neuen Einladungslink. Zuvor geteilte Links funktionieren nicht mehr, bestehende Mitglieder sind davon nicht betroffen.",
+  "@boardAdminRotateInviteCodeDesc": { "description": "Invite code rotation description" },
+  "boardAdminNewInviteCode": "Neuer Einladungslink",
+  "@boardAdminNewInviteCode": { "description": "New invite code label" },
+  "boardAdminOldLinksInvalidated": "Alle vorherigen Einladungslinks wurden ungültig",
+  "@boardAdminOldLinksInvalidated": { "description": "Warning after invite code rotation" },
+  "boardAdminExistingMembersUnaffected": "Bestehende Mitglieder können die Community weiterhin normal nutzen",
+  "@boardAdminExistingMembersUnaffected": { "description": "Reassurance after invite code rotation" },
+  "boardAdminInviteLinkCopied": "Einladungslink kopiert",
+  "@boardAdminInviteLinkCopied": { "description": "Snackbar after copying invite link" },
   "boardCreateSubtitlePlaceholder": "Untertitel (optional)",
   "@boardCreateSubtitlePlaceholder": { "description": "Subtitle placeholder on create form" },
 
@@ -502,5 +514,13 @@
   "termsSection8Title": "Geistiges Eigentum",
   "termsSection8Content": "Der Name, das Logo und die Markenzeichen von BLIP sind geschützt. Der Service-Quellcode wird unter einer Open-Source-Lizenz veröffentlicht.",
   "termsSection9Title": "Änderungen und anwendbares Recht",
-  "termsSection9Content": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung von BLIP nach Änderungen gilt als Zustimmung zu den aktualisierten Bedingungen."
+  "termsSection9Content": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung von BLIP nach Änderungen gilt als Zustimmung zu den aktualisierten Bedingungen.",
+
+  "boardCommentTitle": "Kommentare",
+  "boardCommentPlaceholder": "Kommentar schreiben...",
+  "boardCommentSubmit": "Senden",
+  "boardCommentEmpty": "Noch keine Kommentare",
+  "boardCommentWriteFirst": "Schreibe den ersten Kommentar",
+  "boardCommentLoadMore": "Mehr laden",
+  "boardCommentAttachImage": "Bild"
 }

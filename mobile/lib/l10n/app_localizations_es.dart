@@ -720,6 +720,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get boardAdminSubtitleSave => 'Guardar';
 
   @override
+  String get boardAdminRotateInviteCode => 'Regenerar enlace de invitación';
+
+  @override
+  String get boardAdminRotateInviteCodeDesc => 'Genera un nuevo enlace de invitación. Los enlaces compartidos anteriormente dejarán de funcionar, pero los miembros existentes no se verán afectados.';
+
+  @override
+  String get boardAdminNewInviteCode => 'Nuevo enlace de invitación';
+
+  @override
+  String get boardAdminOldLinksInvalidated => 'Los enlaces anteriores han sido invalidados.';
+
+  @override
+  String get boardAdminExistingMembersUnaffected => 'Los miembros existentes no se ven afectados.';
+
+  @override
+  String get boardAdminInviteLinkCopied => '¡Enlace de invitación copiado!';
+
+  @override
   String get boardCreateSubtitlePlaceholder => 'Subtítulo (opcional)';
 
   @override

@@ -80,6 +80,17 @@
     "description": "每一项改进，透明记录。",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "2026年2月28日",
+        "title": "社区邀请码系统",
+        "changes": {
+          "1": "社区邀请码 — 无需密码，通过链接自动加入",
+          "2": "管理面板中更新邀请码 — 旧链接失效，不影响现有成员",
+          "3": "邀请码（可共享）与加密密钥（不可变）分离，增强安全性",
+          "4": "移动应用支持社区邀请码深度链接"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "移动应用与稳定性提升",
@@ -92,7 +103,7 @@
           "6": "10种语言支持（+德语、繁体中文）"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "加密媒体传输",
@@ -104,7 +115,7 @@
           "5": "SHA-256校验和文件完整性验证"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即时房间销毁与通知",
@@ -115,7 +126,7 @@
           "4": "加密帖子的社区功能"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "首次发布",
@@ -367,6 +378,8 @@
       "adminToken": "管理员令牌",
       "adminTokenWarning": "请保存此令牌 — 无法恢复",
       "shareLink": "分享链接",
+      "inviteLink": "邀请链接（无需密码）",
+      "inviteLinkHint": "通过此链接无需密码即可加入",
       "enter": "进入社区",
       "confirmInfo": "确认"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "社区副标题",
       "subtitlePlaceholder": "输入社区副标题",
       "subtitleSave": "保存",
+      "rotateInviteCode": "重新生成邀请链接",
+      "rotateInviteCodeDesc": "生成新的邀请链接。之前分享的链接将失效，但不会影响已加入的成员。",
+      "newInviteCode": "新邀请链接",
+      "oldLinksInvalidated": "所有之前的邀请链接已失效",
+      "existingMembersUnaffected": "现有成员可继续正常使用",
       "destroy": "销毁社区",
       "destroyWarning": "这将永久删除社区和所有帖子。此操作不可撤销。",
       "cancel": "取消",
@@ -449,6 +467,20 @@
       "confirmRemove": "移除",
       "admin": "管理员",
       "destroying": "删除中..."
+    },
+    "comment": {
+      "title": "评论",
+      "placeholder": "写一条评论...",
+      "submit": "发送",
+      "empty": "暂无评论",
+      "writeFirst": "写下第一条评论",
+      "loadMore": "加载更多",
+      "delete": "删除",
+      "adminDelete": "删除（管理员）",
+      "deleteWarning": "删除此评论？",
+      "confirmDelete": "删除",
+      "attachImage": "图片",
+      "maxImages": "最多2张"
     }
   }
 }

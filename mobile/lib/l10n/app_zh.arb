@@ -290,6 +290,12 @@
   "boardAdminEditSubtitle": "编辑副标题",
   "boardAdminSubtitlePlaceholder": "社区副标题（可选）",
   "boardAdminSubtitleSave": "保存",
+  "boardAdminRotateInviteCode": "重新生成邀请链接",
+  "boardAdminRotateInviteCodeDesc": "生成新的邀请链接。之前分享的链接将失效，但不会影响已加入的成员。",
+  "boardAdminNewInviteCode": "新邀请链接",
+  "boardAdminOldLinksInvalidated": "所有之前的邀请链接已失效",
+  "boardAdminExistingMembersUnaffected": "现有成员可继续正常使用",
+  "boardAdminInviteLinkCopied": "邀请链接已复制",
   "boardCreateSubtitlePlaceholder": "副标题（可选）",
 
   "termsAgree": "我同意使用条款",
@@ -316,5 +322,13 @@
   "termsSection8Title": "知识产权",
   "termsSection8Content": "BLIP的名称、标志和品牌资产受到保护。服务代码库以开源许可证发布。",
   "termsSection9Title": "变更与适用法律",
-  "termsSection9Content": "我们保留随时修改这些条款的权利。在变更后继续使用BLIP即表示接受更新后的条款。"
+  "termsSection9Content": "我们保留随时修改这些条款的权利。在变更后继续使用BLIP即表示接受更新后的条款。",
+
+  "boardCommentTitle": "评论",
+  "boardCommentPlaceholder": "写一条评论...",
+  "boardCommentSubmit": "发送",
+  "boardCommentEmpty": "暂无评论",
+  "boardCommentWriteFirst": "写下第一条评论",
+  "boardCommentLoadMore": "加载更多",
+  "boardCommentAttachImage": "图片"
 }

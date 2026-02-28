@@ -693,6 +693,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get boardAdminSubtitleSave => '保存';
 
   @override
+  String get boardAdminRotateInviteCode => '招待リンクを再生成';
+
+  @override
+  String get boardAdminRotateInviteCodeDesc => '新しい招待リンクを生成します。以前共有されたリンクは無効になりますが、既存メンバーには影響ありません。';
+
+  @override
+  String get boardAdminNewInviteCode => '新しい招待リンク';
+
+  @override
+  String get boardAdminOldLinksInvalidated => '以前のリンクは無効になりました。';
+
+  @override
+  String get boardAdminExistingMembersUnaffected => '既存メンバーへの影響はありません。';
+
+  @override
+  String get boardAdminInviteLinkCopied => '招待リンクをコピーしました！';
+
+  @override
   String get boardCreateSubtitlePlaceholder => 'サブタイトル（任意）';
 
   @override

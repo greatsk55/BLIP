@@ -41,6 +41,8 @@ export interface DecryptedPost {
   images: DecryptedPostImage[];
   /** 복호화 전 이미지 메타데이터 (lazy decryption용) */
   _encryptedImages?: EncryptedPostImageMeta[];
+  /** 댓글 수 (목록 조회 시) */
+  commentCount?: number;
 }
 
 /** 이미지 복호화에 필요한 최소 메타데이터 */
@@ -73,6 +75,34 @@ export interface EncryptedPostImage {
   width: number | null;
   height: number | null;
   displayOrder: number;
+}
+
+// ─── 댓글 (서버 저장 형태: 암호문) ───
+
+export interface BoardComment {
+  id: string;
+  postId: string;
+  authorNameEncrypted: string;
+  authorNameNonce: string;
+  contentEncrypted: string;
+  contentNonce: string;
+  createdAt: string;
+  isBlinded: boolean;
+  images: EncryptedPostImage[];
+}
+
+// ─── 댓글 (클라이언트 복호화 형태) ───
+
+export interface DecryptedComment {
+  id: string;
+  postId: string;
+  authorName: string;
+  content: string;
+  createdAt: string;
+  isBlinded: boolean;
+  isMine: boolean;
+  images: DecryptedPostImage[];
+  _encryptedImages?: EncryptedPostImageMeta[];
 }
 
 // ─── 상태 ───

@@ -81,6 +81,7 @@ class DecryptedPost {
   final bool isMine;
   final List<DecryptedPostImage> images;
   final List<EncryptedPostImageMeta> encryptedImages;
+  final int commentCount;
 
   const DecryptedPost({
     required this.id,
@@ -92,10 +93,12 @@ class DecryptedPost {
     this.isMine = false,
     this.images = const [],
     this.encryptedImages = const [],
+    this.commentCount = 0,
   });
 
   DecryptedPost copyWith({
     List<DecryptedPostImage>? images,
+    int? commentCount,
   }) {
     return DecryptedPost(
       id: id,
@@ -107,6 +110,7 @@ class DecryptedPost {
       isMine: isMine,
       images: images ?? this.images,
       encryptedImages: encryptedImages,
+      commentCount: commentCount ?? this.commentCount,
     );
   }
 }

@@ -41,7 +41,7 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
   const [passwordLoading, setPasswordLoading] = useState(false);
 
   // 생성 직후 안내 모달
-  const [createdInfo, setCreatedInfo] = useState<{ password: string; adminToken: string } | null>(null);
+  const [createdInfo, setCreatedInfo] = useState<{ password: string; adminToken: string; inviteCode?: string } | null>(null);
 
   useEffect(() => {
     const info = getCreatedInfo(boardId);
@@ -50,8 +50,9 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
     }
   }, [boardId]);
 
-  // 신고 모달
+  // 신고 모달 (게시글 또는 댓글)
   const [reportTarget, setReportTarget] = useState<string | null>(null);
+  const [reportType, setReportType] = useState<'post' | 'comment'>('post');
 
   // 관리자 패널
   const [showAdminPanel, setShowAdminPanel] = useState(false);
@@ -138,16 +139,27 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
     [board, handleBackToList]
   );
 
-  // ─── 신고 핸들러 ───
+  // ─── 신고 핸들러 (게시글 + 댓글 공용) ───
 
   const handleReport = useCallback(
     async (reason: ReportReason) => {
       if (!reportTarget) return;
-      await board.submitReport(reportTarget, reason);
+      if (reportType === 'comment') {
+        await board.submitCommentReport(reportTarget, reason);
+      } else {
+        await board.submitReport(reportTarget, reason);
+      }
       setReportTarget(null);
     },
-    [board, reportTarget]
+    [board, reportTarget, reportType]
   );
+
+  // ─── 댓글 신고 모달 열기 ───
+
+  const handleOpenCommentReport = useCallback((commentId: string) => {
+    setReportType('comment');
+    setReportTarget(commentId);
+  }, []);
 
   // ─── 렌더링 ───
 
@@ -211,11 +223,25 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
         <PostDetail
           post={selectedPost}
           onBack={handleBackToList}
-          onReport={() => setReportTarget(selectedPost.id)}
+          onReport={() => {
+            setReportType('post');
+            setReportTarget(selectedPost.id);
+          }}
           onEdit={() => setView('edit')}
           onDelete={handleDeletePost}
           onAdminDelete={board.adminToken ? handleAdminDelete : undefined}
           onDecryptImages={board.decryptPostImages}
+          comments={board.commentsMap[selectedPost.id] ?? []}
+          commentsHasMore={board.commentsHasMore[selectedPost.id] ?? false}
+          commentsLoading={board.commentsLoading}
+          onLoadComments={board.loadComments}
+          onLoadMoreComments={board.loadMoreComments}
+          onSubmitComment={board.submitComment}
+          onDeleteComment={board.deleteComment}
+          onReportComment={board.submitCommentReport}
+          onDecryptCommentImages={board.decryptCommentImages}
+          onOpenCommentReport={handleOpenCommentReport}
+          adminToken={board.adminToken ?? undefined}
         />
       )}
 
@@ -248,6 +274,7 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
           adminToken={board.adminToken}
           currentSubtitle={board.boardSubtitle}
           onUpdateSubtitle={board.updateSubtitle}
+          onRotateInviteCode={board.rotateInviteCode}
           onClose={() => setShowAdminPanel(false)}
           onPostDeleted={() => {
             board.refreshPosts();
@@ -306,6 +333,30 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
                   {t('create.adminTokenWarning')}
                 </p>
               </div>
+
+              {/* 초대 링크 (비밀번호 없이 입장) */}
+              {createdInfo.inviteCode && (
+                <div className="mb-4">
+                  <p className="font-mono text-[10px] text-ghost-grey/60 uppercase tracking-widest mb-2">
+                    {t('create.inviteLink')}
+                  </p>
+                  <div className="flex items-center gap-2 bg-ink/[0.03] border border-signal-green/15 px-3 py-3">
+                    <span className="font-mono text-[11px] text-ghost-grey break-all flex-1">
+                      {typeof window !== 'undefined'
+                        ? `${window.location.origin}/board/${boardId}#k=${encodeURIComponent(createdInfo.inviteCode)}`
+                        : ''}
+                    </span>
+                    <CopyButton
+                      text={typeof window !== 'undefined'
+                        ? `${window.location.origin}/board/${boardId}#k=${encodeURIComponent(createdInfo.inviteCode)}`
+                        : ''}
+                    />
+                  </div>
+                  <p className="font-mono text-[9px] text-signal-green/40 uppercase tracking-wider mt-1">
+                    {t('create.inviteLinkHint')}
+                  </p>
+                </div>
+              )}
 
               {/* 공유 링크 */}
               <div className="mb-6">

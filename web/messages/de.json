@@ -80,6 +80,17 @@
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
       "1": {
+        "version": "v1.4.0",
+        "date": "28. Februar 2026",
+        "title": "Einladungscode-System",
+        "changes": {
+          "1": "Einladungscodes für Boards — automatischer Beitritt per Link ohne Passwort",
+          "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
+          "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
+          "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
+        }
+      },
+      "2": {
         "version": "v1.3.0",
         "date": "26. Februar 2026",
         "title": "Mobile App & Stabilität",
@@ -92,7 +103,7 @@
           "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.2.0",
         "date": "15. Februar 2026",
         "title": "Verschlüsselte Medienübertragung",
@@ -104,7 +115,7 @@
           "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.1.0",
         "date": "10. Februar 2026",
         "title": "Sofortige Raumvernichtung & Benachrichtigungen",
@@ -115,7 +126,7 @@
           "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.0.0",
         "date": "1. Februar 2026",
         "title": "Erstveröffentlichung",
@@ -367,6 +378,8 @@
       "adminToken": "Admin-Token",
       "adminTokenWarning": "Speichere diesen Token — er kann nicht wiederhergestellt werden",
       "shareLink": "Link teilen",
+      "inviteLink": "Einladungslink (kein Passwort nötig)",
+      "inviteLinkHint": "Jeder mit diesem Link kann ohne Passwort beitreten",
       "enter": "Community betreten",
       "confirmInfo": "Verstanden"
     },
@@ -429,6 +442,11 @@
       "subtitleLabel": "Community-Untertitel",
       "subtitlePlaceholder": "Untertitel für diese Community eingeben",
       "subtitleSave": "Speichern",
+      "rotateInviteCode": "Einladungslink neu generieren",
+      "rotateInviteCodeDesc": "Erstellt einen neuen Einladungslink. Zuvor geteilte Links funktionieren nicht mehr, bestehende Mitglieder sind davon nicht betroffen.",
+      "newInviteCode": "Neuer Einladungslink",
+      "oldLinksInvalidated": "Alle vorherigen Einladungslinks wurden ungültig",
+      "existingMembersUnaffected": "Bestehende Mitglieder können die Community weiterhin normal nutzen",
       "destroy": "Community zerstören",
       "destroyWarning": "Dies wird die Community und alle Beiträge dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
       "cancel": "Abbrechen",
@@ -449,6 +467,20 @@
       "confirmRemove": "Entfernen",
       "admin": "Admin",
       "destroying": "Wird gelöscht..."
+    },
+    "comment": {
+      "title": "Kommentare",
+      "placeholder": "Kommentar schreiben...",
+      "submit": "Senden",
+      "empty": "Noch keine Kommentare",
+      "writeFirst": "Schreibe den ersten Kommentar",
+      "loadMore": "Mehr laden",
+      "delete": "Löschen",
+      "adminDelete": "Löschen (Admin)",
+      "deleteWarning": "Diesen Kommentar löschen?",
+      "confirmDelete": "Löschen",
+      "attachImage": "Bild",
+      "maxImages": "Max 2"
     }
   }
 }

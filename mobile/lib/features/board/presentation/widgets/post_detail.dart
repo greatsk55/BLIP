@@ -5,7 +5,10 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../domain/models/board_comment.dart';
 import '../../domain/models/board_post.dart';
+import 'comment_list.dart';
+import 'comment_composer.dart';
 import 'video_player_screen.dart';
 
 /// img:N 스킴 매칭 (web: MarkdownContent.tsx 동일)
@@ -24,6 +27,19 @@ class PostDetail extends StatefulWidget {
   /// 미디어 복호화 트리거 (lazy decryption)
   final Future<void> Function(String postId)? onDecryptImages;
 
+  // 댓글 관련 props
+  final List<DecryptedComment> comments;
+  final bool commentsHasMore;
+  final bool commentsLoading;
+  final VoidCallback? onLoadComments;
+  final VoidCallback? onLoadMoreComments;
+  final Future<String?> Function(String content, {List<MediaAttachment>? media})?
+      onSubmitComment;
+  final Future<String?> Function(String commentId)? onDeleteComment;
+  final Future<String?> Function(String commentId)? onAdminDeleteComment;
+  final void Function(String commentId)? onReportComment;
+  final void Function(String commentId)? onDecryptCommentImages;
+
   const PostDetail({
     super.key,
     required this.post,
@@ -33,6 +49,16 @@ class PostDetail extends StatefulWidget {
     this.onAdminDelete,
     this.onReport,
     this.onDecryptImages,
+    this.comments = const [],
+    this.commentsHasMore = false,
+    this.commentsLoading = false,
+    this.onLoadComments,
+    this.onLoadMoreComments,
+    this.onSubmitComment,
+    this.onDeleteComment,
+    this.onAdminDeleteComment,
+    this.onReportComment,
+    this.onDecryptCommentImages,
   });
 
   @override
@@ -46,6 +72,8 @@ class _PostDetailState extends State<PostDetail> {
   void initState() {
     super.initState();
     _triggerDecryptIfNeeded();
+    // 댓글 초기 로드
+    widget.onLoadComments?.call();
   }
 
   @override
@@ -105,7 +133,7 @@ class _PostDetailState extends State<PostDetail> {
           onReport: widget.onReport,
         ),
 
-        // 본문
+        // 본문 + 댓글 (스크롤 영역)
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -175,10 +203,39 @@ class _PostDetailState extends State<PostDetail> {
                   else if (widget.post.images.isNotEmpty)
                     _MediaGallery(images: widget.post.images),
                 ],
+
+                // 댓글 영역
+                const SizedBox(height: 24),
+                Divider(
+                  color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                ),
+                const SizedBox(height: 8),
+                CommentList(
+                  comments: widget.comments,
+                  hasMore: widget.commentsHasMore,
+                  loading: widget.commentsLoading,
+                  onLoadMore: () => widget.onLoadMoreComments?.call(),
+                  onDelete: (commentId) async =>
+                      widget.onDeleteComment?.call(commentId),
+                  onAdminDelete: widget.onAdminDeleteComment != null
+                      ? (commentId) async =>
+                          widget.onAdminDeleteComment!.call(commentId)
+                      : null,
+                  onReport: (commentId) =>
+                      widget.onReportComment?.call(commentId),
+                  onDecryptImages: (commentId) =>
+                      widget.onDecryptCommentImages?.call(commentId),
+                ),
               ],
             ),
           ),
         ),
+
+        // 댓글 입력 (하단 고정)
+        if (widget.onSubmitComment != null)
+          CommentComposer(
+            onSubmit: widget.onSubmitComment!,
+          ),
       ],
     );
   }

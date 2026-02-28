@@ -1435,6 +1435,24 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get boardAdminSubtitleSave;
 
+  /// Rotate invite code button
+  String get boardAdminRotateInviteCode;
+
+  /// Invite code rotation description
+  String get boardAdminRotateInviteCodeDesc;
+
+  /// New invite code label
+  String get boardAdminNewInviteCode;
+
+  /// Warning after invite code rotation
+  String get boardAdminOldLinksInvalidated;
+
+  /// Reassurance after invite code rotation
+  String get boardAdminExistingMembersUnaffected;
+
+  /// Snackbar after copying invite link
+  String get boardAdminInviteLinkCopied;
+
   /// Subtitle placeholder on create form
   ///
   /// In en, this message translates to:

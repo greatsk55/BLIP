@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     const file = formData.get('file') as Blob | null;
     const boardId = formData.get('boardId') as string | null;
     const postId = formData.get('postId') as string | null;
+    const commentId = formData.get('commentId') as string | null;
     const authKeyHash = formData.get('authKeyHash') as string | null;
     const nonce = formData.get('nonce') as string | null;
     const mimeType = formData.get('mimeType') as string | null;
@@ -42,7 +43,8 @@ export async function POST(request: Request) {
     const heightStr = formData.get('height') as string | null;
     const displayOrderStr = formData.get('displayOrder') as string | null;
 
-    if (!file || !boardId || !postId || !authKeyHash || !nonce || !mimeType) {
+    // postId 또는 commentId 중 하나 필수
+    if (!file || !boardId || (!postId && !commentId) || !authKeyHash || !nonce || !mimeType) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -71,20 +73,44 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 게시글 존재 확인
-    const { data: post } = await supabase
-      .from('board_posts')
-      .select('id')
-      .eq('id', postId)
-      .eq('board_id', boardId)
-      .single();
+    // 게시글 또는 댓글 존재 확인
+    if (postId) {
+      const { data: post } = await supabase
+        .from('board_posts')
+        .select('id')
+        .eq('id', postId)
+        .eq('board_id', boardId)
+        .single();
 
-    if (!post) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      if (!post) {
+        return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+      }
+    } else if (commentId) {
+      const { data: comment } = await supabase
+        .from('board_comments')
+        .select('id')
+        .eq('id', commentId)
+        .eq('board_id', boardId)
+        .single();
+
+      if (!comment) {
+        return NextResponse.json({ error: 'Comment not found' }, { status: 404 });
+      }
+
+      // 댓글당 이미지 최대 2장
+      const { count } = await supabase
+        .from('board_post_images')
+        .select('id', { count: 'exact', head: true })
+        .eq('comment_id', commentId);
+
+      if ((count ?? 0) >= 2) {
+        return NextResponse.json({ error: 'Max 2 images per comment' }, { status: 400 });
+      }
     }
 
     // Storage 업로드 (암호화된 바이너리)
-    const storagePath = `${boardId}/${postId}/${crypto.randomUUID()}`;
+    const ownerId = postId ?? commentId;
+    const storagePath = `${boardId}/${ownerId}/${crypto.randomUUID()}`;
     const buffer = await file.arrayBuffer();
 
     const { error: uploadError } = await supabase.storage
@@ -100,19 +126,22 @@ export async function POST(request: Request) {
     }
 
     // DB 기록
+    const insertData: Record<string, unknown> = {
+      board_id: boardId,
+      storage_path: storagePath,
+      encrypted_nonce: nonce,
+      mime_type: mimeType,
+      size_bytes: file.size,
+      width: widthStr ? parseInt(widthStr, 10) : null,
+      height: heightStr ? parseInt(heightStr, 10) : null,
+      display_order: displayOrderStr ? parseInt(displayOrderStr, 10) : 0,
+    };
+    if (postId) insertData.post_id = postId;
+    if (commentId) insertData.comment_id = commentId;
+
     const { data: imageRecord, error: dbError } = await supabase
       .from('board_post_images')
-      .insert({
-        post_id: postId,
-        board_id: boardId,
-        storage_path: storagePath,
-        encrypted_nonce: nonce,
-        mime_type: mimeType,
-        size_bytes: file.size,
-        width: widthStr ? parseInt(widthStr, 10) : null,
-        height: heightStr ? parseInt(heightStr, 10) : null,
-        display_order: displayOrderStr ? parseInt(displayOrderStr, 10) : 0,
-      })
+      .insert(insertData)
       .select('id')
       .single();
 

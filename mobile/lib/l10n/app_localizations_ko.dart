@@ -695,6 +695,24 @@ class AppLocalizationsKo extends AppLocalizations {
   String get boardAdminSubtitleSave => '저장';
 
   @override
+  String get boardAdminRotateInviteCode => '초대 링크 재생성';
+
+  @override
+  String get boardAdminRotateInviteCodeDesc => '새 초대 링크를 생성합니다. 이전에 공유된 링크는 더 이상 작동하지 않지만, 이미 참여한 멤버에게는 영향이 없습니다.';
+
+  @override
+  String get boardAdminNewInviteCode => '새 초대 링크';
+
+  @override
+  String get boardAdminOldLinksInvalidated => '이전 링크가 무효화되었습니다.';
+
+  @override
+  String get boardAdminExistingMembersUnaffected => '기존 멤버에게는 영향이 없습니다.';
+
+  @override
+  String get boardAdminInviteLinkCopied => '초대 링크가 복사되었습니다!';
+
+  @override
   String get boardCreateSubtitlePlaceholder => '부제목 (선택사항)';
 
   @override

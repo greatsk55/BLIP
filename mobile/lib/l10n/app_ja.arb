@@ -290,6 +290,12 @@
   "boardAdminEditSubtitle": "サブタイトル編集",
   "boardAdminSubtitlePlaceholder": "コミュニティのサブタイトル（任意）",
   "boardAdminSubtitleSave": "保存",
+  "boardAdminRotateInviteCode": "招待リンクを再生成",
+  "boardAdminRotateInviteCodeDesc": "新しい招待リンクを生成します。以前共有されたリンクは無効になりますが、既存メンバーには影響ありません。",
+  "boardAdminNewInviteCode": "新しい招待リンク",
+  "boardAdminOldLinksInvalidated": "以前の招待リンクはすべて無効になりました",
+  "boardAdminExistingMembersUnaffected": "既存メンバーは引き続きご利用いただけます",
+  "boardAdminInviteLinkCopied": "招待リンクがコピーされました",
   "boardCreateSubtitlePlaceholder": "サブタイトル（任意）",
 
   "termsAgree": "利用規約に同意します",
@@ -316,5 +322,13 @@
   "termsSection8Title": "知的財産権",
   "termsSection8Content": "BLIPの名前、ロゴ、ブランド資産は保護されています。サービスのコードベースはオープンソースライセンスで公開されています。",
   "termsSection9Title": "変更と準拠法",
-  "termsSection9Content": "これらの規約はいつでも変更される場合があります。変更後もBLIPの使用を継続することは、更新された規約への同意とみなされます。"
+  "termsSection9Content": "これらの規約はいつでも変更される場合があります。変更後もBLIPの使用を継続することは、更新された規約への同意とみなされます。",
+
+  "boardCommentTitle": "コメント",
+  "boardCommentPlaceholder": "コメントを入力...",
+  "boardCommentSubmit": "送信",
+  "boardCommentEmpty": "コメントはまだありません",
+  "boardCommentWriteFirst": "最初のコメントを書こう",
+  "boardCommentLoadMore": "もっと見る",
+  "boardCommentAttachImage": "画像"
 }

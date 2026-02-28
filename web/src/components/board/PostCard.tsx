@@ -1,6 +1,6 @@
 'use client';
 
-import { ImageIcon, Film } from 'lucide-react';
+import { ImageIcon, Film, MessageSquare } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { DecryptedPost } from '@/types/board';
 
@@ -67,17 +67,29 @@ export default function PostCard({ post, onClick }: PostCardProps) {
         </p>
       )}
 
-      {/* 3행: 미디어 인디케이터 */}
-      {mediaInfo.hasMedia && (
-        <div className="flex items-center gap-1 mt-1.5">
-          {mediaInfo.hasVideo ? (
-            <Film className="w-3 h-3 text-ghost-grey/60" />
-          ) : (
-            <ImageIcon className="w-3 h-3 text-ghost-grey/60" />
+      {/* 4행: 미디어 + 댓글 인디케이터 */}
+      {(mediaInfo.hasMedia || (post.commentCount ?? 0) > 0) && (
+        <div className="flex items-center gap-3 mt-1.5">
+          {mediaInfo.hasMedia && (
+            <div className="flex items-center gap-1">
+              {mediaInfo.hasVideo ? (
+                <Film className="w-3 h-3 text-ghost-grey/60" />
+              ) : (
+                <ImageIcon className="w-3 h-3 text-ghost-grey/60" />
+              )}
+              <span className="font-mono text-[9px] text-ghost-grey/60 uppercase tracking-wider">
+                {mediaInfo.hasVideo ? 'Video' : 'Image'}
+              </span>
+            </div>
           )}
-          <span className="font-mono text-[9px] text-ghost-grey/60 uppercase tracking-wider">
-            {mediaInfo.hasVideo ? 'Video' : 'Image'}
-          </span>
+          {(post.commentCount ?? 0) > 0 && (
+            <div className="flex items-center gap-1">
+              <MessageSquare className="w-3 h-3 text-ghost-grey/60" />
+              <span className="font-mono text-[9px] text-ghost-grey/60">
+                {post.commentCount}
+              </span>
+            </div>
+          )}
         </div>
       )}
     </button>

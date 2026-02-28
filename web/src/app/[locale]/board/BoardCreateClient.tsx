@@ -14,7 +14,7 @@ import SavedBoardsList from '@/components/board/SavedBoardsList';
 /** 생성 직후 정보를 sessionStorage에 임시 저장 (BoardRoom에서 모달로 표시) */
 const CREATED_INFO_PREFIX = 'blip-board-created-';
 
-export function getCreatedInfo(boardId: string): { password: string; adminToken: string } | null {
+export function getCreatedInfo(boardId: string): { password: string; adminToken: string; inviteCode?: string } | null {
   if (typeof window === 'undefined') return null;
   const raw = sessionStorage.getItem(`${CREATED_INFO_PREFIX}${boardId}`);
   if (!raw) return null;
@@ -99,7 +99,11 @@ export default function BoardCreateClient() {
     // sessionStorage에 생성 정보 임시 저장 (BoardRoom에서 안내 모달 표시용)
     sessionStorage.setItem(
       `${CREATED_INFO_PREFIX}${result.boardId}`,
-      JSON.stringify({ password: result.password, adminToken: result.adminToken })
+      JSON.stringify({
+        password: result.password,
+        adminToken: result.adminToken,
+        inviteCode: result.inviteCode,
+      })
     );
 
     // 바로 입장
