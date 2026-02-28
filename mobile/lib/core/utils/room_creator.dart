@@ -40,8 +40,8 @@ class RoomCreator {
         password,
       );
 
-      // 전면광고 (N번에 1번)
-      await AdService.instance.maybeShowInterstitial();
+      // 채팅 생성 시 매번 전면광고
+      await AdService.instance.showInterstitial();
 
       if (!context.mounted) return false;
       context.push('/room/$roomId', extra: password);

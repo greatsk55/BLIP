@@ -24,46 +24,51 @@ class MainShell extends ConsumerWidget {
         isDark ? AppColors.borderDark : AppColors.borderLight;
 
     return Scaffold(
-      body: Column(
+      body: navigationShell,
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: navigationShell),
-          const BannerAdWidget(),
+          // 배너 광고: 바텀탭 바로 위, 네이티브하게 붙음
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: const BannerAdWidget(),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: borderColor)),
+            ),
+            child: NavigationBar(
+              selectedIndex: navigationShell.currentIndex,
+              onDestinationSelected: (index) {
+                navigationShell.goBranch(
+                  index,
+                  initialLocation: index == navigationShell.currentIndex,
+                );
+              },
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              indicatorColor: signalGreen.withValues(alpha: 0.15),
+              height: 64,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+              destinations: [
+                NavigationDestination(
+                  icon: Icon(Icons.home_outlined, color: ghostGrey),
+                  selectedIcon: Icon(Icons.home, color: signalGreen),
+                  label: l10n.navHome,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.chat_bubble_outline, color: ghostGrey),
+                  selectedIcon: Icon(Icons.chat_bubble, color: signalGreen),
+                  label: l10n.navChat,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.forum_outlined, color: ghostGrey),
+                  selectedIcon: Icon(Icons.forum, color: signalGreen),
+                  label: l10n.navCommunity,
+                ),
+              ],
+            ),
+          ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: borderColor)),
-        ),
-        child: NavigationBar(
-          selectedIndex: navigationShell.currentIndex,
-          onDestinationSelected: (index) {
-            navigationShell.goBranch(
-              index,
-              initialLocation: index == navigationShell.currentIndex,
-            );
-          },
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          indicatorColor: signalGreen.withValues(alpha: 0.15),
-          height: 64,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          destinations: [
-            NavigationDestination(
-              icon: Icon(Icons.home_outlined, color: ghostGrey),
-              selectedIcon: Icon(Icons.home, color: signalGreen),
-              label: l10n.navHome,
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.chat_bubble_outline, color: ghostGrey),
-              selectedIcon: Icon(Icons.chat_bubble, color: signalGreen),
-              label: l10n.navChat,
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.forum_outlined, color: ghostGrey),
-              selectedIcon: Icon(Icons.forum, color: signalGreen),
-              label: l10n.navCommunity,
-            ),
-          ],
-        ),
       ),
     );
   }

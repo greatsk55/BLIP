@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// BLIP 앱 상수 (SSOT)
 /// web 프로젝트와 동일한 값 유지
 class AppConstants {
@@ -35,20 +37,27 @@ class AppConstants {
   static const int eventsPerSecond = 10;
 
   // ─── AdMob ───
-  static const String admobBannerAndroid =
-      'ca-app-pub-2005178297837902/5096661695';
-  static const String admobBannerIos =
-      'ca-app-pub-2005178297837902/3028901557';
+  // 디버그 모드: Google 공식 테스트 ID → 릴리스: 실제 ID
+  static String get admobBannerAndroid => kDebugMode
+      ? 'ca-app-pub-3940256099942544/9214589741'
+      : 'ca-app-pub-2005178297837902/5096661695';
+  static String get admobBannerIos => kDebugMode
+      ? 'ca-app-pub-3940256099942544/2435281174'
+      : 'ca-app-pub-2005178297837902/3028901557';
   // 전면광고
-  static const String admobInterstitialAndroid =
-      'ca-app-pub-2005178297837902/4595357994';
-  static const String admobInterstitialIos =
-      'ca-app-pub-2005178297837902/1704211599';
+  static String get admobInterstitialAndroid => kDebugMode
+      ? 'ca-app-pub-3940256099942544/1033173712'
+      : 'ca-app-pub-2005178297837902/4595357994';
+  static String get admobInterstitialIos => kDebugMode
+      ? 'ca-app-pub-3940256099942544/4411468910'
+      : 'ca-app-pub-2005178297837902/1704211599';
   // 전면광고 표시 빈도 (N번에 1번)
   static const int interstitialFrequency = 3;
   // 오프닝(앱 오픈) 광고
-  static const String admobAppOpenAndroid =
-      'ca-app-pub-2005178297837902/1063307095';
-  static const String admobAppOpenIos =
-      'ca-app-pub-2005178297837902/6350033614';
+  static String get admobAppOpenAndroid => kDebugMode
+      ? 'ca-app-pub-3940256099942544/9257395921'
+      : 'ca-app-pub-2005178297837902/1063307095';
+  static String get admobAppOpenIos => kDebugMode
+      ? 'ca-app-pub-3940256099942544/5575463023'
+      : 'ca-app-pub-2005178297837902/6350033614';
 }

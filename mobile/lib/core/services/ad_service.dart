@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,6 @@ class AdService with WidgetsBindingObserver {
   bool _initialized = false;
   InterstitialAd? _interstitialAd;
   AppOpenAd? _appOpenAd;
-  int _actionCount = 0;
   bool _isShowingAd = false;
   int _launchCount = 0;
 
@@ -33,6 +33,22 @@ class AdService with WidgetsBindingObserver {
 
   Future<void> init() async {
     if (_initialized) return;
+
+    // iOS: ATT 권한 요청 (14.5+ 필수 — 없으면 광고 fill rate 급감)
+    if (Platform.isIOS) {
+      try {
+        final status =
+            await AppTrackingTransparency.trackingAuthorizationStatus;
+        if (status == TrackingStatus.notDetermined) {
+          // 첫 프레임 렌더링 후 요청 (Apple 가이드라인)
+          await Future<void>.delayed(const Duration(seconds: 1));
+          await AppTrackingTransparency.requestTrackingAuthorization();
+        }
+      } catch (e) {
+        debugPrint('[BLIP] ATT request failed: $e');
+      }
+    }
+
     try {
       await MobileAds.instance.initialize();
     } catch (e) {
@@ -76,12 +92,28 @@ class AdService with WidgetsBindingObserver {
     );
   }
 
-  /// 액션 수행 시 호출 — N번에 1번 전면광고 표시
-  Future<bool> maybeShowInterstitial() async {
-    _actionCount++;
-    if (_actionCount % AppConstants.interstitialFrequency != 0) return false;
-    if (_interstitialAd == null) return false;
+  /// 전면광고 즉시 표시 (채팅 생성 등 매번 표시할 때)
+  Future<bool> showInterstitial() async {
+    if (_interstitialAd == null || _isShowingAd) return false;
+    return _showAndDispose();
+  }
 
+  /// N번에 1번 전면광고 표시 (글 조회 등 빈도 조절 필요 시)
+  /// [frequency]를 넘기면 해당 빈도 사용, 없으면 기본값
+  final Map<String, int> _counters = {};
+
+  Future<bool> maybeShowInterstitial({
+    String key = 'default',
+    int? frequency,
+  }) async {
+    final freq = frequency ?? AppConstants.interstitialFrequency;
+    _counters[key] = (_counters[key] ?? 0) + 1;
+    if (_counters[key]! % freq != 0) return false;
+    if (_interstitialAd == null || _isShowingAd) return false;
+    return _showAndDispose();
+  }
+
+  Future<bool> _showAndDispose() async {
     final ad = _interstitialAd!;
     _interstitialAd = null;
     _isShowingAd = true;
