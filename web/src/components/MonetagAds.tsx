@@ -5,24 +5,24 @@ import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 
 const POPUNDER_COOLDOWN_MS = 60 * 60 * 1000; // 1시간
-const POPUNDER_KEY = 'monetag_popunder_last';
+const VIGNETTE_COOLDOWN_MS = 60 * 60 * 1000; // 1시간
 
-function usePopunderAllowed() {
+/** localStorage 기반 쿨다운 훅 */
+function useAdCooldown(key: string, cooldownMs: number) {
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
     try {
-      const last = localStorage.getItem(POPUNDER_KEY);
+      const last = localStorage.getItem(key);
       const now = Date.now();
-      if (!last || now - Number(last) >= POPUNDER_COOLDOWN_MS) {
+      if (!last || now - Number(last) >= cooldownMs) {
         setAllowed(true);
-        localStorage.setItem(POPUNDER_KEY, String(now));
+        localStorage.setItem(key, String(now));
       }
     } catch {
-      // localStorage 접근 불가 시 그냥 허용
       setAllowed(true);
     }
-  }, []);
+  }, [key, cooldownMs]);
 
   return allowed;
 }
@@ -30,7 +30,8 @@ function usePopunderAllowed() {
 export default function MonetagAds() {
   const pathname = usePathname();
   const isChatRoom = pathname.includes('/room/');
-  const popunderAllowed = usePopunderAllowed();
+  const popunderAllowed = useAdCooldown('monetag_popunder_last', POPUNDER_COOLDOWN_MS);
+  const vignetteAllowed = useAdCooldown('monetag_vignette_last', VIGNETTE_COOLDOWN_MS);
 
   return (
     <>
@@ -45,14 +46,16 @@ export default function MonetagAds() {
         />
       )}
 
-      {/* Banner (Vignette) — 전체 페이지 */}
-      <Script
-        id="monetag-banner"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `(function(s){s.dataset.zone='10661025',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
-        }}
-      />
+      {/* Vignette — 1시간 쿨다운 */}
+      {vignetteAllowed && (
+        <Script
+          id="monetag-banner"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(s){s.dataset.zone='10661025',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
+          }}
+        />
+      )}
     </>
   );
 }
