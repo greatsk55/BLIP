@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/constants/app_constants.dart';
 import '../../../core/crypto/crypto.dart';
 import '../../../core/media/media_processor.dart';
 import '../../../core/network/api_client.dart';
@@ -151,7 +152,15 @@ class BoardNotifier extends StateNotifier<BoardState> {
         final savedKey = base64Decode(savedKeyB64);
         final error = await _authenticateWithKey(
             Uint8List.fromList(savedKey), savedEAuth);
-        if (error == null) return;
+        if (error == null) {
+          // 키 인증 성공 — 비밀번호도 저장돼 있으면 삭제 버튼 표시
+          final savedPw =
+              await _secureStorage.read(key: '$_storagePrefix$boardId');
+          if (savedPw != null) {
+            state = state.copyWith(isPasswordSaved: true);
+          }
+          return;
+        }
       } catch (_) {
         // 키 파싱 실패 → 다음 경로로
       }
@@ -716,6 +725,17 @@ class BoardNotifier extends StateNotifier<BoardState> {
   Future<void> forgetAdminToken() async {
     await _secureStorage.delete(key: '$_adminPrefix$boardId');
     state = state.copyWith(clearAdminToken: true);
+  }
+
+  /// 게시글 공유 URL 생성 (비밀번호 포함, fragment 방식)
+  Future<String> getShareUrl(String postId) async {
+    final savedPassword =
+        await _secureStorage.read(key: '$_storagePrefix$boardId');
+    final base = '${AppConstants.webBaseUrl}/board/$boardId';
+    if (savedPassword != null) {
+      return '$base#pw=${Uri.encodeComponent(savedPassword)}&p=$postId';
+    }
+    return '$base#p=$postId';
   }
 
   /// 저장된 비밀번호 삭제
