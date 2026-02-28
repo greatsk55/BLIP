@@ -8,8 +8,9 @@ import '../../domain/models/board_post.dart';
 class PostCard extends StatelessWidget {
   final DecryptedPost post;
   final VoidCallback onTap;
+  final VoidCallback? onShare;
 
-  const PostCard({super.key, required this.post, required this.onTap});
+  const PostCard({super.key, required this.post, required this.onTap, this.onShare});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +74,19 @@ class PostCard extends StatelessWidget {
                           : AppColors.ghostGreyLight,
                     ),
                   ),
+                  if (onShare != null && !post.isBlinded) ...[
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: onShare,
+                      child: Icon(
+                        Icons.share_outlined,
+                        size: 14,
+                        color: isDark
+                            ? AppColors.ghostGreyDark
+                            : AppColors.ghostGreyLight,
+                      ),
+                    ),
+                  ],
                 ],
               ),
 

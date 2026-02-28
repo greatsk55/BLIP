@@ -178,6 +178,10 @@
   "@boardPostDeleteWarning": { "description": "Delete warning message" },
   "boardPostConfirmDelete": "Delete",
   "@boardPostConfirmDelete": { "description": "Confirm delete button" },
+  "boardPostShare": "Share",
+  "@boardPostShare": { "description": "Share post button" },
+  "boardPostLinkCopied": "Link copied!",
+  "@boardPostLinkCopied": { "description": "Toast after copying share link" },
 
   "boardReportTitle": "Report Post",
   "@boardReportTitle": { "description": "Report post title" },

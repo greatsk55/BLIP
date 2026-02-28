@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { ArrowLeft, Flag, Pencil, Trash2 } from 'lucide-react';
+import { ArrowLeft, Flag, Pencil, Trash2, Share2, Check } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useTranslations } from 'next-intl';
 import type { DecryptedPost, DecryptedComment, ReportReason } from '@/types/board';
@@ -21,6 +21,7 @@ interface PostDetailProps {
   onDelete: (postId: string) => Promise<{ error?: string }>;
   onAdminDelete?: (postId: string) => Promise<{ error?: string }>;
   onDecryptImages?: (postId: string) => Promise<void>;
+  onShare?: () => void;
   // 댓글 관련
   comments: DecryptedComment[];
   commentsHasMore: boolean;
@@ -43,6 +44,7 @@ export default function PostDetail({
   onDelete,
   onAdminDelete,
   onDecryptImages,
+  onShare,
   comments,
   commentsHasMore,
   commentsLoading,
@@ -59,6 +61,7 @@ export default function PostDetail({
   const decryptedRef = useRef(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<'own' | 'admin' | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
 
   const handleDelete = useCallback(async () => {
     setDeleting(true);
@@ -145,6 +148,19 @@ export default function PostDetail({
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          {onShare && (
+            <button
+              onClick={() => {
+                onShare();
+                setShareCopied(true);
+                setTimeout(() => setShareCopied(false), 1500);
+              }}
+              className="p-2 text-ghost-grey/60 hover:text-signal-green transition-colors"
+              aria-label={t('post.share')}
+            >
+              {shareCopied ? <Check className="w-4 h-4 text-signal-green" /> : <Share2 className="w-4 h-4" />}
+            </button>
+          )}
           {post.isMine && (
             <>
               <button

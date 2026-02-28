@@ -100,6 +100,8 @@
   "boardPostAdminDelete": "Eliminar (Admin)",
   "boardPostDeleteWarning": "Esta publicación se eliminará permanentemente. No se puede deshacer.",
   "boardPostConfirmDelete": "Eliminar",
+  "boardPostShare": "Compartir",
+  "boardPostLinkCopied": "¡Enlace copiado!",
 
   "boardReportTitle": "Reportar Publicación",
   "boardReportSpam": "Spam",

@@ -607,6 +607,18 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get boardPostConfirmDelete;
 
+  /// Share post button
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get boardPostShare;
+
+  /// Toast after copying share link
+  ///
+  /// In en, this message translates to:
+  /// **'Link copied!'**
+  String get boardPostLinkCopied;
+
   /// Report post title
   ///
   /// In en, this message translates to:
@@ -1436,21 +1448,39 @@ abstract class AppLocalizations {
   String get boardAdminSubtitleSave;
 
   /// Rotate invite code button
+  ///
+  /// In en, this message translates to:
+  /// **'Regenerate Invite Link'**
   String get boardAdminRotateInviteCode;
 
   /// Invite code rotation description
+  ///
+  /// In en, this message translates to:
+  /// **'Generate a new invite link. Previously shared links will stop working, but existing members are not affected.'**
   String get boardAdminRotateInviteCodeDesc;
 
   /// New invite code label
+  ///
+  /// In en, this message translates to:
+  /// **'New Invite Link'**
   String get boardAdminNewInviteCode;
 
   /// Warning after invite code rotation
+  ///
+  /// In en, this message translates to:
+  /// **'All previous invite links have been invalidated'**
   String get boardAdminOldLinksInvalidated;
 
   /// Reassurance after invite code rotation
+  ///
+  /// In en, this message translates to:
+  /// **'Existing members can continue using the community as usual'**
   String get boardAdminExistingMembersUnaffected;
 
   /// Snackbar after copying invite link
+  ///
+  /// In en, this message translates to:
+  /// **'Invite link copied'**
   String get boardAdminInviteLinkCopied;
 
   /// Subtitle placeholder on create form
@@ -1608,6 +1638,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea.'**
   String get termsSection9Content;
+
+  /// No description provided for @boardCommentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get boardCommentTitle;
+
+  /// No description provided for @boardCommentPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment...'**
+  String get boardCommentPlaceholder;
+
+  /// No description provided for @boardCommentSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get boardCommentSubmit;
+
+  /// No description provided for @boardCommentEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet'**
+  String get boardCommentEmpty;
+
+  /// No description provided for @boardCommentWriteFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Write the first comment'**
+  String get boardCommentWriteFirst;
+
+  /// No description provided for @boardCommentLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get boardCommentLoadMore;
+
+  /// No description provided for @boardCommentAttachImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get boardCommentAttachImage;
 }
 
 class _AppLocalizationsDelegate

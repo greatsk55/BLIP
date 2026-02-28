@@ -100,6 +100,8 @@
   "boardPostAdminDelete": "削除（管理者）",
   "boardPostDeleteWarning": "この投稿は完全に削除されます。元に戻せません。",
   "boardPostConfirmDelete": "削除",
+  "boardPostShare": "共有",
+  "boardPostLinkCopied": "リンクをコピーしました！",
 
   "boardReportTitle": "投稿を報告",
   "boardReportSpam": "スパム",

@@ -178,6 +178,10 @@
   "@boardPostDeleteWarning": { "description": "Delete warning message" },
   "boardPostConfirmDelete": "刪除",
   "@boardPostConfirmDelete": { "description": "Confirm delete button" },
+  "boardPostShare": "分享",
+  "@boardPostShare": { "description": "Share post button" },
+  "boardPostLinkCopied": "連結已複製！",
+  "@boardPostLinkCopied": { "description": "Toast after copying share link" },
 
   "boardReportTitle": "檢舉文章",
   "@boardReportTitle": { "description": "Report post title" },

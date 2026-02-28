@@ -14,6 +14,7 @@ interface PostListProps {
   onRefresh: () => Promise<void>;
   onPostClick: (post: DecryptedPost) => void;
   onCompose: () => void;
+  onSharePost?: (postId: string) => void;
 }
 
 export default function PostList({
@@ -23,6 +24,7 @@ export default function PostList({
   onRefresh,
   onPostClick,
   onCompose,
+  onSharePost,
 }: PostListProps) {
   const t = useTranslations('Board');
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -87,6 +89,7 @@ export default function PostList({
               <PostCard
                 post={post}
                 onClick={() => onPostClick(post)}
+                onShare={onSharePost ? () => onSharePost(post.id) : undefined}
               />
             </motion.div>
           ))}

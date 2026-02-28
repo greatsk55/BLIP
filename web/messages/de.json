@@ -421,7 +421,9 @@
       "delete": "Löschen",
       "adminDelete": "Löschen (Admin)",
       "deleteWarning": "Dieser Beitrag wird dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
-      "confirmDelete": "Löschen"
+      "confirmDelete": "Löschen",
+      "share": "Teilen",
+      "linkCopied": "Link kopiert!"
     },
     "report": {
       "title": "Beitrag melden",

@@ -421,7 +421,9 @@
       "delete": "删除",
       "adminDelete": "删除（管理员）",
       "deleteWarning": "此帖子将被永久删除，无法恢复。",
-      "confirmDelete": "删除"
+      "confirmDelete": "删除",
+      "share": "分享",
+      "linkCopied": "链接已复制！"
     },
     "report": {
       "title": "举报帖子",

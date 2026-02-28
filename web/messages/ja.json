@@ -421,7 +421,9 @@
       "delete": "削除",
       "adminDelete": "削除（管理者）",
       "deleteWarning": "この投稿は完全に削除されます。元に戻せません。",
-      "confirmDelete": "削除"
+      "confirmDelete": "削除",
+      "share": "共有",
+      "linkCopied": "リンクをコピーしました！"
     },
     "report": {
       "title": "投稿を報告",

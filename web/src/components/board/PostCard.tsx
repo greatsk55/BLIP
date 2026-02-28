@@ -1,16 +1,19 @@
 'use client';
 
-import { ImageIcon, Film, MessageSquare } from 'lucide-react';
+import { useState } from 'react';
+import { ImageIcon, Film, MessageSquare, Share2, Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { DecryptedPost } from '@/types/board';
 
 interface PostCardProps {
   post: DecryptedPost;
   onClick: () => void;
+  onShare?: () => void;
 }
 
-export default function PostCard({ post, onClick }: PostCardProps) {
+export default function PostCard({ post, onClick, onShare }: PostCardProps) {
   const t = useTranslations('Board');
+  const [shareCopied, setShareCopied] = useState(false);
 
   const timeAgo = formatTimeAgo(post.createdAt);
 
@@ -39,7 +42,7 @@ export default function PostCard({ post, onClick }: PostCardProps) {
           : 'border-ink/5 bg-ink/[0.01] hover:bg-ink/[0.03]'
       }`}
     >
-      {/* 1행: 작성자 + 시간 */}
+      {/* 1행: 작성자 + 시간 + 공유 */}
       <div className="flex items-center gap-2 mb-1.5">
         <span
           className={`font-mono text-[10px] uppercase tracking-wider ${
@@ -51,6 +54,28 @@ export default function PostCard({ post, onClick }: PostCardProps) {
         <span className="font-mono text-[9px] text-ghost-grey/60">
           {timeAgo}
         </span>
+        {onShare && (
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={(e) => {
+              e.stopPropagation();
+              onShare();
+              setShareCopied(true);
+              setTimeout(() => setShareCopied(false), 1500);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.stopPropagation();
+                onShare();
+              }
+            }}
+            className="ml-auto p-1 text-ghost-grey/40 hover:text-signal-green transition-colors shrink-0 cursor-pointer"
+            aria-label={t('post.share')}
+          >
+            {shareCopied ? <Check className="w-3 h-3 text-signal-green" /> : <Share2 className="w-3 h-3" />}
+          </div>
+        )}
       </div>
 
       {/* 2행: 제목 */}

@@ -268,6 +268,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get boardPostConfirmDelete => '삭제';
 
   @override
+  String get boardPostShare => '공유';
+
+  @override
+  String get boardPostLinkCopied => '링크가 복사되었습니다!';
+
+  @override
   String get boardReportTitle => '게시물 신고';
 
   @override
@@ -698,19 +704,20 @@ class AppLocalizationsKo extends AppLocalizations {
   String get boardAdminRotateInviteCode => '초대 링크 재생성';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => '새 초대 링크를 생성합니다. 이전에 공유된 링크는 더 이상 작동하지 않지만, 이미 참여한 멤버에게는 영향이 없습니다.';
+  String get boardAdminRotateInviteCodeDesc =>
+      '새 초대 링크를 생성합니다. 이전에 공유된 링크는 더 이상 작동하지 않지만, 이미 참여한 멤버에게는 영향이 없습니다.';
 
   @override
   String get boardAdminNewInviteCode => '새 초대 링크';
 
   @override
-  String get boardAdminOldLinksInvalidated => '이전 링크가 무효화되었습니다.';
+  String get boardAdminOldLinksInvalidated => '이전 초대 링크는 모두 무효화되었습니다';
 
   @override
-  String get boardAdminExistingMembersUnaffected => '기존 멤버에게는 영향이 없습니다.';
+  String get boardAdminExistingMembersUnaffected => '기존 멤버는 영향 없이 계속 이용 가능합니다';
 
   @override
-  String get boardAdminInviteLinkCopied => '초대 링크가 복사되었습니다!';
+  String get boardAdminInviteLinkCopied => '초대 링크가 복사되었습니다';
 
   @override
   String get boardCreateSubtitlePlaceholder => '부제목 (선택사항)';
@@ -799,4 +806,25 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get termsSection9Content =>
       '이 약관은 언제든지 수정될 수 있습니다. 변경 후 BLIP의 계속적인 사용은 수정된 약관에 대한 동의로 간주됩니다. 이 약관은 대한민국 법률에 의해 규율됩니다.';
+
+  @override
+  String get boardCommentTitle => '댓글';
+
+  @override
+  String get boardCommentPlaceholder => '댓글을 입력하세요...';
+
+  @override
+  String get boardCommentSubmit => '전송';
+
+  @override
+  String get boardCommentEmpty => '댓글이 없습니다';
+
+  @override
+  String get boardCommentWriteFirst => '첫 댓글을 작성하세요';
+
+  @override
+  String get boardCommentLoadMore => '더 보기';
+
+  @override
+  String get boardCommentAttachImage => '이미지';
 }

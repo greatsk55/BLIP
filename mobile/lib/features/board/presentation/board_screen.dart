@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -194,6 +195,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
       return PostDetail(
         post: freshPost,
         onBack: () => setState(() => _selectedPost = null),
+        onShare: () => _sharePost(freshPost.id),
         onDecryptImages: (postId) => notifier.decryptPostImages(postId),
         onEdit: freshPost.isMine
             ? () => _showComposer(
@@ -296,6 +298,7 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
               if (!mounted) return;
               setState(() => _selectedPost = post);
             },
+            onSharePost: (postId) => _sharePost(postId),
           ),
         ),
 
@@ -317,6 +320,13 @@ class _BoardScreenState extends ConsumerState<BoardScreen> {
         ),
       ],
     );
+  }
+
+  Future<void> _sharePost(String postId) async {
+    final notifier =
+        ref.read(boardNotifierProvider(widget.boardId).notifier);
+    final url = await notifier.getShareUrl(postId);
+    await Share.share(url);
   }
 
   void _showComposer({

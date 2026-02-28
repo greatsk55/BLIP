@@ -13,6 +13,7 @@ class PostList extends StatefulWidget {
   final Future<void> Function() onLoadMore;
   final Future<void> Function() onRefresh;
   final void Function(DecryptedPost post)? onPostClick;
+  final void Function(String postId)? onSharePost;
 
   const PostList({
     super.key,
@@ -21,6 +22,7 @@ class PostList extends StatefulWidget {
     required this.onLoadMore,
     required this.onRefresh,
     this.onPostClick,
+    this.onSharePost,
   });
 
   @override
@@ -98,6 +100,9 @@ class _PostListState extends State<PostList> {
           return PostCard(
             post: post,
             onTap: () => widget.onPostClick?.call(post),
+            onShare: widget.onSharePost != null
+                ? () => widget.onSharePost!(post.id)
+                : null,
           );
         },
       ),

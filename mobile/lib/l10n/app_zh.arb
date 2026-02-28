@@ -100,6 +100,8 @@
   "boardPostAdminDelete": "删除（管理员）",
   "boardPostDeleteWarning": "此帖子将被永久删除，无法恢复。",
   "boardPostConfirmDelete": "删除",
+  "boardPostShare": "分享",
+  "boardPostLinkCopied": "链接已复制！",
 
   "boardReportTitle": "举报帖子",
   "boardReportSpam": "垃圾信息",

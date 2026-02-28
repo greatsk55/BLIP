@@ -50,6 +50,18 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
     }
   }, [boardId]);
 
+  // 공유 URL로 진입 시 해당 글 자동 오픈
+  useEffect(() => {
+    if (board.status === 'browsing' && board.initialPostId) {
+      const post = board.posts.find((p) => p.id === board.initialPostId);
+      if (post && !post.isBlinded) {
+        setSelectedPostId(post.id);
+        setView('detail');
+      }
+      board.clearInitialPostId();
+    }
+  }, [board.status, board.initialPostId, board.posts, board.clearInitialPostId]);
+
   // 신고 모달 (게시글 또는 댓글)
   const [reportTarget, setReportTarget] = useState<string | null>(null);
   const [reportType, setReportType] = useState<'post' | 'comment'>('post');
@@ -154,6 +166,20 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
     [board, reportTarget, reportType]
   );
 
+  // ─── 공유 핸들러 ───
+
+  const handleSharePost = useCallback(
+    async (postId: string) => {
+      const url = board.getShareUrl(postId);
+      try {
+        await navigator.clipboard.writeText(url);
+      } catch {
+        // clipboard API 미지원 시 무시
+      }
+    },
+    [board]
+  );
+
   // ─── 댓글 신고 모달 열기 ───
 
   const handleOpenCommentReport = useCallback((commentId: string) => {
@@ -216,6 +242,7 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
           onRefresh={board.refreshPosts}
           onPostClick={handlePostClick}
           onCompose={() => setView('compose')}
+          onSharePost={handleSharePost}
         />
       )}
 
@@ -231,6 +258,7 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
           onDelete={handleDeletePost}
           onAdminDelete={board.adminToken ? handleAdminDelete : undefined}
           onDecryptImages={board.decryptPostImages}
+          onShare={() => handleSharePost(selectedPost.id)}
           comments={board.commentsMap[selectedPost.id] ?? []}
           commentsHasMore={board.commentsHasMore[selectedPost.id] ?? false}
           commentsLoading={board.commentsLoading}

@@ -266,6 +266,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get boardPostConfirmDelete => '删除';
 
   @override
+  String get boardPostShare => '分享';
+
+  @override
+  String get boardPostLinkCopied => '链接已复制！';
+
+  @override
   String get boardReportTitle => '举报帖子';
 
   @override
@@ -689,19 +695,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get boardAdminRotateInviteCode => '重新生成邀请链接';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => '生成新的邀请链接。之前分享的链接将失效，但不会影响已加入的成员。';
+  String get boardAdminRotateInviteCodeDesc =>
+      '生成新的邀请链接。之前分享的链接将失效，但不会影响已加入的成员。';
 
   @override
   String get boardAdminNewInviteCode => '新邀请链接';
 
   @override
-  String get boardAdminOldLinksInvalidated => '之前的链接已失效。';
+  String get boardAdminOldLinksInvalidated => '所有之前的邀请链接已失效';
 
   @override
-  String get boardAdminExistingMembersUnaffected => '现有成员不受影响。';
+  String get boardAdminExistingMembersUnaffected => '现有成员可继续正常使用';
 
   @override
-  String get boardAdminInviteLinkCopied => '邀请链接已复制！';
+  String get boardAdminInviteLinkCopied => '邀请链接已复制';
 
   @override
   String get boardCreateSubtitlePlaceholder => '副标题（可选）';
@@ -784,6 +791,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get termsSection9Content => '我们保留随时修改这些条款的权利。在变更后继续使用BLIP即表示接受更新后的条款。';
+
+  @override
+  String get boardCommentTitle => '评论';
+
+  @override
+  String get boardCommentPlaceholder => '写一条评论...';
+
+  @override
+  String get boardCommentSubmit => '发送';
+
+  @override
+  String get boardCommentEmpty => '暂无评论';
+
+  @override
+  String get boardCommentWriteFirst => '写下第一条评论';
+
+  @override
+  String get boardCommentLoadMore => '加载更多';
+
+  @override
+  String get boardCommentAttachImage => '图片';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1046,6 +1074,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get boardPostConfirmDelete => '刪除';
+
+  @override
+  String get boardPostShare => '分享';
+
+  @override
+  String get boardPostLinkCopied => '連結已複製！';
 
   @override
   String get boardReportTitle => '檢舉文章';
@@ -1471,19 +1505,20 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get boardAdminRotateInviteCode => '重新產生邀請連結';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => '產生新的邀請連結。先前分享的連結將失效，但不會影響已加入的成員。';
+  String get boardAdminRotateInviteCodeDesc =>
+      '產生新的邀請連結。先前分享的連結將失效，但不會影響已加入的成員。';
 
   @override
   String get boardAdminNewInviteCode => '新邀請連結';
 
   @override
-  String get boardAdminOldLinksInvalidated => '先前的連結已失效。';
+  String get boardAdminOldLinksInvalidated => '所有先前的邀請連結已失效';
 
   @override
-  String get boardAdminExistingMembersUnaffected => '現有成員不受影響。';
+  String get boardAdminExistingMembersUnaffected => '現有成員可繼續正常使用';
 
   @override
-  String get boardAdminInviteLinkCopied => '邀請連結已複製！';
+  String get boardAdminInviteLinkCopied => '邀請連結已複製';
 
   @override
   String get boardCreateSubtitlePlaceholder => '副標題（選填）';
@@ -1566,4 +1601,25 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get termsSection9Content => '我們保留隨時修改這些條款的權利。在變更後繼續使用BLIP即表示接受更新後的條款。';
+
+  @override
+  String get boardCommentTitle => '留言';
+
+  @override
+  String get boardCommentPlaceholder => '寫一則留言...';
+
+  @override
+  String get boardCommentSubmit => '傳送';
+
+  @override
+  String get boardCommentEmpty => '尚無留言';
+
+  @override
+  String get boardCommentWriteFirst => '寫下第一則留言';
+
+  @override
+  String get boardCommentLoadMore => '載入更多';
+
+  @override
+  String get boardCommentAttachImage => '圖片';
 }

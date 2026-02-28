@@ -421,7 +421,9 @@
       "delete": "刪除",
       "adminDelete": "刪除（管理員）",
       "deleteWarning": "此文章將被永久刪除。此操作無法復原。",
-      "confirmDelete": "刪除"
+      "confirmDelete": "刪除",
+      "share": "分享",
+      "linkCopied": "連結已複製！"
     },
     "report": {
       "title": "檢舉文章",

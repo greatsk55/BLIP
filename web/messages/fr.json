@@ -421,7 +421,9 @@
       "delete": "Supprimer",
       "adminDelete": "Supprimer (Admin)",
       "deleteWarning": "Cette publication sera définitivement supprimée. Cette action est irréversible.",
-      "confirmDelete": "Supprimer"
+      "confirmDelete": "Supprimer",
+      "share": "Partager",
+      "linkCopied": "Lien copié !"
     },
     "report": {
       "title": "Signaler la Publication",

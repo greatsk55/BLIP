@@ -275,6 +275,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get boardPostConfirmDelete => 'Eliminar';
 
   @override
+  String get boardPostShare => 'Compartir';
+
+  @override
+  String get boardPostLinkCopied => '¡Enlace copiado!';
+
+  @override
   String get boardReportTitle => 'Reportar Publicación';
 
   @override
@@ -723,19 +729,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get boardAdminRotateInviteCode => 'Regenerar enlace de invitación';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => 'Genera un nuevo enlace de invitación. Los enlaces compartidos anteriormente dejarán de funcionar, pero los miembros existentes no se verán afectados.';
+  String get boardAdminRotateInviteCodeDesc =>
+      'Genera un nuevo enlace de invitación. Los enlaces compartidos anteriormente dejarán de funcionar, pero los miembros existentes no se verán afectados.';
 
   @override
   String get boardAdminNewInviteCode => 'Nuevo enlace de invitación';
 
   @override
-  String get boardAdminOldLinksInvalidated => 'Los enlaces anteriores han sido invalidados.';
+  String get boardAdminOldLinksInvalidated =>
+      'Todos los enlaces de invitación anteriores han sido invalidados';
 
   @override
-  String get boardAdminExistingMembersUnaffected => 'Los miembros existentes no se ven afectados.';
+  String get boardAdminExistingMembersUnaffected =>
+      'Los miembros existentes pueden seguir usando la comunidad con normalidad';
 
   @override
-  String get boardAdminInviteLinkCopied => '¡Enlace de invitación copiado!';
+  String get boardAdminInviteLinkCopied => 'Enlace de invitación copiado';
 
   @override
   String get boardCreateSubtitlePlaceholder => 'Subtítulo (opcional)';
@@ -825,4 +834,25 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get termsSection9Content =>
       'Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de BLIP después de los cambios constituye aceptación de los términos actualizados.';
+
+  @override
+  String get boardCommentTitle => 'Comentarios';
+
+  @override
+  String get boardCommentPlaceholder => 'Escribe un comentario...';
+
+  @override
+  String get boardCommentSubmit => 'Enviar';
+
+  @override
+  String get boardCommentEmpty => 'Sin comentarios aún';
+
+  @override
+  String get boardCommentWriteFirst => 'Escribe el primer comentario';
+
+  @override
+  String get boardCommentLoadMore => 'Cargar más';
+
+  @override
+  String get boardCommentAttachImage => 'Imagen';
 }

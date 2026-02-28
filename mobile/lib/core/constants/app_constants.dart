@@ -30,6 +30,9 @@ class AppConstants {
   static const int maxVideoCompressedMb = 40; // 압축 후 암호화 전
   static const int maxVideoDurationSec = 60;
 
+  // ─── 웹 사이트 ───
+  static const String webBaseUrl = 'https://blip-blip.vercel.app';
+
   // ─── 방 ───
   static const int maxParticipants = 2; // 1:1 채팅
 

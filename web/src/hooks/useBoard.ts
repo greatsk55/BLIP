@@ -222,6 +222,11 @@ interface UseBoardReturn {
   // 초대 코드
   rotateInviteCode: () => Promise<{ inviteCode?: string; error?: string }>;
 
+  // 공유
+  initialPostId: string | null;
+  clearInitialPostId: () => void;
+  getShareUrl: (postId: string) => string;
+
   // 댓글 액션
   loadComments: (postId: string) => Promise<void>;
   loadMoreComments: (postId: string) => Promise<void>;
@@ -245,6 +250,7 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const [commentsHasMore, setCommentsHasMore] = useState<Record<string, boolean>>({});
   const [commentsLoading, setCommentsLoading] = useState(false);
   const commentCursorsRef = useRef<Record<string, string | undefined>>({});
+  const [initialPostId, setInitialPostId] = useState<string | null>(null);
 
   const encryptionKeyRef = useRef<Uint8Array | null>(null);
   const authKeyHashRef = useRef<string | null>(null);
@@ -411,13 +417,16 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     }
   }
 
-  // 초기화: 3가지 인증 경로 (직접 키 → 비밀번호 → 초대 코드)
+  // 초기화: 4가지 인증 경로 (직접 키 → 비밀번호 → URL 초대코드 → URL 비밀번호)
   useEffect(() => {
     // 관리자 토큰 복원
     const savedToken = getSavedAdminToken(boardId);
     if (savedToken) {
       setAdminToken(savedToken);
     }
+
+    // URL fragment 먼저 파싱 (인증 전에 추출해야 replaceState로 제거 가능)
+    const fragment = parseUrlFragment();
 
     async function initAuth() {
       // 1순위: 저장된 encryptionKey (초대코드로 참여한 멤버)
@@ -426,7 +435,6 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       if (savedKey && savedEAuth) {
         const result = await authenticateWithKey(savedKey, savedEAuth);
         if (!result.error) {
-          // 키 인증 성공 — 비밀번호도 저장돼 있으면 삭제 버튼 표시
           if (getSavedPassword(boardId)) setIsPasswordSaved(true);
           return;
         }
@@ -443,17 +451,26 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       }
 
       // 3순위: URL fragment 초대 코드 (#k=...)
-      const inviteCode = parseInviteCodeFromUrl();
-      if (inviteCode) {
-        const result = await authenticateWithInviteCode(inviteCode);
+      if (fragment?.inviteCode) {
+        const result = await authenticateWithInviteCode(fragment.inviteCode);
         if (!result.error) return;
-        // 초대 코드 인증 실패 → 비밀번호 입력으로
+      }
+
+      // 4순위: URL fragment 비밀번호 (#pw=...)
+      if (fragment?.password) {
+        const result = await authenticateInternal(fragment.password, false);
+        if (!result.error) return;
       }
 
       setStatus('password_required');
     }
 
-    void initAuth();
+    void initAuth().then(() => {
+      // 인증 성공 후 URL fragment의 postId가 있으면 자동 네비게이션
+      if (fragment?.postId) {
+        setInitialPostId(fragment.postId);
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardId]);
 
@@ -1333,6 +1350,19 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     decryptPostImages,
     updateSubtitle: updateSubtitleFn,
     rotateInviteCode: rotateInviteCodeFn,
+
+    // 공유
+    initialPostId,
+    clearInitialPostId: () => setInitialPostId(null),
+    getShareUrl: (postId: string) => {
+      const pw = getSavedPassword(boardId);
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const locale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'en';
+      const base = `${origin}/${locale}/board/${boardId}`;
+      return pw
+        ? `${base}#pw=${encodeURIComponent(pw)}&p=${postId}`
+        : `${base}#p=${postId}`;
+    },
 
     // 댓글 액션
     loadComments,

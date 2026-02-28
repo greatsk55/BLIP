@@ -23,6 +23,7 @@ class PostDetail extends StatefulWidget {
   final Future<String?> Function(String postId)? onDelete;
   final Future<String?> Function(String postId)? onAdminDelete;
   final VoidCallback? onReport;
+  final VoidCallback? onShare;
 
   /// 미디어 복호화 트리거 (lazy decryption)
   final Future<void> Function(String postId)? onDecryptImages;
@@ -48,6 +49,7 @@ class PostDetail extends StatefulWidget {
     this.onDelete,
     this.onAdminDelete,
     this.onReport,
+    this.onShare,
     this.onDecryptImages,
     this.comments = const [],
     this.commentsHasMore = false,
@@ -123,6 +125,7 @@ class _PostDetailState extends State<PostDetail> {
           isDark: isDark,
           signalGreen: signalGreen,
           onBack: widget.onBack,
+          onShare: widget.onShare,
           onEdit: widget.onEdit,
           onDelete: widget.onDelete != null
               ? () => _confirmDelete(context, l10n, isAdmin: false)
@@ -601,6 +604,7 @@ class _DetailHeader extends StatelessWidget {
   final bool isDark;
   final Color signalGreen;
   final VoidCallback onBack;
+  final VoidCallback? onShare;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
   final VoidCallback? onAdminDelete;
@@ -612,6 +616,7 @@ class _DetailHeader extends StatelessWidget {
     required this.isDark,
     required this.signalGreen,
     required this.onBack,
+    this.onShare,
     this.onEdit,
     this.onDelete,
     this.onAdminDelete,
@@ -646,6 +651,14 @@ class _DetailHeader extends StatelessWidget {
             ),
           ),
           const Spacer(),
+
+          // 공유 버튼 (모든 게시글)
+          if (onShare != null)
+            IconButton(
+              onPressed: onShare,
+              icon: Icon(Icons.share_outlined, size: 20, color: signalGreen),
+              tooltip: l10n.boardPostShare,
+            ),
 
           // 본인 게시글: 편집 + 삭제
           if (post.isMine) ...[

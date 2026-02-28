@@ -421,7 +421,9 @@
       "delete": "Eliminar",
       "adminDelete": "Eliminar (Admin)",
       "deleteWarning": "Esta publicación se eliminará permanentemente. No se puede deshacer.",
-      "confirmDelete": "Eliminar"
+      "confirmDelete": "Eliminar",
+      "share": "Compartir",
+      "linkCopied": "¡Enlace copiado!"
     },
     "report": {
       "title": "Reportar Publicación",

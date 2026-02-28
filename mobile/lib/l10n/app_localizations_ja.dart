@@ -268,6 +268,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get boardPostConfirmDelete => '削除';
 
   @override
+  String get boardPostShare => '共有';
+
+  @override
+  String get boardPostLinkCopied => 'リンクをコピーしました！';
+
+  @override
   String get boardReportTitle => '投稿を報告';
 
   @override
@@ -696,19 +702,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get boardAdminRotateInviteCode => '招待リンクを再生成';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => '新しい招待リンクを生成します。以前共有されたリンクは無効になりますが、既存メンバーには影響ありません。';
+  String get boardAdminRotateInviteCodeDesc =>
+      '新しい招待リンクを生成します。以前共有されたリンクは無効になりますが、既存メンバーには影響ありません。';
 
   @override
   String get boardAdminNewInviteCode => '新しい招待リンク';
 
   @override
-  String get boardAdminOldLinksInvalidated => '以前のリンクは無効になりました。';
+  String get boardAdminOldLinksInvalidated => '以前の招待リンクはすべて無効になりました';
 
   @override
-  String get boardAdminExistingMembersUnaffected => '既存メンバーへの影響はありません。';
+  String get boardAdminExistingMembersUnaffected => '既存メンバーは引き続きご利用いただけます';
 
   @override
-  String get boardAdminInviteLinkCopied => '招待リンクをコピーしました！';
+  String get boardAdminInviteLinkCopied => '招待リンクがコピーされました';
 
   @override
   String get boardCreateSubtitlePlaceholder => 'サブタイトル（任意）';
@@ -797,4 +804,25 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get termsSection9Content =>
       'これらの規約はいつでも変更される場合があります。変更後もBLIPの使用を継続することは、更新された規約への同意とみなされます。';
+
+  @override
+  String get boardCommentTitle => 'コメント';
+
+  @override
+  String get boardCommentPlaceholder => 'コメントを入力...';
+
+  @override
+  String get boardCommentSubmit => '送信';
+
+  @override
+  String get boardCommentEmpty => 'コメントはまだありません';
+
+  @override
+  String get boardCommentWriteFirst => '最初のコメントを書こう';
+
+  @override
+  String get boardCommentLoadMore => 'もっと見る';
+
+  @override
+  String get boardCommentAttachImage => '画像';
 }

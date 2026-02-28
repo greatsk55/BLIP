@@ -274,6 +274,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get boardPostConfirmDelete => 'Delete';
 
   @override
+  String get boardPostShare => 'Share';
+
+  @override
+  String get boardPostLinkCopied => 'Link copied!';
+
+  @override
   String get boardReportTitle => 'Report Post';
 
   @override
@@ -716,19 +722,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get boardAdminRotateInviteCode => 'Regenerate Invite Link';
 
   @override
-  String get boardAdminRotateInviteCodeDesc => 'Generate a new invite link. Previously shared links will stop working, but existing members are not affected.';
+  String get boardAdminRotateInviteCodeDesc =>
+      'Generate a new invite link. Previously shared links will stop working, but existing members are not affected.';
 
   @override
   String get boardAdminNewInviteCode => 'New Invite Link';
 
   @override
-  String get boardAdminOldLinksInvalidated => 'Previous links have been invalidated.';
+  String get boardAdminOldLinksInvalidated =>
+      'All previous invite links have been invalidated';
 
   @override
-  String get boardAdminExistingMembersUnaffected => 'Existing members are not affected.';
+  String get boardAdminExistingMembersUnaffected =>
+      'Existing members can continue using the community as usual';
 
   @override
-  String get boardAdminInviteLinkCopied => 'Invite link copied!';
+  String get boardAdminInviteLinkCopied => 'Invite link copied';
 
   @override
   String get boardCreateSubtitlePlaceholder => 'Subtitle (optional)';
@@ -818,4 +827,25 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get termsSection9Content =>
       'We reserve the right to modify these terms at any time. Continued use of BLIP after changes constitutes acceptance of the updated terms. These terms are governed by the laws of the Republic of Korea.';
+
+  @override
+  String get boardCommentTitle => 'Comments';
+
+  @override
+  String get boardCommentPlaceholder => 'Write a comment...';
+
+  @override
+  String get boardCommentSubmit => 'Send';
+
+  @override
+  String get boardCommentEmpty => 'No comments yet';
+
+  @override
+  String get boardCommentWriteFirst => 'Write the first comment';
+
+  @override
+  String get boardCommentLoadMore => 'Load more';
+
+  @override
+  String get boardCommentAttachImage => 'Image';
 }

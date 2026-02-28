@@ -421,7 +421,9 @@
       "delete": "Delete",
       "adminDelete": "Delete (Admin)",
       "deleteWarning": "This post will be permanently deleted. This cannot be undone.",
-      "confirmDelete": "Delete"
+      "confirmDelete": "Delete",
+      "share": "Share",
+      "linkCopied": "Link copied!"
     },
     "report": {
       "title": "Report Post",
