@@ -264,31 +264,32 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     };
   }, []);
 
-  // ─── URL fragment에서 초대 코드 파싱 ───
+  // ─── URL fragment 파싱 (#k=초대코드, #pw=비밀번호, #p=게시글ID) ───
   // Room의 RoomPageClient.tsx 패턴 재활용
-  function parseInviteCodeFromUrl(): string | null {
+  function parseUrlFragment(): { inviteCode?: string; password?: string; postId?: string } | null {
     if (typeof window === 'undefined') return null;
-    let k: string | null = null;
 
-    // 1순위: fragment (#k=...)
-    const hash = window.location.hash;
-    if (hash) {
-      const hashParams = new URLSearchParams(hash.slice(1));
-      k = hashParams.get('k');
-    }
+    const params = new URLSearchParams(
+      window.location.hash.startsWith('#') ? window.location.hash.slice(1) : ''
+    );
 
-    // 2순위: query parameter (?k=...)
-    if (!k) {
-      const searchParams = new URLSearchParams(window.location.search);
-      k = searchParams.get('k');
-    }
+    // fallback: query parameter
+    const searchParams = new URLSearchParams(window.location.search);
 
-    // URL에서 즉시 제거 (보안)
-    if (k) {
-      window.history.replaceState(null, '', window.location.pathname);
-    }
+    const k = params.get('k') ?? searchParams.get('k');
+    const pw = params.get('pw') ?? searchParams.get('pw');
+    const p = params.get('p') ?? searchParams.get('p');
 
-    return k ? decodeURIComponent(k) : null;
+    if (!k && !pw && !p) return null;
+
+    // URL에서 즉시 제거 (보안: fragment에 비밀번호 노출 방지)
+    window.history.replaceState(null, '', window.location.pathname);
+
+    return {
+      inviteCode: k ? decodeURIComponent(k) : undefined,
+      password: pw ? decodeURIComponent(pw) : undefined,
+      postId: p ? decodeURIComponent(p) : undefined,
+    };
   }
 
   // ─── 초대 코드로 인증 ───
@@ -424,7 +425,11 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       const savedEAuth = getSavedEAuth(boardId);
       if (savedKey && savedEAuth) {
         const result = await authenticateWithKey(savedKey, savedEAuth);
-        if (!result.error) return;
+        if (!result.error) {
+          // 키 인증 성공 — 비밀번호도 저장돼 있으면 삭제 버튼 표시
+          if (getSavedPassword(boardId)) setIsPasswordSaved(true);
+          return;
+        }
         // 키 인증 실패 → 다음 경로로
       }
 

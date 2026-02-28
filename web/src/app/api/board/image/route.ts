@@ -40,14 +40,18 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Image not found' }, { status: 404 });
     }
 
-    // 게시판 인증 검증
+    // 게시판 인증 검증 (이중 인증: password hash OR encryption key hash)
     const { data: board } = await supabase
       .from('boards')
-      .select('auth_key_hash')
+      .select('auth_key_hash, encryption_key_auth_hash')
       .eq('id', image.board_id)
       .single();
 
-    if (!board || board.auth_key_hash !== authKeyHash) {
+    if (
+      !board ||
+      (board.auth_key_hash !== authKeyHash &&
+        (!board.encryption_key_auth_hash || board.encryption_key_auth_hash !== authKeyHash))
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
