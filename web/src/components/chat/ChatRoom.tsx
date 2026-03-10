@@ -98,7 +98,9 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
 
       const transferId = typeof crypto.randomUUID === 'function'
         ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+        : Array.from(crypto.getRandomValues(new Uint8Array(16)))
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('');
 
       // 전송 중 placeholder 메시지 추가
       let thumbnailUrl: string | undefined;

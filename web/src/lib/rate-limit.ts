@@ -43,8 +43,9 @@ export async function checkRateLimit(
   key: string,
   config: RateLimitConfig
 ): Promise<RateLimitResult> {
-  // 개발 환경에서는 rate limit 비활성화
+  // 개발 환경에서는 rate limit 비활성화 (프로덕션에서는 반드시 NODE_ENV=production)
   if (process.env.NODE_ENV === 'development') {
+    console.warn('[rate-limit] Rate limiting DISABLED in development mode');
     return { allowed: true, remaining: config.maxRequests };
   }
 

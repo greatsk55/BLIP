@@ -48,7 +48,7 @@ export function checkOrigin(request: Request): boolean {
   // origin이 없는 경우 (same-origin 요청, sendBeacon 등)
   if (!origin) return true;
   // 설정된 origin 목록에 없으면 거부
-  if (ALLOWED_ORIGINS.size === 0) return true; // 설정 안 된 경우 pass
+  if (ALLOWED_ORIGINS.size === 0) return false; // 설정 안 된 경우 거부 (fail-closed)
   return ALLOWED_ORIGINS.has(origin);
 }
 

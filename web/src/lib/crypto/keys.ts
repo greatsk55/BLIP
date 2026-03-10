@@ -46,7 +46,7 @@ export async function deriveKeysFromPassword(
     {
       name: 'PBKDF2',
       salt: encoder.encode(`blip-room-${roomId}`),
-      iterations: 100000,
+      iterations: 210000,
       hash: 'SHA-256',
     },
     keyMaterial,

@@ -1,20 +1,30 @@
 import { createServerSupabase } from '@/lib/supabase/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { parseJsonBody, isStringArray, checkOrigin } from '@/lib/api-utils';
 
 // IP당 분당 10회
 const BATCH_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
 export async function POST(request: Request) {
   try {
+    if (!checkOrigin(request)) {
+      return Response.json({ error: 'FORBIDDEN' }, { status: 403 });
+    }
+
     const ip = getClientIp(new Headers(request.headers));
     const rateCheck = await checkRateLimit(`board:batch:${ip}`, BATCH_LIMIT);
     if (!rateCheck.allowed) {
       return Response.json({ error: 'TOO_MANY_REQUESTS' }, { status: 429 });
     }
 
-    const { boardIds } = await request.json();
+    const body = await parseJsonBody(request);
+    if (!body) {
+      return Response.json({ error: 'INVALID_JSON' }, { status: 400 });
+    }
 
-    if (!Array.isArray(boardIds) || boardIds.length === 0 || boardIds.length > 50) {
+    const { boardIds } = body;
+
+    if (!isStringArray(boardIds) || boardIds.length === 0 || boardIds.length > 50) {
       return Response.json(
         { error: 'INVALID_PARAMS' },
         { status: 400 }

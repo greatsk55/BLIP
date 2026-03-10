@@ -45,7 +45,7 @@ export async function deriveWrappingKey(
     {
       name: 'PBKDF2',
       salt: encoder.encode(`blip-invite-${boardId}`),
-      iterations: 100000,
+      iterations: 210000,
       hash: 'SHA-256',
     },
     keyMaterial,

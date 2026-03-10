@@ -40,7 +40,7 @@ const nextConfig = {
               "img-src 'self' data: blob: https:",
               "media-src 'self' blob:",
               "font-src 'self' https:",
-              "connect-src 'self' wss://*.supabase.co https://*.supabase.co https: http:",
+              "connect-src 'self' wss://*.supabase.co https://*.supabase.co https:",
               "frame-src https:",
               "frame-ancestors 'none'",
               "base-uri 'self'",
