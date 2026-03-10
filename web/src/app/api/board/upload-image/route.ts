@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { checkOrigin } from '@/lib/api-utils';
 
 // IP당 분당 10회
 const UPLOAD_LIMIT = { windowMs: 60_000, maxRequests: 10 };
@@ -25,6 +26,10 @@ const MAX_VIDEO_ENCRYPTED_SIZE = 50 * 1024 * 1024;   // 동영상: 50MB
  */
 export async function POST(request: Request) {
   try {
+    if (!checkOrigin(request)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
     const ip = getClientIp(new Headers(request.headers));
     const rateCheck = await checkRateLimit(`board:upload:${ip}`, UPLOAD_LIMIT);
     if (!rateCheck.allowed) {
@@ -132,9 +137,9 @@ export async function POST(request: Request) {
       encrypted_nonce: nonce,
       mime_type: mimeType,
       size_bytes: file.size,
-      width: widthStr ? parseInt(widthStr, 10) : null,
-      height: heightStr ? parseInt(heightStr, 10) : null,
-      display_order: displayOrderStr ? parseInt(displayOrderStr, 10) : 0,
+      width: widthStr ? Math.max(0, Math.min(parseInt(widthStr, 10) || 0, 10000)) : null,
+      height: heightStr ? Math.max(0, Math.min(parseInt(heightStr, 10) || 0, 10000)) : null,
+      display_order: displayOrderStr ? Math.max(0, Math.min(parseInt(displayOrderStr, 10) || 0, 100)) : 0,
     };
     if (postId) insertData.post_id = postId;
     if (commentId) insertData.comment_id = commentId;
