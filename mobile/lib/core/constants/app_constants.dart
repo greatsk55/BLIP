@@ -15,7 +15,7 @@ class AppConstants {
   static const int windowSize = 16; // 흐름 제어 윈도우
 
   // ─── PBKDF2 ───
-  static const int pbkdf2Iterations = 100000;
+  static const int pbkdf2Iterations = 210000;
   static const int pbkdf2OutputBytes = 64; // 512 bits
   static const String pbkdf2SaltPrefix = 'blip-room-';
 

@@ -9,7 +9,7 @@ class ApiClient {
 
   ApiClient() {
     _dio = Dio(BaseOptions(
-      baseUrl: dotenv.env['API_BASE_URL'] ?? 'http://localhost:3000',
+      baseUrl: dotenv.env['API_BASE_URL'] ?? 'https://blip-blip.vercel.app',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 15),
       headers: {
