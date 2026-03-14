@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLIP Embed Example</title>
+  <style>
+    body { font-family: monospace; background: #1a1a1a; color: #ccc; padding: 20px; }
+    h1 { color: #00FF94; }
+    .embed-container { margin: 20px 0; border: 1px solid #333; }
+    pre { background: #111; padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+    code { color: #00FF94; }
+    .log { margin-top: 20px; padding: 12px; background: #111; border: 1px solid #333; min-height: 100px; font-size: 12px; }
+    .log p { margin: 4px 0; color: #888; }
+  </style>
+</head>
+<body>
+  <h1>BLIP Embed Demo</h1>
+  <p>Below is a BLIP chat widget embedded via iframe.</p>
+
+  <div class="embed-container">
+    <iframe
+      src="https://blip-blip.vercel.app/embed"
+      width="400"
+      height="600"
+      style="border: none;"
+      allow="clipboard-write"
+    ></iframe>
+  </div>
+
+  <h2>Usage</h2>
+  <pre><code>&lt;iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+  window.addEventListener('message', (e) => {
+    if (e.origin !== 'https://blip-blip.vercel.app') return;
+    const { type, roomId, shareUrl } = e.data;
+
+    switch (type) {
+      case 'blip:ready':
+        console.log('BLIP widget loaded');
+        break;
+      case 'blip:room-created':
+        console.log('Room created:', roomId);
+        console.log('Share URL:', shareUrl);
+        break;
+      case 'blip:room-joined':
+        console.log('Joined room:', roomId);
+        break;
+      case 'blip:room-destroyed':
+        console.log('Room destroyed:', roomId);
+        break;
+    }
+  });
+&lt;/script&gt;</code></pre>
+
+  <h2>Events Log</h2>
+  <div class="log" id="log"></div>
+
+  <script>
+    const log = document.getElementById('log');
+    window.addEventListener('message', (e) => {
+      if (!e.data || !e.data.type || !e.data.type.startsWith('blip:')) return;
+      const p = document.createElement('p');
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${JSON.stringify(e.data)}`;
+      log.prepend(p);
+    });
+  </script>
+</body>
+</html>

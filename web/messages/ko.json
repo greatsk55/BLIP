@@ -32,6 +32,10 @@
       "title": "Capture Guard",
       "description": "스크린샷·화면 녹화 시도를 감지합니다. 메시지가 즉시 블러 처리되어 캡처할 수 없습니다."
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "iframe 하나로 어떤 웹사이트에든 BLIP 채팅을 삽입하세요. 완전한 종단간 암호화, 사용자 설정 제로."
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100% 오픈소스. 우리가 당신의 대화를 훔쳐보지 않는다는 사실을, 코드로 직접 검증할 수 있습니다."
@@ -71,7 +75,8 @@
       "board": "프라이빗 커뮤니티",
       "privacy": "개인정보처리방침",
       "terms": "이용약관",
-      "updates": "업데이트"
+      "updates": "업데이트",
+      "embed": "임베드"
     }
   },
   "Changelog": {
@@ -80,17 +85,29 @@
     "description": "모든 개선 사항을 투명하게 기록합니다.",
     "versions": {
       "1": {
-        "version": "v1.4.0",
-        "date": "2026년 2월 28일",
-        "title": "보드 초대 코드 시스템",
+        "version": "v1.5.0",
+        "date": "2026년 3월 14일",
+        "title": "임베드 채팅 위젯",
         "changes": {
-          "1": "보드 초대 코드 — 비밀번호 없이 링크로 자동 입장",
-          "2": "관리자 패널에서 초대 코드 갱신 — 이전 링크 무효화, 기존 멤버 영향 없음",
-          "3": "초대 코드(공유용)와 암호화 키(불변) 분리로 보안 강화",
-          "4": "모바일 앱 보드 초대 코드 딥링크 지원"
+          "1": "iframe으로 어떤 웹사이트에든 BLIP 채팅 삽입 — HTML 한 줄로 암호화 채팅 추가",
+          "2": "경량 임베드 레이아웃 — 광고 없음, 네비게이션 없음, 채팅에만 집중",
+          "3": "postMessage API로 부모 페이지와 이벤트 통신 (방 생성, 입장, 파쇄)",
+          "4": "임베드 모드에서 공유 링크가 임베드 컨텍스트 내에서 유지",
+          "5": "임베드 모드에서도 완전한 종단간 암호화 유지"
         }
       },
       "2": {
+        "version": "v1.4.0",
+        "date": "2026년 2월 28일",
+        "title": "커뮤니티 초대 코드 시스템",
+        "changes": {
+          "1": "커뮤니티 초대 코드 — 비밀번호 없이 링크로 자동 입장",
+          "2": "관리자 패널에서 초대 코드 갱신 — 이전 링크 무효화, 기존 멤버 영향 없음",
+          "3": "초대 코드(공유용)와 암호화 키(불변) 분리로 보안 강화",
+          "4": "모바일 앱 커뮤니티 초대 코드 딥링크 지원"
+        }
+      },
+      "3": {
         "version": "v1.3.0",
         "date": "2026년 2월 26일",
         "title": "모바일 앱 & 안정성 개선",
@@ -103,7 +120,7 @@
           "6": "10개 언어 지원 (+독일어, 번체 중국어)"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "2026년 2월 15일",
         "title": "암호화된 미디어 전송",
@@ -115,7 +132,7 @@
           "5": "SHA-256 체크섬으로 파일 무결성 검증"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "2026년 2월 10일",
         "title": "즉시 방 파쇄 & 알림",
@@ -126,7 +143,7 @@
           "4": "암호화된 게시글의 프라이빗 커뮤니티 기능"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "2026년 2월 1일",
         "title": "첫 출시",
@@ -365,7 +382,38 @@
     "termsTitle": "이용약관",
     "termsDescription": "BLIP 서비스 이용약관. 사용 전 반드시 확인해주세요.",
     "updatesTitle": "업데이트 내역",
-    "updatesDescription": "BLIP의 최신 업데이트와 변경 사항을 확인하세요."
+    "updatesDescription": "BLIP의 최신 업데이트와 변경 사항을 확인하세요.",
+    "embedGuideTitle": "BLIP 임베드",
+    "embedGuideDescription": "iframe 한 줄로 어떤 웹사이트에든 암호화된 일회용 채팅을 추가하세요."
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "당신의 웹사이트에<br></br>BLIP을 추가하세요",
+    "description": "iframe 하나로 어떤 페이지에든 암호화된 일회용 채팅을 삽입하세요. 백엔드 불필요, 계정 불필요, 완전한 E2E 암호화.",
+    "quickStart": "빠른 시작",
+    "quickStartDesc": "이 코드를 HTML에 복사해서 붙여넣으세요:",
+    "customize": "커스터마이징",
+    "customizeWidth": "너비 & 높이",
+    "customizeWidthDesc": "레이아웃에 맞게 iframe 크기를 조정하세요:",
+    "customizeDark": "다크 배경",
+    "customizeDarkDesc": "BLIP은 기본적으로 다크 테마를 사용합니다 — 다크 테마 사이트와 잘 어울립니다.",
+    "events": "이벤트 API",
+    "eventsDesc": "postMessage를 통해 임베드에서 발생하는 이벤트를 수신하세요:",
+    "eventReady": "위젯 로드 완료",
+    "eventCreated": "방 생성 완료 — roomId와 shareUrl 포함",
+    "eventJoined": "사용자가 채팅방에 입장",
+    "eventDestroyed": "채팅방이 파쇄됨",
+    "features": "제공되는 기능",
+    "featureE2E": "완전한 E2E 암호화",
+    "featureE2EDesc": "메인 사이트와 동일한 Curve25519 ECDH + XSalsa20-Poly1305 암호화.",
+    "featureNoAds": "광고 없음",
+    "featureNoAdsDesc": "임베드 모드는 깔끔한 사용자 경험을 위해 완전히 광고 없음.",
+    "featureNoAccount": "계정 불필요",
+    "featureNoAccountDesc": "사용자가 가입하거나 로그인할 필요 없음. 클릭하고 바로 대화.",
+    "featureAutoDestroy": "자동 파쇄",
+    "featureAutoDestroyDesc": "모든 참여자가 퇴장하면 방이 파쇄됩니다. 흔적이 남지 않습니다.",
+    "tryIt": "직접 체험하기",
+    "tryItDesc": "라이브 BLIP 임베드입니다. 방을 만들고 링크를 공유해보세요!"
   },
   "Board": {
     "create": {

@@ -32,6 +32,10 @@
       "title": "Capture Guard",
       "description": "スクリーンショットや画面録画の試行を検知します。メッセージは即座にぼかし処理され、キャプチャできません。"
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "iframe一つでどんなウェブサイトにもBLIPチャットを埋め込めます。完全なE2E暗号化、セットアップ不要。"
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100%オープンソース。私たちがあなたの会話を盗み見ないことを、コードで直接検証できます。"
@@ -71,7 +75,8 @@
       "board": "プライベートコミュニティ",
       "privacy": "プライバシー",
       "terms": "利用規約",
-      "updates": "更新履歴"
+      "updates": "更新履歴",
+      "embed": "埋め込み"
     }
   },
   "Changelog": {
@@ -80,9 +85,21 @@
     "description": "すべての改善を透明に記録します。",
     "versions": {
       "1": {
+        "version": "v1.5.0",
+        "date": "2026年3月14日",
+        "title": "埋め込みチャットウィジェット",
+        "changes": {
+          "1": "iframeでどんなウェブサイトにもBLIPチャットを埋め込み — HTML一行で暗号化チャットを追加",
+          "2": "軽量な埋め込みレイアウト — 広告なし、ナビゲーションなし、チャットに集中",
+          "3": "postMessage APIで親ページとイベント通信（ルーム作成、入室、破棄）",
+          "4": "埋め込みモードで共有リンクが埋め込みコンテキスト内で維持",
+          "5": "埋め込みモードでも完全なエンドツーエンド暗号化を維持"
+        }
+      },
+      "2": {
         "version": "v1.4.0",
         "date": "2026年2月28日",
-        "title": "ボード招待コードシステム",
+        "title": "コミュニティ招待コードシステム",
         "changes": {
           "1": "ボード招待コード — パスワードなしでリンクから自動参加",
           "2": "管理パネルで招待コード更新 — 古いリンクを無効化、既存メンバーはそのまま",
@@ -90,7 +107,7 @@
           "4": "モバイルアプリのボード招待コードディープリンク対応"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "モバイルアプリ＆安定性向上",
@@ -103,7 +120,7 @@
           "6": "10言語対応（+ドイツ語、繁体字中国語）"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "暗号化メディア転送",
@@ -115,7 +132,7 @@
           "5": "SHA-256チェックサムによるファイル整合性検証"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即時ルーム破棄＆通知",
@@ -126,7 +143,7 @@
           "4": "暗号化投稿のコミュニティ機能"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "初回リリース",
@@ -365,7 +382,38 @@
     "termsTitle": "利用規約",
     "termsDescription": "BLIPの利用規約。ご利用前に必ずご確認ください。",
     "updatesTitle": "アップデート",
-    "updatesDescription": "BLIPの最新アップデートと変更点をご確認ください。"
+    "updatesDescription": "BLIPの最新アップデートと変更点をご確認ください。",
+    "embedGuideTitle": "BLIP 埋め込み",
+    "embedGuideDescription": "iframe一行でどんなウェブサイトにも暗号化チャットを追加。"
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "あなたのウェブサイトに<br></br>BLIPを追加",
+    "description": "iframe一つでどんなページにも暗号化チャットを埋め込めます。バックエンド不要、アカウント不要、完全なE2E暗号化。",
+    "quickStart": "クイックスタート",
+    "quickStartDesc": "このスニペットをHTMLにコピー＆ペーストしてください：",
+    "customize": "カスタマイズ",
+    "customizeWidth": "幅と高さ",
+    "customizeWidthDesc": "レイアウトに合わせてiframeのサイズを調整してください：",
+    "customizeDark": "ダークテーマ",
+    "customizeDarkDesc": "BLIPはデフォルトでダークテーマを使用します — ダーク系サイトとよく馴染みます。",
+    "events": "イベントAPI",
+    "eventsDesc": "postMessageを通じて埋め込みからのイベントを受信してください：",
+    "eventReady": "ウィジェット読み込み完了",
+    "eventCreated": "ルーム作成完了 — roomIdとshareUrlを含む",
+    "eventJoined": "ユーザーがチャットルームに入室",
+    "eventDestroyed": "チャットルームが破棄された",
+    "features": "提供される機能",
+    "featureE2E": "完全なE2E暗号化",
+    "featureE2EDesc": "メインサイトと同じCurve25519 ECDH + XSalsa20-Poly1305暗号化。",
+    "featureNoAds": "広告なし",
+    "featureNoAdsDesc": "埋め込みモードはクリーンなUXのために完全に広告なし。",
+    "featureNoAccount": "アカウント不要",
+    "featureNoAccountDesc": "ユーザーの登録やログインは不要。クリックするだけで会話開始。",
+    "featureAutoDestroy": "自動破棄",
+    "featureAutoDestroyDesc": "全参加者が退出するとルームは破棄されます。痕跡は残りません。",
+    "tryIt": "ライブデモ",
+    "tryItDesc": "ライブBLIP埋め込みです。ルームを作成してリンクを共有してみてください！"
   },
   "Board": {
     "create": {

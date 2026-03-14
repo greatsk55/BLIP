@@ -32,6 +32,10 @@
       "title": "Capture Guard",
       "description": "Screenshot and screen-recording attempts are detected. Messages blur instantly — nothing to capture."
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "Drop BLIP into any website with a single iframe. Full E2E encryption, zero setup for your users."
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100% Open Source. You can verify with the code that we never spy on your conversations."
@@ -71,7 +75,8 @@
       "board": "Private Community",
       "privacy": "Privacy",
       "terms": "Terms",
-      "updates": "Updates"
+      "updates": "Updates",
+      "embed": "Embed"
     }
   },
   "Changelog": {
@@ -80,17 +85,29 @@
     "description": "Every improvement, tracked transparently.",
     "versions": {
       "1": {
-        "version": "v1.4.0",
-        "date": "February 28, 2026",
-        "title": "Board Invite Code System",
+        "version": "v1.5.0",
+        "date": "March 14, 2026",
+        "title": "Embeddable Chat Widget",
         "changes": {
-          "1": "Rotatable invite codes for boards — share a link that auto-joins without password",
-          "2": "Invite code rotation in admin panel — invalidate old links while existing members keep access",
-          "3": "Separated invite code (shareable) from encryption key (immutable) for stronger security",
-          "4": "Mobile app deep link support for board invite codes"
+          "1": "Embed BLIP chat into any website via iframe — add encrypted chat with a single HTML snippet",
+          "2": "Lightweight embed layout — no ads, no navigation, just the chat",
+          "3": "postMessage API for parent page communication (room created, joined, destroyed events)",
+          "4": "Shared links in embed mode stay within the embed context",
+          "5": "Full E2E encryption maintained in embedded mode"
         }
       },
       "2": {
+        "version": "v1.4.0",
+        "date": "February 28, 2026",
+        "title": "Community Invite Code System",
+        "changes": {
+          "1": "Rotatable invite codes for communities — share a link that auto-joins without password",
+          "2": "Invite code rotation in admin panel — invalidate old links while existing members keep access",
+          "3": "Separated invite code (shareable) from encryption key (immutable) for stronger security",
+          "4": "Mobile app deep link support for community invite codes"
+        }
+      },
+      "3": {
         "version": "v1.3.0",
         "date": "February 26, 2026",
         "title": "Mobile App & Stability",
@@ -103,7 +120,7 @@
           "6": "10 language support (+German, Traditional Chinese)"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "February 15, 2026",
         "title": "Encrypted Media Transfer",
@@ -115,7 +132,7 @@
           "5": "File integrity verification with SHA-256 checksums"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "February 10, 2026",
         "title": "Instant Room Destruction & Notifications",
@@ -126,7 +143,7 @@
           "4": "Private community feature with encrypted posts"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "February 1, 2026",
         "title": "Initial Release",
@@ -365,7 +382,38 @@
     "termsTitle": "Terms of Service",
     "termsDescription": "BLIP terms of service. Please review before using the service.",
     "updatesTitle": "Updates",
-    "updatesDescription": "See the latest updates and changes to BLIP."
+    "updatesDescription": "See the latest updates and changes to BLIP.",
+    "embedGuideTitle": "Embed BLIP",
+    "embedGuideDescription": "Add encrypted ephemeral chat to any website with a single iframe snippet."
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "Add BLIP to<br></br>Your Website",
+    "description": "Drop encrypted ephemeral chat into any page with a single iframe. No backend, no accounts, full E2E encryption.",
+    "quickStart": "Quick Start",
+    "quickStartDesc": "Copy and paste this snippet into your HTML:",
+    "customize": "Customization",
+    "customizeWidth": "Width & Height",
+    "customizeWidthDesc": "Adjust the iframe dimensions to fit your layout:",
+    "customizeDark": "Dark Background",
+    "customizeDarkDesc": "BLIP uses a dark theme by default — it blends well with dark-themed sites.",
+    "events": "Events API",
+    "eventsDesc": "Listen for events from the embed via postMessage:",
+    "eventReady": "Widget loaded and ready",
+    "eventCreated": "Room created — contains roomId and shareUrl",
+    "eventJoined": "User entered the chat room",
+    "eventDestroyed": "Chat room has been destroyed",
+    "features": "What You Get",
+    "featureE2E": "Full E2E Encryption",
+    "featureE2EDesc": "Same Curve25519 ECDH + XSalsa20-Poly1305 encryption as the main site.",
+    "featureNoAds": "No Ads",
+    "featureNoAdsDesc": "Embed mode is completely ad-free for a clean user experience.",
+    "featureNoAccount": "No Accounts",
+    "featureNoAccountDesc": "Users don't need to sign up or log in. Just click and chat.",
+    "featureAutoDestroy": "Auto-Destroy",
+    "featureAutoDestroyDesc": "Rooms are destroyed when all participants leave. No traces remain.",
+    "tryIt": "Try It Live",
+    "tryItDesc": "Here's a live BLIP embed. Create a room and share the link!"
   },
   "Board": {
     "create": {

@@ -39,6 +39,9 @@ export default function Footer() {
         <Link href="/board" className="hover:text-signal-green transition-colors font-mono tracking-wider">
           {t("links.board")}
         </Link>
+        <Link href="/embed-guide" className="hover:text-signal-green transition-colors font-mono tracking-wider">
+          {t("links.embed")}
+        </Link>
       </div>
       <div className="mb-8 flex justify-center gap-6 text-xs font-mono text-zinc-500 [.dark_&]:text-zinc-600 tracking-wider">
         <Link href="/privacy" className="hover:text-ink transition-colors">

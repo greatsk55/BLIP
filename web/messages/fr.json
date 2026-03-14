@@ -32,6 +32,10 @@
       "title": "Capture Guard",
       "description": "Les tentatives de capture d'écran et d'enregistrement sont détectées. Les messages sont floutés instantanément — rien à capturer."
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "Intégrez BLIP dans n'importe quel site web avec un simple iframe. Chiffrement E2E complet, aucune configuration pour vos utilisateurs."
+    },
     "opensource": {
       "title": "Transparent Code",
       "description": "100% Open Source. Vous pouvez vérifier avec le code que nous n'espionnons jamais vos conversations."
@@ -71,7 +75,8 @@
       "board": "Communauté Privée",
       "privacy": "Confidentialité",
       "terms": "Conditions",
-      "updates": "Mises à jour"
+      "updates": "Mises à jour",
+      "embed": "Intégrer"
     }
   },
   "Changelog": {
@@ -80,9 +85,21 @@
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
       "1": {
+        "version": "v1.5.0",
+        "date": "14 mars 2026",
+        "title": "Widget de chat intégrable",
+        "changes": {
+          "1": "Intégrez le chat BLIP dans n'importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
+          "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
+          "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
+          "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
+          "5": "Chiffrement E2E complet maintenu en mode intégré"
+        }
+      },
+      "2": {
         "version": "v1.4.0",
         "date": "28 février 2026",
-        "title": "Système de codes d'invitation",
+        "title": "Système de codes d'invitation communautaire",
         "changes": {
           "1": "Codes d'invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
           "2": "Rotation du code d'invitation dans le panneau d'administration — invalider les anciens liens sans affecter les membres existants",
@@ -90,7 +107,7 @@
           "4": "Prise en charge des liens profonds pour les codes d'invitation dans l'application mobile"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.3.0",
         "date": "26 février 2026",
         "title": "Application mobile et stabilité",
@@ -103,7 +120,7 @@
           "6": "Support de 10 langues (+allemand, chinois traditionnel)"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "15 février 2026",
         "title": "Transfert de médias chiffré",
@@ -115,7 +132,7 @@
           "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "10 février 2026",
         "title": "Destruction instantanée et notifications",
@@ -126,7 +143,7 @@
           "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "1er février 2026",
         "title": "Version initiale",
@@ -365,7 +382,38 @@
     "termsTitle": "Conditions d'Utilisation",
     "termsDescription": "Conditions d'utilisation de BLIP. Veuillez les consulter avant d'utiliser le service.",
     "updatesTitle": "Mises à jour",
-    "updatesDescription": "Consultez les dernières mises à jour et modifications de BLIP."
+    "updatesDescription": "Consultez les dernières mises à jour et modifications de BLIP.",
+    "embedGuideTitle": "Intégrer BLIP",
+    "embedGuideDescription": "Ajoutez un chat chiffré à n'importe quel site avec une seule ligne d'iframe."
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "Ajoutez BLIP à<br></br>votre site web",
+    "description": "Un simple iframe pour intégrer un chat chiffré dans n'importe quelle page. Pas de backend, pas de comptes, chiffrement E2E complet.",
+    "quickStart": "Démarrage rapide",
+    "quickStartDesc": "Copiez et collez ce code dans votre HTML :",
+    "customize": "Personnalisation",
+    "customizeWidth": "Largeur et hauteur",
+    "customizeWidthDesc": "Ajustez les dimensions de l'iframe selon votre mise en page :",
+    "customizeDark": "Thème sombre",
+    "customizeDarkDesc": "BLIP utilise un thème sombre par défaut — il s'intègre bien aux sites à thème sombre.",
+    "events": "API d'événements",
+    "eventsDesc": "Écoutez les événements de l'intégration via postMessage :",
+    "eventReady": "Widget chargé et prêt",
+    "eventCreated": "Salon créé — contient roomId et shareUrl",
+    "eventJoined": "L'utilisateur est entré dans le salon",
+    "eventDestroyed": "Le salon a été détruit",
+    "features": "Ce que vous obtenez",
+    "featureE2E": "Chiffrement E2E complet",
+    "featureE2EDesc": "Le même chiffrement Curve25519 ECDH + XSalsa20-Poly1305 que le site principal.",
+    "featureNoAds": "Sans publicité",
+    "featureNoAdsDesc": "Le mode intégré est entièrement sans publicité.",
+    "featureNoAccount": "Sans compte",
+    "featureNoAccountDesc": "Les utilisateurs n'ont pas besoin de s'inscrire. Cliquez et discutez.",
+    "featureAutoDestroy": "Auto-destruction",
+    "featureAutoDestroyDesc": "Les salons sont détruits quand tous les participants partent. Aucune trace.",
+    "tryIt": "Essayez en direct",
+    "tryItDesc": "Voici une intégration BLIP en direct. Créez un salon et partagez le lien !"
   },
   "Board": {
     "create": {

@@ -79,6 +79,40 @@ BLIP不是即时通讯工具。
 - 自动粉碎：超出显示范围的消息随blob URL释放立即删除
 - 截图防护：标签切换、快捷键、右键菜单检测后模糊处理消息
 
+## 嵌入
+
+一个iframe即可将BLIP聊天添加到任何网站：
+
+```html
+<iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+监听嵌入事件：
+
+```js
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://blip-blip.vercel.app') return;
+
+  switch (e.data.type) {
+    case 'blip:ready':         // 小组件加载完成
+    case 'blip:room-created':  // 房间创建（roomId, shareUrl）
+    case 'blip:room-joined':   // 进入聊天
+    case 'blip:room-destroyed': // 房间销毁
+  }
+});
+```
+
+- 轻量布局 — 无广告、无导航
+- 保持完整的端到端加密
+- 分享链接保持在嵌入上下文中
+- 完整示例：[embed-example.html](../web/public/embed-example.html)
+
 ## 下载
 
 <a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="在 Google Play 上获取" width="200"></a>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import CopyButton from '@/components/shared/CopyButton';
 
 interface RoomCreatedViewProps {
@@ -19,10 +20,15 @@ export default function RoomCreatedView({
   peerConnected,
 }: RoomCreatedViewProps) {
   const t = useTranslations('Chat');
+  const pathname = usePathname();
+  const isEmbed = pathname.startsWith('/embed');
   const [includeKey, setIncludeKey] = useState(true);
 
+  // embed 모드: 공유 링크도 /embed/room/ 경로 사용
   const baseUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}${window.location.pathname}`
+    ? (isEmbed
+        ? `${window.location.origin}/embed/room/${roomId}`
+        : `${window.location.origin}${window.location.pathname}`)
     : '';
   const shareUrl = includeKey
     ? `${baseUrl}#k=${encodeURIComponent(password)}`

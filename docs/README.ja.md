@@ -79,6 +79,40 @@ BLIPはメッセンジャーではありません。
 - 自動シュレッダー：表示範囲外のメッセージはblob URL解放と共に即削除
 - キャプチャ防止：タブ切替・ショートカット・右クリック検知でメッセージぼかし処理
 
+## 埋め込み
+
+iframeひとつでどんなウェブサイトにもBLIPチャットを追加できます：
+
+```html
+<iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+埋め込みからのイベントを受信：
+
+```js
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://blip-blip.vercel.app') return;
+
+  switch (e.data.type) {
+    case 'blip:ready':         // ウィジェット読み込み完了
+    case 'blip:room-created':  // ルーム作成（roomId, shareUrl）
+    case 'blip:room-joined':   // チャット入室
+    case 'blip:room-destroyed': // ルーム破棄
+  }
+});
+```
+
+- 軽量レイアウト — 広告なし、ナビゲーションなし
+- 完全なE2E暗号化を維持
+- 共有リンクが埋め込みコンテキスト内で維持
+- 完全な例：[embed-example.html](../web/public/embed-example.html)
+
 ## ダウンロード
 
 <a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Playで入手" width="200"></a>

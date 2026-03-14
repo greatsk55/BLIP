@@ -79,6 +79,40 @@ BLIP은 메신저가 아닙니다.
 - 자동 파쇄: 화면 밖 메시지는 blob URL 해제와 함께 즉시 삭제
 - 캡처 방지: 탭 전환·단축키·우클릭 감지로 메시지 블러 처리
 
+## 임베드
+
+iframe 하나로 어떤 웹사이트에든 BLIP 채팅을 추가할 수 있습니다:
+
+```html
+<iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+임베드에서 발생하는 이벤트 수신:
+
+```js
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://blip-blip.vercel.app') return;
+
+  switch (e.data.type) {
+    case 'blip:ready':         // 위젯 로드 완료
+    case 'blip:room-created':  // 방 생성 (roomId, shareUrl)
+    case 'blip:room-joined':   // 채팅 입장
+    case 'blip:room-destroyed': // 방 파쇄
+  }
+});
+```
+
+- 경량 레이아웃 — 광고 없음, 네비게이션 없음
+- 완전한 종단간 암호화 유지
+- 공유 링크가 임베드 컨텍스트 내에서 유지
+- 전체 예시: [embed-example.html](../web/public/embed-example.html)
+
 ## 다운로드
 
 <a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play에서 다운로드" width="200"></a>

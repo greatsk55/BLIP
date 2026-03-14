@@ -32,6 +32,10 @@
       "title": "截圖防護",
       "description": "偵測截圖和螢幕錄製行為。訊息立即模糊處理——什麼都截不到。"
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "一個iframe即可將BLIP聊天嵌入任何網站。完整E2E加密，使用者零設定。"
+    },
     "opensource": {
       "title": "透明程式碼",
       "description": "100% 開源。你可以透過程式碼驗證我們絕不會窺探你的對話。"
@@ -71,7 +75,8 @@
       "board": "私密社群",
       "privacy": "隱私權",
       "terms": "服務條款",
-      "updates": "更新紀錄"
+      "updates": "更新紀錄",
+      "embed": "嵌入"
     }
   },
   "Changelog": {
@@ -80,6 +85,18 @@
     "description": "每一項改進，透明追蹤。",
     "versions": {
       "1": {
+        "version": "v1.5.0",
+        "date": "2026年3月14日",
+        "title": "嵌入式聊天小工具",
+        "changes": {
+          "1": "透過iframe將BLIP聊天嵌入任何網站 — 一行HTML即可新增加密聊天",
+          "2": "輕量嵌入佈局 — 無廣告、無導航，專注聊天",
+          "3": "postMessage API與父頁面事件通訊（建立房間、加入、銷毀）",
+          "4": "嵌入模式下分享連結保持在嵌入上下文中",
+          "5": "嵌入模式下保持完整的端對端加密"
+        }
+      },
+      "2": {
         "version": "v1.4.0",
         "date": "2026年2月28日",
         "title": "社群邀請碼系統",
@@ -90,7 +107,7 @@
           "4": "行動應用程式支援社群邀請碼深層連結"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "行動應用程式與穩定性提升",
@@ -103,7 +120,7 @@
           "6": "10種語言支援（+德語、繁體中文）"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "加密媒體傳輸",
@@ -115,7 +132,7 @@
           "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即時房間銷毀與通知",
@@ -126,7 +143,7 @@
           "4": "加密文章的私密社群功能"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "首次發布",
@@ -365,7 +382,38 @@
     "termsTitle": "服務條款",
     "termsDescription": "BLIP 服務條款。使用前請務必閱讀。",
     "updatesTitle": "更新紀錄",
-    "updatesDescription": "查看 BLIP 的最新更新和變更。"
+    "updatesDescription": "查看 BLIP 的最新更新和變更。",
+    "embedGuideTitle": "BLIP 嵌入",
+    "embedGuideDescription": "一行iframe即可為任何網站添加加密聊天。"
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "將BLIP添加到<br></br>您的網站",
+    "description": "一個iframe即可在任何頁面嵌入加密聊天。無需後端、無需帳號、完整E2E加密。",
+    "quickStart": "快速開始",
+    "quickStartDesc": "將此程式碼複製貼上到您的HTML中：",
+    "customize": "自訂",
+    "customizeWidth": "寬度與高度",
+    "customizeWidthDesc": "根據版面調整iframe尺寸：",
+    "customizeDark": "深色主題",
+    "customizeDarkDesc": "BLIP預設使用深色主題 — 與深色網站完美融合。",
+    "events": "事件API",
+    "eventsDesc": "透過postMessage監聽嵌入事件：",
+    "eventReady": "小工具載入完成",
+    "eventCreated": "房間建立完成 — 包含roomId和shareUrl",
+    "eventJoined": "使用者進入聊天室",
+    "eventDestroyed": "聊天室已銷毀",
+    "features": "包含功能",
+    "featureE2E": "完整E2E加密",
+    "featureE2EDesc": "與主站相同的Curve25519 ECDH + XSalsa20-Poly1305加密。",
+    "featureNoAds": "無廣告",
+    "featureNoAdsDesc": "嵌入模式完全無廣告，提供清爽的使用者體驗。",
+    "featureNoAccount": "無需帳號",
+    "featureNoAccountDesc": "使用者無需註冊或登入。點擊即可聊天。",
+    "featureAutoDestroy": "自動銷毀",
+    "featureAutoDestroyDesc": "所有參與者離開後房間自動銷毀。不留痕跡。",
+    "tryIt": "線上體驗",
+    "tryItDesc": "這是BLIP即時嵌入。建立房間並分享連結！"
   },
   "Board": {
     "create": {

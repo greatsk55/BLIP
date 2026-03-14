@@ -32,6 +32,10 @@
       "title": "Aufnahmeschutz",
       "description": "Screenshot- und Bildschirmaufnahme-Versuche werden erkannt. Nachrichten werden sofort unscharf — nichts zu erfassen."
     },
+    "embed": {
+      "title": "Embed Anywhere",
+      "description": "Betten Sie BLIP mit einem einzigen iframe in jede Website ein. Vollständige E2E-Verschlüsselung, kein Setup für Ihre Nutzer."
+    },
     "opensource": {
       "title": "Transparenter Code",
       "description": "100% Open Source. Du kannst im Code nachprüfen, dass wir deine Gespräche niemals ausspionieren."
@@ -71,7 +75,8 @@
       "board": "Private Community",
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",
-      "updates": "Updates"
+      "updates": "Updates",
+      "embed": "Einbetten"
     }
   },
   "Changelog": {
@@ -80,17 +85,29 @@
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
       "1": {
+        "version": "v1.5.0",
+        "date": "14. März 2026",
+        "title": "Einbettbares Chat-Widget",
+        "changes": {
+          "1": "BLIP-Chat per iframe in jede Website einbetten — verschlüsselten Chat mit einer HTML-Zeile hinzufügen",
+          "2": "Leichtes Einbettungs-Layout — keine Werbung, keine Navigation, nur der Chat",
+          "3": "postMessage-API für Kommunikation mit der Elternseite (Raumerstellung, Beitritt, Zerstörung)",
+          "4": "Geteilte Links im Einbettungsmodus bleiben im Einbettungskontext",
+          "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
+        }
+      },
+      "2": {
         "version": "v1.4.0",
         "date": "28. Februar 2026",
-        "title": "Einladungscode-System",
+        "title": "Community-Einladungscode-System",
         "changes": {
-          "1": "Einladungscodes für Boards — automatischer Beitritt per Link ohne Passwort",
+          "1": "Einladungscodes für Communities — automatischer Beitritt per Link ohne Passwort",
           "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
           "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
           "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.3.0",
         "date": "26. Februar 2026",
         "title": "Mobile App & Stabilität",
@@ -103,7 +120,7 @@
           "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.2.0",
         "date": "15. Februar 2026",
         "title": "Verschlüsselte Medienübertragung",
@@ -115,7 +132,7 @@
           "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.1.0",
         "date": "10. Februar 2026",
         "title": "Sofortige Raumvernichtung & Benachrichtigungen",
@@ -126,7 +143,7 @@
           "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.0.0",
         "date": "1. Februar 2026",
         "title": "Erstveröffentlichung",
@@ -365,7 +382,38 @@
     "termsTitle": "Nutzungsbedingungen",
     "termsDescription": "BLIP Nutzungsbedingungen. Bitte vor der Nutzung lesen.",
     "updatesTitle": "Updates",
-    "updatesDescription": "Sieh dir die neuesten Updates und Änderungen von BLIP an."
+    "updatesDescription": "Sieh dir die neuesten Updates und Änderungen von BLIP an.",
+    "embedGuideTitle": "BLIP einbetten",
+    "embedGuideDescription": "Fügen Sie mit einer einzigen iframe-Zeile verschlüsselten Chat zu jeder Website hinzu."
+  },
+  "EmbedGuide": {
+    "subtitle": "Embed",
+    "title": "Fügen Sie BLIP zu<br></br>Ihrer Website hinzu",
+    "description": "Ein einzelnes iframe für verschlüsselten Chat auf jeder Seite. Kein Backend, keine Konten, vollständige E2E-Verschlüsselung.",
+    "quickStart": "Schnellstart",
+    "quickStartDesc": "Kopieren Sie diesen Code in Ihr HTML:",
+    "customize": "Anpassung",
+    "customizeWidth": "Breite und Höhe",
+    "customizeWidthDesc": "Passen Sie die iframe-Größe an Ihr Layout an:",
+    "customizeDark": "Dunkles Theme",
+    "customizeDarkDesc": "BLIP verwendet standardmäßig ein dunkles Theme — passt gut zu dunklen Websites.",
+    "events": "Event-API",
+    "eventsDesc": "Empfangen Sie Events aus der Einbettung über postMessage:",
+    "eventReady": "Widget geladen und bereit",
+    "eventCreated": "Raum erstellt — enthält roomId und shareUrl",
+    "eventJoined": "Benutzer hat den Chatraum betreten",
+    "eventDestroyed": "Chatraum wurde zerstört",
+    "features": "Was Sie bekommen",
+    "featureE2E": "Vollständige E2E-Verschlüsselung",
+    "featureE2EDesc": "Dieselbe Curve25519 ECDH + XSalsa20-Poly1305 Verschlüsselung wie die Hauptseite.",
+    "featureNoAds": "Keine Werbung",
+    "featureNoAdsDesc": "Der Einbettungsmodus ist vollständig werbefrei.",
+    "featureNoAccount": "Keine Konten",
+    "featureNoAccountDesc": "Benutzer müssen sich nicht registrieren. Einfach klicken und chatten.",
+    "featureAutoDestroy": "Auto-Zerstörung",
+    "featureAutoDestroyDesc": "Räume werden zerstört, wenn alle Teilnehmer gehen. Keine Spuren.",
+    "tryIt": "Live ausprobieren",
+    "tryItDesc": "Hier ist eine Live-BLIP-Einbettung. Erstellen Sie einen Raum und teilen Sie den Link!"
   },
   "Board": {
     "create": {

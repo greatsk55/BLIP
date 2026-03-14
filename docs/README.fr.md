@@ -79,6 +79,40 @@ Ce service ne fait intentionnellement **PAS** ce qui suit :
 - Auto-destruction : les messages hors de la fenêtre visible sont supprimés instantanément avec libération des blob URL
 - Protection contre les captures : détection de changement d'onglet, raccourcis clavier et menu contextuel pour flouter les messages
 
+## Intégration
+
+Ajoutez le chat BLIP à n'importe quel site web avec un simple iframe :
+
+```html
+<iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+Écoutez les événements de l'intégration :
+
+```js
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://blip-blip.vercel.app') return;
+
+  switch (e.data.type) {
+    case 'blip:ready':         // Widget chargé
+    case 'blip:room-created':  // Salon créé (roomId, shareUrl)
+    case 'blip:room-joined':   // Entré dans le chat
+    case 'blip:room-destroyed': // Salon détruit
+  }
+});
+```
+
+- Mise en page légère — pas de publicité, pas de navigation
+- Chiffrement E2E complet maintenu
+- Les liens partagés restent dans le contexte intégré
+- Exemple complet : [embed-example.html](../web/public/embed-example.html)
+
 ## Télécharger
 
 <a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Disponible sur Google Play" width="200"></a>

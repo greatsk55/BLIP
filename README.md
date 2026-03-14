@@ -70,6 +70,47 @@ This service intentionally does **NOT** do the following:
 
 > We never sacrifice philosophy for convenience.
 
+## Security Architecture
+
+> **Zero-Knowledge by Design** — We can't read your messages. We can't store them. We can't hand them over. Because we never have them.
+
+```
+┌─────────────┐                                    ┌─────────────┐
+│   User A    │                                    │   User B    │
+│             │                                    │             │
+│  plaintext  │                                    │  plaintext  │
+│     ↓       │                                    │     ↑       │
+│  encrypt()  │    ┌──────────────────────┐        │  decrypt()  │
+│     ↓       │───→│   Server (Relay)     │───────→│     ↑       │
+│ ciphertext  │    │                      │        │ ciphertext  │
+│             │    │  • No DB for msgs    │        │             │
+│  Curve25519 │    │  • No logs           │        │  Curve25519 │
+│  ECDH keys  │    │  • RAM only          │        │  ECDH keys  │
+│             │    │  • Broadcast relay   │        │             │
+└─────────────┘    └──────────────────────┘        └─────────────┘
+                              │
+                    Room close / disconnect
+                              ↓
+                   ┌─────────────────────┐
+                   │  All state erased   │
+                   │  Nothing to recover │
+                   └─────────────────────┘
+```
+
+### Why Messages Can Never Be Stored
+
+| Layer | Protection | Verifiable in Code |
+|-------|-----------|-------------------|
+| **Database** | No `messages` table exists | [`001_rooms.sql`](web/supabase/001_rooms.sql) — only `rooms` metadata |
+| **Supabase Client** | Broadcast-only mode, DB features explicitly disabled | [`client.ts`](web/src/lib/supabase/client.ts) |
+| **Chat Hook** | `channel.send()` only — zero DB INSERT calls | [`useChat.ts`](web/src/hooks/useChat.ts) |
+| **API Routes** | No message storage/retrieval endpoints exist | [`/api/room/*`](web/src/app/api/room/) |
+| **Memory** | Max 4 messages in RAM, older ones auto-shredded | `limitMessages()` in useChat.ts |
+| **Encryption** | E2EE with ephemeral ECDH keys — server sees only ciphertext | [`lib/crypto/`](web/src/lib/crypto/) |
+| **Room Lifecycle** | On disconnect: keys destroyed, state wiped, room deleted | `user_left` handler in useChat.ts |
+
+> For full security details, see [SECURITY.md](SECURITY.md).
+
 ## Tech Stack
 
 - WebSocket-based real-time communication
@@ -78,6 +119,40 @@ This service intentionally does **NOT** do the following:
 - On room close: unrecoverable on both server and client
 - Auto-shred: messages beyond the visible window are destroyed with blob URLs released
 - Capture protection: visibility change, keyboard shortcut, and context-menu detection
+
+## Embed
+
+Add BLIP chat to any website with a single iframe:
+
+```html
+<iframe
+  src="https://blip-blip.vercel.app/embed"
+  width="400"
+  height="600"
+  style="border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+Listen for events from the embed:
+
+```js
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://blip-blip.vercel.app') return;
+
+  switch (e.data.type) {
+    case 'blip:ready':         // Widget loaded
+    case 'blip:room-created':  // Room created (roomId, shareUrl)
+    case 'blip:room-joined':   // Entered chat
+    case 'blip:room-destroyed': // Room destroyed
+  }
+});
+```
+
+- Lightweight layout — no ads, no navigation
+- Full E2E encryption maintained
+- Share links stay within the embed context
+- See [embed-example.html](web/public/embed-example.html) for a full demo
 
 ## Download
 

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface RoomDestroyedOverlayProps {
   reason?: 'destroyed' | 'full';
@@ -11,6 +11,8 @@ interface RoomDestroyedOverlayProps {
 export default function RoomDestroyedOverlay({ reason = 'destroyed' }: RoomDestroyedOverlayProps) {
   const t = useTranslations('Chat');
   const router = useRouter();
+  const pathname = usePathname();
+  const isEmbed = pathname.startsWith('/embed');
 
   const ns = reason === 'full' ? 'roomFull' : 'destroyed';
   const statusLabel = reason === 'full' ? 'CHANNEL_FULL' : 'CHANNEL_DESTROYED';
@@ -55,7 +57,7 @@ export default function RoomDestroyedOverlay({ reason = 'destroyed' }: RoomDestr
         transition={{ delay: 2.5 }}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        onClick={() => router.push('/')}
+        onClick={() => router.push(isEmbed ? '/embed' : '/')}
         className="min-h-[48px] px-8 py-4 bg-transparent border border-signal-green text-signal-green hover:bg-signal-green hover:text-void-black active:bg-signal-green active:text-void-black transition-all duration-300 rounded-none font-mono text-sm uppercase tracking-wider"
       >
         {t(`${ns}.newChat`)}
