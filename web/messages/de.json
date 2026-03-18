@@ -84,30 +84,42 @@
     "subtitle": "Änderungsprotokoll",
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
-      "1": {
-        "version": "v1.5.0",
-        "date": "14. März 2026",
-        "title": "Einbettbares Chat-Widget",
+      "7": {
+        "version": "v1.0.0",
+        "date": "1. Februar 2026",
+        "title": "Erstveröffentlichung",
         "changes": {
-          "1": "BLIP-Chat per iframe in jede Website einbetten — verschlüsselten Chat mit einer HTML-Zeile hinzufügen",
-          "2": "Leichtes Einbettungs-Layout — keine Werbung, keine Navigation, nur der Chat",
-          "3": "postMessage-API für Kommunikation mit der Elternseite (Raumerstellung, Beitritt, Zerstörung)",
-          "4": "Geteilte Links im Einbettungsmodus bleiben im Einbettungskontext",
-          "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
+          "1": "E2EE-Textchat (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Ein-Klick-Raumerstellung mit teilbaren Links",
+          "3": "Keine Kontoerfordernis — vollständig anonym",
+          "4": "8 Sprachen unterstützt (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "100% quelloffene Codebasis"
         }
       },
-      "2": {
-        "version": "v1.4.0",
-        "date": "28. Februar 2026",
-        "title": "Community-Einladungscode-System",
+      "6": {
+        "version": "v1.1.0",
+        "date": "10. Februar 2026",
+        "title": "Sofortige Raumvernichtung & Benachrichtigungen",
         "changes": {
-          "1": "Einladungscodes für Communities — automatischer Beitritt per Link ohne Passwort",
-          "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
-          "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
-          "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
+          "1": "Räume werden sofort zerstört, wenn alle Teilnehmer gehen",
+          "2": "Browser-Push-Benachrichtigungen für eingehende Nachrichten",
+          "3": "Rate-Limiting für Raumerstellung (Anti-Missbrauch)",
+          "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
         }
       },
-      "3": {
+      "5": {
+        "version": "v1.2.0",
+        "date": "15. Februar 2026",
+        "title": "Verschlüsselte Medienübertragung",
+        "changes": {
+          "1": "Bild- & Videoübertragung über verschlüsseltes P2P (WebRTC DataChannel)",
+          "2": "TURN-only-Relay zur Vermeidung von IP-Offenlegung zwischen Teilnehmern",
+          "3": "Automatische Bildkomprimierung (max. 2048px, JPEG 80%)",
+          "4": "Vollbild-Bildbetrachter mit Pinch-to-Zoom",
+          "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
+        }
+      },
+      "4": {
         "version": "v1.3.0",
         "date": "26. Februar 2026",
         "title": "Mobile App & Stabilität",
@@ -120,39 +132,40 @@
           "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
         }
       },
-      "4": {
-        "version": "v1.2.0",
-        "date": "15. Februar 2026",
-        "title": "Verschlüsselte Medienübertragung",
+      "3": {
+        "version": "v1.4.0",
+        "date": "28. Februar 2026",
+        "title": "Community-Einladungscode-System",
         "changes": {
-          "1": "Bild- & Videoübertragung über verschlüsseltes P2P (WebRTC DataChannel)",
-          "2": "TURN-only-Relay zur Vermeidung von IP-Offenlegung zwischen Teilnehmern",
-          "3": "Automatische Bildkomprimierung (max. 2048px, JPEG 80%)",
-          "4": "Vollbild-Bildbetrachter mit Pinch-to-Zoom",
-          "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
+          "1": "Einladungscodes für Communities — automatischer Beitritt per Link ohne Passwort",
+          "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
+          "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
+          "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
         }
       },
-      "5": {
-        "version": "v1.1.0",
-        "date": "10. Februar 2026",
-        "title": "Sofortige Raumvernichtung & Benachrichtigungen",
+      "2": {
+        "version": "v1.5.0",
+        "date": "14. März 2026",
+        "title": "Einbettbares Chat-Widget",
         "changes": {
-          "1": "Räume werden sofort zerstört, wenn alle Teilnehmer gehen",
-          "2": "Browser-Push-Benachrichtigungen für eingehende Nachrichten",
-          "3": "Rate-Limiting für Raumerstellung (Anti-Missbrauch)",
-          "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
+          "1": "BLIP-Chat per iframe in jede Website einbetten — verschlüsselten Chat mit einer HTML-Zeile hinzufügen",
+          "2": "Leichtes Einbettungs-Layout — keine Werbung, keine Navigation, nur der Chat",
+          "3": "postMessage-API für Kommunikation mit der Elternseite (Raumerstellung, Beitritt, Zerstörung)",
+          "4": "Geteilte Links im Einbettungsmodus bleiben im Einbettungskontext",
+          "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
         }
       },
-      "6": {
-        "version": "v1.0.0",
-        "date": "1. Februar 2026",
-        "title": "Erstveröffentlichung",
+      "1": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
         "changes": {
-          "1": "E2EE-Textchat (Curve25519 ECDH + XSalsa20-Poly1305)",
-          "2": "Ein-Klick-Raumerstellung mit teilbaren Links",
-          "3": "Keine Kontoerfordernis — vollständig anonym",
-          "4": "8 Sprachen unterstützt (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
-          "5": "100% quelloffene Codebasis"
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
         }
       }
     }
@@ -531,6 +544,47 @@
       "confirmDelete": "Löschen",
       "attachImage": "Bild",
       "maxImages": "Max 2"
+    }
+  },
+  "Group": {
+    "create": {
+      "pageTitle": "Create Group Chat",
+      "pageDescription": "Create an encrypted group chat room",
+      "title": "CREATE GROUP CHANNEL",
+      "titlePlaceholder": "Group name...",
+      "cta": "CREATE GROUP",
+      "backHome": "BACK HOME",
+      "rateLimited": "Room creation limit reached. Please try again later.",
+      "failed": "Failed to create group. Please try again."
+    },
+    "created": {
+      "title": "GROUP CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "adminToken": "ADMIN TOKEN",
+      "shareLink": "Share link",
+      "includeKeyInLink": "Include key in link",
+      "warning": "SAVE THIS KEY. IT CANNOT BE RECOVERED.",
+      "adminWarning": "SAVE THE ADMIN TOKEN. YOU NEED IT TO MANAGE THE GROUP.",
+      "enter": "ENTER GROUP"
+    },
+    "room": {
+      "pageTitle": "Group Chat",
+      "pageDescription": "Encrypted group chat room"
+    },
+    "admin": {
+      "lock": "Lock Room",
+      "unlock": "Unlock Room",
+      "destroy": "Destroy Room",
+      "destroyConfirm": "Are you sure? This will permanently destroy the room for everyone."
+    },
+    "sidebar": {
+      "title": "PARTICIPANTS",
+      "kick": "Kick",
+      "ban": "Ban",
+      "banConfirm": "Ban {name}? They will not be able to rejoin."
+    },
+    "hero": {
+      "cta": "Create Group Chat"
     }
   }
 }

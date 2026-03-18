@@ -825,4 +825,126 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => '画像';
+
+  @override
+  String get authSignInApple => 'Appleでサインイン';
+
+  @override
+  String get authSignInGoogle => 'Googleでサインイン';
+
+  @override
+  String get authPrivacyNote => '個人情報は保存しません。\nサインインはアプリへのアクセスにのみ使用されます。';
+
+  @override
+  String get authSignOut => 'サインアウト';
+
+  @override
+  String get authDeleteAccount => 'アカウント削除';
+
+  @override
+  String get authDeleteConfirm => 'アカウントを削除しますか？元に戻すことはできません。';
+
+  @override
+  String get chatReportUser => 'ユーザーを報告';
+
+  @override
+  String get chatReportReasonHarassment => '嫌がらせ・脅迫';
+
+  @override
+  String get chatReportReasonSpam => 'スパム';
+
+  @override
+  String get chatReportReasonIllegal => '違法コンテンツ';
+
+  @override
+  String get chatReportReasonOther => 'その他';
+
+  @override
+  String get chatReportSubmitted => '報告が送信されました。ありがとうございます。';
+
+  @override
+  String get chatBlockUser => 'ユーザーをブロック';
+
+  @override
+  String get chatBlockConfirm => 'このユーザーをブロックしますか？チャットから切断されます。';
+
+  @override
+  String get chatUserBlocked => 'ユーザーをブロックしました。';
+
+  @override
+  String get heroGroupCta => 'グループチャット';
+
+  @override
+  String get groupCreateTitle => 'グループチャットを作成';
+
+  @override
+  String get groupCreateSubtitle => 'エンドツーエンド暗号化されたグループ会話。\nアカウント不要。';
+
+  @override
+  String get groupCreateNameHint => 'グループ名（任意）';
+
+  @override
+  String get groupCreateButton => 'グループ作成';
+
+  @override
+  String get groupCreatedTitle => 'グループ作成完了';
+
+  @override
+  String get groupAdminToken => '管理者トークン';
+
+  @override
+  String get groupAdminTokenWarning => 'このトークンを保存してください。復元できません。ルーム管理に必要です。';
+
+  @override
+  String get groupEnterChat => 'チャットルームに入る';
+
+  @override
+  String get groupJoinTitle => 'グループチャットに参加';
+
+  @override
+  String get groupJoinSubtitle => 'グループ作成者から共有されたアクセスキーを入力してください';
+
+  @override
+  String get groupRoomDestroyed => 'このグループは破棄されました。';
+
+  @override
+  String get groupRoomLocked => '管理者がこのグループをロックしました。';
+
+  @override
+  String get groupKicked => 'このグループから追放されました。';
+
+  @override
+  String get groupChatHeader => 'グループチャット';
+
+  @override
+  String get groupEmptyChat => 'まだメッセージがありません。挨拶しましょう！';
+
+  @override
+  String groupParticipants(int count) {
+    return '参加者 ($count)';
+  }
+
+  @override
+  String get groupYou => '自分';
+
+  @override
+  String get groupAdmin => '管理者';
+
+  @override
+  String get groupLeaveTitle => 'グループを退出？';
+
+  @override
+  String get groupLeaveConfirm => '本当にこのグループから退出しますか？';
+
+  @override
+  String get groupLeaveButton => '退出';
+
+  @override
+  String get groupDestroyTitle => 'グループを破棄？';
+
+  @override
+  String get groupDestroyConfirm => 'すべての参加者のグループが永久に破棄されます。元に戻すことはできません。';
+
+  @override
+  String get groupDestroyButton => '破棄';
 }

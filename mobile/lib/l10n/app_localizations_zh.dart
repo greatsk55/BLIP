@@ -812,6 +812,128 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => '图片';
+
+  @override
+  String get authSignInApple => '通过Apple登录';
+
+  @override
+  String get authSignInGoogle => '通过Google登录';
+
+  @override
+  String get authPrivacyNote => '我们不存储您的个人信息。\n登录仅用于访问应用。';
+
+  @override
+  String get authSignOut => '退出登录';
+
+  @override
+  String get authDeleteAccount => '删除账号';
+
+  @override
+  String get authDeleteConfirm => '确定要删除账号吗？此操作无法撤消。';
+
+  @override
+  String get chatReportUser => '举报用户';
+
+  @override
+  String get chatReportReasonHarassment => '骚扰/威胁';
+
+  @override
+  String get chatReportReasonSpam => '垃圾信息';
+
+  @override
+  String get chatReportReasonIllegal => '违法内容';
+
+  @override
+  String get chatReportReasonOther => '其他';
+
+  @override
+  String get chatReportSubmitted => '举报已提交。感谢您。';
+
+  @override
+  String get chatBlockUser => '屏蔽用户';
+
+  @override
+  String get chatBlockConfirm => '确定要屏蔽此用户吗？您将断开此聊天连接。';
+
+  @override
+  String get chatUserBlocked => '用户已被屏蔽。';
+
+  @override
+  String get heroGroupCta => '群聊';
+
+  @override
+  String get groupCreateTitle => '创建群聊';
+
+  @override
+  String get groupCreateSubtitle => '端到端加密的群组对话。\n无需账号。';
+
+  @override
+  String get groupCreateNameHint => '群组名称（可选）';
+
+  @override
+  String get groupCreateButton => '创建群组';
+
+  @override
+  String get groupCreatedTitle => '群组已创建';
+
+  @override
+  String get groupAdminToken => '管理员令牌';
+
+  @override
+  String get groupAdminTokenWarning => '请保存此令牌，无法恢复。管理房间时需要使用。';
+
+  @override
+  String get groupEnterChat => '进入聊天室';
+
+  @override
+  String get groupJoinTitle => '加入群聊';
+
+  @override
+  String get groupJoinSubtitle => '输入群组创建者分享的访问密钥';
+
+  @override
+  String get groupRoomDestroyed => '此群组已被销毁。';
+
+  @override
+  String get groupRoomLocked => '管理员已锁定此群组。';
+
+  @override
+  String get groupKicked => '您已被移出此群组。';
+
+  @override
+  String get groupChatHeader => '群聊';
+
+  @override
+  String get groupEmptyChat => '暂无消息，打个招呼吧！';
+
+  @override
+  String groupParticipants(int count) {
+    return '参与者 ($count)';
+  }
+
+  @override
+  String get groupYou => '我';
+
+  @override
+  String get groupAdmin => '管理员';
+
+  @override
+  String get groupLeaveTitle => '退出群组？';
+
+  @override
+  String get groupLeaveConfirm => '确定要退出此群组吗？';
+
+  @override
+  String get groupLeaveButton => '退出';
+
+  @override
+  String get groupDestroyTitle => '销毁群组？';
+
+  @override
+  String get groupDestroyConfirm => '这将永久销毁所有参与者的群组，无法撤销。';
+
+  @override
+  String get groupDestroyButton => '销毁';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1622,4 +1744,126 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get boardCommentAttachImage => '圖片';
+
+  @override
+  String get authSignInApple => '透過Apple登入';
+
+  @override
+  String get authSignInGoogle => '透過Google登入';
+
+  @override
+  String get authPrivacyNote => '我們不儲存您的個人資訊。\n登入僅用於存取應用程式。';
+
+  @override
+  String get authSignOut => '登出';
+
+  @override
+  String get authDeleteAccount => '刪除帳號';
+
+  @override
+  String get authDeleteConfirm => '確定要刪除帳號嗎？此操作無法復原。';
+
+  @override
+  String get chatReportUser => '檢舉用戶';
+
+  @override
+  String get chatReportReasonHarassment => '騷擾/威脅';
+
+  @override
+  String get chatReportReasonSpam => '垃圾訊息';
+
+  @override
+  String get chatReportReasonIllegal => '違法內容';
+
+  @override
+  String get chatReportReasonOther => '其他';
+
+  @override
+  String get chatReportSubmitted => '檢舉已提交。感謝您。';
+
+  @override
+  String get chatBlockUser => '封鎖用戶';
+
+  @override
+  String get chatBlockConfirm => '確定要封鎖此用戶嗎？您將中斷此聊天連線。';
+
+  @override
+  String get chatUserBlocked => '用戶已被封鎖。';
+
+  @override
+  String get heroGroupCta => '群組聊天';
+
+  @override
+  String get groupCreateTitle => '建立群組聊天';
+
+  @override
+  String get groupCreateSubtitle => '端對端加密的群組對話。\n無需帳號。';
+
+  @override
+  String get groupCreateNameHint => '群組名稱（選填）';
+
+  @override
+  String get groupCreateButton => '建立群組';
+
+  @override
+  String get groupCreatedTitle => '群組已建立';
+
+  @override
+  String get groupAdminToken => '管理員權杖';
+
+  @override
+  String get groupAdminTokenWarning => '請儲存此權杖，無法復原。管理房間時需要使用。';
+
+  @override
+  String get groupEnterChat => '進入聊天室';
+
+  @override
+  String get groupJoinTitle => '加入群組聊天';
+
+  @override
+  String get groupJoinSubtitle => '輸入群組建立者分享的存取金鑰';
+
+  @override
+  String get groupRoomDestroyed => '此群組已被銷毀。';
+
+  @override
+  String get groupRoomLocked => '管理員已鎖定此群組。';
+
+  @override
+  String get groupKicked => '您已被移出此群組。';
+
+  @override
+  String get groupChatHeader => '群組聊天';
+
+  @override
+  String get groupEmptyChat => '尚無訊息，打個招呼吧！';
+
+  @override
+  String groupParticipants(int count) {
+    return '參與者 ($count)';
+  }
+
+  @override
+  String get groupYou => '我';
+
+  @override
+  String get groupAdmin => '管理員';
+
+  @override
+  String get groupLeaveTitle => '離開群組？';
+
+  @override
+  String get groupLeaveConfirm => '確定要離開此群組嗎？';
+
+  @override
+  String get groupLeaveButton => '離開';
+
+  @override
+  String get groupDestroyTitle => '銷毀群組？';
+
+  @override
+  String get groupDestroyConfirm => '這將永久銷毀所有參與者的群組，無法復原。';
+
+  @override
+  String get groupDestroyButton => '銷毀';
 }

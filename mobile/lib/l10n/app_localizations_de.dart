@@ -860,4 +860,134 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => 'Bild';
+
+  @override
+  String get authSignInApple => 'Mit Apple anmelden';
+
+  @override
+  String get authSignInGoogle => 'Mit Google anmelden';
+
+  @override
+  String get authPrivacyNote =>
+      'Wir speichern keine persönlichen Daten.\nDie Anmeldung dient nur dem Zugang zur App.';
+
+  @override
+  String get authSignOut => 'Abmelden';
+
+  @override
+  String get authDeleteAccount => 'Konto löschen';
+
+  @override
+  String get authDeleteConfirm =>
+      'Möchten Sie Ihr Konto wirklich löschen? Dies kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get chatReportUser => 'Benutzer melden';
+
+  @override
+  String get chatReportReasonHarassment => 'Belästigung / Drohungen';
+
+  @override
+  String get chatReportReasonSpam => 'Spam';
+
+  @override
+  String get chatReportReasonIllegal => 'Illegaler Inhalt';
+
+  @override
+  String get chatReportReasonOther => 'Sonstiges';
+
+  @override
+  String get chatReportSubmitted => 'Meldung gesendet. Vielen Dank.';
+
+  @override
+  String get chatBlockUser => 'Benutzer blockieren';
+
+  @override
+  String get chatBlockConfirm =>
+      'Diesen Benutzer blockieren? Die Chatverbindung wird getrennt.';
+
+  @override
+  String get chatUserBlocked => 'Benutzer blockiert.';
+
+  @override
+  String get heroGroupCta => 'Gruppenchat';
+
+  @override
+  String get groupCreateTitle => 'Gruppenchat erstellen';
+
+  @override
+  String get groupCreateSubtitle =>
+      'Ende-zu-Ende verschlüsselte Gruppenunterhaltung.\nKein Konto erforderlich.';
+
+  @override
+  String get groupCreateNameHint => 'Gruppenname (optional)';
+
+  @override
+  String get groupCreateButton => 'Gruppe erstellen';
+
+  @override
+  String get groupCreatedTitle => 'GRUPPE ERSTELLT';
+
+  @override
+  String get groupAdminToken => 'ADMIN-TOKEN';
+
+  @override
+  String get groupAdminTokenWarning =>
+      'Speichern Sie dieses Token. Es kann nicht wiederhergestellt werden. Sie benötigen es zur Raumverwaltung.';
+
+  @override
+  String get groupEnterChat => 'Chatraum betreten';
+
+  @override
+  String get groupJoinTitle => 'Gruppenchat beitreten';
+
+  @override
+  String get groupJoinSubtitle =>
+      'Geben Sie den vom Gruppenersteller geteilten Zugangsschlüssel ein';
+
+  @override
+  String get groupRoomDestroyed => 'Diese Gruppe wurde zerstört.';
+
+  @override
+  String get groupRoomLocked => 'Diese Gruppe wurde vom Admin gesperrt.';
+
+  @override
+  String get groupKicked => 'Sie wurden aus dieser Gruppe entfernt.';
+
+  @override
+  String get groupChatHeader => 'GRUPPENCHAT';
+
+  @override
+  String get groupEmptyChat => 'Noch keine Nachrichten. Sagen Sie Hallo!';
+
+  @override
+  String groupParticipants(int count) {
+    return 'TEILNEHMER ($count)';
+  }
+
+  @override
+  String get groupYou => 'du';
+
+  @override
+  String get groupAdmin => 'Admin';
+
+  @override
+  String get groupLeaveTitle => 'Gruppe verlassen?';
+
+  @override
+  String get groupLeaveConfirm =>
+      'Möchten Sie diese Gruppe wirklich verlassen?';
+
+  @override
+  String get groupLeaveButton => 'Verlassen';
+
+  @override
+  String get groupDestroyTitle => 'Gruppe zerstören?';
+
+  @override
+  String get groupDestroyConfirm =>
+      'Dies wird die Gruppe für alle Teilnehmer dauerhaft zerstören. Dies kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get groupDestroyButton => 'Zerstören';
 }

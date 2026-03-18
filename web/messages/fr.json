@@ -84,30 +84,42 @@
     "subtitle": "Journal des modifications",
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
-      "1": {
-        "version": "v1.5.0",
-        "date": "14 mars 2026",
-        "title": "Widget de chat intégrable",
+      "7": {
+        "version": "v1.0.0",
+        "date": "1er février 2026",
+        "title": "Version initiale",
         "changes": {
-          "1": "Intégrez le chat BLIP dans n'importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
-          "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
-          "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
-          "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
-          "5": "Chiffrement E2E complet maintenu en mode intégré"
+          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Création de salon en un clic avec liens partageables",
+          "3": "Aucun compte requis — totalement anonyme",
+          "4": "Support de 8 langues (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "Code source 100% ouvert"
         }
       },
-      "2": {
-        "version": "v1.4.0",
-        "date": "28 février 2026",
-        "title": "Système de codes d'invitation communautaire",
+      "6": {
+        "version": "v1.1.0",
+        "date": "10 février 2026",
+        "title": "Destruction instantanée et notifications",
         "changes": {
-          "1": "Codes d'invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
-          "2": "Rotation du code d'invitation dans le panneau d'administration — invalider les anciens liens sans affecter les membres existants",
-          "3": "Séparation du code d'invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
-          "4": "Prise en charge des liens profonds pour les codes d'invitation dans l'application mobile"
+          "1": "Salons détruits immédiatement lorsque tous les participants partent",
+          "2": "Notifications push du navigateur pour les messages entrants",
+          "3": "Limitation de création de salons (anti-abus)",
+          "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "3": {
+      "5": {
+        "version": "v1.2.0",
+        "date": "15 février 2026",
+        "title": "Transfert de médias chiffré",
+        "changes": {
+          "1": "Transfert d'images et vidéos par P2P chiffré (WebRTC DataChannel)",
+          "2": "Relais TURN uniquement pour empêcher l'exposition IP entre pairs",
+          "3": "Compression automatique des images (max 2048px, JPEG 80%)",
+          "4": "Visionneuse d'images plein écran avec zoom par pincement",
+          "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
+        }
+      },
+      "4": {
         "version": "v1.3.0",
         "date": "26 février 2026",
         "title": "Application mobile et stabilité",
@@ -120,39 +132,40 @@
           "6": "Support de 10 langues (+allemand, chinois traditionnel)"
         }
       },
-      "4": {
-        "version": "v1.2.0",
-        "date": "15 février 2026",
-        "title": "Transfert de médias chiffré",
+      "3": {
+        "version": "v1.4.0",
+        "date": "28 février 2026",
+        "title": "Système de codes d'invitation communautaire",
         "changes": {
-          "1": "Transfert d'images et vidéos par P2P chiffré (WebRTC DataChannel)",
-          "2": "Relais TURN uniquement pour empêcher l'exposition IP entre pairs",
-          "3": "Compression automatique des images (max 2048px, JPEG 80%)",
-          "4": "Visionneuse d'images plein écran avec zoom par pincement",
-          "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
+          "1": "Codes d'invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
+          "2": "Rotation du code d'invitation dans le panneau d'administration — invalider les anciens liens sans affecter les membres existants",
+          "3": "Séparation du code d'invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
+          "4": "Prise en charge des liens profonds pour les codes d'invitation dans l'application mobile"
         }
       },
-      "5": {
-        "version": "v1.1.0",
-        "date": "10 février 2026",
-        "title": "Destruction instantanée et notifications",
+      "2": {
+        "version": "v1.5.0",
+        "date": "14 mars 2026",
+        "title": "Widget de chat intégrable",
         "changes": {
-          "1": "Salons détruits immédiatement lorsque tous les participants partent",
-          "2": "Notifications push du navigateur pour les messages entrants",
-          "3": "Limitation de création de salons (anti-abus)",
-          "4": "Communauté privée avec publications chiffrées"
+          "1": "Intégrez le chat BLIP dans n'importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
+          "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
+          "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
+          "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
+          "5": "Chiffrement E2E complet maintenu en mode intégré"
         }
       },
-      "6": {
-        "version": "v1.0.0",
-        "date": "1er février 2026",
-        "title": "Version initiale",
+      "1": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
         "changes": {
-          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
-          "2": "Création de salon en un clic avec liens partageables",
-          "3": "Aucun compte requis — totalement anonyme",
-          "4": "Support de 8 langues (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
-          "5": "Code source 100% ouvert"
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
         }
       }
     }
@@ -531,6 +544,47 @@
       "confirmDelete": "Supprimer",
       "attachImage": "Image",
       "maxImages": "Max 2"
+    }
+  },
+  "Group": {
+    "create": {
+      "pageTitle": "Create Group Chat",
+      "pageDescription": "Create an encrypted group chat room",
+      "title": "CREATE GROUP CHANNEL",
+      "titlePlaceholder": "Group name...",
+      "cta": "CREATE GROUP",
+      "backHome": "BACK HOME",
+      "rateLimited": "Room creation limit reached. Please try again later.",
+      "failed": "Failed to create group. Please try again."
+    },
+    "created": {
+      "title": "GROUP CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "adminToken": "ADMIN TOKEN",
+      "shareLink": "Share link",
+      "includeKeyInLink": "Include key in link",
+      "warning": "SAVE THIS KEY. IT CANNOT BE RECOVERED.",
+      "adminWarning": "SAVE THE ADMIN TOKEN. YOU NEED IT TO MANAGE THE GROUP.",
+      "enter": "ENTER GROUP"
+    },
+    "room": {
+      "pageTitle": "Group Chat",
+      "pageDescription": "Encrypted group chat room"
+    },
+    "admin": {
+      "lock": "Lock Room",
+      "unlock": "Unlock Room",
+      "destroy": "Destroy Room",
+      "destroyConfirm": "Are you sure? This will permanently destroy the room for everyone."
+    },
+    "sidebar": {
+      "title": "PARTICIPANTS",
+      "kick": "Kick",
+      "ban": "Ban",
+      "banConfirm": "Ban {name}? They will not be able to rejoin."
+    },
+    "hero": {
+      "cta": "Create Group Chat"
     }
   }
 }

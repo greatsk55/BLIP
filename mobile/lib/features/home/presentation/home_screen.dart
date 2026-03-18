@@ -321,6 +321,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ),
           ),
+          const SizedBox(height: 12),
+
+          // Group Chat CTA
+          FadeTransition(
+            opacity: _ctaFade,
+            child: SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: OutlinedButton.icon(
+                onPressed: () => context.push('/group/create'),
+                icon: Icon(Icons.group_outlined, color: signalGreen),
+                label: Text(l10n.heroGroupCta),
+              ),
+            ),
+          ),
           const SizedBox(height: 24),
 
           // Link share

@@ -84,30 +84,42 @@
     "subtitle": "更新紀錄",
     "description": "每一項改進，透明追蹤。",
     "versions": {
-      "1": {
-        "version": "v1.5.0",
-        "date": "2026年3月14日",
-        "title": "嵌入式聊天小工具",
+      "7": {
+        "version": "v1.0.0",
+        "date": "2026年2月1日",
+        "title": "首次發布",
         "changes": {
-          "1": "透過iframe將BLIP聊天嵌入任何網站 — 一行HTML即可新增加密聊天",
-          "2": "輕量嵌入佈局 — 無廣告、無導航，專注聊天",
-          "3": "postMessage API與父頁面事件通訊（建立房間、加入、銷毀）",
-          "4": "嵌入模式下分享連結保持在嵌入上下文中",
-          "5": "嵌入模式下保持完整的端對端加密"
+          "1": "E2EE 文字聊天（Curve25519 ECDH + XSalsa20-Poly1305）",
+          "2": "一鍵建立房間，附帶可分享連結",
+          "3": "完全匿名——無需任何帳號",
+          "4": "支援8種語言（EN、KO、JA、ZH、ZH-TW、ES、FR、DE）",
+          "5": "100% 開源程式碼"
         }
       },
-      "2": {
-        "version": "v1.4.0",
-        "date": "2026年2月28日",
-        "title": "社群邀請碼系統",
+      "6": {
+        "version": "v1.1.0",
+        "date": "2026年2月10日",
+        "title": "即時房間銷毀與通知",
         "changes": {
-          "1": "社群邀請碼 — 無需密碼，透過連結自動加入",
-          "2": "管理面板中更新邀請碼 — 舊連結失效，不影響現有成員",
-          "3": "邀請碼（可分享）與加密金鑰（不可變）分離，增強安全性",
-          "4": "行動應用程式支援社群邀請碼深層連結"
+          "1": "所有參與者離開時立即銷毀房間",
+          "2": "瀏覽器推播通知接收新訊息",
+          "3": "房間建立速率限制（防濫用）",
+          "4": "加密文章的私密社群功能"
         }
       },
-      "3": {
+      "5": {
+        "version": "v1.2.0",
+        "date": "2026年2月15日",
+        "title": "加密媒體傳輸",
+        "changes": {
+          "1": "透過加密 P2P（WebRTC DataChannel）傳輸圖片與影片",
+          "2": "僅使用 TURN 中繼，防止對等方之間的 IP 暴露",
+          "3": "自動圖片壓縮（最大 2048px，JPEG 80%）",
+          "4": "全螢幕圖片檢視器，支援雙指縮放",
+          "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
+        }
+      },
+      "4": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "行動應用程式與穩定性提升",
@@ -120,39 +132,40 @@
           "6": "10種語言支援（+德語、繁體中文）"
         }
       },
-      "4": {
-        "version": "v1.2.0",
-        "date": "2026年2月15日",
-        "title": "加密媒體傳輸",
+      "3": {
+        "version": "v1.4.0",
+        "date": "2026年2月28日",
+        "title": "社群邀請碼系統",
         "changes": {
-          "1": "透過加密 P2P（WebRTC DataChannel）傳輸圖片與影片",
-          "2": "僅使用 TURN 中繼，防止對等方之間的 IP 暴露",
-          "3": "自動圖片壓縮（最大 2048px，JPEG 80%）",
-          "4": "全螢幕圖片檢視器，支援雙指縮放",
-          "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
+          "1": "社群邀請碼 — 無需密碼，透過連結自動加入",
+          "2": "管理面板中更新邀請碼 — 舊連結失效，不影響現有成員",
+          "3": "邀請碼（可分享）與加密金鑰（不可變）分離，增強安全性",
+          "4": "行動應用程式支援社群邀請碼深層連結"
         }
       },
-      "5": {
-        "version": "v1.1.0",
-        "date": "2026年2月10日",
-        "title": "即時房間銷毀與通知",
+      "2": {
+        "version": "v1.5.0",
+        "date": "2026年3月14日",
+        "title": "嵌入式聊天小工具",
         "changes": {
-          "1": "所有參與者離開時立即銷毀房間",
-          "2": "瀏覽器推播通知接收新訊息",
-          "3": "房間建立速率限制（防濫用）",
-          "4": "加密文章的私密社群功能"
+          "1": "透過iframe將BLIP聊天嵌入任何網站 — 一行HTML即可新增加密聊天",
+          "2": "輕量嵌入佈局 — 無廣告、無導航，專注聊天",
+          "3": "postMessage API與父頁面事件通訊（建立房間、加入、銷毀）",
+          "4": "嵌入模式下分享連結保持在嵌入上下文中",
+          "5": "嵌入模式下保持完整的端對端加密"
         }
       },
-      "6": {
-        "version": "v1.0.0",
-        "date": "2026年2月1日",
-        "title": "首次發布",
+      "1": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
         "changes": {
-          "1": "E2EE 文字聊天（Curve25519 ECDH + XSalsa20-Poly1305）",
-          "2": "一鍵建立房間，附帶可分享連結",
-          "3": "完全匿名——無需任何帳號",
-          "4": "支援8種語言（EN、KO、JA、ZH、ZH-TW、ES、FR、DE）",
-          "5": "100% 開源程式碼"
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
         }
       }
     }
@@ -531,6 +544,47 @@
       "confirmDelete": "刪除",
       "attachImage": "圖片",
       "maxImages": "最多2張"
+    }
+  },
+  "Group": {
+    "create": {
+      "pageTitle": "Create Group Chat",
+      "pageDescription": "Create an encrypted group chat room",
+      "title": "CREATE GROUP CHANNEL",
+      "titlePlaceholder": "Group name...",
+      "cta": "CREATE GROUP",
+      "backHome": "BACK HOME",
+      "rateLimited": "Room creation limit reached. Please try again later.",
+      "failed": "Failed to create group. Please try again."
+    },
+    "created": {
+      "title": "GROUP CHANNEL CREATED",
+      "password": "ACCESS KEY",
+      "adminToken": "ADMIN TOKEN",
+      "shareLink": "Share link",
+      "includeKeyInLink": "Include key in link",
+      "warning": "SAVE THIS KEY. IT CANNOT BE RECOVERED.",
+      "adminWarning": "SAVE THE ADMIN TOKEN. YOU NEED IT TO MANAGE THE GROUP.",
+      "enter": "ENTER GROUP"
+    },
+    "room": {
+      "pageTitle": "Group Chat",
+      "pageDescription": "Encrypted group chat room"
+    },
+    "admin": {
+      "lock": "Lock Room",
+      "unlock": "Unlock Room",
+      "destroy": "Destroy Room",
+      "destroyConfirm": "Are you sure? This will permanently destroy the room for everyone."
+    },
+    "sidebar": {
+      "title": "PARTICIPANTS",
+      "kick": "Kick",
+      "ban": "Ban",
+      "banConfirm": "Ban {name}? They will not be able to rejoin."
+    },
+    "hero": {
+      "cta": "Create Group Chat"
     }
   }
 }

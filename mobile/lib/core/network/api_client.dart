@@ -458,6 +458,45 @@ class ApiClient {
     }
   }
 
+  // ─── Group Chat API ───
+
+  Future<Map<String, dynamic>> createGroupRoom({String title = 'Untitled Group'}) async {
+    final response = await _dio.post('/api/group/create', data: {
+      'title': title,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> verifyGroupPassword(String roomId, String password) async {
+    final response = await _dio.post('/api/group/verify', data: {
+      'roomId': roomId,
+      'password': password,
+    });
+    return response.data;
+  }
+
+  Future<void> groupLeave({required String roomId, required String authKeyHash}) async {
+    await _dio.post('/api/group/leave', data: {
+      'roomId': roomId,
+      'authKeyHash': authKeyHash,
+    });
+  }
+
+  Future<Map<String, dynamic>> groupAdmin({
+    required String roomId,
+    required String adminToken,
+    required String action,
+    String? userToken,
+  }) async {
+    final response = await _dio.post('/api/group/admin', data: {
+      'roomId': roomId,
+      'adminToken': adminToken,
+      'action': action,
+      if (userToken != null) 'userToken': userToken,
+    });
+    return response.data;
+  }
+
   // ─── Batch Status API ───
 
   /// 여러 Room의 상태를 한 번에 확인

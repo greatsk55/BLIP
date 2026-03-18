@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/review_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 import '../providers/chat_provider.dart';
@@ -152,18 +153,41 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 /// - chatting + !peerConnected → RoomCreatedView (링크+비밀번호 공유, 대기)
 /// - chatting + peerConnected → ChatRoomView (실제 채팅)
 /// - destroyed/error → 에러/파쇄 뷰
-class _ChatWrapper extends ConsumerWidget {
+class _ChatWrapper extends ConsumerStatefulWidget {
   final String roomId;
   final String password;
 
   const _ChatWrapper({required this.roomId, required this.password});
 
+  @override
+  ConsumerState<_ChatWrapper> createState() => _ChatWrapperState();
+}
+
+class _ChatWrapperState extends ConsumerState<_ChatWrapper> {
+  /// 피어와 메시지를 주고받은 성공적인 채팅인지 추적
+  bool _hadSuccessfulChat = false;
+  bool _reviewRequested = false;
+
   ({String roomId, String password}) get _params =>
-      (roomId: roomId, password: password);
+      (roomId: widget.roomId, password: widget.password);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final chatState = ref.watch(chatNotifierProvider(_params));
+
+    // 피어와 연결되고 메시지가 있으면 성공적인 채팅으로 마킹
+    if (chatState.peerConnected && chatState.messages.isNotEmpty) {
+      _hadSuccessfulChat = true;
+    }
+
+    // destroyed 상태 전환 시 리뷰 요청 (한 번만)
+    if (chatState.status == ChatStatus.destroyed &&
+        _hadSuccessfulChat &&
+        !_reviewRequested) {
+      _reviewRequested = true;
+      // 비동기로 리뷰 요청 (UI 블로킹 없음)
+      ReviewService().recordSuccessfulChat();
+    }
 
     switch (chatState.status) {
       case ChatStatus.connecting:
@@ -179,8 +203,8 @@ class _ChatWrapper extends ConsumerWidget {
               _BackHeader(),
               Expanded(
                 child: RoomCreatedView(
-                  roomId: roomId,
-                  password: password,
+                  roomId: widget.roomId,
+                  password: widget.password,
                 ),
               ),
             ],
@@ -188,8 +212,8 @@ class _ChatWrapper extends ConsumerWidget {
         }
         // 상대방 접속됨 → 실제 채팅
         return ChatRoomView(
-          roomId: roomId,
-          password: password,
+          roomId: widget.roomId,
+          password: widget.password,
           onDestroyed: () {
             ref.read(chatNotifierProvider(_params).notifier).disconnect();
           },

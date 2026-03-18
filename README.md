@@ -43,6 +43,29 @@ But most conversations in life are just **quick talks that don't need to last**.
 4. Done            →  All data instantly destroyed
 ```
 
+## Group Chat ✨ NEW
+
+BLIP now supports **ephemeral group chat** — same philosophy, multiple people.
+
+```
+1. Create a group room  →  Set a title, get a link
+2. Share the link       →  Anyone with the password can join
+3. Chat together        →  Real-time E2E encrypted group messaging
+4. Done                 →  Room vanishes when everyone leaves or admin destroys it
+```
+
+### Admin Controls
+- 👢 **Kick** — Remove a participant instantly
+- 🚫 **Ban** — Block re-entry
+- 🔒 **Lock** — Prevent new joins
+- 💣 **Destroy** — Nuke the room immediately
+
+### How It Stays Ephemeral
+- Messages are **never stored** — memory only, same as 1:1
+- Room auto-deletes when the last person leaves
+- Admin can destroy the room at any time
+- No chat history, no logs, no traces
+
 ## Use Cases
 
 - "Quick chat, then blow up the room"

@@ -4,13 +4,14 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { ArrowRight, Trash2 } from "lucide-react";
+import { ArrowRight, Trash2, Users } from "lucide-react";
 import { createRoom } from "@/lib/room/actions";
 import TermsModal from "@/components/chat/TermsModal";
 
 export default function Hero() {
   const t = useTranslations("Hero");
   const tc = useTranslations("Chat");
+  const tg = useTranslations("Group");
   const router = useRouter();
   const [textVisible, setTextVisible] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -141,6 +142,20 @@ export default function Hero() {
           {error}
         </motion.p>
       )}
+
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.7 }}
+        whileHover={{ opacity: 1, scale: 1.05 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        onClick={() => router.push('/group/create')}
+        className="mt-4 group relative px-6 py-3 bg-transparent border border-ink/20 text-ghost-grey hover:border-signal-green hover:text-signal-green transition-all duration-300 rounded-none overflow-hidden"
+      >
+        <span className="relative z-10 flex items-center gap-2 font-mono text-xs md:text-sm">
+          <Users className="w-4 h-4" />
+          {tg("hero.cta")}
+        </span>
+      </motion.button>
 
       <motion.p
         initial={{ opacity: 0 }}

@@ -848,4 +848,133 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => 'Image';
+
+  @override
+  String get authSignInApple => 'Sign in with Apple';
+
+  @override
+  String get authSignInGoogle => 'Sign in with Google';
+
+  @override
+  String get authPrivacyNote =>
+      'We don\'t store your personal information.\nSign-in is only used for app access.';
+
+  @override
+  String get authSignOut => 'Sign Out';
+
+  @override
+  String get authDeleteAccount => 'Delete Account';
+
+  @override
+  String get authDeleteConfirm =>
+      'Are you sure you want to delete your account? This cannot be undone.';
+
+  @override
+  String get chatReportUser => 'Report User';
+
+  @override
+  String get chatReportReasonHarassment => 'Harassment or Threats';
+
+  @override
+  String get chatReportReasonSpam => 'Spam';
+
+  @override
+  String get chatReportReasonIllegal => 'Illegal Content';
+
+  @override
+  String get chatReportReasonOther => 'Other';
+
+  @override
+  String get chatReportSubmitted => 'Report submitted. Thank you.';
+
+  @override
+  String get chatBlockUser => 'Block User';
+
+  @override
+  String get chatBlockConfirm =>
+      'Block this user? You will be disconnected from this chat.';
+
+  @override
+  String get chatUserBlocked => 'User blocked.';
+
+  @override
+  String get heroGroupCta => 'Group Chat';
+
+  @override
+  String get groupCreateTitle => 'Create Group Chat';
+
+  @override
+  String get groupCreateSubtitle =>
+      'End-to-end encrypted group conversation.\nNo accounts needed.';
+
+  @override
+  String get groupCreateNameHint => 'Group name (optional)';
+
+  @override
+  String get groupCreateButton => 'Create Group';
+
+  @override
+  String get groupCreatedTitle => 'GROUP CREATED';
+
+  @override
+  String get groupAdminToken => 'ADMIN TOKEN';
+
+  @override
+  String get groupAdminTokenWarning =>
+      'Save this token. It cannot be recovered. You need it to manage the room.';
+
+  @override
+  String get groupEnterChat => 'Enter Chat Room';
+
+  @override
+  String get groupJoinTitle => 'Join Group Chat';
+
+  @override
+  String get groupJoinSubtitle =>
+      'Enter the access key shared by the group creator';
+
+  @override
+  String get groupRoomDestroyed => 'This group has been destroyed.';
+
+  @override
+  String get groupRoomLocked => 'This group is locked by the admin.';
+
+  @override
+  String get groupKicked => 'You have been removed from this group.';
+
+  @override
+  String get groupChatHeader => 'GROUP CHAT';
+
+  @override
+  String get groupEmptyChat => 'No messages yet. Say hello!';
+
+  @override
+  String groupParticipants(int count) {
+    return 'PARTICIPANTS ($count)';
+  }
+
+  @override
+  String get groupYou => 'you';
+
+  @override
+  String get groupAdmin => 'Admin';
+
+  @override
+  String get groupLeaveTitle => 'Leave Group?';
+
+  @override
+  String get groupLeaveConfirm => 'Are you sure you want to leave this group?';
+
+  @override
+  String get groupLeaveButton => 'Leave';
+
+  @override
+  String get groupDestroyTitle => 'Destroy Group?';
+
+  @override
+  String get groupDestroyConfirm =>
+      'This will permanently destroy the group for all participants. This cannot be undone.';
+
+  @override
+  String get groupDestroyButton => 'Destroy';
 }

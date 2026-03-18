@@ -827,4 +827,126 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => '이미지';
+
+  @override
+  String get authSignInApple => 'Apple로 로그인';
+
+  @override
+  String get authSignInGoogle => 'Google로 로그인';
+
+  @override
+  String get authPrivacyNote => '개인정보를 저장하지 않습니다.\n로그인은 앱 접근에만 사용됩니다.';
+
+  @override
+  String get authSignOut => '로그아웃';
+
+  @override
+  String get authDeleteAccount => '계정 삭제';
+
+  @override
+  String get authDeleteConfirm => '계정을 삭제하시겠습니까? 되돌릴 수 없습니다.';
+
+  @override
+  String get chatReportUser => '유저 신고';
+
+  @override
+  String get chatReportReasonHarassment => '괴롭힘 / 위협';
+
+  @override
+  String get chatReportReasonSpam => '스팸';
+
+  @override
+  String get chatReportReasonIllegal => '불법 콘텐츠';
+
+  @override
+  String get chatReportReasonOther => '기타';
+
+  @override
+  String get chatReportSubmitted => '신고가 접수되었습니다. 감사합니다.';
+
+  @override
+  String get chatBlockUser => '유저 차단';
+
+  @override
+  String get chatBlockConfirm => '이 유저를 차단하시겠습니까? 채팅에서 연결이 해제됩니다.';
+
+  @override
+  String get chatUserBlocked => '유저가 차단되었습니다.';
+
+  @override
+  String get heroGroupCta => '그룹 채팅';
+
+  @override
+  String get groupCreateTitle => '그룹 채팅 만들기';
+
+  @override
+  String get groupCreateSubtitle => '종단간 암호화된 그룹 대화.\n계정이 필요 없습니다.';
+
+  @override
+  String get groupCreateNameHint => '그룹 이름 (선택)';
+
+  @override
+  String get groupCreateButton => '그룹 만들기';
+
+  @override
+  String get groupCreatedTitle => '그룹 생성됨';
+
+  @override
+  String get groupAdminToken => '관리자 토큰';
+
+  @override
+  String get groupAdminTokenWarning => '이 토큰을 저장하세요. 복구할 수 없습니다. 방 관리에 필요합니다.';
+
+  @override
+  String get groupEnterChat => '채팅방 입장';
+
+  @override
+  String get groupJoinTitle => '그룹 채팅 참여';
+
+  @override
+  String get groupJoinSubtitle => '그룹 생성자가 공유한 액세스 키를 입력하세요';
+
+  @override
+  String get groupRoomDestroyed => '이 그룹이 파쇄되었습니다.';
+
+  @override
+  String get groupRoomLocked => '관리자가 이 그룹을 잠갔습니다.';
+
+  @override
+  String get groupKicked => '이 그룹에서 추방되었습니다.';
+
+  @override
+  String get groupChatHeader => '그룹 채팅';
+
+  @override
+  String get groupEmptyChat => '아직 메시지가 없습니다. 인사해보세요!';
+
+  @override
+  String groupParticipants(int count) {
+    return '참여자 ($count)';
+  }
+
+  @override
+  String get groupYou => '나';
+
+  @override
+  String get groupAdmin => '관리자';
+
+  @override
+  String get groupLeaveTitle => '그룹 나가기';
+
+  @override
+  String get groupLeaveConfirm => '정말 이 그룹에서 나가시겠습니까?';
+
+  @override
+  String get groupLeaveButton => '나가기';
+
+  @override
+  String get groupDestroyTitle => '그룹 폭파';
+
+  @override
+  String get groupDestroyConfirm => '모든 참여자의 그룹이 영구적으로 파쇄됩니다. 되돌릴 수 없습니다.';
+
+  @override
+  String get groupDestroyButton => '폭파';
 }

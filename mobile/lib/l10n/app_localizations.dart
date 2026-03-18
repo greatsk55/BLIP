@@ -1680,6 +1680,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Image'**
   String get boardCommentAttachImage;
+
+  /// Apple sign-in button
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get authSignInApple;
+
+  /// Google sign-in button
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get authSignInGoogle;
+
+  /// Privacy note on login screen
+  ///
+  /// In en, this message translates to:
+  /// **'We don\'t store your personal information.\nSign-in is only used for app access.'**
+  String get authPrivacyNote;
+
+  /// Sign out button
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get authSignOut;
+
+  /// Delete account button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get authDeleteAccount;
+
+  /// Delete account confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This cannot be undone.'**
+  String get authDeleteConfirm;
+
+  /// Report user button
+  ///
+  /// In en, this message translates to:
+  /// **'Report User'**
+  String get chatReportUser;
+
+  /// Report reason
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or Threats'**
+  String get chatReportReasonHarassment;
+
+  /// Report reason
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get chatReportReasonSpam;
+
+  /// Report reason
+  ///
+  /// In en, this message translates to:
+  /// **'Illegal Content'**
+  String get chatReportReasonIllegal;
+
+  /// Report reason
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get chatReportReasonOther;
+
+  /// Report submitted confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted. Thank you.'**
+  String get chatReportSubmitted;
+
+  /// Block user button
+  ///
+  /// In en, this message translates to:
+  /// **'Block User'**
+  String get chatBlockUser;
+
+  /// Block user confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Block this user? You will be disconnected from this chat.'**
+  String get chatBlockConfirm;
+
+  /// User blocked confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'User blocked.'**
+  String get chatUserBlocked;
+
+  /// Group chat CTA on home
+  ///
+  /// In en, this message translates to:
+  /// **'Group Chat'**
+  String get heroGroupCta;
+
+  /// Group creation title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Group Chat'**
+  String get groupCreateTitle;
+
+  /// Group creation subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'End-to-end encrypted group conversation.\nNo accounts needed.'**
+  String get groupCreateSubtitle;
+
+  /// Group name hint
+  ///
+  /// In en, this message translates to:
+  /// **'Group name (optional)'**
+  String get groupCreateNameHint;
+
+  /// Create group button
+  ///
+  /// In en, this message translates to:
+  /// **'Create Group'**
+  String get groupCreateButton;
+
+  /// Group created title
+  ///
+  /// In en, this message translates to:
+  /// **'GROUP CREATED'**
+  String get groupCreatedTitle;
+
+  /// Admin token label
+  ///
+  /// In en, this message translates to:
+  /// **'ADMIN TOKEN'**
+  String get groupAdminToken;
+
+  /// Admin token warning
+  ///
+  /// In en, this message translates to:
+  /// **'Save this token. It cannot be recovered. You need it to manage the room.'**
+  String get groupAdminTokenWarning;
+
+  /// Enter group chat button
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Chat Room'**
+  String get groupEnterChat;
+
+  /// Group join title
+  ///
+  /// In en, this message translates to:
+  /// **'Join Group Chat'**
+  String get groupJoinTitle;
+
+  /// Group join subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the access key shared by the group creator'**
+  String get groupJoinSubtitle;
+
+  /// Group room destroyed
+  ///
+  /// In en, this message translates to:
+  /// **'This group has been destroyed.'**
+  String get groupRoomDestroyed;
+
+  /// Group room locked
+  ///
+  /// In en, this message translates to:
+  /// **'This group is locked by the admin.'**
+  String get groupRoomLocked;
+
+  /// Kicked from group
+  ///
+  /// In en, this message translates to:
+  /// **'You have been removed from this group.'**
+  String get groupKicked;
+
+  /// Group chat header
+  ///
+  /// In en, this message translates to:
+  /// **'GROUP CHAT'**
+  String get groupChatHeader;
+
+  /// Empty group chat
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet. Say hello!'**
+  String get groupEmptyChat;
+
+  /// Participants header
+  ///
+  /// In en, this message translates to:
+  /// **'PARTICIPANTS ({count})'**
+  String groupParticipants(int count);
+
+  /// You label
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get groupYou;
+
+  /// Admin label
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get groupAdmin;
+
+  /// Leave group title
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Group?'**
+  String get groupLeaveTitle;
+
+  /// Leave group confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to leave this group?'**
+  String get groupLeaveConfirm;
+
+  /// Leave button
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get groupLeaveButton;
+
+  /// Destroy group title
+  ///
+  /// In en, this message translates to:
+  /// **'Destroy Group?'**
+  String get groupDestroyTitle;
+
+  /// Destroy group confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently destroy the group for all participants. This cannot be undone.'**
+  String get groupDestroyConfirm;
+
+  /// Destroy button
+  ///
+  /// In en, this message translates to:
+  /// **'Destroy'**
+  String get groupDestroyButton;
 }
 
 class _AppLocalizationsDelegate

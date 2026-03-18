@@ -860,4 +860,135 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get boardCommentAttachImage => 'Image';
+
+  @override
+  String get authSignInApple => 'Se connecter avec Apple';
+
+  @override
+  String get authSignInGoogle => 'Se connecter avec Google';
+
+  @override
+  String get authPrivacyNote =>
+      'Nous ne stockons pas vos informations personnelles.\nLa connexion est uniquement utilisée pour accéder à l\'application.';
+
+  @override
+  String get authSignOut => 'Se déconnecter';
+
+  @override
+  String get authDeleteAccount => 'Supprimer le compte';
+
+  @override
+  String get authDeleteConfirm =>
+      'Voulez-vous supprimer votre compte ? Cette action est irréversible.';
+
+  @override
+  String get chatReportUser => 'Signaler l\'utilisateur';
+
+  @override
+  String get chatReportReasonHarassment => 'Harcèlement / Menaces';
+
+  @override
+  String get chatReportReasonSpam => 'Spam';
+
+  @override
+  String get chatReportReasonIllegal => 'Contenu illégal';
+
+  @override
+  String get chatReportReasonOther => 'Autre';
+
+  @override
+  String get chatReportSubmitted => 'Signalement envoyé. Merci.';
+
+  @override
+  String get chatBlockUser => 'Bloquer l\'utilisateur';
+
+  @override
+  String get chatBlockConfirm =>
+      'Bloquer cet utilisateur ? Vous serez déconnecté du chat.';
+
+  @override
+  String get chatUserBlocked => 'Utilisateur bloqué.';
+
+  @override
+  String get heroGroupCta => 'Chat de groupe';
+
+  @override
+  String get groupCreateTitle => 'Créer un chat de groupe';
+
+  @override
+  String get groupCreateSubtitle =>
+      'Conversation de groupe chiffrée de bout en bout.\nAucun compte nécessaire.';
+
+  @override
+  String get groupCreateNameHint => 'Nom du groupe (optionnel)';
+
+  @override
+  String get groupCreateButton => 'Créer le groupe';
+
+  @override
+  String get groupCreatedTitle => 'GROUPE CRÉÉ';
+
+  @override
+  String get groupAdminToken => 'JETON ADMIN';
+
+  @override
+  String get groupAdminTokenWarning =>
+      'Enregistrez ce jeton. Il ne peut pas être récupéré. Vous en avez besoin pour gérer le salon.';
+
+  @override
+  String get groupEnterChat => 'Entrer dans le chat';
+
+  @override
+  String get groupJoinTitle => 'Rejoindre le chat de groupe';
+
+  @override
+  String get groupJoinSubtitle =>
+      'Entrez la clé d\'accès partagée par le créateur du groupe';
+
+  @override
+  String get groupRoomDestroyed => 'Ce groupe a été détruit.';
+
+  @override
+  String get groupRoomLocked =>
+      'Ce groupe a été verrouillé par l\'administrateur.';
+
+  @override
+  String get groupKicked => 'Vous avez été retiré de ce groupe.';
+
+  @override
+  String get groupChatHeader => 'CHAT DE GROUPE';
+
+  @override
+  String get groupEmptyChat => 'Pas encore de messages. Dites bonjour !';
+
+  @override
+  String groupParticipants(int count) {
+    return 'PARTICIPANTS ($count)';
+  }
+
+  @override
+  String get groupYou => 'vous';
+
+  @override
+  String get groupAdmin => 'Admin';
+
+  @override
+  String get groupLeaveTitle => 'Quitter le groupe ?';
+
+  @override
+  String get groupLeaveConfirm =>
+      'Êtes-vous sûr de vouloir quitter ce groupe ?';
+
+  @override
+  String get groupLeaveButton => 'Quitter';
+
+  @override
+  String get groupDestroyTitle => 'Détruire le groupe ?';
+
+  @override
+  String get groupDestroyConfirm =>
+      'Cela détruira définitivement le groupe pour tous les participants. Cette action est irréversible.';
+
+  @override
+  String get groupDestroyButton => 'Détruire';
 }

@@ -124,6 +124,7 @@ class _SplashScreenState extends State<SplashScreen>
   void _navigate() {
     if (_navigated || !mounted) return;
     _navigated = true;
+    // GoRouter redirect가 auth 상태에 따라 /login 또는 / 로 보냄
     context.go('/');
   }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,8 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import 'core/constants/app_theme.dart';
 import 'core/security/security_overlay.dart';
+import 'features/auth/presentation/login_screen.dart';
+import 'features/auth/providers/auth_provider.dart';
 import 'features/splash/presentation/splash_screen.dart';
 import 'features/home/presentation/home_screen.dart';
 import 'features/chat/presentation/chat_screen.dart';
@@ -15,6 +19,8 @@ import 'features/settings/presentation/settings_screen.dart';
 import 'features/shell/presentation/main_shell.dart';
 import 'features/chat_list/presentation/my_chat_list_screen.dart';
 import 'features/community_list/presentation/my_community_list_screen.dart';
+import 'features/group_chat/presentation/group_create_screen.dart';
+import 'features/group_chat/presentation/group_chat_screen.dart';
 import 'features/settings/providers/theme_provider.dart';
 import 'features/settings/providers/locale_provider.dart';
 
@@ -23,15 +29,46 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 /// 딥링크 ID 검증: 영숫자 6~32자만 허용 (injection 방지)
 final _validIdPattern = RegExp(r'^[a-zA-Z0-9]{6,32}$');
 
-final _router = GoRouter(
+final routerProvider = Provider<GoRouter>((ref) {
+  // authState 변경 시 라우터 redirect가 재평가되도록 watch
+  ref.watch(authStateProvider);
+  return _buildRouter(ref);
+});
+
+GoRouter _buildRouter(Ref ref) => GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
+  redirect: (context, state) {
+    final isLoggedIn = ref.read(isLoggedInProvider);
+    final isOnLogin = state.matchedLocation == '/login';
+    final isOnSplash = state.matchedLocation == '/splash';
+
+    // 스플래시는 항상 허용
+    if (isOnSplash) return null;
+    // Android는 로그인 불필요 — iOS만 Apple Sign In 적용
+    if (!Platform.isIOS) {
+      if (isOnLogin) return '/';
+      return null;
+    }
+    // iOS: 미로그인 → 로그인 화면으로
+    if (!isLoggedIn && !isOnLogin) return '/login';
+    // iOS: 로그인 상태인데 로그인 화면 → 홈으로
+    if (isLoggedIn && isOnLogin) return '/';
+
+    return null;
+  },
   routes: [
     // ── 스플래시 (브랜드 인트로) ──
     GoRoute(
       path: '/splash',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const SplashScreen(),
+    ),
+    // ── 로그인 ──
+    GoRoute(
+      path: '/login',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const LoginScreen(),
     ),
     // ── 바텀 네비게이션 Shell (3탭) ──
     StatefulShellRoute.indexedStack(
@@ -116,6 +153,38 @@ final _router = GoRouter(
       builder: (context, state) => const SettingsScreen(),
     ),
 
+    // ── 그룹 채팅 ──
+    GoRoute(
+      path: '/group/create',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const GroupCreateScreen(),
+    ),
+    GoRoute(
+      path: '/group/:roomId',
+      parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final roomId = state.pathParameters['roomId'];
+        if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
+        return null;
+      },
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final passwordFromExtra = extra?['password'] as String?;
+        final passwordFromQuery = state.uri.queryParameters['k'];
+        final fragment = state.uri.fragment;
+        final passwordFromFragment =
+            fragment.isNotEmpty ? Uri.decodeComponent(fragment) : null;
+        return GroupChatScreen(
+          roomId: state.pathParameters['roomId']!,
+          initialPassword:
+              passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment,
+          adminToken: extra?['adminToken'] as String?,
+          isAdmin: extra?['isAdmin'] as bool? ?? false,
+          justCreated: extra?['justCreated'] as bool? ?? false,
+        );
+      },
+    ),
+
     // ── 딥링크: /{locale}/room, /{locale}/board (next-intl 로캘 프리픽스 제거) ──
     GoRoute(
       path: '/:locale/room/:roomId',
@@ -170,7 +239,7 @@ class BlipApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: _router,
+      routerConfig: ref.watch(routerProvider),
       builder: (context, child) => SecurityOverlay(child: child!),
     );
   }
