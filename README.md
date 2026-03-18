@@ -13,6 +13,10 @@ No accounts. No history. No profiles. Start with a single link, and when it's ov
 
 ---
 
+📋 **[Changelog](CHANGELOG.md)** — Full version history
+
+---
+
 ## Why BLIP?
 
 Every messenger today keeps too much. Accounts, friend lists, chat logs, notifications...
@@ -65,6 +69,16 @@ BLIP now supports **ephemeral group chat** — same philosophy, multiple people.
 - Room auto-deletes when the last person leaves
 - Admin can destroy the room at any time
 - No chat history, no logs, no traces
+
+## File Transfer ✨ NEW
+
+Send **any file** — PDFs, ZIPs, documents, audio, anything — via encrypted P2P.
+
+- 📎 All file types supported (200MB max)
+- 🔐 Same E2E encryption as messages (NaCl + SHA-256 checksum)
+- 🚀 P2P transfer — files never touch our servers
+- 📊 Real-time transfer progress
+- ⬇️ Explicit download button — nothing auto-saves
 
 ## Use Cases
 

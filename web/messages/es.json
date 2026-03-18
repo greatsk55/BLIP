@@ -84,7 +84,7 @@
     "subtitle": "Registro de cambios",
     "description": "Cada mejora, registrada de forma transparente.",
     "versions": {
-      "7": {
+      "8": {
         "version": "v1.0.0",
         "date": "1 de febrero de 2026",
         "title": "Lanzamiento inicial",
@@ -96,7 +96,7 @@
           "5": "Código 100% abierto"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.1.0",
         "date": "10 de febrero de 2026",
         "title": "Destrucción instantánea y notificaciones",
@@ -107,7 +107,7 @@
           "4": "Comunidad privada con publicaciones cifradas"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.2.0",
         "date": "15 de febrero de 2026",
         "title": "Transferencia de medios cifrada",
@@ -119,7 +119,7 @@
           "5": "Verificación de integridad con sumas SHA-256"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.3.0",
         "date": "26 de febrero de 2026",
         "title": "Aplicación móvil y estabilidad",
@@ -132,7 +132,7 @@
           "6": "Soporte para 10 idiomas (+alemán, chino tradicional)"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.4.0",
         "date": "28 de febrero de 2026",
         "title": "Sistema de códigos de invitación de comunidad",
@@ -143,7 +143,7 @@
           "4": "Soporte de deep links para códigos de invitación en la app móvil"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.5.0",
         "date": "14 de marzo de 2026",
         "title": "Widget de chat embebible",
@@ -155,7 +155,7 @@
           "5": "Cifrado E2E completo mantenido en modo embebido"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -166,6 +166,18 @@
           "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
           "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
           "6": "Available on both web and mobile app"
+        }
+      },
+      "1": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
+        "changes": {
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
         }
       }
     }

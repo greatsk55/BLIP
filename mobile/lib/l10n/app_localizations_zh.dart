@@ -133,6 +133,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatMediaUnsupportedType => '不支持的文件格式';
 
   @override
+  String get chatMediaAttachAllFiles => 'Attach file';
+
+  @override
+  String get chatMediaDownloadFile => 'Download';
+
+  @override
   String get boardCreateTitle => '社区已创建';
 
   @override

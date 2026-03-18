@@ -143,10 +143,10 @@ export function extractVideoFrameFromUrl(objectUrl: string): Promise<string> {
 /**
  * MIME 타입으로 미디어 종류 판별
  */
-export function getMediaType(mimeType: string): 'image' | 'video' | null {
+export function getMediaType(mimeType: string): 'image' | 'video' | 'file' {
   if (mimeType.startsWith('image/')) return 'image';
   if (mimeType.startsWith('video/')) return 'video';
-  return null;
+  return 'file';
 }
 
 /**
@@ -158,11 +158,10 @@ export function validateFileSize(
   const limits: Record<string, number> = {
     image: 50 * 1024 * 1024,  // 50MB
     video: 100 * 1024 * 1024, // 100MB
+    file: 200 * 1024 * 1024,  // 200MB
   };
 
   const type = getMediaType(file.type);
-  if (!type) return { valid: false, maxSize: 0 };
-
   const maxSize = limits[type];
   return { valid: file.size <= maxSize, maxSize };
 }

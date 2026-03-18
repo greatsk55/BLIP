@@ -134,6 +134,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatMediaUnsupportedType => '지원하지 않는 파일 형식';
 
   @override
+  String get chatMediaAttachAllFiles => '파일 첨부';
+
+  @override
+  String get chatMediaDownloadFile => '다운로드';
+
+  @override
   String get boardCreateTitle => '커뮤니티 생성됨';
 
   @override

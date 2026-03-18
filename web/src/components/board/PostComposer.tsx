@@ -66,7 +66,7 @@ export default function PostComposer({ editPost, onSubmit, onBack }: PostCompose
 
       for (const file of toAdd) {
         const mediaType = getMediaType(file.type);
-        if (!mediaType) continue;
+        if (mediaType !== 'image' && mediaType !== 'video') continue;
 
         const { valid } = validateFileSize(file);
         if (!valid) continue;

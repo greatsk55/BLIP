@@ -174,10 +174,6 @@ export function useWebRTC({
             const mediaUrl = URL.createObjectURL(blob);
 
             const mediaType = getMediaType(transfer.header.mimeType);
-            if (!mediaType) {
-              logError('Unknown media type:', transfer.header.mimeType);
-              return;
-            }
 
             log('File received:', transfer.header.fileName, `(${assembled.length} bytes)`);
             onMediaReceivedRef.current({
@@ -480,10 +476,6 @@ export function useWebRTC({
       return null;
     }
     const mediaType = getMediaType(file.type);
-    if (!mediaType) {
-      logError('Unsupported media type:', file.type);
-      return null;
-    }
 
     try {
       let fileData: Uint8Array;
@@ -501,7 +493,7 @@ export function useWebRTC({
         metadata.height = compressed.height;
         metadata.mimeType = compressed.blob.type;
         metadata.size = compressed.blob.size;
-      } else {
+      } else if (mediaType === 'video') {
         // 동영상: 원본 전송
         fileData = new Uint8Array(await file.arrayBuffer());
         try {
@@ -512,6 +504,9 @@ export function useWebRTC({
         } catch {
           // 섬네일 실패해도 전송 계속
         }
+      } else {
+        // 일반 파일: 압축/썸네일 없이 원본 전송
+        fileData = new Uint8Array(await file.arrayBuffer());
       }
 
       log('Sending file:', file.name, `(${fileData.length} bytes)`);

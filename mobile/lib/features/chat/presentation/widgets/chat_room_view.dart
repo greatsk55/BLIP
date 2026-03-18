@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
@@ -169,6 +170,21 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                           : AppColors.ghostGreyLight),
                 ),
               ),
+              // File attach (모든 파일)
+              IconButton(
+                onPressed: webrtcState.status == WebRtcStatus.connected &&
+                        !_sendingFile
+                    ? _pickAndSendFile
+                    : null,
+                icon: Icon(
+                  Icons.attach_file,
+                  color: webrtcState.status == WebRtcStatus.connected
+                      ? signalGreen
+                      : (isDark
+                          ? AppColors.ghostGreyDark
+                          : AppColors.ghostGreyLight),
+                ),
+              ),
               // Text input
               Expanded(
                 child: TextField(
@@ -315,6 +331,49 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
           ))),
         );
       }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _sendingFile = false);
+    }
+  }
+
+  Future<void> _pickAndSendFile() async {
+    final l10n = AppLocalizations.of(context)!;
+
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      withData: true,
+    );
+    if (result == null || result.files.isEmpty || !mounted) return;
+
+    final pickedFile = result.files.first;
+    if (pickedFile.bytes == null || pickedFile.size == 0) return;
+
+    // 200MB limit
+    const maxSize = 200 * 1024 * 1024;
+    if (pickedFile.size > maxSize) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.chatMediaFileTooLarge('200MB'))),
+        );
+      }
+      return;
+    }
+
+    setState(() => _sendingFile = true);
+
+    try {
+      final fileName = pickedFile.name;
+      final mimeType = _guessMimeType(fileName);
+      await ref
+          .read(webRtcNotifierProvider(_params).notifier)
+          .sendFile(pickedFile.bytes!, fileName, mimeType);
+      NotificationService.instance.notifyMessageSent();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

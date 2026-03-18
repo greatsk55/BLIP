@@ -138,6 +138,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatMediaUnsupportedType => 'Unsupported file type';
 
   @override
+  String get chatMediaAttachAllFiles => 'Attach file';
+
+  @override
+  String get chatMediaDownloadFile => 'Download';
+
+  @override
   String get boardCreateTitle => 'COMMUNITY CREATED';
 
   @override

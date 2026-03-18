@@ -49,6 +49,8 @@
   "chatMediaP2pConnected": "P2P 미디어 채널 준비 완료",
   "chatMediaVideoLoadFailed": "동영상 로드 실패",
   "chatMediaUnsupportedType": "지원하지 않는 파일 형식",
+  "chatMediaAttachAllFiles": "파일 첨부",
+  "chatMediaDownloadFile": "다운로드",
 
   "boardCreateTitle": "커뮤니티 생성됨",
   "boardCreateSubtitle": "프라이빗 커뮤니티 만들기",

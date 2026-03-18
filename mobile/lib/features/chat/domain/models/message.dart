@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 /// 메시지 유형 (web: MessageType)
-enum MessageType { text, image, video }
+enum MessageType { text, image, video, file }
 
 /// 미디어 메타데이터 (web: MediaMetadata)
 class MediaMetadata {

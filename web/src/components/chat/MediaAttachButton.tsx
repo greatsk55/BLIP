@@ -2,14 +2,14 @@
 
 import { useRef, useCallback } from 'react';
 import { Paperclip } from 'lucide-react';
-import { getMediaType } from '@/lib/media/thumbnail';
 
 interface MediaAttachButtonProps {
   onFileSelected: (file: File) => void;
   disabled?: boolean;
 }
 
-const ACCEPT = 'image/*,video/*';
+// Accept all file types (images, videos, and general files)
+const ACCEPT = '*/*';
 
 export default function MediaAttachButton({ onFileSelected, disabled }: MediaAttachButtonProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,9 +22,6 @@ export default function MediaAttachButton({ onFileSelected, disabled }: MediaAtt
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
-
-      // 미디어 타입 검증
-      if (!getMediaType(file.type)) return;
 
       onFileSelected(file);
 
@@ -40,7 +37,6 @@ export default function MediaAttachButton({ onFileSelected, disabled }: MediaAtt
         ref={inputRef}
         type="file"
         accept={ACCEPT}
-        capture="environment"
         onChange={handleChange}
         className="hidden"
         aria-hidden="true"

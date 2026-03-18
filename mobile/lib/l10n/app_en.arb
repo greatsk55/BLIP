@@ -89,6 +89,10 @@
   "@chatMediaVideoLoadFailed": { "description": "Video load failed" },
   "chatMediaUnsupportedType": "Unsupported file type",
   "@chatMediaUnsupportedType": { "description": "Unsupported file type" },
+  "chatMediaAttachAllFiles": "Attach file",
+  "@chatMediaAttachAllFiles": { "description": "Attach any file button" },
+  "chatMediaDownloadFile": "Download",
+  "@chatMediaDownloadFile": { "description": "Download file button" },
 
   "boardCreateTitle": "COMMUNITY CREATED",
   "@boardCreateTitle": { "description": "Board created title" },

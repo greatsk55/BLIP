@@ -67,6 +67,11 @@ export default function MediaPreview({ file, onConfirm, onCancel }: MediaPreview
               playsInline
             />
           )}
+          {mediaType === 'file' && (
+            <div className="w-full h-full flex items-center justify-center bg-ink/5">
+              <span className="text-3xl">📎</span>
+            </div>
+          )}
         </div>
 
         {/* 파일 정보 */}

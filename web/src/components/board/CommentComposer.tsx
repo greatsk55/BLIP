@@ -57,7 +57,7 @@ export default function CommentComposer({ postId, onSubmit }: CommentComposerPro
 
       const validFiles = toAdd.filter((f) => {
         const mediaType = getMediaType(f.type);
-        if (!mediaType) return false;
+        if (mediaType !== 'image' && mediaType !== 'video') return false;
         const sizeCheck = validateFileSize(f);
         return sizeCheck.valid;
       });

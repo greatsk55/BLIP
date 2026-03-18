@@ -140,6 +140,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatMediaUnsupportedType => 'Type de fichier non pris en charge';
 
   @override
+  String get chatMediaAttachAllFiles => 'Attach file';
+
+  @override
+  String get chatMediaDownloadFile => 'Download';
+
+  @override
   String get boardCreateTitle => 'COMMUNAUTÉ CRÉÉE';
 
   @override

@@ -16,7 +16,7 @@ export interface Message {
   timestamp: number;
 }
 
-export type MessageType = 'text' | 'image' | 'video';
+export type MessageType = 'text' | 'image' | 'video' | 'file';
 
 export interface MediaMetadata {
   fileName: string;

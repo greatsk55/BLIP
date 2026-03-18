@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import type { DecryptedMessage } from '@/types/chat';
 import MediaBubble from './MediaBubble';
+import FileBubble from './FileBubble';
 
 interface MessageBubbleProps {
   message: DecryptedMessage;
@@ -20,6 +21,7 @@ export default function MessageBubble({ message, onImageClick }: MessageBubblePr
   }
 
   const isMedia = message.type === 'image' || message.type === 'video';
+  const isFile = message.type === 'file';
 
   return (
     <motion.div
@@ -29,27 +31,29 @@ export default function MessageBubble({ message, onImageClick }: MessageBubblePr
       className={`flex ${message.isMine ? 'justify-end' : 'justify-start'} mb-2`}
     >
       <div
-        className={`max-w-[80%] md:max-w-[60%] ${isMedia ? 'p-1.5' : 'px-4 py-3'} ${
+        className={`max-w-[80%] md:max-w-[60%] ${isMedia ? 'p-1.5' : isFile ? 'px-3 py-2.5' : 'px-4 py-3'} ${
           message.isMine
             ? 'bg-signal-green/10 border border-signal-green/20'
             : 'bg-ink/[0.04] border border-ink/5'
         } rounded-sm`}
       >
         {!message.isMine && (
-          <p className={`font-mono text-xs text-signal-green/60 mb-1 uppercase tracking-wider ${isMedia ? 'px-2 pt-1' : ''}`}>
+          <p className={`font-mono text-xs text-signal-green/60 mb-1 uppercase tracking-wider ${isMedia ? 'px-2 pt-1' : isFile ? 'px-1' : ''}`}>
             {message.senderName}
           </p>
         )}
 
         {isMedia ? (
           <MediaBubble message={message} onImageClick={onImageClick} />
+        ) : isFile ? (
+          <FileBubble message={message} />
         ) : (
           <p className="font-sans text-sm text-ink/90 leading-relaxed wrap-break-word whitespace-pre-wrap">
             {message.content}
           </p>
         )}
 
-        <p className={`font-mono text-[10px] text-ink/20 mt-1 text-right ${isMedia ? 'px-2 pb-1' : ''}`}>
+        <p className={`font-mono text-[10px] text-ink/20 mt-1 text-right ${isMedia ? 'px-2 pb-1' : isFile ? 'px-1' : ''}`}>
           {time}
         </p>
       </div>

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -111,7 +112,18 @@ class MessageBubble extends StatelessWidget {
                 message.mediaBytes != null)
               _VideoThumbnail(message: message),
 
-            // 텍스트 내용 (미디어 메시지일 때는 파일명 숨김)
+            // 일반 파일 메시지 (다운로드/공유 버튼)
+            if (message.type == MessageType.file &&
+                message.mediaBytes != null)
+              _FileBubbleContent(message: message),
+
+            // 일반 파일 전송 중 (바이트 없음)
+            if (message.type == MessageType.file &&
+                message.mediaBytes == null &&
+                message.mediaMetadata != null)
+              _FileBubbleContent(message: message),
+
+            // 텍스트 내용 (미디어/파일 메시지일 때는 파일명 숨김)
             if (message.content.isNotEmpty &&
                 message.type == MessageType.text)
               Text(
@@ -451,6 +463,103 @@ class _VideoControlsState extends State<_VideoControls> {
     final m = d.inMinutes.remainder(60).toString().padLeft(2, '0');
     final s = d.inSeconds.remainder(60).toString().padLeft(2, '0');
     return '$m:$s';
+  }
+}
+
+/// 파일 메시지 버블 콘텐츠 (파일명 + 크기 + 다운로드/공유)
+class _FileBubbleContent extends StatelessWidget {
+  final DecryptedMessage message;
+
+  const _FileBubbleContent({required this.message});
+
+  String _getFileIcon(String fileName) {
+    final ext = fileName.split('.').last.toLowerCase();
+    return switch (ext) {
+      'pdf' => '📄',
+      'doc' || 'docx' => '📝',
+      'xls' || 'xlsx' => '📊',
+      'ppt' || 'pptx' => '📑',
+      'zip' || 'rar' || '7z' || 'tar' || 'gz' => '🗜️',
+      'mp3' || 'wav' || 'flac' || 'aac' || 'ogg' => '🎵',
+      'txt' || 'md' || 'rtf' => '📃',
+      _ => '📎',
+    };
+  }
+
+  String _formatSize(int bytes) {
+    if (bytes < 1024) return '${bytes}B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)}KB';
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}MB';
+  }
+
+  Future<void> _shareFile(BuildContext context) async {
+    if (message.mediaBytes == null) return;
+    try {
+      final dir = await getTemporaryDirectory();
+      final fileName = message.mediaMetadata?.fileName ?? 'file';
+      final file = File('${dir.path}/$fileName');
+      await file.writeAsBytes(message.mediaBytes!);
+      await Share.shareXFiles([XFile(file.path)]);
+    } catch (e) {
+      debugPrint('File share error: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final meta = message.mediaMetadata;
+    final fileName = meta?.fileName ?? 'file';
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(_getFileIcon(fileName), style: const TextStyle(fontSize: 28)),
+        const SizedBox(width: 10),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                fileName,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: isDark ? Colors.white : Colors.black87,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              if (meta != null && meta.size > 0)
+                Text(
+                  _formatSize(meta.size),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: isDark
+                        ? AppColors.ghostGreyDark
+                        : AppColors.ghostGreyLight,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        if (message.mediaBytes != null) ...[
+          const SizedBox(width: 8),
+          IconButton(
+            onPressed: () => _shareFile(context),
+            icon: Icon(
+              Icons.download,
+              size: 20,
+              color: isDark
+                  ? AppColors.signalGreenDark
+                  : AppColors.signalGreenLight,
+            ),
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            padding: EdgeInsets.zero,
+          ),
+        ],
+      ],
+    );
   }
 }
 

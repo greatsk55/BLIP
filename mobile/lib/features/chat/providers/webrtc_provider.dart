@@ -370,9 +370,14 @@ class WebRtcNotifier extends StateNotifier<WebRtcState> {
     _incomingTransfers[header.transferId] = _IncomingTransfer(header);
 
     // 수신 시작 메시지
-    final type = header.mimeType.startsWith('video')
-        ? MessageType.video
-        : MessageType.image;
+    final MessageType type;
+    if (header.mimeType.startsWith('video')) {
+      type = MessageType.video;
+    } else if (header.mimeType.startsWith('image')) {
+      type = MessageType.image;
+    } else {
+      type = MessageType.file;
+    }
     chatNotifier.addMediaMessage(DecryptedMessage(
       id: header.transferId,
       senderId: 'peer',
@@ -460,8 +465,19 @@ class WebRtcNotifier extends StateNotifier<WebRtcState> {
         return;
       }
 
-      // 동영상이면 썸네일 생성 (임시 파일 → VideoCompress → 삭제)
+      // 미디어 타입 판별
       final isVideo = transfer.header.mimeType.startsWith('video');
+      final isImage = transfer.header.mimeType.startsWith('image');
+      final MessageType msgType;
+      if (isVideo) {
+        msgType = MessageType.video;
+      } else if (isImage) {
+        msgType = MessageType.image;
+      } else {
+        msgType = MessageType.file;
+      }
+
+      // 동영상이면 썸네일 생성 (임시 파일 → VideoCompress → 삭제)
       Uint8List? thumbnailBytes;
       if (isVideo) {
         try {
@@ -485,7 +501,7 @@ class WebRtcNotifier extends StateNotifier<WebRtcState> {
         content: transfer.header.fileName,
         timestamp: DateTime.now().millisecondsSinceEpoch,
         isMine: false,
-        type: isVideo ? MessageType.video : MessageType.image,
+        type: msgType,
         mediaBytes: assembled,
         mediaThumbnailBytes: thumbnailBytes,
         mediaMetadata: MediaMetadata(
@@ -539,7 +555,14 @@ class WebRtcNotifier extends StateNotifier<WebRtcState> {
     );
 
     // 1. 내 메시지에 전송 시작 표시
-    final type = mimeType.startsWith('video') ? MessageType.video : MessageType.image;
+    final MessageType type;
+    if (mimeType.startsWith('video')) {
+      type = MessageType.video;
+    } else if (mimeType.startsWith('image')) {
+      type = MessageType.image;
+    } else {
+      type = MessageType.file;
+    }
     chatNotifier.addMediaMessage(DecryptedMessage(
       id: transferId,
       senderId: chatNotifier.state.myId,

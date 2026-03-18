@@ -84,7 +84,7 @@
     "subtitle": "更新日志",
     "description": "每一项改进，透明记录。",
     "versions": {
-      "7": {
+      "8": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "首次发布",
@@ -96,7 +96,7 @@
           "5": "100%开源代码库"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即时房间销毁与通知",
@@ -107,7 +107,7 @@
           "4": "加密帖子的社区功能"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "加密媒体传输",
@@ -119,7 +119,7 @@
           "5": "SHA-256校验和文件完整性验证"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "移动应用与稳定性提升",
@@ -132,7 +132,7 @@
           "6": "10种语言支持（+德语、繁体中文）"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.4.0",
         "date": "2026年2月28日",
         "title": "社区邀请码系统",
@@ -143,7 +143,7 @@
           "4": "移动应用支持社区邀请码深度链接"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.5.0",
         "date": "2026年3月14日",
         "title": "嵌入式聊天小组件",
@@ -155,7 +155,7 @@
           "5": "嵌入模式下保持完整的端到端加密"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -166,6 +166,18 @@
           "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
           "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
           "6": "Available on both web and mobile app"
+        }
+      },
+      "1": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
+        "changes": {
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
         }
       }
     }

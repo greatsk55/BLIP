@@ -349,6 +349,18 @@ abstract class AppLocalizations {
   /// **'Unsupported file type'**
   String get chatMediaUnsupportedType;
 
+  /// Attach any file button
+  ///
+  /// In en, this message translates to:
+  /// **'Attach file'**
+  String get chatMediaAttachAllFiles;
+
+  /// Download file button
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get chatMediaDownloadFile;
+
   /// Board created title
   ///
   /// In en, this message translates to:

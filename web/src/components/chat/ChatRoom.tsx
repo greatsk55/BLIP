@@ -94,7 +94,6 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
   const handleSendFile = useCallback(
     async (file: File) => {
       const mediaType = getMediaType(file.type);
-      if (!mediaType) return;
 
       const transferId = typeof crypto.randomUUID === 'function'
         ? crypto.randomUUID()
@@ -117,7 +116,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
           width: thumb.width,
           height: thumb.height,
         };
-      } else {
+      } else if (mediaType === 'video') {
         try {
           const { thumbnail, metadata: videoMeta } = await createVideoThumbnail(file);
           thumbnailUrl = URL.createObjectURL(thumbnail);
@@ -137,6 +136,13 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
             size: file.size,
           };
         }
+      } else {
+        // 일반 파일: 썸네일 없이 메타데이터만
+        metadata = {
+          fileName: file.name,
+          mimeType: file.type,
+          size: file.size,
+        };
       }
 
       // 전송 중 메시지 (프로그레스 표시)
