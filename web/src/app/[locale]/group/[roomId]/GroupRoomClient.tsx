@@ -21,6 +21,7 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
   const [linkPassword, setLinkPassword] = useState<string | undefined>();
   const [linkVerified, setLinkVerified] = useState(false);
   const [hashParsed, setHashParsed] = useState(false);
+  const [enteredChat, setEnteredChat] = useState(false);
 
   // URL fragment 파싱
   useEffect(() => {
@@ -144,8 +145,6 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
       </div>
     );
   }
-
-  const [enteredChat, setEnteredChat] = useState(false);
 
   const isCreator = !!creatorPassword;
   const resolvedPassword = creatorPassword ?? (linkVerified ? linkPassword : undefined);
