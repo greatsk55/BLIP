@@ -1,3 +1,5 @@
+📋 Changelog: [EN](CHANGELOG.md) | [한국어](docs/CHANGELOG.ko.md) | [日本語](docs/CHANGELOG.ja.md) | [中文](docs/CHANGELOG.zh.md) | [Español](docs/CHANGELOG.es.md) | [Français](docs/CHANGELOG.fr.md)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
