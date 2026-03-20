@@ -86,15 +86,18 @@ export async function createBoard(
   const adminToken = crypto.randomUUID();
 
   const { authKey, encryptionSeed } = await deriveKeysFromPassword(password, boardId);
-  const authKeyHash = await hashAuthKey(authKey);
-  const adminTokenHash = await hashString(adminToken);
 
-  // 초대 코드 생성 + encryptionSeed wrapping
+  // 독립적인 해시/유도 연산을 병렬 실행
   const inviteCode = generateInviteCode();
-  const inviteCodeHash = await hashInviteCode(inviteCode);
-  const wrappingKey = await deriveWrappingKey(inviteCode, boardId);
+  const [authKeyHash, adminTokenHash, inviteCodeHash, wrappingKey, encKeyAuthHash] =
+    await Promise.all([
+      hashAuthKey(authKey),
+      hashString(adminToken),
+      hashInviteCode(inviteCode),
+      deriveWrappingKey(inviteCode, boardId),
+      hashEncryptionKeyForAuth(encryptionSeed),
+    ]);
   const wrapped = wrapEncryptionKey(encryptionSeed, wrappingKey);
-  const encKeyAuthHash = await hashEncryptionKeyForAuth(encryptionSeed);
 
   const { error } = await supabase.from('boards').insert({
     id: boardId,

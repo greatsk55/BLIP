@@ -4,6 +4,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/network/api_client.dart';
+import '../../../core/services/analytics_service.dart';
 import '../../../core/services/review_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
@@ -62,6 +63,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
       if (result['valid'] == true) {
         _password = widget.initialPassword;
+        AnalyticsService.instance.logRoomJoined(roomType: 'chat');
         setState(() => _phase = _ScreenPhase.chatting);
       } else {
         setState(() {
@@ -131,6 +133,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
       password,
     );
 
+    AnalyticsService.instance.logRoomJoined(roomType: 'chat');
     setState(() {
       _password = password;
       _phase = _ScreenPhase.chatting;

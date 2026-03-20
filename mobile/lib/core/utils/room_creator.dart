@@ -4,6 +4,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import '../network/api_client.dart';
 import '../services/ad_service.dart';
+import '../services/analytics_service.dart';
 import '../storage/local_storage_service.dart';
 import '../storage/models/saved_room.dart';
 
@@ -39,6 +40,9 @@ class RoomCreator {
         ),
         password,
       );
+
+      // 애널리틱스 이벤트
+      AnalyticsService.instance.logRoomCreated(roomType: 'chat');
 
       // 채팅 생성 시 매번 전면광고
       await AdService.instance.showInterstitial();

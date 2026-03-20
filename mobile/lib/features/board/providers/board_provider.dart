@@ -123,17 +123,27 @@ class BoardNotifier extends StateNotifier<BoardState> {
   }
 
   Future<void> _init() async {
+    // 모든 초기 데이터를 병렬로 로딩 (5번 순차 I/O → 1번 병렬 I/O)
+    final results = await Future.wait([
+      SharedPreferences.getInstance(),                                    // [0]
+      _secureStorage.read(key: '$_adminPrefix$boardId'),                  // [1]
+      _secureStorage.read(key: '$_encryptionKeyPrefix$boardId'),          // [2]
+      _secureStorage.read(key: '$_eauthPrefix$boardId'),                  // [3]
+      _secureStorage.read(key: '$_storagePrefix$boardId'),                // [4]
+    ]);
+
+    final prefs = results[0] as SharedPreferences;
+    final savedToken = results[1] as String?;
+    final savedKeyB64 = results[2] as String?;
+    final savedEAuth = results[3] as String?;
+    final savedPassword = results[4] as String?;
+
     // 사용자명 복원 또는 생성
-    final prefs = await SharedPreferences.getInstance();
     final savedUsername = prefs.getString('$_usernamePrefix$boardId');
     final username = savedUsername ?? generateUsername();
     if (savedUsername == null) {
       await prefs.setString('$_usernamePrefix$boardId', username);
     }
-
-    // 관리자 토큰 복원
-    final savedToken =
-        await _secureStorage.read(key: '$_adminPrefix$boardId');
 
     state = state.copyWith(
       myUsername: username,
@@ -143,20 +153,13 @@ class BoardNotifier extends StateNotifier<BoardState> {
     // 3가지 인증 경로 (web useBoard.ts와 동일)
 
     // 1순위: 저장된 encryptionKey (초대코드로 참여한 멤버)
-    final savedKeyB64 =
-        await _secureStorage.read(key: '$_encryptionKeyPrefix$boardId');
-    final savedEAuth =
-        await _secureStorage.read(key: '$_eauthPrefix$boardId');
     if (savedKeyB64 != null && savedEAuth != null) {
       try {
         final savedKey = base64Decode(savedKeyB64);
         final error = await _authenticateWithKey(
             Uint8List.fromList(savedKey), savedEAuth);
         if (error == null) {
-          // 키 인증 성공 — 비밀번호도 저장돼 있으면 삭제 버튼 표시
-          final savedPw =
-              await _secureStorage.read(key: '$_storagePrefix$boardId');
-          if (savedPw != null) {
+          if (savedPassword != null) {
             state = state.copyWith(isPasswordSaved: true);
           }
           return;
@@ -167,8 +170,6 @@ class BoardNotifier extends StateNotifier<BoardState> {
     }
 
     // 2순위: 저장된 비밀번호 (password로 참여한 멤버)
-    final savedPassword =
-        await _secureStorage.read(key: '$_storagePrefix$boardId');
     if (savedPassword != null) {
       state = state.copyWith(isPasswordSaved: true);
       final error = await authenticate(savedPassword, isSaved: true);
@@ -182,7 +183,7 @@ class BoardNotifier extends StateNotifier<BoardState> {
   /// 비밀번호 인증
   Future<String?> authenticate(String password, {bool isSaved = false}) async {
     try {
-      final derived = deriveKeysFromPassword(password, boardId);
+      final derived = await deriveKeysFromPasswordAsync(password, boardId);
       final keyHash = hashAuthKey(derived.authKey);
 
       // 서버 인증

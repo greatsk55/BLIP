@@ -55,6 +55,7 @@ export default function PostImageGallery({ images }: PostImageGalleryProps) {
                 <img
                   src={img.objectUrl}
                   alt=""
+                  loading="lazy"
                   className="w-full h-full object-contain"
                   draggable={false}
                 />

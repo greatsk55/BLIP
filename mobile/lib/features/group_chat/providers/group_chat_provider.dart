@@ -119,8 +119,8 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
 
   Future<void> _init() async {
     try {
-      // PBKDF2로 대칭키 유도 (web과 동일)
-      final derived = deriveKeysFromPassword(params.password, params.roomId);
+      // PBKDF2로 대칭키 유도 — Isolate에서 실행 (UI 블로킹 방지)
+      final derived = await deriveKeysFromPasswordAsync(params.password, params.roomId);
       _symmetricKey = derived.encryptionSeed;
       _authKeyHash = hashAuthKey(derived.authKey);
 

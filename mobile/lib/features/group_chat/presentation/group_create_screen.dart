@@ -5,6 +5,7 @@ import 'package:blip/l10n/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/services/ad_service.dart';
+import '../../../core/services/analytics_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 
@@ -65,6 +66,7 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
       );
       await storage.saveAdminToken(roomId, adminToken);
 
+      AnalyticsService.instance.logRoomCreated(roomType: 'group');
       await AdService.instance.showInterstitial();
       if (!mounted) return;
 

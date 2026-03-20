@@ -1,7 +1,7 @@
 name: blip
 description: "BLIP - Talk. Then Vanish. E2EE ephemeral chat."
 publish_to: 'none'
-version: 1.0.3+7
+version: 1.8.1+11
 
 environment:
   sdk: ^3.10.4
@@ -19,9 +19,10 @@ dependencies:
   # Routing
   go_router: ^14.6.2
 
-  # Firebase (FCM Push Notifications)
+  # Firebase (FCM Push Notifications + Analytics)
   firebase_core: ^3.8.1
   firebase_messaging: ^15.1.6
+  firebase_analytics: ^11.4.2
 
   # Social Sign-In (iOS only — Apple Sign In)
   sign_in_with_apple: ^6.1.4

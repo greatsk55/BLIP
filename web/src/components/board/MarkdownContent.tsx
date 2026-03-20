@@ -142,6 +142,7 @@ export default function MarkdownContent({ content, images }: MarkdownContentProp
             <img
               src={image.objectUrl}
               alt={alt ?? ''}
+              loading="lazy"
               className="max-w-full max-h-[400px] rounded-sm border border-ink/10"
               style={{ objectFit: 'contain' }}
               draggable={false}

@@ -236,6 +236,51 @@ interface UseBoardReturn {
   decryptCommentImages: (commentId: string, postId: string) => Promise<void>;
 }
 
+// ─── 이미지 배치 복호화 헬퍼 (SSOT: 게시글/댓글 공용) ───
+
+async function decryptImageBatch(
+  images: import('@/types/board').EncryptedPostImageMeta[],
+  key: Uint8Array,
+  keyHash: string,
+  blobUrlsRef: React.MutableRefObject<Set<string>>
+): Promise<DecryptedPostImage[]> {
+  const results = await Promise.allSettled(
+    images.map(async (imgMeta) => {
+      const res = await fetch(
+        `/api/board/image?imageId=${imgMeta.id}&authKeyHash=${encodeURIComponent(keyHash)}`
+      );
+      if (!res.ok) return null;
+
+      const encryptedBuffer = await res.arrayBuffer();
+      const decrypted = decryptBinaryRaw(
+        new Uint8Array(encryptedBuffer),
+        decodeBase64(imgMeta.encryptedNonce),
+        key
+      );
+      if (!decrypted) return null;
+
+      const blob = new Blob([new Uint8Array(decrypted)], { type: imgMeta.mimeType });
+      const objectUrl = URL.createObjectURL(blob);
+      blobUrlsRef.current.add(objectUrl);
+
+      return {
+        id: imgMeta.id,
+        objectUrl,
+        mimeType: imgMeta.mimeType,
+        width: imgMeta.width,
+        height: imgMeta.height,
+      };
+    })
+  );
+
+  return results
+    .filter(
+      (r): r is PromiseFulfilledResult<DecryptedPostImage> =>
+        r.status === 'fulfilled' && r.value != null
+    )
+    .map((r) => r.value);
+}
+
 export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
   const [status, setStatus] = useState<BoardStatus>('loading');
   const [boardName, setBoardName] = useState<string | null>(null);
@@ -656,40 +701,9 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     if (!post?._encryptedImages || post._encryptedImages.length === 0) return;
     if (post.images.length > 0) return; // 이미 복호화됨
 
-    const decryptedImages: DecryptedPostImage[] = [];
-
-    for (const imgMeta of post._encryptedImages) {
-      try {
-        const res = await fetch(
-          `/api/board/image?imageId=${imgMeta.id}&authKeyHash=${encodeURIComponent(keyHash)}`
-        );
-        if (!res.ok) continue;
-
-        const encryptedBuffer = await res.arrayBuffer();
-
-        // imgMeta에서 직접 nonce 사용 (X-Encrypted-Nonce 헤더보다 안정적)
-        const decrypted = decryptBinaryRaw(
-          new Uint8Array(encryptedBuffer),
-          decodeBase64(imgMeta.encryptedNonce),
-          key
-        );
-        if (!decrypted) continue;
-
-        const blob = new Blob([new Uint8Array(decrypted)], { type: imgMeta.mimeType });
-        const objectUrl = URL.createObjectURL(blob);
-        blobUrlsRef.current.add(objectUrl);
-
-        decryptedImages.push({
-          id: imgMeta.id,
-          objectUrl,
-          mimeType: imgMeta.mimeType,
-          width: imgMeta.width,
-          height: imgMeta.height,
-        });
-      } catch {
-        // 개별 이미지 복호화 실패 무시
-      }
-    }
+    const decryptedImages = await decryptImageBatch(
+      post._encryptedImages, key, keyHash, blobUrlsRef
+    );
 
     if (!isMountedRef.current) return;
     if (decryptedImages.length > 0) {
@@ -710,38 +724,35 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
     keyHash: string,
     commentId?: string
   ): Promise<void> {
-    for (let i = 0; i < files.length; i++) {
-      try {
-        const mediaType = getMediaType(files[i].type);
-        if (mediaType !== 'image' && mediaType !== 'video') continue; // 지원하지 않는 파일 형식 건너뛰기
+    // 1단계: 압축 + 암호화 병렬 처리
+    const prepared = await Promise.allSettled(
+      files.map(async (file, i) => {
+        const mediaType = getMediaType(file.type);
+        if (mediaType !== 'image' && mediaType !== 'video') return null;
 
         let buffer: Uint8Array;
         let width = 0;
         let height = 0;
 
         if (mediaType === 'video') {
-          // 동영상: 압축 없이 raw 바이트 암호화
-          buffer = new Uint8Array(await files[i].arrayBuffer());
+          buffer = new Uint8Array(await file.arrayBuffer());
           try {
-            const { metadata } = await createVideoThumbnail(files[i]);
+            const { metadata } = await createVideoThumbnail(file);
             width = metadata.width;
             height = metadata.height;
           } catch {
             // 메타데이터 추출 실패 시 0으로 유지
           }
         } else {
-          // 이미지: 압축 후 암호화
-          const compressed = await compressImage(files[i]);
+          const compressed = await compressImage(file);
           buffer = new Uint8Array(await compressed.blob.arrayBuffer());
           width = compressed.width;
           height = compressed.height;
         }
 
-        // 암호화
         const encrypted = encryptBinary(buffer, key);
         const ciphertextBytes = decodeBase64(encrypted.ciphertext);
 
-        // FormData
         const formData = new FormData();
         formData.append('file', new Blob([new Uint8Array(ciphertextBytes)]), 'media.enc');
         formData.append('boardId', boardId);
@@ -752,18 +763,31 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
         }
         formData.append('authKeyHash', keyHash);
         formData.append('nonce', encrypted.nonce);
-        formData.append('mimeType', files[i].type || 'application/octet-stream');
+        formData.append('mimeType', file.type || 'application/octet-stream');
         formData.append('width', String(width));
         formData.append('height', String(height));
         formData.append('displayOrder', String(i));
 
-        await fetch('/api/board/upload-image', {
-          method: 'POST',
-          body: formData,
-        });
-      } catch {
-        // 개별 미디어 업로드 실패 무시 (게시글은 이미 생성됨)
-      }
+        return formData;
+      })
+    );
+
+    const validFormDatas = prepared
+      .filter(
+        (r): r is PromiseFulfilledResult<FormData> =>
+          r.status === 'fulfilled' && r.value != null
+      )
+      .map((r) => r.value);
+
+    // 2단계: 네트워크 업로드 3개씩 배치 병렬화
+    const UPLOAD_CONCURRENCY = 3;
+    for (let i = 0; i < validFormDatas.length; i += UPLOAD_CONCURRENCY) {
+      const batch = validFormDatas.slice(i, i + UPLOAD_CONCURRENCY);
+      await Promise.allSettled(
+        batch.map((formData) =>
+          fetch('/api/board/upload-image', { method: 'POST', body: formData })
+        )
+      );
     }
   }
 
@@ -1277,38 +1301,9 @@ export function useBoard({ boardId }: UseBoardOptions): UseBoardReturn {
       if (!comment?._encryptedImages || comment._encryptedImages.length === 0) return;
       if (comment.images.length > 0) return;
 
-      const decryptedImages: DecryptedPostImage[] = [];
-
-      for (const imgMeta of comment._encryptedImages) {
-        try {
-          const res = await fetch(
-            `/api/board/image?imageId=${imgMeta.id}&authKeyHash=${encodeURIComponent(keyHash)}`
-          );
-          if (!res.ok) continue;
-
-          const encryptedBuffer = await res.arrayBuffer();
-          const decrypted = decryptBinaryRaw(
-            new Uint8Array(encryptedBuffer),
-            decodeBase64(imgMeta.encryptedNonce),
-            key
-          );
-          if (!decrypted) continue;
-
-          const blob = new Blob([new Uint8Array(decrypted)], { type: imgMeta.mimeType });
-          const objectUrl = URL.createObjectURL(blob);
-          blobUrlsRef.current.add(objectUrl);
-
-          decryptedImages.push({
-            id: imgMeta.id,
-            objectUrl,
-            mimeType: imgMeta.mimeType,
-            width: imgMeta.width,
-            height: imgMeta.height,
-          });
-        } catch {
-          // 개별 이미지 복호화 실패 무시
-        }
-      }
+      const decryptedImages = await decryptImageBatch(
+        comment._encryptedImages, key, keyHash, blobUrlsRef
+      );
 
       if (!isMountedRef.current || decryptedImages.length === 0) return;
 

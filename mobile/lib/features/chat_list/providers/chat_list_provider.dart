@@ -71,14 +71,17 @@ class ChatListNotifier extends StateNotifier<ChatListState> {
         activeRooms.map((r) => r.roomId).toList(),
       );
 
+      // 배치 업데이트 (N번 I/O → 1번)
+      final statusMap = <String, String>{};
       for (final entry in statuses.entries) {
-        final serverStatus = entry.value;
-        // 'not_found'도 destroyed로 처리
         final normalizedStatus =
-            serverStatus == 'not_found' ? 'destroyed' : serverStatus;
+            entry.value == 'not_found' ? 'destroyed' : entry.value;
         if (normalizedStatus != 'active') {
-          await _storage.updateRoomStatus(entry.key, normalizedStatus);
+          statusMap[entry.key] = normalizedStatus;
         }
+      }
+      if (statusMap.isNotEmpty) {
+        await _storage.updateRoomStatuses(statusMap);
       }
 
       // 업데이트된 목록 다시 로드

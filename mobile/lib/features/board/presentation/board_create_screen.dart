@@ -66,7 +66,7 @@ class _BoardCreateScreenState extends State<BoardCreateScreen> {
       final adminToken = createResult['adminToken'] as String;
 
       // 2단계: 비밀번호에서 암호화 키 유도 → 커뮤니티 이름 암호화 → 서버 업데이트
-      final derived = deriveKeysFromPassword(password, boardId);
+      final derived = await deriveKeysFromPasswordAsync(password, boardId);
       final encName = encryptSymmetric(name, derived.encryptionSeed);
       final authKeyHash = hashAuthKey(derived.authKey);
 

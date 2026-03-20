@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as hash;
+import 'package:flutter/foundation.dart' show compute;
 import 'package:pinenacl/x25519.dart';
 import 'package:pointycastle/export.dart' hide PrivateKey, PublicKey;
 
@@ -68,6 +69,23 @@ DerivedKeys deriveKeysFromPassword(String password, String roomId) {
     authKey: Uint8List.fromList(derived.sublist(0, 32)),
     encryptionSeed: Uint8List.fromList(derived.sublist(32, 64)),
   );
+}
+
+/// Isolate용 파라미터
+class _DeriveParams {
+  final String password;
+  final String roomId;
+  const _DeriveParams(this.password, this.roomId);
+}
+
+DerivedKeys _deriveKeysIsolate(_DeriveParams params) {
+  return deriveKeysFromPassword(params.password, params.roomId);
+}
+
+/// PBKDF2 키 유도를 Isolate에서 비동기 실행 (UI 스레드 블로킹 방지)
+Future<DerivedKeys> deriveKeysFromPasswordAsync(
+    String password, String roomId) async {
+  return compute(_deriveKeysIsolate, _DeriveParams(password, roomId));
 }
 
 /// authKey → SHA-256 → Base64 (서버 검증용)

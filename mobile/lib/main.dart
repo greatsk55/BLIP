@@ -9,6 +9,7 @@ import 'app.dart';
 import 'core/push/push_service.dart';
 import 'core/security/screenshot_detector.dart';
 import 'core/services/ad_service.dart';
+import 'core/services/analytics_service.dart';
 import 'core/supabase/supabase_client.dart';
 import 'firebase_options.dart';
 
@@ -63,14 +64,21 @@ void main() async {
     debugPrint('[BLIP] PushService init failed: $e');
   }
 
-  // 5) AdMob 초기화
+  // 5) Firebase Analytics 초기화
+  try {
+    await AnalyticsService.instance.init();
+  } catch (e) {
+    debugPrint('[BLIP] Analytics init failed: $e');
+  }
+
+  // 7) AdMob 초기화
   try {
     await AdService.instance.init();
   } catch (e) {
     debugPrint('[BLIP] AdService init failed: $e');
   }
 
-  // 6) 스크린샷/화면녹화 감지 채널 초기화
+  // 8) 스크린샷/화면녹화 감지 채널 초기화
   try {
     ScreenshotDetector.init();
   } catch (e) {

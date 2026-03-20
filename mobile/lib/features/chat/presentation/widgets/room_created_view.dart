@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/services/analytics_service.dart';
 
 class RoomCreatedView extends StatefulWidget {
   final String roomId;
@@ -267,6 +268,7 @@ class _RoomCreatedViewState extends State<RoomCreatedView> {
                           ? l10n.chatShareMessageLinkOnly(_shareLink)
                           : l10n.chatShareMessage(_shareLink, widget.password);
                       final box = ctx.findRenderObject() as RenderBox?;
+                      AnalyticsService.instance.logShareLink(roomType: 'chat');
                       await Share.share(
                         text,
                         sharePositionOrigin: box != null

@@ -8,11 +8,13 @@ import '../../../../core/network/api_client.dart';
 class PasswordEntry extends StatefulWidget {
   final String roomId;
   final void Function(String password) onVerified;
+  final String? initialError;
 
   const PasswordEntry({
     super.key,
     required this.roomId,
     required this.onVerified,
+    this.initialError,
   });
 
   @override
@@ -23,7 +25,7 @@ class _PasswordEntryState extends State<PasswordEntry> {
   final _controller = TextEditingController();
   final _api = ApiClient();
   bool _loading = false;
-  String? _error;
+  late String? _error = widget.initialError;
 
   @override
   void dispose() {

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/analytics_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 import '../providers/group_chat_provider.dart';
@@ -97,6 +98,7 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen>
   }
 
   void _onPasswordVerified(String password) {
+    AnalyticsService.instance.logRoomJoined(roomType: 'group');
     // 참여자로 로컬 저장
     final now = DateTime.now().millisecondsSinceEpoch;
     final storage = LocalStorageService();

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import 'core/constants/app_theme.dart';
+import 'core/services/analytics_service.dart';
 import 'core/security/security_overlay.dart';
 import 'features/auth/presentation/login_screen.dart';
 import 'features/auth/providers/auth_provider.dart';
@@ -38,6 +39,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 GoRouter _buildRouter(Ref ref) => GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
+  observers: [AnalyticsService.instance.observer],
   redirect: (context, state) {
     final isLoggedIn = ref.read(isLoggedInProvider);
     final isOnLogin = state.matchedLocation == '/login';

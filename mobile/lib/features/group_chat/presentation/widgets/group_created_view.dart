@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/services/analytics_service.dart';
 
 /// 그룹방 생성 결과 화면 (비밀번호 + 관리자 토큰 + 공유 링크)
 class GroupCreatedView extends StatefulWidget {
@@ -236,6 +237,7 @@ class _GroupCreatedViewState extends State<GroupCreatedView> {
                           ? l10n.chatShareMessageLinkOnly(_shareLink)
                           : l10n.chatShareMessage(_shareLink, widget.password);
                       final box = ctx.findRenderObject() as RenderBox?;
+                      AnalyticsService.instance.logShareLink(roomType: 'group');
                       await Share.share(
                         text,
                         sharePositionOrigin: box != null
