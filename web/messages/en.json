@@ -312,7 +312,7 @@
   "Privacy": {
     "title": "Privacy by Architecture",
     "subtitle": "Privacy Policy",
-    "lastUpdated": "Last updated: February 2026",
+    "lastUpdated": "Last updated: March 2026",
     "intro": "BLIP is designed to know nothing about you. This isn't just a policy—it's how we built the system. What we can't collect, we can't leak.",
     "sections": {
       "1": {
@@ -333,11 +333,11 @@
       },
       "5": {
         "title": "Cookies & Local Storage",
-        "content": "BLIP uses minimal local storage for: theme preferences (dark/light mode), language settings, and temporary encryption keys during active sessions. We do not use tracking cookies, analytics cookies, or any third-party advertising cookies. Encryption keys are automatically destroyed when you close the browser tab."
+        "content": "BLIP uses minimal local storage for: theme preferences (dark/light mode), language settings, saved room data, and temporary encryption keys during active sessions. We use Google Ads conversion tracking (gtag.js) which may set cookies to measure ad effectiveness. We do not use analytics cookies that track your browsing behavior across sites. Encryption keys are automatically destroyed when you close the browser tab."
       },
       "6": {
         "title": "Third-Party Services",
-        "content": "BLIP uses Supabase for real-time WebSocket communication (message relay only, no storage). We may display contextual advertisements. Ad providers may use their own cookies subject to their privacy policies. We never share any conversation data with advertisers—because we don't have any."
+        "content": "BLIP uses Supabase for real-time WebSocket communication (message relay only, no storage). We use Google Ads (gtag.js, ID: AW-874567055) for conversion tracking to measure ad campaign effectiveness. We may display contextual advertisements. Ad providers may use their own cookies subject to their privacy policies. We never share any conversation data with advertisers—because we don't have any."
       },
       "7": {
         "title": "Children's Privacy",

@@ -310,7 +310,7 @@
   "Privacy": {
     "title": "Privacy by Architecture",
     "subtitle": "Datenschutzrichtlinie",
-    "lastUpdated": "Zuletzt aktualisiert: Februar 2026",
+    "lastUpdated": "Zuletzt aktualisiert: März 2026",
     "intro": "BLIP ist so konzipiert, dass es nichts über dich weiß. Das ist nicht nur eine Richtlinie — so haben wir das System gebaut. Was wir nicht sammeln können, können wir nicht preisgeben.",
     "sections": {
       "1": {
@@ -331,11 +331,11 @@
       },
       "5": {
         "title": "Cookies & Lokaler Speicher",
-        "content": "BLIP verwendet minimalen lokalen Speicher für: Theme-Einstellungen (Dunkel-/Hellmodus), Spracheinstellungen und temporäre Verschlüsselungsschlüssel während aktiver Sitzungen. Wir verwenden keine Tracking-Cookies, Analyse-Cookies oder Drittanbieter-Werbe-Cookies. Verschlüsselungsschlüssel werden automatisch zerstört, wenn du den Browser-Tab schließt."
+        "content": "BLIP verwendet minimalen lokalen Speicher für: Theme-Einstellungen (Dunkel-/Hellmodus), Spracheinstellungen, gespeicherte Raumdaten und temporäre Verschlüsselungsschlüssel während aktiver Sitzungen. Wir verwenden Google Ads Conversion-Tracking (gtag.js), das Cookies setzen kann, um die Werbewirksamkeit zu messen. Wir verwenden keine Analyse-Cookies, die dein Surfverhalten über Websites hinweg verfolgen. Verschlüsselungsschlüssel werden automatisch zerstört, wenn du den Browser-Tab schließt."
       },
       "6": {
         "title": "Drittanbieter-Dienste",
-        "content": "BLIP nutzt Supabase für Echtzeit-WebSocket-Kommunikation (nur Nachrichtenweiterleitung, keine Speicherung). Wir zeigen möglicherweise kontextbezogene Werbung an. Werbeanbieter können eigene Cookies verwenden, die ihren Datenschutzrichtlinien unterliegen. Wir teilen nie Gesprächsdaten mit Werbetreibenden — weil wir keine haben."
+        "content": "BLIP nutzt Supabase für Echtzeit-WebSocket-Kommunikation (nur Nachrichtenweiterleitung, keine Speicherung). Wir verwenden Google Ads (gtag.js, ID: AW-874567055) für Conversion-Tracking, um die Wirksamkeit von Werbekampagnen zu messen. Wir zeigen möglicherweise kontextbezogene Werbung an. Werbeanbieter können eigene Cookies verwenden, die ihren Datenschutzrichtlinien unterliegen. Wir teilen nie Gesprächsdaten mit Werbetreibenden — weil wir keine haben."
       },
       "7": {
         "title": "Datenschutz für Kinder",

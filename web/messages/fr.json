@@ -310,7 +310,7 @@
   "Privacy": {
     "title": "Vie Privée par Architecture",
     "subtitle": "Politique de Confidentialité",
-    "lastUpdated": "Dernière mise à jour : février 2026",
+    "lastUpdated": "Dernière mise à jour : mars 2026",
     "intro": "BLIP est conçu pour ne rien savoir de vous. Ce n'est pas seulement une politique—c'est ainsi que nous avons construit le système. Ce que nous ne pouvons pas collecter, nous ne pouvons pas divulguer.",
     "sections": {
       "1": {
@@ -331,11 +331,11 @@
       },
       "5": {
         "title": "Cookies et Stockage Local",
-        "content": "BLIP utilise un stockage local minimal pour : les préférences de thème (mode sombre/clair), les paramètres de langue et les clés de chiffrement temporaires pendant les sessions actives. Nous n'utilisons pas de cookies de suivi, de cookies d'analyse ni de cookies publicitaires tiers. Les clés de chiffrement sont automatiquement détruites lorsque vous fermez l'onglet du navigateur."
+        "content": "BLIP utilise un stockage local minimal pour : les préférences de thème (mode sombre/clair), les paramètres de langue, les données de salons sauvegardées et les clés de chiffrement temporaires pendant les sessions actives. Nous utilisons le suivi des conversions Google Ads (gtag.js), qui peut définir des cookies pour mesurer l'efficacité publicitaire. Nous n'utilisons pas de cookies d'analyse qui suivent votre comportement de navigation entre les sites. Les clés de chiffrement sont automatiquement détruites lorsque vous fermez l'onglet du navigateur."
       },
       "6": {
         "title": "Services Tiers",
-        "content": "BLIP utilise Supabase pour la communication WebSocket en temps réel (relais de messages uniquement, sans stockage). Nous pouvons afficher des publicités contextuelles. Les fournisseurs de publicité peuvent utiliser leurs propres cookies conformément à leurs politiques de confidentialité. Nous ne partageons jamais de données de conversation avec les annonceurs—parce que nous n'en avons pas."
+        "content": "BLIP utilise Supabase pour la communication WebSocket en temps réel (relais de messages uniquement, sans stockage). Nous utilisons Google Ads (gtag.js, ID : AW-874567055) pour le suivi des conversions afin de mesurer l'efficacité des campagnes publicitaires. Nous pouvons afficher des publicités contextuelles. Les fournisseurs de publicité peuvent utiliser leurs propres cookies conformément à leurs politiques de confidentialité. Nous ne partageons jamais de données de conversation avec les annonceurs—parce que nous n'en avons pas."
       },
       "7": {
         "title": "Protection des Mineurs",

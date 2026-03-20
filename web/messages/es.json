@@ -310,7 +310,7 @@
   "Privacy": {
     "title": "Privacidad por Arquitectura",
     "subtitle": "Política de Privacidad",
-    "lastUpdated": "Última actualización: febrero 2026",
+    "lastUpdated": "Última actualización: marzo 2026",
     "intro": "BLIP está diseñado para no saber nada sobre ti. Esto no es solo una política—es cómo construimos el sistema. Lo que no podemos recopilar, no podemos filtrar.",
     "sections": {
       "1": {
@@ -331,11 +331,11 @@
       },
       "5": {
         "title": "Cookies y Almacenamiento Local",
-        "content": "BLIP utiliza almacenamiento local mínimo para: preferencias de tema (modo oscuro/claro), configuración de idioma y claves de cifrado temporales durante sesiones activas. No usamos cookies de rastreo, cookies de análisis ni cookies publicitarias de terceros. Las claves de cifrado se destruyen automáticamente al cerrar la pestaña del navegador."
+        "content": "BLIP utiliza almacenamiento local mínimo para: preferencias de tema (modo oscuro/claro), configuración de idioma, datos de salas guardadas y claves de cifrado temporales durante sesiones activas. Utilizamos el seguimiento de conversiones de Google Ads (gtag.js), que puede establecer cookies para medir la efectividad publicitaria. No utilizamos cookies de análisis que rastreen tu comportamiento de navegación entre sitios. Las claves de cifrado se destruyen automáticamente al cerrar la pestaña del navegador."
       },
       "6": {
         "title": "Servicios de Terceros",
-        "content": "BLIP utiliza Supabase para comunicación WebSocket en tiempo real (solo retransmisión de mensajes, sin almacenamiento). Podemos mostrar anuncios contextuales. Los proveedores de anuncios pueden usar sus propias cookies sujetas a sus políticas de privacidad. Nunca compartimos datos de conversación con anunciantes—porque no tenemos ninguno."
+        "content": "BLIP utiliza Supabase para comunicación WebSocket en tiempo real (solo retransmisión de mensajes, sin almacenamiento). Utilizamos Google Ads (gtag.js, ID: AW-874567055) para el seguimiento de conversiones y medir la efectividad de las campañas publicitarias. Podemos mostrar anuncios contextuales. Los proveedores de anuncios pueden usar sus propias cookies sujetas a sus políticas de privacidad. Nunca compartimos datos de conversación con anunciantes—porque no tenemos ninguno."
       },
       "7": {
         "title": "Privacidad Infantil",

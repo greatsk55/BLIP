@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import LegalPageLayout from "@/components/LegalPageLayout";
 
-const SECTION_COUNT = 8;
+const SECTION_COUNT = 9;
 
 export default function PrivacyClient() {
   const t = useTranslations("Privacy");
