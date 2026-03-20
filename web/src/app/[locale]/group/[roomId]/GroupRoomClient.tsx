@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { getGroupRoomStatus, verifyGroupPassword } from '@/lib/group/actions';
+import { saveRoom, saveRoomPassword, saveAdminToken } from '@/lib/room/storage';
 import GroupChatRoom from '@/components/group/GroupChatRoom';
 import GroupCreatedView from '@/components/group/GroupCreatedView';
 import PasswordEntry from '@/components/chat/PasswordEntry';
@@ -44,9 +45,10 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
       a = searchParams.get('a');
     }
 
+    if (a) setAdminToken(decodeURIComponent(a));
+
     if (p) {
       setCreatorPassword(decodeURIComponent(p));
-      if (a) setAdminToken(decodeURIComponent(a));
     } else if (k) {
       setLinkPassword(decodeURIComponent(k));
     }
@@ -63,6 +65,18 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
     async function autoVerify() {
       const result = await verifyGroupPassword(roomId, linkPassword!);
       if (result.valid) {
+        const hasAdmin = !!adminToken;
+        saveRoom({
+          roomId,
+          roomType: 'group',
+          isCreator: false,
+          isAdmin: hasAdmin,
+          createdAt: Date.now(),
+          lastAccessedAt: Date.now(),
+          status: 'active',
+        });
+        saveRoomPassword(roomId, linkPassword!);
+        if (hasAdmin) saveAdminToken(roomId, adminToken!);
         setLinkVerified(true);
         setRoomExists(true);
       } else {
@@ -72,7 +86,7 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
       }
     }
     autoVerify();
-  }, [hashParsed, linkPassword, roomId]);
+  }, [hashParsed, linkPassword, adminToken, roomId]);
 
   // 방 상태 확인
   useEffect(() => {

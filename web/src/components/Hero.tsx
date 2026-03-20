@@ -4,8 +4,10 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { ArrowRight, Trash2, Users } from "lucide-react";
+import { ArrowRight, Trash2, Users, MessageCircle } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { createRoom } from "@/lib/room/actions";
+import { saveRoom, saveRoomPassword } from "@/lib/room/storage";
 import TermsModal from "@/components/chat/TermsModal";
 
 export default function Hero() {
@@ -42,6 +44,16 @@ export default function Hero() {
       setCreating(false);
       return;
     }
+    saveRoom({
+      roomId: result.roomId,
+      roomType: 'chat',
+      isCreator: true,
+      isAdmin: false,
+      createdAt: Date.now(),
+      lastAccessedAt: Date.now(),
+      status: 'active',
+    });
+    saveRoomPassword(result.roomId, result.password);
     router.push(`/room/${result.roomId}#p=${encodeURIComponent(result.password)}`);
   }, [creating, termsAgreed, router, t]);
 
@@ -157,11 +169,26 @@ export default function Hero() {
         </span>
       </motion.button>
 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <Link
+          href="/my-rooms"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 font-mono text-xs text-ghost-grey hover:text-signal-green transition-colors uppercase tracking-wider"
+        >
+          <MessageCircle className="w-3 h-3" />
+          {t("myRooms")}
+        </Link>
+      </motion.div>
+
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 1, duration: 1 }}
-        className="mt-10 text-sm md:text-base text-ghost-grey font-sans font-light tracking-wide"
+        className="mt-6 text-sm md:text-base text-ghost-grey font-sans font-light tracking-wide"
       >
         {t("linkShare")}
       </motion.p>

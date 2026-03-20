@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { Users, ArrowRight } from 'lucide-react';
 import { createGroupRoom } from '@/lib/group/actions';
+import { saveRoom, saveRoomPassword, saveAdminToken } from '@/lib/room/storage';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import TermsModal from '@/components/chat/TermsModal';
 
@@ -36,6 +37,19 @@ export default function GroupCreateClient() {
       setCreating(false);
       return;
     }
+
+    saveRoom({
+      roomId: result.roomId,
+      roomType: 'group',
+      isCreator: true,
+      isAdmin: true,
+      title: title.trim() || 'Untitled Group',
+      createdAt: Date.now(),
+      lastAccessedAt: Date.now(),
+      status: 'active',
+    });
+    saveRoomPassword(result.roomId, result.password);
+    saveAdminToken(result.roomId, result.adminToken);
 
     // URL fragment로 비밀번호+관리자토큰 전달
     router.push(

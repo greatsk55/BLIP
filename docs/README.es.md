@@ -79,6 +79,18 @@ Este servicio intencionalmente **NO** hace lo siguiente:
 - Auto-destrucción: los mensajes fuera de la ventana visible se eliminan al instante con liberación de blob URL
 - Protección contra capturas: detección de cambio de pestaña, atajos de teclado y menú contextual para difuminar mensajes
 
+## Mis Salas
+
+Las salas creadas o unidas recientemente se guardan localmente — sin almacenamiento en servidor.
+
+- **Guardado automático**: las salas se almacenan en localStorage (web) o SecureStorage (móvil)
+- **Reingreso con un clic**: la contraseña guardada te permite entrar sin escribirla de nuevo
+- **Persistencia de admin**: los tokens de administrador de grupo se guardan para mantener privilegios
+- **Lista unificada**: chats 1:1 y grupales en un solo lugar
+- Visita `/my-rooms` en web, o toca la pestaña **Chat** en móvil
+
+> Las contraseñas y tokens de admin nunca salen de tu dispositivo. Borrar los datos del navegador los elimina permanentemente.
+
 ## Embeber
 
 Añade el chat BLIP a cualquier sitio web con un solo iframe:

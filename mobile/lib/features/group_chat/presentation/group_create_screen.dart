@@ -5,6 +5,8 @@ import 'package:blip/l10n/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/services/ad_service.dart';
+import '../../../core/storage/local_storage_service.dart';
+import '../../../core/storage/models/saved_room.dart';
 
 /// 그룹 채팅방 생성 화면
 class GroupCreateScreen extends StatefulWidget {
@@ -45,6 +47,23 @@ class _GroupCreateScreenState extends State<GroupCreateScreen> {
       final roomId = result['roomId'] as String;
       final password = result['password'] as String;
       final adminToken = result['adminToken'] as String;
+
+      // 로컬 저장 (채팅 리스트에 표시용)
+      final now = DateTime.now().millisecondsSinceEpoch;
+      final storage = LocalStorageService();
+      await storage.saveRoom(
+        SavedRoom(
+          roomId: roomId,
+          roomType: RoomType.group,
+          isCreator: true,
+          isAdmin: true,
+          title: title,
+          createdAt: now,
+          lastAccessedAt: now,
+        ),
+        password,
+      );
+      await storage.saveAdminToken(roomId, adminToken);
 
       await AdService.instance.showInterstitial();
       if (!mounted) return;

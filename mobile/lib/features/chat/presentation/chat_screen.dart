@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/network/api_client.dart';
 import '../../../core/services/review_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
@@ -13,8 +14,8 @@ import 'widgets/room_created_view.dart';
 import 'widgets/chat_room_view.dart';
 import 'widgets/room_destroyed_overlay.dart';
 
-/// 채팅 화면 최상위 상태 (비밀번호 입력 전/후)
-enum _ScreenPhase { passwordRequired, chatting }
+/// 채팅 화면 최상위 상태 (비밀번호 입력 전/후/검증중)
+enum _ScreenPhase { passwordRequired, verifying, chatting }
 
 class ChatScreen extends ConsumerStatefulWidget {
   final String roomId;
@@ -34,6 +35,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     with WidgetsBindingObserver {
   late _ScreenPhase _phase;
   String? _password;
+  String? _verifyError;
 
   @override
   void initState() {
@@ -41,10 +43,38 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
     WidgetsBinding.instance.addObserver(this);
 
     if (widget.initialPassword != null) {
-      _password = widget.initialPassword;
-      _phase = _ScreenPhase.chatting; // 바로 ChatWrapper 진입 (Presence 연결)
+      _phase = _ScreenPhase.verifying;
+      _verifyDeepLinkPassword();
     } else {
       _phase = _ScreenPhase.passwordRequired;
+    }
+  }
+
+  /// 딥링크로 전달된 비밀번호를 서버에서 검증 후 채팅 진입
+  Future<void> _verifyDeepLinkPassword() async {
+    try {
+      final api = ApiClient();
+      final result = await api.verifyPassword(
+        widget.roomId,
+        widget.initialPassword!,
+      );
+      if (!mounted) return;
+
+      if (result['valid'] == true) {
+        _password = widget.initialPassword;
+        setState(() => _phase = _ScreenPhase.chatting);
+      } else {
+        setState(() {
+          _verifyError = result['error'] as String?;
+          _phase = _ScreenPhase.passwordRequired;
+        });
+      }
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _verifyError = 'NETWORK_ERROR';
+        _phase = _ScreenPhase.passwordRequired;
+      });
     }
   }
 
@@ -110,7 +140,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
   @override
   Widget build(BuildContext context) {
     // chatting phase는 _ChatWrapper 내부에서 뒤로가기 제공 → AppBar 생략
-    final showAppBar = _phase != _ScreenPhase.chatting;
+    // verifying 상태에서도 AppBar 숨김 (로딩 스피너만 표시)
+    final showAppBar = _phase == _ScreenPhase.passwordRequired;
 
     return Scaffold(
       appBar: showAppBar
@@ -133,10 +164,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
 
   Widget _buildContent() {
     switch (_phase) {
+      case _ScreenPhase.verifying:
+        return const Center(child: CircularProgressIndicator());
+
       case _ScreenPhase.passwordRequired:
         return PasswordEntry(
           roomId: widget.roomId,
           onVerified: _onPasswordVerified,
+          initialError: _verifyError,
         );
 
       case _ScreenPhase.chatting:

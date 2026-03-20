@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getRoomStatus, verifyPassword } from '@/lib/room/actions';
+import { saveRoom, saveRoomPassword } from '@/lib/room/storage';
 import ChatRoom from '@/components/chat/ChatRoom';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
@@ -62,6 +63,16 @@ export default function RoomPageClient({ roomId }: RoomPageClientProps) {
     async function autoVerify() {
       const result = await verifyPassword(roomId, linkPassword!);
       if (result.valid) {
+        saveRoom({
+          roomId,
+          roomType: 'chat',
+          isCreator: false,
+          isAdmin: false,
+          createdAt: Date.now(),
+          lastAccessedAt: Date.now(),
+          status: 'active',
+        });
+        saveRoomPassword(roomId, linkPassword!);
         setLinkVerified(true);
         setRoomExists(true);
       } else {

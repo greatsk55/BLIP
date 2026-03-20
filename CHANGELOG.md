@@ -4,6 +4,15 @@ All notable changes to BLIP are documented here.
 
 ---
 
+## v1.8.0 — March 20, 2026
+### My Rooms & Board Improvements
+- **My Rooms** — View and manage your saved chat rooms (1:1 & group) from a dedicated page
+- Local room storage with status tracking (active, destroyed, expired)
+- Quick re-join or delete saved rooms
+- **Board improvements** — Refactored board hook, image gallery, markdown content enhancements
+- **Mobile enhancements** — Saved room management, improved group chat creation flow, room sharing UX
+- Updated translations for all 8 languages
+
 ## v1.7.0 — March 18, 2026
 ### Universal File Transfer
 - **Any file type** — Send PDFs, ZIPs, documents, audio, or any file via encrypted P2P

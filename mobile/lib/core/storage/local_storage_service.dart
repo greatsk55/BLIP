@@ -13,6 +13,7 @@ class LocalStorageService {
   static const _roomsKey = 'blip_saved_rooms';
   static const _boardsKey = 'blip_saved_boards';
   static const _roomPasswordPrefix = 'blip-room-pwd-';
+  static const _adminTokenPrefix = 'blip-room-admin-';
 
   final FlutterSecureStorage _secure;
   SharedPreferences? _prefs;
@@ -46,19 +47,24 @@ class LocalStorageService {
     } else {
       rooms.insert(0, room);
     }
-    await _writeRooms(rooms);
-    // 비밀번호는 SecureStorage에 별도 저장
-    await _secure.write(
-      key: '$_roomPasswordPrefix${room.roomId}',
-      value: password,
-    );
+    // SharedPreferences 쓰기와 SecureStorage 쓰기는 독립적이므로 병렬 실행
+    await Future.wait([
+      _writeRooms(rooms),
+      _secure.write(
+        key: '$_roomPasswordPrefix${room.roomId}',
+        value: password,
+      ),
+    ]);
   }
 
   Future<void> removeRoom(String roomId) async {
     final rooms = await getSavedRooms();
     rooms.removeWhere((r) => r.roomId == roomId);
-    await _writeRooms(rooms);
-    await _secure.delete(key: '$_roomPasswordPrefix$roomId');
+    await Future.wait([
+      _writeRooms(rooms),
+      _secure.delete(key: '$_roomPasswordPrefix$roomId'),
+      _secure.delete(key: '$_adminTokenPrefix$roomId'),
+    ]);
   }
 
   Future<void> updateRoomStatus(String roomId, String status) async {
@@ -68,6 +74,21 @@ class LocalStorageService {
       rooms[index] = rooms[index].copyWith(status: status);
       await _writeRooms(rooms);
     }
+  }
+
+  /// 여러 방의 상태를 한 번에 업데이트 (N번 I/O → 1번)
+  Future<void> updateRoomStatuses(Map<String, String> statusMap) async {
+    if (statusMap.isEmpty) return;
+    final rooms = await getSavedRooms();
+    bool changed = false;
+    for (int i = 0; i < rooms.length; i++) {
+      final newStatus = statusMap[rooms[i].roomId];
+      if (newStatus != null && rooms[i].status != newStatus) {
+        rooms[i] = rooms[i].copyWith(status: newStatus);
+        changed = true;
+      }
+    }
+    if (changed) await _writeRooms(rooms);
   }
 
   Future<void> updateRoomPeer(String roomId, String peerUsername) async {
@@ -81,6 +102,23 @@ class LocalStorageService {
 
   Future<String?> getRoomPassword(String roomId) async {
     return _secure.read(key: '$_roomPasswordPrefix$roomId');
+  }
+
+  // ═══════════ Admin Tokens ═══════════
+
+  Future<void> saveAdminToken(String roomId, String adminToken) async {
+    await _secure.write(
+      key: '$_adminTokenPrefix$roomId',
+      value: adminToken,
+    );
+  }
+
+  Future<String?> getAdminToken(String roomId) async {
+    return _secure.read(key: '$_adminTokenPrefix$roomId');
+  }
+
+  Future<void> removeAdminToken(String roomId) async {
+    await _secure.delete(key: '$_adminTokenPrefix$roomId');
   }
 
   Future<void> _writeRooms(List<SavedRoom> rooms) async {

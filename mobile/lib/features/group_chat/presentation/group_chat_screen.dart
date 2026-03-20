@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/storage/local_storage_service.dart';
+import '../../../core/storage/models/saved_room.dart';
 import '../providers/group_chat_provider.dart';
 import 'widgets/group_created_view.dart';
 import 'widgets/group_password_entry.dart';
@@ -95,6 +97,25 @@ class _GroupChatScreenState extends ConsumerState<GroupChatScreen>
   }
 
   void _onPasswordVerified(String password) {
+    // 참여자로 로컬 저장
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final storage = LocalStorageService();
+    storage.saveRoom(
+      SavedRoom(
+        roomId: widget.roomId,
+        roomType: RoomType.group,
+        isCreator: false,
+        isAdmin: _isAdmin,
+        title: null,
+        createdAt: now,
+        lastAccessedAt: now,
+      ),
+      password,
+    );
+    // 관리자 토큰이 있으면 같이 저장
+    if (_isAdmin && _adminToken != null) {
+      storage.saveAdminToken(widget.roomId, _adminToken!);
+    }
     setState(() {
       _password = password;
       _phase = _Phase.chatting;

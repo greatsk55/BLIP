@@ -5,7 +5,8 @@
     "cta": "Haz clic para crear sala de chat",
     "linkShare": "Conéctate perfectamente con un solo enlace, sin procedimientos complejos.",
     "rateLimited": "Se alcanzó el límite de creación de salas. Inténtalo más tarde.",
-    "createFailed": "Error al crear la sala. Inténtalo de nuevo."
+    "createFailed": "Error al crear la sala. Inténtalo de nuevo.",
+    "myRooms": "Mis Salas"
   },
   "Problem": {
     "title": "Tus conversaciones duran demasiado.",
@@ -76,7 +77,8 @@
       "privacy": "Privacidad",
       "terms": "Términos",
       "updates": "Novedades",
-      "embed": "Embeber"
+      "embed": "Embeber",
+      "myRooms": "Mis Salas"
     }
   },
   "Changelog": {
@@ -84,7 +86,7 @@
     "subtitle": "Registro de cambios",
     "description": "Cada mejora, registrada de forma transparente.",
     "versions": {
-      "8": {
+      "9": {
         "version": "v1.0.0",
         "date": "1 de febrero de 2026",
         "title": "Lanzamiento inicial",
@@ -96,7 +98,7 @@
           "5": "Código 100% abierto"
         }
       },
-      "7": {
+      "8": {
         "version": "v1.1.0",
         "date": "10 de febrero de 2026",
         "title": "Destrucción instantánea y notificaciones",
@@ -107,7 +109,7 @@
           "4": "Comunidad privada con publicaciones cifradas"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.2.0",
         "date": "15 de febrero de 2026",
         "title": "Transferencia de medios cifrada",
@@ -119,7 +121,7 @@
           "5": "Verificación de integridad con sumas SHA-256"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.3.0",
         "date": "26 de febrero de 2026",
         "title": "Aplicación móvil y estabilidad",
@@ -132,7 +134,7 @@
           "6": "Soporte para 10 idiomas (+alemán, chino tradicional)"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.4.0",
         "date": "28 de febrero de 2026",
         "title": "Sistema de códigos de invitación de comunidad",
@@ -143,7 +145,7 @@
           "4": "Soporte de deep links para códigos de invitación en la app móvil"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.5.0",
         "date": "14 de marzo de 2026",
         "title": "Widget de chat embebible",
@@ -155,7 +157,7 @@
           "5": "Cifrado E2E completo mantenido en modo embebido"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -168,7 +170,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -178,6 +180,19 @@
           "3": "Transfer progress indicator during send/receive",
           "4": "200MB max file size (P2P — no server storage)",
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "1": {
+        "version": "v1.8.0",
+        "date": "20 de marzo de 2026",
+        "title": "Mis Salas & Reingreso Automático",
+        "changes": {
+          "1": "Página Mis Salas — gestiona tus chats 1:1 y grupales recientes en un solo lugar",
+          "2": "Las salas se guardan automáticamente al crear o unirse",
+          "3": "Reingreso con un clic — la contraseña guardada te permite entrar sin escribirla de nuevo",
+          "4": "Persistencia del token de admin — los administradores de grupo mantienen sus privilegios entre sesiones",
+          "5": "Los chats grupales ahora aparecen en la lista de chats de la app móvil",
+          "6": "Disponible en web y app móvil"
         }
       }
     }
@@ -409,7 +424,9 @@
     "updatesTitle": "Actualizaciones",
     "updatesDescription": "Consulta las últimas actualizaciones y cambios de BLIP.",
     "embedGuideTitle": "Embeber BLIP",
-    "embedGuideDescription": "Añade chat cifrado a cualquier sitio web con una sola línea de iframe."
+    "embedGuideDescription": "Añade chat cifrado a cualquier sitio web con una sola línea de iframe.",
+    "myRoomsTitle": "Mis Salas - BLIP",
+    "myRoomsDescription": "Ver tus salas de chat creadas o unidas recientemente."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -598,5 +615,20 @@
     "hero": {
       "cta": "Create Group Chat"
     }
+  },
+  "MyRooms": {
+    "title": "Mis Salas",
+    "backHome": "Inicio",
+    "empty": "Aún no tienes salas de chat. Crea una para empezar.",
+    "createNew": "Crear Sala",
+    "typeChat": "1:1",
+    "typeGroup": "Grupo",
+    "statusActive": "Activa",
+    "statusDestroyed": "Destruida",
+    "statusExpired": "Expirada",
+    "remove": "Eliminar",
+    "removeConfirm": "¿Eliminar esta sala de tu lista?",
+    "cancel": "Cancelar",
+    "confirmRemove": "Eliminar"
   }
 }

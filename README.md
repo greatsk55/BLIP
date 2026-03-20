@@ -157,6 +157,18 @@ This service intentionally does **NOT** do the following:
 - Auto-shred: messages beyond the visible window are destroyed with blob URLs released
 - Capture protection: visibility change, keyboard shortcut, and context-menu detection
 
+## My Chat Rooms
+
+Your recently created or joined rooms are saved locally — no server storage.
+
+- **Auto-save**: rooms are stored in localStorage (web) or SecureStorage (mobile) when created or joined
+- **One-click rejoin**: saved password lets you re-enter rooms without typing it again
+- **Admin persistence**: group chat admin tokens are stored so you keep admin privileges
+- **Unified list**: both 1:1 and group chats in one place
+- Visit `/my-rooms` on web, or tap the **Chat** tab on mobile
+
+> Passwords and admin tokens never leave your device. Clearing browser data removes them permanently.
+
 ## Embed
 
 Add BLIP chat to any website with a single iframe:

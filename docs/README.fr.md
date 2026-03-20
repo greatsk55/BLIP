@@ -79,6 +79,18 @@ Ce service ne fait intentionnellement **PAS** ce qui suit :
 - Auto-destruction : les messages hors de la fenêtre visible sont supprimés instantanément avec libération des blob URL
 - Protection contre les captures : détection de changement d'onglet, raccourcis clavier et menu contextuel pour flouter les messages
 
+## Mes Salons
+
+Les salons récemment créés ou rejoints sont sauvegardés localement — aucun stockage serveur.
+
+- **Sauvegarde automatique**: les salons sont stockés dans localStorage (web) ou SecureStorage (mobile)
+- **Reconnexion en un clic**: le mot de passe sauvegardé permet de rejoindre sans le retaper
+- **Persistance admin**: les jetons d'administrateur de groupe sont sauvegardés pour maintenir les privilèges
+- **Liste unifiée**: discussions 1:1 et de groupe en un seul endroit
+- Visitez `/my-rooms` sur le web, ou appuyez sur l'onglet **Chat** sur mobile
+
+> Les mots de passe et jetons admin ne quittent jamais votre appareil. Effacer les données du navigateur les supprime définitivement.
+
 ## Intégration
 
 Ajoutez le chat BLIP à n'importe quel site web avec un simple iframe :

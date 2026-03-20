@@ -5,7 +5,8 @@
     "cta": "Klicke, um einen Chatraum zu erstellen",
     "linkShare": "Verbinde dich perfekt mit einem einzigen Link, ohne komplizierte Verfahren.",
     "rateLimited": "Raumerstellungslimit erreicht. Bitte versuche es später erneut.",
-    "createFailed": "Raumerstellung fehlgeschlagen. Bitte versuche es erneut."
+    "createFailed": "Raumerstellung fehlgeschlagen. Bitte versuche es erneut.",
+    "myRooms": "Meine Räume"
   },
   "Problem": {
     "title": "Deine Gespräche dauern zu lange.",
@@ -76,7 +77,8 @@
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",
       "updates": "Updates",
-      "embed": "Einbetten"
+      "embed": "Einbetten",
+      "myRooms": "Meine Räume"
     }
   },
   "Changelog": {
@@ -84,7 +86,7 @@
     "subtitle": "Änderungsprotokoll",
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
-      "8": {
+      "9": {
         "version": "v1.0.0",
         "date": "1. Februar 2026",
         "title": "Erstveröffentlichung",
@@ -96,7 +98,7 @@
           "5": "100% quelloffene Codebasis"
         }
       },
-      "7": {
+      "8": {
         "version": "v1.1.0",
         "date": "10. Februar 2026",
         "title": "Sofortige Raumvernichtung & Benachrichtigungen",
@@ -107,7 +109,7 @@
           "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.2.0",
         "date": "15. Februar 2026",
         "title": "Verschlüsselte Medienübertragung",
@@ -119,7 +121,7 @@
           "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.3.0",
         "date": "26. Februar 2026",
         "title": "Mobile App & Stabilität",
@@ -132,7 +134,7 @@
           "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.4.0",
         "date": "28. Februar 2026",
         "title": "Community-Einladungscode-System",
@@ -143,7 +145,7 @@
           "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.5.0",
         "date": "14. März 2026",
         "title": "Einbettbares Chat-Widget",
@@ -155,7 +157,7 @@
           "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -168,7 +170,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -178,6 +180,19 @@
           "3": "Transfer progress indicator during send/receive",
           "4": "200MB max file size (P2P — no server storage)",
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "1": {
+        "version": "v1.8.0",
+        "date": "20. März 2026",
+        "title": "Meine Räume & Automatischer Wiedereintritt",
+        "changes": {
+          "1": "Meine Räume — verwalte deine letzten 1:1- und Gruppenchats an einem Ort",
+          "2": "Räume werden beim Erstellen oder Beitreten automatisch lokal gespeichert",
+          "3": "Wiedereintritt mit einem Klick — gespeichertes Passwort ermöglicht den Eintritt ohne erneute Eingabe",
+          "4": "Admin-Token-Persistenz — Gruppenadministratoren behalten ihre Rechte über Sitzungen hinweg",
+          "5": "Gruppenchats erscheinen jetzt auch in der Chat-Liste der mobilen App",
+          "6": "Verfügbar auf Web und mobiler App"
         }
       }
     }
@@ -409,7 +424,9 @@
     "updatesTitle": "Updates",
     "updatesDescription": "Sieh dir die neuesten Updates und Änderungen von BLIP an.",
     "embedGuideTitle": "BLIP einbetten",
-    "embedGuideDescription": "Fügen Sie mit einer einzigen iframe-Zeile verschlüsselten Chat zu jeder Website hinzu."
+    "embedGuideDescription": "Fügen Sie mit einer einzigen iframe-Zeile verschlüsselten Chat zu jeder Website hinzu.",
+    "myRoomsTitle": "Meine Räume - BLIP",
+    "myRoomsDescription": "Sieh dir deine kürzlich erstellten oder beigetretenen Chaträume an."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -598,5 +615,20 @@
     "hero": {
       "cta": "Create Group Chat"
     }
+  },
+  "MyRooms": {
+    "title": "Meine Räume",
+    "backHome": "Startseite",
+    "empty": "Noch keine Chaträume. Erstelle einen, um loszulegen.",
+    "createNew": "Raum erstellen",
+    "typeChat": "1:1",
+    "typeGroup": "Gruppe",
+    "statusActive": "Aktiv",
+    "statusDestroyed": "Zerstört",
+    "statusExpired": "Abgelaufen",
+    "remove": "Entfernen",
+    "removeConfirm": "Diesen Raum aus deiner Liste entfernen?",
+    "cancel": "Abbrechen",
+    "confirmRemove": "Entfernen"
   }
 }

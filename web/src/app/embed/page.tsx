@@ -4,6 +4,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { createRoom } from '@/lib/room/actions';
+import { saveRoom, saveRoomPassword } from '@/lib/room/storage';
 import { postToParent } from '@/lib/embed/postMessage';
 import TermsModal from '@/components/chat/TermsModal';
 
@@ -36,6 +37,17 @@ export default function EmbedPage() {
       setCreating(false);
       return;
     }
+
+    saveRoom({
+      roomId: result.roomId,
+      roomType: 'chat',
+      isCreator: true,
+      isAdmin: false,
+      createdAt: Date.now(),
+      lastAccessedAt: Date.now(),
+      status: 'active',
+    });
+    saveRoomPassword(result.roomId, result.password);
 
     const shareUrl = `${window.location.origin}/embed/room/${result.roomId}#k=${encodeURIComponent(result.password)}`;
     postToParent({

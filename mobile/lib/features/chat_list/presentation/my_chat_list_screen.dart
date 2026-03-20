@@ -79,7 +79,7 @@ class MyChatListScreen extends ConsumerWidget {
     );
   }
 
-  /// + 버튼 → 만들기 / ID로 참여 선택
+  /// + 버튼 → 만들기 / 그룹 만들기 / ID로 참여 선택
   void _showAddOptions(
       BuildContext context, AppLocalizations l10n, Color signalGreen) {
     showModalBottomSheet(
@@ -97,6 +97,14 @@ class MyChatListScreen extends ConsumerWidget {
                 if (agreed && context.mounted) {
                   RoomCreator.createAndNavigate(context);
                 }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.group_add, color: signalGreen),
+              title: Text(l10n.groupCreateButton),
+              onTap: () {
+                Navigator.pop(ctx);
+                context.push('/group/create');
               },
             ),
             ListTile(
@@ -175,9 +183,23 @@ class MyChatListScreen extends ConsumerWidget {
 
   Future<void> _openRoom(BuildContext context, SavedRoom room) async {
     if (room.status != 'active') return;
-    // 저장된 비밀번호로 자동 입장
-    final password = await LocalStorageService().getRoomPassword(room.roomId);
-    if (context.mounted) {
+    final storage = LocalStorageService();
+    final password = await storage.getRoomPassword(room.roomId);
+    if (!context.mounted) return;
+
+    if (room.roomType == RoomType.group) {
+      // 그룹 채팅: extra로 비밀번호 + 관리자 정보 + 관리자 토큰 전달
+      final adminToken = room.isAdmin
+          ? await storage.getAdminToken(room.roomId)
+          : null;
+      if (!context.mounted) return;
+      context.push('/group/${room.roomId}', extra: {
+        'password': password,
+        'adminToken': adminToken,
+        'isAdmin': room.isAdmin,
+      });
+    } else {
+      // 1:1 채팅: 저장된 비밀번호로 자동 입장
       context.push('/room/${room.roomId}', extra: password);
     }
   }
@@ -342,14 +364,30 @@ class _RoomCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  // 상태 표시등
-                  Container(
-                    width: 10,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: statusColor,
-                      shape: BoxShape.circle,
-                    ),
+                  // 타입 아이콘 + 상태 표시등
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Icon(
+                        room.roomType == RoomType.group
+                            ? Icons.group
+                            : Icons.chat_bubble_outline,
+                        size: 28,
+                        color: isActive ? signalGreen : ghostGrey,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: statusColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isDark ? Colors.black : Colors.white,
+                            width: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(width: 12),
                   // 정보
@@ -358,7 +396,9 @@ class _RoomCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          room.peerUsername ?? 'Room ${room.roomId.substring(0, 8)}',
+                          room.roomType == RoomType.group
+                              ? (room.title ?? 'Group ${room.roomId.substring(0, 8)}')
+                              : (room.peerUsername ?? 'Room ${room.roomId.substring(0, 8)}'),
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall
@@ -369,7 +409,7 @@ class _RoomCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '$statusText · $timeAgo',
+                          '${room.roomType == RoomType.group ? "Group" : "1:1"} · $statusText · $timeAgo',
                           style: TextStyle(
                             fontSize: 12,
                             color: ghostGrey,
@@ -379,6 +419,11 @@ class _RoomCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  if (room.isAdmin)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Icon(Icons.shield, size: 16, color: signalGreen.withValues(alpha: 0.6)),
+                    ),
                   if (isActive)
                     Icon(Icons.arrow_forward_ios,
                         size: 14, color: ghostGrey),

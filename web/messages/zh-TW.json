@@ -5,7 +5,8 @@
     "cta": "點擊建立聊天室",
     "linkShare": "不需要複雜手續，一個連結就能完美連線。",
     "rateLimited": "已達房間建立上限，請稍後再試。",
-    "createFailed": "房間建立失敗，請重試。"
+    "createFailed": "房間建立失敗，請重試。",
+    "myRooms": "我的聊天室"
   },
   "Problem": {
     "title": "你的對話留存得太久了。",
@@ -76,7 +77,8 @@
       "privacy": "隱私權",
       "terms": "服務條款",
       "updates": "更新紀錄",
-      "embed": "嵌入"
+      "embed": "嵌入",
+      "myRooms": "我的聊天室"
     }
   },
   "Changelog": {
@@ -84,7 +86,7 @@
     "subtitle": "更新紀錄",
     "description": "每一項改進，透明追蹤。",
     "versions": {
-      "8": {
+      "9": {
         "version": "v1.0.0",
         "date": "2026年2月1日",
         "title": "首次發布",
@@ -96,7 +98,7 @@
           "5": "100% 開源程式碼"
         }
       },
-      "7": {
+      "8": {
         "version": "v1.1.0",
         "date": "2026年2月10日",
         "title": "即時房間銷毀與通知",
@@ -107,7 +109,7 @@
           "4": "加密文章的私密社群功能"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.2.0",
         "date": "2026年2月15日",
         "title": "加密媒體傳輸",
@@ -119,7 +121,7 @@
           "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.3.0",
         "date": "2026年2月26日",
         "title": "行動應用程式與穩定性提升",
@@ -132,7 +134,7 @@
           "6": "10種語言支援（+德語、繁體中文）"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.4.0",
         "date": "2026年2月28日",
         "title": "社群邀請碼系統",
@@ -143,7 +145,7 @@
           "4": "行動應用程式支援社群邀請碼深層連結"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.5.0",
         "date": "2026年3月14日",
         "title": "嵌入式聊天小工具",
@@ -155,7 +157,7 @@
           "5": "嵌入模式下保持完整的端對端加密"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -168,7 +170,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -178,6 +180,19 @@
           "3": "Transfer progress indicator during send/receive",
           "4": "200MB max file size (P2P — no server storage)",
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "1": {
+        "version": "v1.8.0",
+        "date": "2026年3月20日",
+        "title": "我的聊天室 & 自動重新加入",
+        "changes": {
+          "1": "我的聊天室頁面 — 集中管理所有最近的1:1和群聊",
+          "2": "建立或加入聊天室時自動本地儲存",
+          "3": "一鍵重新加入 — 使用已儲存的密碼無需重新輸入",
+          "4": "管理員令牌持久化 — 群聊管理員權限跨會話保持",
+          "5": "行動端聊天列表中也顯示群聊（與1:1並列）",
+          "6": "網頁端和行動端均可使用"
         }
       }
     }
@@ -409,7 +424,9 @@
     "updatesTitle": "更新紀錄",
     "updatesDescription": "查看 BLIP 的最新更新和變更。",
     "embedGuideTitle": "BLIP 嵌入",
-    "embedGuideDescription": "一行iframe即可為任何網站添加加密聊天。"
+    "embedGuideDescription": "一行iframe即可為任何網站添加加密聊天。",
+    "myRoomsTitle": "我的聊天室 - BLIP",
+    "myRoomsDescription": "查看您最近建立或加入的聊天室。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -598,5 +615,20 @@
     "hero": {
       "cta": "Create Group Chat"
     }
+  },
+  "MyRooms": {
+    "title": "我的聊天室",
+    "backHome": "首頁",
+    "empty": "還沒有聊天室。建立一個開始吧。",
+    "createNew": "建立房間",
+    "typeChat": "1:1",
+    "typeGroup": "群聊",
+    "statusActive": "活躍",
+    "statusDestroyed": "已銷毀",
+    "statusExpired": "已過期",
+    "remove": "移除",
+    "removeConfirm": "從列表中移除此聊天室？",
+    "cancel": "取消",
+    "confirmRemove": "移除"
   }
 }

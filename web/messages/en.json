@@ -5,7 +5,8 @@
     "cta": "Click to Create Chat Room",
     "linkShare": "Connect perfectly with a single link, no complex procedures.",
     "rateLimited": "Room creation limit reached. Please try again later.",
-    "createFailed": "Failed to create room. Please try again."
+    "createFailed": "Failed to create room. Please try again.",
+    "myRooms": "My Chat Rooms"
   },
   "Problem": {
     "title": "Your conversations last too long.",
@@ -76,7 +77,8 @@
       "privacy": "Privacy",
       "terms": "Terms",
       "updates": "Updates",
-      "embed": "Embed"
+      "embed": "Embed",
+      "myRooms": "My Rooms"
     }
   },
   "Changelog": {
@@ -84,7 +86,7 @@
     "subtitle": "Changelog",
     "description": "Every improvement, tracked transparently.",
     "versions": {
-      "8": {
+      "9": {
         "version": "v1.0.0",
         "date": "February 1, 2026",
         "title": "Initial Release",
@@ -96,7 +98,7 @@
           "5": "100% open source codebase"
         }
       },
-      "7": {
+      "8": {
         "version": "v1.1.0",
         "date": "February 10, 2026",
         "title": "Instant Room Destruction & Notifications",
@@ -107,7 +109,7 @@
           "4": "Private community feature with encrypted posts"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.2.0",
         "date": "February 15, 2026",
         "title": "Encrypted Media Transfer",
@@ -119,7 +121,7 @@
           "5": "File integrity verification with SHA-256 checksums"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.3.0",
         "date": "February 26, 2026",
         "title": "Mobile App & Stability",
@@ -132,7 +134,7 @@
           "6": "10 language support (+German, Traditional Chinese)"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.4.0",
         "date": "February 28, 2026",
         "title": "Community Invite Code System",
@@ -143,7 +145,7 @@
           "4": "Mobile app deep link support for community invite codes"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.5.0",
         "date": "March 14, 2026",
         "title": "Embeddable Chat Widget",
@@ -155,7 +157,7 @@
           "5": "Full E2E encryption maintained in embedded mode"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -168,7 +170,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -178,6 +180,19 @@
           "3": "Transfer progress indicator during send/receive",
           "4": "200MB max file size (P2P — no server storage)",
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "1": {
+        "version": "v1.8.0",
+        "date": "March 20, 2026",
+        "title": "My Chat Rooms & Auto-Rejoin",
+        "changes": {
+          "1": "My Rooms page — view all your recent 1:1 and group chats in one place",
+          "2": "Rooms are automatically saved locally when created or joined",
+          "3": "One-click rejoin — stored password lets you re-enter rooms without typing it again",
+          "4": "Admin token persistence — group chat admins keep their privileges across sessions",
+          "5": "Group chats now appear in the chat list on mobile (alongside 1:1 chats)",
+          "6": "Available on both web and mobile app"
         }
       }
     }
@@ -411,7 +426,9 @@
     "updatesTitle": "Updates",
     "updatesDescription": "See the latest updates and changes to BLIP.",
     "embedGuideTitle": "Embed BLIP",
-    "embedGuideDescription": "Add encrypted ephemeral chat to any website with a single iframe snippet."
+    "embedGuideDescription": "Add encrypted ephemeral chat to any website with a single iframe snippet.",
+    "myRoomsTitle": "My Chat Rooms - BLIP",
+    "myRoomsDescription": "View your recently created or joined chat rooms."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -600,5 +617,20 @@
     "hero": {
       "cta": "Create Group Chat"
     }
+  },
+  "MyRooms": {
+    "title": "My Rooms",
+    "backHome": "Home",
+    "empty": "No chat rooms yet. Create one to get started.",
+    "createNew": "Create Room",
+    "typeChat": "1:1",
+    "typeGroup": "Group",
+    "statusActive": "Active",
+    "statusDestroyed": "Destroyed",
+    "statusExpired": "Expired",
+    "remove": "Remove",
+    "removeConfirm": "Remove this room from your list?",
+    "cancel": "Cancel",
+    "confirmRemove": "Remove"
   }
 }

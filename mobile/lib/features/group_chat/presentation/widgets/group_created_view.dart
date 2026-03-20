@@ -226,31 +226,37 @@ class _GroupCreatedViewState extends State<GroupCreatedView> {
               const SizedBox(height: 32),
 
               // Share button
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: OutlinedButton(
-                  onPressed: () {
-                    if (_includeKey) {
-                      Share.share(l10n.chatShareMessageLinkOnly(_shareLink));
-                    } else {
-                      Share.share(
-                          l10n.chatShareMessage(_shareLink, widget.password));
-                    }
-                  },
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: signalGreen),
-                    foregroundColor: signalGreen,
-                    shape: const RoundedRectangleBorder(),
-                    textStyle: const TextStyle(
-                      fontFamily: 'monospace',
-                      fontSize: 13,
-                      letterSpacing: 3,
+              Builder(builder: (ctx) {
+                return SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: () async {
+                      final text = _includeKey
+                          ? l10n.chatShareMessageLinkOnly(_shareLink)
+                          : l10n.chatShareMessage(_shareLink, widget.password);
+                      final box = ctx.findRenderObject() as RenderBox?;
+                      await Share.share(
+                        text,
+                        sharePositionOrigin: box != null
+                            ? box.localToGlobal(Offset.zero) & box.size
+                            : null,
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: signalGreen),
+                      foregroundColor: signalGreen,
+                      shape: const RoundedRectangleBorder(),
+                      textStyle: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                        letterSpacing: 3,
+                      ),
                     ),
+                    child: Text(l10n.commonShare.toUpperCase()),
                   ),
-                  child: Text(l10n.commonShare.toUpperCase()),
-                ),
-              ),
+                );
+              }),
               const SizedBox(height: 16),
 
               // Enter chat button

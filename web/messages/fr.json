@@ -5,7 +5,8 @@
     "cta": "Cliquez pour créer un salon",
     "linkShare": "Connectez-vous parfaitement avec un seul lien, sans procédures complexes.",
     "rateLimited": "Limite de création de salons atteinte. Veuillez réessayer plus tard.",
-    "createFailed": "Échec de la création du salon. Veuillez réessayer."
+    "createFailed": "Échec de la création du salon. Veuillez réessayer.",
+    "myRooms": "Mes Salons"
   },
   "Problem": {
     "title": "Vos conversations durent trop longtemps.",
@@ -76,7 +77,8 @@
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "updates": "Mises à jour",
-      "embed": "Intégrer"
+      "embed": "Intégrer",
+      "myRooms": "Mes Salons"
     }
   },
   "Changelog": {
@@ -84,7 +86,7 @@
     "subtitle": "Journal des modifications",
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
-      "8": {
+      "9": {
         "version": "v1.0.0",
         "date": "1er février 2026",
         "title": "Version initiale",
@@ -96,7 +98,7 @@
           "5": "Code source 100% ouvert"
         }
       },
-      "7": {
+      "8": {
         "version": "v1.1.0",
         "date": "10 février 2026",
         "title": "Destruction instantanée et notifications",
@@ -107,55 +109,55 @@
           "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "6": {
+      "7": {
         "version": "v1.2.0",
         "date": "15 février 2026",
         "title": "Transfert de médias chiffré",
         "changes": {
-          "1": "Transfert d'images et vidéos par P2P chiffré (WebRTC DataChannel)",
-          "2": "Relais TURN uniquement pour empêcher l'exposition IP entre pairs",
+          "1": "Transfert d’images et vidéos par P2P chiffré (WebRTC DataChannel)",
+          "2": "Relais TURN uniquement pour empêcher l’exposition IP entre pairs",
           "3": "Compression automatique des images (max 2048px, JPEG 80%)",
-          "4": "Visionneuse d'images plein écran avec zoom par pincement",
-          "5": "Vérification d'intégrité par sommes de contrôle SHA-256"
+          "4": "Visionneuse d’images plein écran avec zoom par pincement",
+          "5": "Vérification d’intégrité par sommes de contrôle SHA-256"
         }
       },
-      "5": {
+      "6": {
         "version": "v1.3.0",
         "date": "26 février 2026",
         "title": "Application mobile et stabilité",
         "changes": {
           "1": "Application Android lancée (Google Play Store)",
-          "2": "Liens profonds — ouvrir les salons directement depuis les liens partagés dans l'app",
+          "2": "Liens profonds — ouvrir les salons directement depuis les liens partagés dans l’app",
           "3": "Entrée en un clic — inclure le mot de passe dans le lien pour connexion instantanée",
           "4": "Période de grâce de 60 secondes — les salons ne sont pas détruits immédiatement à la sortie",
           "5": "Tableau de bord communautaire et vidéos dans les publications",
           "6": "Support de 10 langues (+allemand, chinois traditionnel)"
         }
       },
-      "4": {
+      "5": {
         "version": "v1.4.0",
         "date": "28 février 2026",
-        "title": "Système de codes d'invitation communautaire",
+        "title": "Système de codes d’invitation communautaire",
         "changes": {
-          "1": "Codes d'invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
-          "2": "Rotation du code d'invitation dans le panneau d'administration — invalider les anciens liens sans affecter les membres existants",
-          "3": "Séparation du code d'invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
-          "4": "Prise en charge des liens profonds pour les codes d'invitation dans l'application mobile"
+          "1": "Codes d’invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
+          "2": "Rotation du code d’invitation dans le panneau d’administration — invalider les anciens liens sans affecter les membres existants",
+          "3": "Séparation du code d’invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
+          "4": "Prise en charge des liens profonds pour les codes d’invitation dans l’application mobile"
         }
       },
-      "3": {
+      "4": {
         "version": "v1.5.0",
         "date": "14 mars 2026",
         "title": "Widget de chat intégrable",
         "changes": {
-          "1": "Intégrez le chat BLIP dans n'importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
+          "1": "Intégrez le chat BLIP dans n’importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
           "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
           "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
           "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
           "5": "Chiffrement E2E complet maintenu en mode intégré"
         }
       },
-      "2": {
+      "3": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -168,7 +170,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -178,6 +180,19 @@
           "3": "Transfer progress indicator during send/receive",
           "4": "200MB max file size (P2P — no server storage)",
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "1": {
+        "version": "v1.8.0",
+        "date": "20 mars 2026",
+        "title": "Mes Salons & Reconnexion Automatique",
+        "changes": {
+          "1": "Page Mes Salons — gérez vos discussions 1:1 et de groupe récentes en un seul endroit",
+          "2": "Les salons sont automatiquement sauvegardés lors de la création ou de la participation",
+          "3": "Reconnexion en un clic — le mot de passe sauvegardé permet de rejoindre sans le retaper",
+          "4": "Persistance du jeton admin — les administrateurs de groupe conservent leurs privilèges entre les sessions",
+          "5": "Les discussions de groupe apparaissent désormais dans la liste des chats de l’app mobile",
+          "6": "Disponible sur web et app mobile"
         }
       }
     }
@@ -409,7 +424,9 @@
     "updatesTitle": "Mises à jour",
     "updatesDescription": "Consultez les dernières mises à jour et modifications de BLIP.",
     "embedGuideTitle": "Intégrer BLIP",
-    "embedGuideDescription": "Ajoutez un chat chiffré à n'importe quel site avec une seule ligne d'iframe."
+    "embedGuideDescription": "Ajoutez un chat chiffré à n'importe quel site avec une seule ligne d'iframe.",
+    "myRoomsTitle": "Mes Salons - BLIP",
+    "myRoomsDescription": "Voir vos salons de discussion récemment créés ou rejoints."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -598,5 +615,20 @@
     "hero": {
       "cta": "Create Group Chat"
     }
+  },
+  "MyRooms": {
+    "title": "Mes Salons",
+    "backHome": "Accueil",
+    "empty": "Aucun salon pour le moment. Créez-en un pour commencer.",
+    "createNew": "Créer un Salon",
+    "typeChat": "1:1",
+    "typeGroup": "Groupe",
+    "statusActive": "Actif",
+    "statusDestroyed": "Détruit",
+    "statusExpired": "Expiré",
+    "remove": "Supprimer",
+    "removeConfirm": "Supprimer ce salon de votre liste ?",
+    "cancel": "Annuler",
+    "confirmRemove": "Supprimer"
   }
 }
