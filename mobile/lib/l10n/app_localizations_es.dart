@@ -992,4 +992,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get groupDestroyButton => 'Destruir';
+
+  @override
+  String get groupBackModalTitle => 'OPCIONES DE SALIDA';
+
+  @override
+  String get groupBackModalDescription => 'Elige cómo quieres salir';
+
+  @override
+  String get groupBackModalGoBack => 'VOLVER';
+
+  @override
+  String get groupBackModalLeaveChat => 'SALIR DEL CHAT';
+
+  @override
+  String get groupBackModalStay => 'QUEDARME';
 }

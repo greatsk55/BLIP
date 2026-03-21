@@ -25,6 +25,9 @@ function generateUUID(): string {
 
 const MAX_VISIBLE_MESSAGES = 50;
 
+// soft leave 시 cleanup/beforeunload에서 user_left 전송 방지
+let softLeaveFlag = false;
+
 function limitMessages(messages: DecryptedMessage[]): DecryptedMessage[] {
   if (messages.length <= MAX_VISIBLE_MESSAGES) return messages;
   return messages.slice(-MAX_VISIBLE_MESSAGES);
@@ -53,6 +56,7 @@ interface UseGroupChatReturn {
   participants: GroupPresenceUser[];
   sendMessage: (content: string) => void;
   disconnect: () => void;
+  softDisconnect: () => void;
   kickUser: (userId: string) => void;
   channel: ReturnType<typeof supabase.channel> | null;
   authKeyHash: string | null;
@@ -148,6 +152,18 @@ export function useGroupChat({
     }
     setMessages([]);
     setStatus('destroyed');
+  }, []);
+
+  // 페이지만 나가기: 채널 정리하되 user_left 안 보내고 participant count 유지
+  const softDisconnect = useCallback(() => {
+    softLeaveFlag = true;
+    if (channelRef.current) {
+      channelRef.current.untrack();
+      channelRef.current.unsubscribe();
+      supabase.removeChannel(channelRef.current);
+      channelRef.current = null;
+      setChannelState(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -347,20 +363,24 @@ export function useGroupChat({
         channelRef.current = null;
         setChannelState(null);
         ch.untrack();
-        ch.send({
-          type: 'broadcast',
-          event: 'user_left',
-          payload: {
-            userId: myIdRef.current,
-            username: myUsernameRef.current,
-          },
-        });
+        // softLeave 시 user_left 브로드캐스트 생략
+        if (!softLeaveFlag) {
+          ch.send({
+            type: 'broadcast',
+            event: 'user_left',
+            payload: {
+              userId: myIdRef.current,
+              username: myUsernameRef.current,
+            },
+          });
+        }
         ch.unsubscribe();
         supabase.removeChannel(ch);
       }
       sharedKeyRef.current = null;
       authKeyHashRef.current = null;
       selfTrackedRef.current = false;
+      softLeaveFlag = false;
     };
   }, [roomId, password, isAdmin]);
 
@@ -369,6 +389,9 @@ export function useGroupChat({
     if (!password) return;
 
     const handlePageLeave = () => {
+      // softLeave 시 beacon/user_left 전송 생략 (페이지만 나가기)
+      if (softLeaveFlag) return;
+
       const blob = new Blob(
         [JSON.stringify({ roomId, authKeyHash: authKeyHashRef.current, type: 'group' })],
         { type: 'application/json' }
@@ -408,6 +431,7 @@ export function useGroupChat({
     participants,
     sendMessage,
     disconnect,
+    softDisconnect,
     kickUser,
     channel: channelState,
     authKeyHash: authKeyHashState,

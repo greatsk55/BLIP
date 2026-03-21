@@ -377,5 +377,11 @@
   "groupLeaveButton": "나가기",
   "groupDestroyTitle": "그룹 폭파",
   "groupDestroyConfirm": "모든 참여자의 그룹이 영구적으로 파쇄됩니다. 되돌릴 수 없습니다.",
-  "groupDestroyButton": "폭파"
+  "groupDestroyButton": "폭파",
+
+  "groupBackModalTitle": "나가기 옵션",
+  "groupBackModalDescription": "어떻게 나갈지 선택하세요",
+  "groupBackModalGoBack": "페이지만 나가기",
+  "groupBackModalLeaveChat": "채팅에서 나가기",
+  "groupBackModalStay": "머물기"
 }

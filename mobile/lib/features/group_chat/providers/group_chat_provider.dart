@@ -351,7 +351,7 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
     );
   }
 
-  /// 퇴장
+  /// 퇴장 (완전히 나가기 - user_left 전송 + API leave)
   void disconnect() {
     if (_channel != null) {
       _channel!.untrack();
@@ -376,6 +376,20 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
       messages: [],
       status: GroupChatStatus.destroyed,
     );
+  }
+
+  /// 페이지만 나가기 (채널 정리만, user_left/API leave 안 보냄)
+  void softDisconnect() {
+    _selfTracked = false;
+    if (_channel != null) {
+      _channel!.untrack();
+      _channel!.unsubscribe();
+      _channel = null;
+    }
+    if (_symmetricKey != null) {
+      _symmetricKey!.fillRange(0, _symmetricKey!.length, 0);
+      _symmetricKey = null;
+    }
   }
 
   /// 앱 복귀 시 Presence 재등록

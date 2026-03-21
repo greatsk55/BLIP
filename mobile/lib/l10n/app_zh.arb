@@ -375,5 +375,11 @@
   "groupLeaveButton": "退出",
   "groupDestroyTitle": "销毁群组？",
   "groupDestroyConfirm": "这将永久销毁所有参与者的群组，无法撤销。",
-  "groupDestroyButton": "销毁"
+  "groupDestroyButton": "销毁",
+
+  "groupBackModalTitle": "离开选项",
+  "groupBackModalDescription": "选择离开方式",
+  "groupBackModalGoBack": "返回页面",
+  "groupBackModalLeaveChat": "退出聊天",
+  "groupBackModalStay": "留下"
 }

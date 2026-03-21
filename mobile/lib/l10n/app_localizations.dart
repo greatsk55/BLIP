@@ -1932,6 +1932,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Destroy'**
   String get groupDestroyButton;
+
+  /// Back modal title
+  ///
+  /// In en, this message translates to:
+  /// **'LEAVE OPTIONS'**
+  String get groupBackModalTitle;
+
+  /// Back modal description
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to leave'**
+  String get groupBackModalDescription;
+
+  /// Go back to page only
+  ///
+  /// In en, this message translates to:
+  /// **'GO BACK'**
+  String get groupBackModalGoBack;
+
+  /// Leave group chat completely
+  ///
+  /// In en, this message translates to:
+  /// **'LEAVE CHAT'**
+  String get groupBackModalLeaveChat;
+
+  /// Stay in chat
+  ///
+  /// In en, this message translates to:
+  /// **'STAY'**
+  String get groupBackModalStay;
 }
 
 class _AppLocalizationsDelegate

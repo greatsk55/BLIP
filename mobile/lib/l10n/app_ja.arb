@@ -375,5 +375,11 @@
   "groupLeaveButton": "退出",
   "groupDestroyTitle": "グループを破棄？",
   "groupDestroyConfirm": "すべての参加者のグループが永久に破棄されます。元に戻すことはできません。",
-  "groupDestroyButton": "破棄"
+  "groupDestroyButton": "破棄",
+
+  "groupBackModalTitle": "退出オプション",
+  "groupBackModalDescription": "退出方法を選択してください",
+  "groupBackModalGoBack": "ページを離れる",
+  "groupBackModalLeaveChat": "チャットから退出",
+  "groupBackModalStay": "留まる"
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ShieldCheck, LogOut, Users, FileText, Lock, Unlock, Bomb, Menu } from 'lucide-react';
+import { ShieldCheck, LogOut, Users, FileText, Lock, Unlock, Bomb, Menu, ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import TermsModal from '@/components/chat/TermsModal';
@@ -11,6 +11,7 @@ interface GroupChatHeaderProps {
   title: string;
   participantCount: number;
   isAdmin: boolean;
+  onBack: () => void;
   onLeave: () => void;
   onToggleSidebar: () => void;
   onLock: () => void;
@@ -23,6 +24,7 @@ export default function GroupChatHeader({
   title,
   participantCount,
   isAdmin,
+  onBack,
   onLeave,
   onToggleSidebar,
   onLock,
@@ -38,6 +40,13 @@ export default function GroupChatHeader({
     <>
       <header className="sticky top-0 z-50 h-14 flex items-center justify-between px-4 bg-void-black/80 backdrop-blur-md border-b border-ink/5 pt-[env(safe-area-inset-top)]">
         <div className="flex items-center gap-3">
+          <button
+            onClick={onBack}
+            className="flex items-center min-w-[44px] min-h-[44px] justify-center text-ink/50 hover:text-ink transition-colors -ml-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-signal-green/60" />
             <span className="relative flex h-2 w-2">

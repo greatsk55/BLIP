@@ -612,6 +612,14 @@
       "ban": "Ban",
       "banConfirm": "Ban {name}? They will not be able to rejoin."
     },
+    "backModal": {
+      "title": "離開選項",
+      "description": "選擇離開方式",
+      "goBack": "返回頁面",
+      "leaveChat": "退出聊天",
+      "lastPersonWarning": "你是最後一位參與者。離開將銷毀此頻道。",
+      "cancel": "留下"
+    },
     "hero": {
       "cta": "Create Group Chat"
     }

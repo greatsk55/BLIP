@@ -614,6 +614,14 @@
       "ban": "밴",
       "banConfirm": "{name}님을 밴하시겠습니까? 재입장이 불가능합니다."
     },
+    "backModal": {
+      "title": "나가기 옵션",
+      "description": "어떻게 나갈지 선택하세요",
+      "goBack": "페이지만 나가기",
+      "leaveChat": "채팅에서 나가기",
+      "lastPersonWarning": "당신이 마지막 참여자입니다. 나가면 이 채널이 파쇄됩니다.",
+      "cancel": "머물기"
+    },
     "hero": {
       "cta": "그룹 채팅 만들기"
     }

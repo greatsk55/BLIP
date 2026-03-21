@@ -955,4 +955,19 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get groupDestroyButton => '폭파';
+
+  @override
+  String get groupBackModalTitle => '나가기 옵션';
+
+  @override
+  String get groupBackModalDescription => '어떻게 나갈지 선택하세요';
+
+  @override
+  String get groupBackModalGoBack => '페이지만 나가기';
+
+  @override
+  String get groupBackModalLeaveChat => '채팅에서 나가기';
+
+  @override
+  String get groupBackModalStay => '머물기';
 }

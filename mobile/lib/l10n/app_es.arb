@@ -375,5 +375,11 @@
   "groupLeaveButton": "Salir",
   "groupDestroyTitle": "¿Destruir grupo?",
   "groupDestroyConfirm": "Esto destruirá permanentemente el grupo para todos los participantes. No se puede deshacer.",
-  "groupDestroyButton": "Destruir"
+  "groupDestroyButton": "Destruir",
+
+  "groupBackModalTitle": "OPCIONES DE SALIDA",
+  "groupBackModalDescription": "Elige cómo quieres salir",
+  "groupBackModalGoBack": "VOLVER",
+  "groupBackModalLeaveChat": "SALIR DEL CHAT",
+  "groupBackModalStay": "QUEDARME"
 }

@@ -569,5 +569,11 @@
   "groupLeaveButton": "Verlassen",
   "groupDestroyTitle": "Gruppe zerstören?",
   "groupDestroyConfirm": "Dies wird die Gruppe für alle Teilnehmer dauerhaft zerstören. Dies kann nicht rückgängig gemacht werden.",
-  "groupDestroyButton": "Zerstören"
+  "groupDestroyButton": "Zerstören",
+
+  "groupBackModalTitle": "VERLASSEN-OPTIONEN",
+  "groupBackModalDescription": "Wähle, wie du gehen möchtest",
+  "groupBackModalGoBack": "ZURÜCK",
+  "groupBackModalLeaveChat": "CHAT VERLASSEN",
+  "groupBackModalStay": "BLEIBEN"
 }

@@ -953,4 +953,19 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get groupDestroyButton => '破棄';
+
+  @override
+  String get groupBackModalTitle => '退出オプション';
+
+  @override
+  String get groupBackModalDescription => '退出方法を選択してください';
+
+  @override
+  String get groupBackModalGoBack => 'ページを離れる';
+
+  @override
+  String get groupBackModalLeaveChat => 'チャットから退出';
+
+  @override
+  String get groupBackModalStay => '留まる';
 }

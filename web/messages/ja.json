@@ -612,6 +612,14 @@
       "ban": "バン",
       "banConfirm": "{name}をバンしますか？再入場できなくなります。"
     },
+    "backModal": {
+      "title": "退出オプション",
+      "description": "退出方法を選択してください",
+      "goBack": "ページを離れる",
+      "leaveChat": "チャットから退出",
+      "lastPersonWarning": "あなたが最後の参加者です。退出するとこのチャンネルは破棄されます。",
+      "cancel": "留まる"
+    },
     "hero": {
       "cta": "グループチャット作成"
     }

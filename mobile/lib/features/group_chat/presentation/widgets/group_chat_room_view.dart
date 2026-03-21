@@ -83,30 +83,123 @@ class _GroupChatRoomViewState extends ConsumerState<GroupChatRoomView> {
     );
   }
 
-  Future<void> _confirmLeave() async {
+  /// 뒤로가기 버튼: 모달로 "페이지만 나가기" / "채팅에서 나가기" 선택
+  Future<void> _showBackOptions() async {
     final l10n = AppLocalizations.of(context)!;
-    final result = await showDialog<bool>(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ghostGrey =
+        isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
+
+    final result = await showModalBottomSheet<String>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.groupLeaveTitle),
-        content: Text(l10n.groupLeaveConfirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(l10n.commonCancel),
+      backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 핸들 바
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: ghostGrey.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Text(
+                l10n.groupBackModalTitle,
+                style: TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                l10n.groupBackModalDescription,
+                style: TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 11,
+                  color: ghostGrey.withValues(alpha: 0.6),
+                ),
+              ),
+              const SizedBox(height: 20),
+              // 페이지만 나가기
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.of(ctx).pop('goBack'),
+                  icon: const Icon(Icons.arrow_back, size: 18),
+                  label: Text(l10n.groupBackModalGoBack),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    foregroundColor: isDark ? Colors.white : Colors.black87,
+                    side: BorderSide(color: ghostGrey.withValues(alpha: 0.3)),
+                    textStyle: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // 채팅에서 나가기
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () => Navigator.of(ctx).pop('leaveChat'),
+                  icon: const Icon(Icons.logout, size: 18),
+                  label: Text(l10n.groupBackModalLeaveChat),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    foregroundColor: AppColors.glitchRed,
+                    side: const BorderSide(color: AppColors.glitchRed),
+                    textStyle: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // 취소
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(
+                    l10n.groupBackModalStay,
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 11,
+                      color: ghostGrey.withValues(alpha: 0.5),
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(
-              l10n.groupLeaveButton,
-              style: const TextStyle(color: AppColors.glitchRed),
-            ),
-          ),
-        ],
+        ),
       ),
     );
 
-    if (result == true && mounted) {
+    if (!mounted || result == null) return;
+
+    if (result == 'goBack') {
+      ref.read(groupChatNotifierProvider(_params).notifier).softDisconnect();
+      Navigator.of(context).popUntil((r) => r.isFirst);
+    } else if (result == 'leaveChat') {
       ref.read(groupChatNotifierProvider(_params).notifier).disconnect();
       Navigator.of(context).popUntil((r) => r.isFirst);
     }
@@ -168,7 +261,7 @@ class _GroupChatRoomViewState extends ConsumerState<GroupChatRoomView> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: _confirmLeave,
+                  onPressed: _showBackOptions,
                   icon: Icon(Icons.arrow_back, color: ghostGrey),
                 ),
                 const SizedBox(width: 4),

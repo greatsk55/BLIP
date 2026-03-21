@@ -198,24 +198,18 @@ export async function updateGroupParticipantCount(
   if (!authKeyHash) return;
   const supabase = createServerSupabase();
 
-  if (count === 0) {
-    await supabase
-      .from('rooms')
-      .update({ status: 'destroyed', participant_count: 0 })
-      .eq('id', roomId)
-      .eq('auth_key_hash', authKeyHash)
-      .eq('type', 'group');
-  } else {
-    await supabase
-      .from('rooms')
-      .update({
-        participant_count: count,
-        status: count > 0 ? 'active' : 'waiting',
-      })
-      .eq('id', roomId)
-      .eq('auth_key_hash', authKeyHash)
-      .eq('type', 'group');
-  }
+  // 그룹채팅은 참여자가 0이 되어도 파쇄하지 않음 (waiting 상태로 유지)
+  // 방 파쇄는 관리자의 명시적 destroyGroupRoom()으로만 가능
+  await supabase
+    .from('rooms')
+    .update({
+      participant_count: Math.max(0, count),
+      status: count > 0 ? 'active' : 'waiting',
+    })
+    .eq('id', roomId)
+    .eq('auth_key_hash', authKeyHash)
+    .eq('type', 'group')
+    .neq('status', 'destroyed');
 }
 
 /**

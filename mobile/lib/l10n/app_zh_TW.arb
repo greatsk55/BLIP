@@ -569,5 +569,11 @@
   "groupLeaveButton": "離開",
   "groupDestroyTitle": "銷毀群組？",
   "groupDestroyConfirm": "這將永久銷毀所有參與者的群組，無法復原。",
-  "groupDestroyButton": "銷毀"
+  "groupDestroyButton": "銷毀",
+
+  "groupBackModalTitle": "離開選項",
+  "groupBackModalDescription": "選擇離開方式",
+  "groupBackModalGoBack": "返回頁面",
+  "groupBackModalLeaveChat": "退出聊天",
+  "groupBackModalStay": "留下"
 }

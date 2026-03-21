@@ -375,5 +375,11 @@
   "groupLeaveButton": "Quitter",
   "groupDestroyTitle": "Détruire le groupe ?",
   "groupDestroyConfirm": "Cela détruira définitivement le groupe pour tous les participants. Cette action est irréversible.",
-  "groupDestroyButton": "Détruire"
+  "groupDestroyButton": "Détruire",
+
+  "groupBackModalTitle": "OPTIONS DE SORTIE",
+  "groupBackModalDescription": "Choisissez comment quitter",
+  "groupBackModalGoBack": "RETOUR",
+  "groupBackModalLeaveChat": "QUITTER LE CHAT",
+  "groupBackModalStay": "RESTER"
 }

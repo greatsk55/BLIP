@@ -940,6 +940,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get groupDestroyButton => '销毁';
+
+  @override
+  String get groupBackModalTitle => '离开选项';
+
+  @override
+  String get groupBackModalDescription => '选择离开方式';
+
+  @override
+  String get groupBackModalGoBack => '返回页面';
+
+  @override
+  String get groupBackModalLeaveChat => '退出聊天';
+
+  @override
+  String get groupBackModalStay => '留下';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1872,4 +1887,19 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get groupDestroyButton => '銷毀';
+
+  @override
+  String get groupBackModalTitle => '離開選項';
+
+  @override
+  String get groupBackModalDescription => '選擇離開方式';
+
+  @override
+  String get groupBackModalGoBack => '返回頁面';
+
+  @override
+  String get groupBackModalLeaveChat => '退出聊天';
+
+  @override
+  String get groupBackModalStay => '留下';
 }

@@ -646,5 +646,16 @@
   "groupDestroyConfirm": "This will permanently destroy the group for all participants. This cannot be undone.",
   "@groupDestroyConfirm": { "description": "Destroy group confirmation" },
   "groupDestroyButton": "Destroy",
-  "@groupDestroyButton": { "description": "Destroy button" }
+  "@groupDestroyButton": { "description": "Destroy button" },
+
+  "groupBackModalTitle": "LEAVE OPTIONS",
+  "@groupBackModalTitle": { "description": "Back modal title" },
+  "groupBackModalDescription": "Choose how you want to leave",
+  "@groupBackModalDescription": { "description": "Back modal description" },
+  "groupBackModalGoBack": "GO BACK",
+  "@groupBackModalGoBack": { "description": "Go back to page only" },
+  "groupBackModalLeaveChat": "LEAVE CHAT",
+  "@groupBackModalLeaveChat": { "description": "Leave group chat completely" },
+  "groupBackModalStay": "STAY",
+  "@groupBackModalStay": { "description": "Stay in chat" }
 }

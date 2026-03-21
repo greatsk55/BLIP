@@ -996,4 +996,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get groupDestroyButton => 'Zerstören';
+
+  @override
+  String get groupBackModalTitle => 'VERLASSEN-OPTIONEN';
+
+  @override
+  String get groupBackModalDescription => 'Wähle, wie du gehen möchtest';
+
+  @override
+  String get groupBackModalGoBack => 'ZURÜCK';
+
+  @override
+  String get groupBackModalLeaveChat => 'CHAT VERLASSEN';
+
+  @override
+  String get groupBackModalStay => 'BLEIBEN';
 }

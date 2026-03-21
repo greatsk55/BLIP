@@ -612,6 +612,14 @@
       "ban": "Ban",
       "banConfirm": "Ban {name}? They will not be able to rejoin."
     },
+    "backModal": {
+      "title": "VERLASSEN-OPTIONEN",
+      "description": "Wähle, wie du gehen möchtest",
+      "goBack": "ZURÜCK",
+      "leaveChat": "CHAT VERLASSEN",
+      "lastPersonWarning": "Du bist der letzte Teilnehmer. Verlassen wird diesen Kanal zerstören.",
+      "cancel": "BLEIBEN"
+    },
     "hero": {
       "cta": "Create Group Chat"
     }

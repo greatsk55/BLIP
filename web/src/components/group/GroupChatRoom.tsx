@@ -10,8 +10,8 @@ import { updateGroupParticipantCount, destroyGroupRoom, toggleGroupLock, banUser
 import GroupChatHeader from './GroupChatHeader';
 import ChatMessageArea, { type ChatMessageAreaHandle } from '@/components/chat/ChatMessageArea';
 import ChatInput from '@/components/chat/ChatInput';
-import LeaveConfirmModal from '@/components/chat/LeaveConfirmModal';
 import RoomDestroyedOverlay from '@/components/chat/RoomDestroyedOverlay';
+import GroupBackModal from './GroupBackModal';
 import SystemMessage from '@/components/chat/SystemMessage';
 import ParticipantSidebar from './ParticipantSidebar';
 
@@ -33,7 +33,7 @@ export default function GroupChatRoom({
   const router = useRouter();
   useVisualViewport();
   const { notifyMessage } = useNotification();
-  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [showBackModal, setShowBackModal] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const messageAreaRef = useRef<ChatMessageAreaHandle>(null);
 
@@ -45,8 +45,16 @@ export default function GroupChatRoom({
     onMessageReceived: notifyMessage,
   });
 
-  const handleConfirmLeave = useCallback(async () => {
-    setShowLeaveModal(false);
+  // 페이지만 나가기: 채팅 유지, 홈으로 이동 (재접속 가능)
+  const handleGoBack = useCallback(() => {
+    setShowBackModal(false);
+    chat.softDisconnect();
+    router.push('/');
+  }, [chat, router]);
+
+  // 채팅에서 나가기: 완전 퇴장
+  const handleLeaveChat = useCallback(async () => {
+    setShowBackModal(false);
     chat.disconnect();
     if (password) {
       const { authKey } = await deriveKeysFromPassword(password, roomId);
@@ -104,7 +112,8 @@ export default function GroupChatRoom({
         title={title}
         participantCount={chat.participants.length}
         isAdmin={isAdmin}
-        onLeave={() => setShowLeaveModal(true)}
+        onBack={() => setShowBackModal(true)}
+        onLeave={() => setShowBackModal(true)}
         onToggleSidebar={() => setShowSidebar(!showSidebar)}
         onLock={() => handleLock(true)}
         onUnlock={() => handleLock(false)}
@@ -150,11 +159,12 @@ export default function GroupChatRoom({
         />
       </div>
 
-      <LeaveConfirmModal
-        isOpen={showLeaveModal}
+      <GroupBackModal
+        isOpen={showBackModal}
         isLastPerson={chat.participants.length <= 1}
-        onConfirm={handleConfirmLeave}
-        onCancel={() => setShowLeaveModal(false)}
+        onGoBack={handleGoBack}
+        onLeaveChat={handleLeaveChat}
+        onCancel={() => setShowBackModal(false)}
       />
     </div>
   );
