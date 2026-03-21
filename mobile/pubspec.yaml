@@ -1,7 +1,7 @@
 name: blip
 description: "BLIP - Talk. Then Vanish. E2EE ephemeral chat."
 publish_to: 'none'
-version: 1.8.1+11
+version: 1.9.0+12
 
 environment:
   sdk: ^3.10.4
