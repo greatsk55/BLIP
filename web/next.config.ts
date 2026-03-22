@@ -50,6 +50,13 @@ const nextConfig = {
           { key: 'Content-Type', value: 'application/json' },
         ],
       },
+      // Android App Links — assetlinks.json
+      {
+        source: '/.well-known/assetlinks.json',
+        headers: [
+          { key: 'Content-Type', value: 'application/json' },
+        ],
+      },
       // 기본 경로: iframe 차단 (먼저 선언하여 embed 규칙이 오버라이드할 수 있게)
       {
         source: '/(.*)',

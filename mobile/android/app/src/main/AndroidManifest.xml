@@ -42,12 +42,33 @@
                 <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/room/"/>
             </intent-filter>
             <!-- /{locale}/room/, /{locale}/board/ (next-intl 로캘 프리픽스) -->
+            <!-- 2글자 locale: en, ko, ja, zh, es, fr, de -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPattern="/../room/.*"/>
-                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPattern="/../board/.*"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/en/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/en/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/ko/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/ko/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/ja/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/ja/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/zh/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/zh/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/es/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/es/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/fr/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/fr/board/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/de/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/de/board/"/>
+            </intent-filter>
+            <!-- zh-TW locale (5글자) -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/zh-TW/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/zh-TW/board/"/>
             </intent-filter>
         </activity>
         <!-- AdMob App ID -->

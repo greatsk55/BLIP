@@ -29,9 +29,7 @@
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-2005178297837902~6566480446</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
-	<true/>
-	<key>ITSEncryptionExportComplianceCode</key>
-	<string></string>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSUserTrackingUsageDescription</key>
