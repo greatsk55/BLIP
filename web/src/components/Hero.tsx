@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { ArrowRight, Trash2, Users, MessageCircle } from "lucide-react";
+import { ArrowRight, Trash2, Users, MessageCircle, Zap } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { createRoom } from "@/lib/room/actions";
 import { saveRoom, saveRoomPassword } from "@/lib/room/storage";
@@ -14,6 +14,7 @@ export default function Hero() {
   const t = useTranslations("Hero");
   const tc = useTranslations("Chat");
   const tg = useTranslations("Group");
+  const tb = useTranslations("BlipMe");
   const router = useRouter();
   const [textVisible, setTextVisible] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -169,20 +170,36 @@ export default function Hero() {
         </span>
       </motion.button>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-      >
-        <Link
-          href="/my-rooms"
-          className="mt-4 inline-flex items-center gap-2 px-4 py-2 font-mono text-xs text-ghost-grey hover:text-signal-green transition-colors uppercase tracking-wider"
+      <div className="mt-4 flex flex-wrap justify-center gap-3">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <MessageCircle className="w-3 h-3" />
-          {t("myRooms")}
-        </Link>
-      </motion.div>
+          <Link
+            href="/blipme"
+            className="inline-flex items-center gap-2 px-4 py-2 font-mono text-xs text-ghost-grey hover:text-signal-green transition-colors uppercase tracking-wider"
+          >
+            <Zap className="w-3 h-3" />
+            {tb("hero")}
+          </Link>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <Link
+            href="/my-rooms"
+            className="inline-flex items-center gap-2 px-4 py-2 font-mono text-xs text-ghost-grey hover:text-signal-green transition-colors uppercase tracking-wider"
+          >
+            <MessageCircle className="w-3 h-3" />
+            {t("myRooms")}
+          </Link>
+        </motion.div>
+      </div>
 
       <motion.p
         initial={{ opacity: 0 }}

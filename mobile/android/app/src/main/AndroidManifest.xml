@@ -40,6 +40,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/board/"/>
                 <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/room/"/>
+                <data android:scheme="https" android:host="blip-blip.vercel.app" android:pathPrefix="/m/"/>
             </intent-filter>
             <!-- /{locale}/room/, /{locale}/board/ (next-intl 로캘 프리픽스) -->
             <!-- 2글자 locale: en, ko, ja, zh, es, fr, de -->

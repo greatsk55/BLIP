@@ -970,4 +970,60 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get groupBackModalStay => '머물기';
+
+  @override
+  String get blipMeListening => '대기 중';
+
+  @override
+  String get blipMeOffline => '오프라인';
+
+  @override
+  String get blipMeCreateTitle => '나만의 연락 링크 만들기';
+
+  @override
+  String get blipMeCreateDescription =>
+      '링크를 SNS 프로필이나 어디든 공유하세요. 누군가 클릭하면 즉시 1:1 비밀 채팅방이 생성됩니다.';
+
+  @override
+  String get blipMeCreateButton => 'BLIP me 링크 생성';
+
+  @override
+  String get blipMeYourLink => '나의 링크';
+
+  @override
+  String get blipMeTotalConnections => '총 연결 수';
+
+  @override
+  String get blipMeHowItWorks =>
+      '이 페이지를 열어두면 누군가 링크를 클릭했을 때 실시간 알림을 받습니다. 각 연결은 독립된 일회용 채팅방입니다.';
+
+  @override
+  String get blipMeRegenerate => 'URL 변경';
+
+  @override
+  String get blipMeDelete => '삭제';
+
+  @override
+  String get blipMeConfirmDelete => '정말 삭제?';
+
+  @override
+  String get blipMeIncomingTitle => '누군가 대화를 요청합니다!';
+
+  @override
+  String get blipMeIncomingDescription => 'BLIP me 링크를 통해 연결 요청이 도착했습니다.';
+
+  @override
+  String get blipMeJoinRoom => '채팅 시작';
+
+  @override
+  String get blipMeDismiss => '무시';
+
+  @override
+  String get blipMeRateLimited => '생성 제한에 도달했습니다. 잠시 후 다시 시도해주세요.';
+
+  @override
+  String get blipMeError => '오류가 발생했습니다. 다시 시도해주세요.';
+
+  @override
+  String get blipMeHero => 'BLIP me';
 }

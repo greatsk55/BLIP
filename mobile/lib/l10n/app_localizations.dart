@@ -1962,6 +1962,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'STAY'**
   String get groupBackModalStay;
+
+  /// BLIP me listening status
+  ///
+  /// In en, this message translates to:
+  /// **'Listening'**
+  String get blipMeListening;
+
+  /// BLIP me offline status
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get blipMeOffline;
+
+  /// BLIP me create title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Your Contact Link'**
+  String get blipMeCreateTitle;
+
+  /// BLIP me create description
+  ///
+  /// In en, this message translates to:
+  /// **'Share your link on your social profile or anywhere. When someone clicks, an instant 1:1 encrypted chat room is created.'**
+  String get blipMeCreateDescription;
+
+  /// BLIP me create button
+  ///
+  /// In en, this message translates to:
+  /// **'Create BLIP me Link'**
+  String get blipMeCreateButton;
+
+  /// BLIP me your link label
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR LINK'**
+  String get blipMeYourLink;
+
+  /// BLIP me total connections
+  ///
+  /// In en, this message translates to:
+  /// **'Total Connections'**
+  String get blipMeTotalConnections;
+
+  /// BLIP me how it works
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this page open to receive real-time notifications when someone clicks your link. Each connection creates an independent disposable chat room.'**
+  String get blipMeHowItWorks;
+
+  /// BLIP me regenerate link
+  ///
+  /// In en, this message translates to:
+  /// **'Change URL'**
+  String get blipMeRegenerate;
+
+  /// BLIP me delete link
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get blipMeDelete;
+
+  /// BLIP me confirm delete
+  ///
+  /// In en, this message translates to:
+  /// **'Really delete?'**
+  String get blipMeConfirmDelete;
+
+  /// BLIP me incoming title
+  ///
+  /// In en, this message translates to:
+  /// **'Someone wants to talk!'**
+  String get blipMeIncomingTitle;
+
+  /// BLIP me incoming description
+  ///
+  /// In en, this message translates to:
+  /// **'A connection request arrived via your BLIP me link.'**
+  String get blipMeIncomingDescription;
+
+  /// BLIP me join room
+  ///
+  /// In en, this message translates to:
+  /// **'Start Chat'**
+  String get blipMeJoinRoom;
+
+  /// BLIP me dismiss
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get blipMeDismiss;
+
+  /// BLIP me rate limited
+  ///
+  /// In en, this message translates to:
+  /// **'Creation limit reached. Please try again later.'**
+  String get blipMeRateLimited;
+
+  /// BLIP me error
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred. Please try again.'**
+  String get blipMeError;
+
+  /// BLIP me hero button text
+  ///
+  /// In en, this message translates to:
+  /// **'BLIP me'**
+  String get blipMeHero;
 }
 
 class _AppLocalizationsDelegate

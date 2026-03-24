@@ -1012,4 +1012,62 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get groupBackModalStay => 'RESTER';
+
+  @override
+  String get blipMeListening => 'En écoute';
+
+  @override
+  String get blipMeOffline => 'Hors ligne';
+
+  @override
+  String get blipMeCreateTitle => 'Créez votre lien de contact';
+
+  @override
+  String get blipMeCreateDescription =>
+      'Partagez votre lien sur votre profil social ou n\'importe où. Quand quelqu\'un clique, une salle de chat 1:1 chiffrée est créée instantanément.';
+
+  @override
+  String get blipMeCreateButton => 'Créer un lien BLIP me';
+
+  @override
+  String get blipMeYourLink => 'Votre lien';
+
+  @override
+  String get blipMeTotalConnections => 'Connexions totales';
+
+  @override
+  String get blipMeHowItWorks =>
+      'Gardez cette page ouverte pour recevoir des notifications en temps réel quand quelqu\'un clique sur votre lien. Chaque connexion crée une salle de chat jetable indépendante.';
+
+  @override
+  String get blipMeRegenerate => 'Changer l\'URL';
+
+  @override
+  String get blipMeDelete => 'Supprimer';
+
+  @override
+  String get blipMeConfirmDelete => 'Vraiment supprimer ?';
+
+  @override
+  String get blipMeIncomingTitle => 'Quelqu\'un veut parler !';
+
+  @override
+  String get blipMeIncomingDescription =>
+      'Une demande de connexion est arrivée via votre lien BLIP me.';
+
+  @override
+  String get blipMeJoinRoom => 'Démarrer le chat';
+
+  @override
+  String get blipMeDismiss => 'Ignorer';
+
+  @override
+  String get blipMeRateLimited =>
+      'Limite de création atteinte. Réessayez plus tard.';
+
+  @override
+  String get blipMeError => 'Une erreur est survenue. Veuillez réessayer.';
+
+  @override
+  String get blipMeHero => 'BLIP me';
 }

@@ -78,7 +78,8 @@
       "terms": "이용약관",
       "updates": "업데이트",
       "embed": "임베드",
-      "myRooms": "내 채팅방"
+      "myRooms": "내 채팅방",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "관리자 토큰 유지 — 그룹 채팅 관리자 권한이 세션 간 유지",
           "5": "모바일 앱 채팅 리스트에 그룹 채팅도 표시 (1:1과 함께)",
           "6": "웹 및 모바일 앱 모두 지원"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "2026년 3월 24일",
+        "title": "BLIP me — 일회용 연락 링크",
+        "changes": {
+          "1": "BLIP me 링크 — 나만의 URL을 생성하여 SNS 프로필에 공유. 누군가 클릭하면 즉시 1:1 비밀 채팅 시작",
+          "2": "실시간 연결 알림 — 페이지를 열어두면 방문자 접속 시 즉시 알림 수신",
+          "3": "링크 관리 — 언제든 URL 변경 또는 삭제 가능",
+          "4": "계정 없는 소유권 — 디바이스 기반 토큰으로 링크 소유권 증명, 계정 불필요",
+          "5": "웹 및 모바일 앱 모두 지원"
         }
       }
     }
@@ -428,7 +441,9 @@
     "embedGuideTitle": "BLIP 임베드",
     "embedGuideDescription": "iframe 한 줄로 어떤 웹사이트에든 암호화된 일회용 채팅을 추가하세요.",
     "myRoomsTitle": "내 채팅방 - BLIP",
-    "myRoomsDescription": "최근 생성하거나 참여한 채팅방을 확인하세요."
+    "myRoomsDescription": "최근 생성하거나 참여한 채팅방을 확인하세요.",
+    "blipMeTitle": "BLIP me - 일회용 연락 링크",
+    "blipMeDescription": "일회용 연락 링크를 만들어 공유하세요. 클릭 한 번으로 비밀 채팅이 시작됩니다."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -640,5 +655,27 @@
     "removeConfirm": "이 채팅방을 목록에서 삭제할까요?",
     "cancel": "취소",
     "confirmRemove": "삭제"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - 일회용 연락 링크",
+    "pageDescription": "나만의 BLIP me 링크를 만들어 SNS에 공유하세요. 누군가 클릭하면 즉시 비밀 채팅이 시작됩니다.",
+    "createTitle": "나만의 연락 링크 만들기",
+    "createDescription": "링크를 SNS 프로필이나 어디든 공유하세요. 누군가 클릭하면 즉시 1:1 비밀 채팅방이 생성됩니다.",
+    "createButton": "BLIP me 링크 생성",
+    "yourLink": "나의 링크",
+    "totalConnections": "총 연결 수",
+    "howItWorks": "이 페이지를 열어두면 누군가 링크를 클릭했을 때 실시간 알림을 받습니다. 각 연결은 독립된 일회용 채팅방입니다.",
+    "regenerate": "URL 변경",
+    "delete": "삭제",
+    "confirmDelete": "정말 삭제?",
+    "listening": "대기 중",
+    "offline": "오프라인",
+    "incomingTitle": "누군가 대화를 요청합니다!",
+    "incomingDescription": "BLIP me 링크를 통해 연결 요청이 도착했습니다.",
+    "joinRoom": "채팅 시작",
+    "dismiss": "무시",
+    "rateLimited": "생성 제한에 도달했습니다. 잠시 후 다시 시도해주세요.",
+    "error": "오류가 발생했습니다. 다시 시도해주세요.",
+    "hero": "BLIP me"
   }
 }

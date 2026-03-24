@@ -968,4 +968,60 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get groupBackModalStay => '留まる';
+
+  @override
+  String get blipMeListening => '待機中';
+
+  @override
+  String get blipMeOffline => 'オフライン';
+
+  @override
+  String get blipMeCreateTitle => '自分の連絡リンクを作成';
+
+  @override
+  String get blipMeCreateDescription =>
+      'リンクをSNSプロフィールやどこにでも共有してください。誰かがクリックすると、即座に1:1暗号化チャットルームが作成されます。';
+
+  @override
+  String get blipMeCreateButton => 'BLIP meリンクを作成';
+
+  @override
+  String get blipMeYourLink => 'あなたのリンク';
+
+  @override
+  String get blipMeTotalConnections => '総接続数';
+
+  @override
+  String get blipMeHowItWorks =>
+      'このページを開いたままにすると、誰かがリンクをクリックした時にリアルタイム通知を受け取れます。各接続は独立した使い捨てチャットルームです。';
+
+  @override
+  String get blipMeRegenerate => 'URL変更';
+
+  @override
+  String get blipMeDelete => '削除';
+
+  @override
+  String get blipMeConfirmDelete => '本当に削除？';
+
+  @override
+  String get blipMeIncomingTitle => '誰かが会話を求めています！';
+
+  @override
+  String get blipMeIncomingDescription => 'BLIP meリンク経由で接続リクエストが届きました。';
+
+  @override
+  String get blipMeJoinRoom => 'チャット開始';
+
+  @override
+  String get blipMeDismiss => '無視';
+
+  @override
+  String get blipMeRateLimited => '作成制限に達しました。しばらくしてから再試行してください。';
+
+  @override
+  String get blipMeError => 'エラーが発生しました。もう一度お試しください。';
+
+  @override
+  String get blipMeHero => 'BLIP me';
 }

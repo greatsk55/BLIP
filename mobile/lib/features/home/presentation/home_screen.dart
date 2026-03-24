@@ -336,6 +336,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ),
           ),
+          const SizedBox(height: 12),
+
+          // BLIP me CTA
+          FadeTransition(
+            opacity: _ctaFade,
+            child: SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: OutlinedButton.icon(
+                onPressed: () => context.push('/blipme'),
+                icon: Icon(Icons.bolt, color: signalGreen),
+                label: Text(l10n.blipMeHero),
+              ),
+            ),
+          ),
           const SizedBox(height: 24),
 
           // Link share

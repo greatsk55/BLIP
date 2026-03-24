@@ -78,7 +78,8 @@
       "terms": "Términos",
       "updates": "Novedades",
       "embed": "Embeber",
-      "myRooms": "Mis Salas"
+      "myRooms": "Mis Salas",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "Persistencia del token de admin — los administradores de grupo mantienen sus privilegios entre sesiones",
           "5": "Los chats grupales ahora aparecen en la lista de chats de la app móvil",
           "6": "Disponible en web y app móvil"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "24 de marzo de 2026",
+        "title": "BLIP me — Enlace de contacto desechable",
+        "changes": {
+          "1": "Enlace BLIP me — Crea tu URL personal y compártelo en redes sociales. Cuando alguien haga clic, un chat 1:1 cifrado comienza al instante",
+          "2": "Alertas de conexión en tiempo real — Mantén la página abierta para recibir notificaciones instantáneas cuando un visitante se conecte",
+          "3": "Gestión de enlaces — Cambia la URL o elimina tu enlace en cualquier momento",
+          "4": "Propiedad sin cuenta — Token basado en dispositivo prueba la propiedad del enlace, sin necesidad de cuenta",
+          "5": "Disponible en web y aplicación móvil"
         }
       }
     }
@@ -426,7 +439,9 @@
     "embedGuideTitle": "Embeber BLIP",
     "embedGuideDescription": "Añade chat cifrado a cualquier sitio web con una sola línea de iframe.",
     "myRoomsTitle": "Mis Salas - BLIP",
-    "myRoomsDescription": "Ver tus salas de chat creadas o unidas recientemente."
+    "myRoomsDescription": "Ver tus salas de chat creadas o unidas recientemente.",
+    "blipMeTitle": "BLIP me - Enlace de contacto desechable",
+    "blipMeDescription": "Crea un enlace de contacto desechable. Compártelo en cualquier lugar — al hacer clic, comienza un chat secreto."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -638,5 +653,27 @@
     "removeConfirm": "¿Eliminar esta sala de tu lista?",
     "cancel": "Cancelar",
     "confirmRemove": "Eliminar"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - Enlace de contacto desechable",
+    "pageDescription": "Crea tu enlace BLIP me y compártelo en redes sociales. Cuando alguien haga clic, un chat secreto comienza al instante.",
+    "createTitle": "Crea tu enlace de contacto",
+    "createDescription": "Comparte tu enlace en tu perfil social o donde quieras. Cuando alguien haga clic, se crea una sala de chat 1:1 cifrada al instante.",
+    "createButton": "Crear enlace BLIP me",
+    "yourLink": "Tu enlace",
+    "totalConnections": "Conexiones totales",
+    "howItWorks": "Mantén esta página abierta para recibir notificaciones en tiempo real cuando alguien haga clic en tu enlace. Cada conexión crea una sala de chat desechable independiente.",
+    "regenerate": "Cambiar URL",
+    "delete": "Eliminar",
+    "confirmDelete": "¿Eliminar?",
+    "listening": "Escuchando",
+    "offline": "Desconectado",
+    "incomingTitle": "¡Alguien quiere hablar!",
+    "incomingDescription": "Llegó una solicitud de conexión a través de tu enlace BLIP me.",
+    "joinRoom": "Iniciar chat",
+    "dismiss": "Descartar",
+    "rateLimited": "Límite de creación alcanzado. Inténtalo de nuevo más tarde.",
+    "error": "Se produjo un error. Inténtalo de nuevo.",
+    "hero": "BLIP me"
   }
 }

@@ -955,6 +955,60 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get groupBackModalStay => '留下';
+
+  @override
+  String get blipMeListening => '等待中';
+
+  @override
+  String get blipMeOffline => '离线';
+
+  @override
+  String get blipMeCreateTitle => '创建您的联系链接';
+
+  @override
+  String get blipMeCreateDescription => '将链接分享到社交媒体或任何地方。有人点击后，即刻创建1:1加密聊天室。';
+
+  @override
+  String get blipMeCreateButton => '创建BLIP me链接';
+
+  @override
+  String get blipMeYourLink => '您的链接';
+
+  @override
+  String get blipMeTotalConnections => '总连接数';
+
+  @override
+  String get blipMeHowItWorks => '保持此页面打开，当有人点击您的链接时会收到实时通知。每次连接都会创建独立的一次性聊天室。';
+
+  @override
+  String get blipMeRegenerate => '更换URL';
+
+  @override
+  String get blipMeDelete => '删除';
+
+  @override
+  String get blipMeConfirmDelete => '确定删除？';
+
+  @override
+  String get blipMeIncomingTitle => '有人想与您交谈！';
+
+  @override
+  String get blipMeIncomingDescription => '通过BLIP me链接收到了连接请求。';
+
+  @override
+  String get blipMeJoinRoom => '开始聊天';
+
+  @override
+  String get blipMeDismiss => '忽略';
+
+  @override
+  String get blipMeRateLimited => '已达到创建限制，请稍后重试。';
+
+  @override
+  String get blipMeError => '发生错误，请重试。';
+
+  @override
+  String get blipMeHero => 'BLIP me';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1902,4 +1956,58 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get groupBackModalStay => '留下';
+
+  @override
+  String get blipMeListening => '等待中';
+
+  @override
+  String get blipMeOffline => '離線';
+
+  @override
+  String get blipMeCreateTitle => '建立您的聯繫連結';
+
+  @override
+  String get blipMeCreateDescription => '將連結分享到社群媒體或任何地方。有人點擊後，即刻建立1:1加密聊天室。';
+
+  @override
+  String get blipMeCreateButton => '建立BLIP me連結';
+
+  @override
+  String get blipMeYourLink => '您的連結';
+
+  @override
+  String get blipMeTotalConnections => '總連接數';
+
+  @override
+  String get blipMeHowItWorks => '保持此頁面開啟，當有人點擊您的連結時會收到即時通知。每次連接都會建立獨立的一次性聊天室。';
+
+  @override
+  String get blipMeRegenerate => '更換URL';
+
+  @override
+  String get blipMeDelete => '刪除';
+
+  @override
+  String get blipMeConfirmDelete => '確定刪除？';
+
+  @override
+  String get blipMeIncomingTitle => '有人想與您交談！';
+
+  @override
+  String get blipMeIncomingDescription => '透過BLIP me連結收到了連接請求。';
+
+  @override
+  String get blipMeJoinRoom => '開始聊天';
+
+  @override
+  String get blipMeDismiss => '忽略';
+
+  @override
+  String get blipMeRateLimited => '已達到建立限制，請稍後重試。';
+
+  @override
+  String get blipMeError => '發生錯誤，請重試。';
+
+  @override
+  String get blipMeHero => 'BLIP me';
 }

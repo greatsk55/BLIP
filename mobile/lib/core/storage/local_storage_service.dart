@@ -14,6 +14,8 @@ class LocalStorageService {
   static const _boardsKey = 'blip_saved_boards';
   static const _roomPasswordPrefix = 'blip-room-pwd-';
   static const _adminTokenPrefix = 'blip-room-admin-';
+  static const _blipMeOwnerTokenKey = 'blip-me-owner-token';
+  static const _blipMeLinkIdKey = 'blip_me_link_id';
 
   final FlutterSecureStorage _secure;
   SharedPreferences? _prefs;
@@ -127,6 +129,35 @@ class LocalStorageService {
       _roomsKey,
       jsonEncode(rooms.map((r) => r.toJson()).toList()),
     );
+  }
+
+  // ═══════════ BLIP me ═══════════
+
+  Future<String?> getBlipMeOwnerToken() async {
+    return _secure.read(key: _blipMeOwnerTokenKey);
+  }
+
+  Future<void> saveBlipMeOwnerToken(String token) async {
+    await _secure.write(key: _blipMeOwnerTokenKey, value: token);
+  }
+
+  Future<void> removeBlipMeOwnerToken() async {
+    await _secure.delete(key: _blipMeOwnerTokenKey);
+  }
+
+  Future<String?> getBlipMeLinkId() async {
+    final prefs = await _preferences;
+    return prefs.getString(_blipMeLinkIdKey);
+  }
+
+  Future<void> saveBlipMeLinkId(String linkId) async {
+    final prefs = await _preferences;
+    await prefs.setString(_blipMeLinkIdKey, linkId);
+  }
+
+  Future<void> removeBlipMeLinkId() async {
+    final prefs = await _preferences;
+    await prefs.remove(_blipMeLinkIdKey);
   }
 
   // ═══════════ Boards ═══════════

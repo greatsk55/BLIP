@@ -78,7 +78,8 @@
       "terms": "利用規約",
       "updates": "更新履歴",
       "embed": "埋め込み",
-      "myRooms": "マイルーム"
+      "myRooms": "マイルーム",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "管理者トークン保持 — グループ管理者権限がセッション間で維持",
           "5": "モバイルアプリのチャットリストにグループチャットも表示",
           "6": "Web・モバイルアプリ両対応"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "2026年3月24日",
+        "title": "BLIP me — 使い捨て連絡リンク",
+        "changes": {
+          "1": "BLIP meリンク — 自分のURLを作成してSNSで共有。誰かがクリックすると即座に1:1暗号化チャットが開始",
+          "2": "リアルタイム接続通知 — ページを開いたままにすると訪問者の接続時に即時通知を受信",
+          "3": "リンク管理 — いつでもURL変更または削除可能",
+          "4": "アカウント不要の所有権 — デバイスベースのトークンでリンク所有権を証明、アカウント不要",
+          "5": "ウェブとモバイルアプリの両方で利用可能"
         }
       }
     }
@@ -426,7 +439,9 @@
     "embedGuideTitle": "BLIP 埋め込み",
     "embedGuideDescription": "iframe一行でどんなウェブサイトにも暗号化チャットを追加。",
     "myRoomsTitle": "マイルーム - BLIP",
-    "myRoomsDescription": "最近作成または参加したチャットルームを確認できます。"
+    "myRoomsDescription": "最近作成または参加したチャットルームを確認できます。",
+    "blipMeTitle": "BLIP me - 使い捨て連絡リンク",
+    "blipMeDescription": "使い捨て連絡リンクを作成。どこにでも共有 — クリックで秘密チャットが始まります。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -638,5 +653,27 @@
     "removeConfirm": "このルームをリストから削除しますか？",
     "cancel": "キャンセル",
     "confirmRemove": "削除"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - 使い捨て連絡リンク",
+    "pageDescription": "BLIP meリンクを作成してSNSで共有。誰かがクリックすると、即座に秘密チャットが始まります。",
+    "createTitle": "自分の連絡リンクを作成",
+    "createDescription": "リンクをSNSプロフィールやどこにでも共有してください。誰かがクリックすると、即座に1:1暗号化チャットルームが作成されます。",
+    "createButton": "BLIP meリンクを作成",
+    "yourLink": "あなたのリンク",
+    "totalConnections": "総接続数",
+    "howItWorks": "このページを開いたままにすると、誰かがリンクをクリックした時にリアルタイム通知を受け取れます。各接続は独立した使い捨てチャットルームです。",
+    "regenerate": "URL変更",
+    "delete": "削除",
+    "confirmDelete": "本当に削除？",
+    "listening": "待機中",
+    "offline": "オフライン",
+    "incomingTitle": "誰かが会話を求めています！",
+    "incomingDescription": "BLIP meリンク経由で接続リクエストが届きました。",
+    "joinRoom": "チャット開始",
+    "dismiss": "無視",
+    "rateLimited": "作成制限に達しました。しばらくしてから再試行してください。",
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "hero": "BLIP me"
   }
 }

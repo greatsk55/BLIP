@@ -78,7 +78,8 @@
       "terms": "Nutzungsbedingungen",
       "updates": "Updates",
       "embed": "Einbetten",
-      "myRooms": "Meine Räume"
+      "myRooms": "Meine Räume",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "Admin-Token-Persistenz — Gruppenadministratoren behalten ihre Rechte über Sitzungen hinweg",
           "5": "Gruppenchats erscheinen jetzt auch in der Chat-Liste der mobilen App",
           "6": "Verfügbar auf Web und mobiler App"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "24. März 2026",
+        "title": "BLIP me — Einweg-Kontaktlink",
+        "changes": {
+          "1": "BLIP me-Link — Erstellen Sie Ihre persönliche URL und teilen Sie sie in sozialen Medien. Wenn jemand klickt, startet sofort ein verschlüsselter 1:1-Chat",
+          "2": "Echtzeit-Verbindungsbenachrichtigungen — Lassen Sie die Seite geöffnet, um sofortige Benachrichtigungen zu erhalten, wenn ein Besucher sich verbindet",
+          "3": "Link-Verwaltung — URL jederzeit ändern oder Link löschen",
+          "4": "Kontolose Eigentumsrechte — Gerätebasierter Token beweist Link-Eigentum, kein Konto erforderlich",
+          "5": "Verfügbar im Web und in der mobilen App"
         }
       }
     }
@@ -426,7 +439,9 @@
     "embedGuideTitle": "BLIP einbetten",
     "embedGuideDescription": "Fügen Sie mit einer einzigen iframe-Zeile verschlüsselten Chat zu jeder Website hinzu.",
     "myRoomsTitle": "Meine Räume - BLIP",
-    "myRoomsDescription": "Sieh dir deine kürzlich erstellten oder beigetretenen Chaträume an."
+    "myRoomsDescription": "Sieh dir deine kürzlich erstellten oder beigetretenen Chaträume an.",
+    "blipMeTitle": "BLIP me - Einweg-Kontaktlink",
+    "blipMeDescription": "Erstellen Sie einen Einweg-Kontaktlink. Teilen Sie ihn überall — ein Klick startet einen geheimen Chat."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -638,5 +653,27 @@
     "removeConfirm": "Diesen Raum aus deiner Liste entfernen?",
     "cancel": "Abbrechen",
     "confirmRemove": "Entfernen"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - Einweg-Kontaktlink",
+    "pageDescription": "Erstellen Sie Ihren BLIP me-Link und teilen Sie ihn in sozialen Medien. Wenn jemand klickt, startet sofort ein geheimer Chat.",
+    "createTitle": "Erstellen Sie Ihren Kontaktlink",
+    "createDescription": "Teilen Sie Ihren Link in Ihrem Social-Media-Profil oder überall. Wenn jemand klickt, wird sofort ein verschlüsselter 1:1-Chatraum erstellt.",
+    "createButton": "BLIP me-Link erstellen",
+    "yourLink": "Ihr Link",
+    "totalConnections": "Gesamtverbindungen",
+    "howItWorks": "Lassen Sie diese Seite geöffnet, um Echtzeit-Benachrichtigungen zu erhalten, wenn jemand Ihren Link anklickt. Jede Verbindung erstellt einen unabhängigen Einweg-Chatraum.",
+    "regenerate": "URL ändern",
+    "delete": "Löschen",
+    "confirmDelete": "Wirklich löschen?",
+    "listening": "Wartend",
+    "offline": "Offline",
+    "incomingTitle": "Jemand möchte sprechen!",
+    "incomingDescription": "Eine Verbindungsanfrage ist über Ihren BLIP me-Link eingegangen.",
+    "joinRoom": "Chat starten",
+    "dismiss": "Verwerfen",
+    "rateLimited": "Erstellungslimit erreicht. Bitte versuchen Sie es später erneut.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "hero": "BLIP me"
   }
 }

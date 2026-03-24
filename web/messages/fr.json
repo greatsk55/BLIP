@@ -78,7 +78,8 @@
       "terms": "Conditions",
       "updates": "Mises à jour",
       "embed": "Intégrer",
-      "myRooms": "Mes Salons"
+      "myRooms": "Mes Salons",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "Persistance du jeton admin — les administrateurs de groupe conservent leurs privilèges entre les sessions",
           "5": "Les discussions de groupe apparaissent désormais dans la liste des chats de l’app mobile",
           "6": "Disponible sur web et app mobile"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "24 mars 2026",
+        "title": "BLIP me — Lien de contact jetable",
+        "changes": {
+          "1": "Lien BLIP me — Créez votre URL personnelle et partagez-la sur les réseaux sociaux. Quand quelqu'un clique, un chat 1:1 chiffré démarre instantanément",
+          "2": "Alertes de connexion en temps réel — Gardez la page ouverte pour recevoir des notifications instantanées quand un visiteur se connecte",
+          "3": "Gestion des liens — Changez l'URL ou supprimez votre lien à tout moment",
+          "4": "Propriété sans compte — Un token basé sur l'appareil prouve la propriété du lien, aucun compte nécessaire",
+          "5": "Disponible sur le web et l'application mobile"
         }
       }
     }
@@ -426,7 +439,9 @@
     "embedGuideTitle": "Intégrer BLIP",
     "embedGuideDescription": "Ajoutez un chat chiffré à n'importe quel site avec une seule ligne d'iframe.",
     "myRoomsTitle": "Mes Salons - BLIP",
-    "myRoomsDescription": "Voir vos salons de discussion récemment créés ou rejoints."
+    "myRoomsDescription": "Voir vos salons de discussion récemment créés ou rejoints.",
+    "blipMeTitle": "BLIP me - Lien de contact jetable",
+    "blipMeDescription": "Créez un lien de contact jetable. Partagez-le n'importe où — un clic et un chat secret démarre."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -638,5 +653,27 @@
     "removeConfirm": "Supprimer ce salon de votre liste ?",
     "cancel": "Annuler",
     "confirmRemove": "Supprimer"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - Lien de contact jetable",
+    "pageDescription": "Créez votre lien BLIP me et partagez-le sur les réseaux sociaux. Quand quelqu'un clique, un chat secret démarre instantanément.",
+    "createTitle": "Créez votre lien de contact",
+    "createDescription": "Partagez votre lien sur votre profil social ou n'importe où. Quand quelqu'un clique, une salle de chat 1:1 chiffrée est créée instantanément.",
+    "createButton": "Créer un lien BLIP me",
+    "yourLink": "Votre lien",
+    "totalConnections": "Connexions totales",
+    "howItWorks": "Gardez cette page ouverte pour recevoir des notifications en temps réel quand quelqu'un clique sur votre lien. Chaque connexion crée une salle de chat jetable indépendante.",
+    "regenerate": "Changer l'URL",
+    "delete": "Supprimer",
+    "confirmDelete": "Vraiment supprimer ?",
+    "listening": "En écoute",
+    "offline": "Hors ligne",
+    "incomingTitle": "Quelqu'un veut parler !",
+    "incomingDescription": "Une demande de connexion est arrivée via votre lien BLIP me.",
+    "joinRoom": "Démarrer le chat",
+    "dismiss": "Ignorer",
+    "rateLimited": "Limite de création atteinte. Réessayez plus tard.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "hero": "BLIP me"
   }
 }

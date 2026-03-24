@@ -78,7 +78,8 @@
       "terms": "使用条款",
       "updates": "更新日志",
       "embed": "嵌入",
-      "myRooms": "我的聊天室"
+      "myRooms": "我的聊天室",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "管理员令牌持久化 — 群聊管理员权限跨会话保持",
           "5": "移动端聊天列表中也显示群聊（与1:1并列）",
           "6": "网页端和移动端均可使用"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "2026年3月24日",
+        "title": "BLIP me — 一次性联系链接",
+        "changes": {
+          "1": "BLIP me链接 — 创建个人URL并分享到社交媒体。有人点击后即刻开始1:1加密聊天",
+          "2": "实时连接提醒 — 保持页面打开，访客连接时即时收到通知",
+          "3": "链接管理 — 随时更换URL或删除链接",
+          "4": "无账户所有权 — 基于设备的令牌证明链接所有权，无需账户",
+          "5": "网页和移动应用均可使用"
         }
       }
     }
@@ -426,7 +439,9 @@
     "embedGuideTitle": "BLIP 嵌入",
     "embedGuideDescription": "一行iframe即可为任何网站添加加密聊天。",
     "myRoomsTitle": "我的聊天室 - BLIP",
-    "myRoomsDescription": "查看您最近创建或加入的聊天室。"
+    "myRoomsDescription": "查看您最近创建或加入的聊天室。",
+    "blipMeTitle": "BLIP me - 一次性联系链接",
+    "blipMeDescription": "创建一次性联系链接。分享到任何地方 — 点击即开始加密聊天。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -638,5 +653,27 @@
     "removeConfirm": "从列表中移除此聊天室？",
     "cancel": "取消",
     "confirmRemove": "移除"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - 一次性联系链接",
+    "pageDescription": "创建您的BLIP me链接并分享到社交媒体。有人点击后，即刻开始加密聊天。",
+    "createTitle": "创建您的联系链接",
+    "createDescription": "将链接分享到社交媒体或任何地方。有人点击后，即刻创建1:1加密聊天室。",
+    "createButton": "创建BLIP me链接",
+    "yourLink": "您的链接",
+    "totalConnections": "总连接数",
+    "howItWorks": "保持此页面打开，当有人点击您的链接时会收到实时通知。每次连接都会创建独立的一次性聊天室。",
+    "regenerate": "更换URL",
+    "delete": "删除",
+    "confirmDelete": "确定删除？",
+    "listening": "等待中",
+    "offline": "离线",
+    "incomingTitle": "有人想与您交谈！",
+    "incomingDescription": "通过BLIP me链接收到了连接请求。",
+    "joinRoom": "开始聊天",
+    "dismiss": "忽略",
+    "rateLimited": "已达到创建限制，请稍后重试。",
+    "error": "发生错误，请重试。",
+    "hero": "BLIP me"
   }
 }

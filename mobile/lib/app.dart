@@ -7,6 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import 'core/constants/app_theme.dart';
+import 'core/network/api_client.dart';
+import 'core/storage/local_storage_service.dart';
+import 'core/storage/models/saved_room.dart';
 import 'core/services/analytics_service.dart';
 import 'core/security/security_overlay.dart';
 import 'features/auth/presentation/login_screen.dart';
@@ -16,6 +19,7 @@ import 'features/home/presentation/home_screen.dart';
 import 'features/chat/presentation/chat_screen.dart';
 import 'features/board/presentation/board_screen.dart';
 import 'features/board/presentation/board_create_screen.dart';
+import 'features/blipme/presentation/blipme_screen.dart';
 import 'features/settings/presentation/settings_screen.dart';
 import 'features/shell/presentation/main_shell.dart';
 import 'features/chat_list/presentation/my_chat_list_screen.dart';
@@ -150,6 +154,11 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       ),
     ),
     GoRoute(
+      path: '/blipme',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const BlipMeScreen(),
+    ),
+    GoRoute(
       path: '/settings',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const SettingsScreen(),
@@ -185,6 +194,22 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
           justCreated: extra?['justCreated'] as bool? ?? false,
         );
       },
+    ),
+
+    // ── 딥링크: /m/:linkId (BLIP me 방문자) ──
+    GoRoute(
+      path: '/m/:linkId',
+      parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final linkId = state.pathParameters['linkId'];
+        if (linkId == null || !_validIdPattern.hasMatch(linkId)) return '/';
+        // 앱에서는 웹 방문자 페이지 대신 직접 연결 처리
+        // BlipMeConnectScreen에서 처리하거나, 웹으로 리다이렉트
+        return null;
+      },
+      builder: (context, state) => _BlipMeConnectRedirect(
+        linkId: state.pathParameters['linkId']!,
+      ),
     ),
 
     // ── 딥링크: /{locale}/room, /{locale}/board (next-intl 로캘 프리픽스 제거) ──
@@ -243,6 +268,105 @@ class BlipApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: ref.watch(routerProvider),
       builder: (context, child) => SecurityOverlay(child: child!),
+    );
+  }
+}
+
+/// BLIP me 딥링크 방문자: API 호출 → 방 생성 → 채팅 화면으로 이동
+class _BlipMeConnectRedirect extends StatefulWidget {
+  final String linkId;
+  const _BlipMeConnectRedirect({required this.linkId});
+
+  @override
+  State<_BlipMeConnectRedirect> createState() => _BlipMeConnectRedirectState();
+}
+
+class _BlipMeConnectRedirectState extends State<_BlipMeConnectRedirect> {
+  bool _loading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _connect();
+  }
+
+  Future<void> _connect() async {
+    try {
+      final api = ApiClient();
+      final result = await api.connectViaBlipMe(widget.linkId);
+
+      if (!mounted) return;
+
+      if (result['error'] != null) {
+        setState(() {
+          _loading = false;
+          _error = result['error'] as String;
+        });
+        return;
+      }
+
+      final roomId = result['roomId'] as String;
+      final password = result['password'] as String;
+
+      // 로컬 저장
+      final storage = LocalStorageService();
+      final now = DateTime.now().millisecondsSinceEpoch;
+      await storage.saveRoom(
+        SavedRoom(
+          roomId: roomId,
+          isCreator: false,
+          createdAt: now,
+          lastAccessedAt: now,
+        ),
+        password,
+      );
+
+      if (!mounted) return;
+      context.go('/room/$roomId', extra: password);
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _error = 'NETWORK_ERROR';
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _loading
+            ? const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text(
+                    'Connecting...',
+                    style: TextStyle(fontFamily: 'monospace', fontSize: 12),
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                  const SizedBox(height: 16),
+                  Text(
+                    _error ?? 'Something went wrong.',
+                    style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                  ),
+                  const SizedBox(height: 24),
+                  TextButton(
+                    onPressed: () => context.go('/'),
+                    child: const Text('Go Home'),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }

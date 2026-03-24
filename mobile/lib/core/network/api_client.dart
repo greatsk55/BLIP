@@ -519,6 +519,58 @@ class ApiClient {
     return statuses?.map((k, v) => MapEntry(k, v as String)) ?? {};
   }
 
+  // ─── BLIP me API ───
+
+  Future<Map<String, dynamic>> createBlipMeLink(String ownerTokenHash) async {
+    final response = await _dio.post('/api/blipme/create', data: {
+      'ownerTokenHash': ownerTokenHash,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getMyBlipMeLink(String ownerTokenHash) async {
+    final response = await _dio.post('/api/blipme/my-link', data: {
+      'ownerTokenHash': ownerTokenHash,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> deleteBlipMeLink({
+    required String linkId,
+    required String ownerTokenHash,
+  }) async {
+    final response = await _dio.post('/api/blipme/delete', data: {
+      'linkId': linkId,
+      'ownerTokenHash': ownerTokenHash,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> regenerateBlipMeLink({
+    required String oldLinkId,
+    required String ownerTokenHash,
+  }) async {
+    final response = await _dio.post('/api/blipme/regenerate', data: {
+      'oldLinkId': oldLinkId,
+      'ownerTokenHash': ownerTokenHash,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> connectViaBlipMe(String linkId) async {
+    final response = await _dio.post('/api/blipme/connect', data: {
+      'linkId': linkId,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> checkBlipMeLink(String linkId) async {
+    final response = await _dio.post('/api/blipme/check', data: {
+      'linkId': linkId,
+    });
+    return response.data;
+  }
+
   // ─── Push API ───
 
   /// FCM 토큰을 Room에 등록

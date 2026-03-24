@@ -78,7 +78,8 @@
       "terms": "Terms",
       "updates": "Updates",
       "embed": "Embed",
-      "myRooms": "My Rooms"
+      "myRooms": "My Rooms",
+      "blipme": "BLIP me"
     }
   },
   "Changelog": {
@@ -193,6 +194,18 @@
           "4": "Admin token persistence — group chat admins keep their privileges across sessions",
           "5": "Group chats now appear in the chat list on mobile (alongside 1:1 chats)",
           "6": "Available on both web and mobile app"
+        }
+      },
+      "0": {
+        "version": "v1.9.0",
+        "date": "March 24, 2026",
+        "title": "BLIP me — Burner Contact Link",
+        "changes": {
+          "1": "BLIP me link — Create your personal URL and share it on social media. When someone clicks, an instant 1:1 encrypted chat starts",
+          "2": "Real-time connection alerts — Keep the page open to receive instant notifications when a visitor connects",
+          "3": "Link management — Change URL or delete your link anytime",
+          "4": "Accountless ownership — Device-based token proves link ownership, no account needed",
+          "5": "Available on both web and mobile app"
         }
       }
     }
@@ -428,7 +441,9 @@
     "embedGuideTitle": "Embed BLIP",
     "embedGuideDescription": "Add encrypted ephemeral chat to any website with a single iframe snippet.",
     "myRoomsTitle": "My Chat Rooms - BLIP",
-    "myRoomsDescription": "View your recently created or joined chat rooms."
+    "myRoomsDescription": "View your recently created or joined chat rooms.",
+    "blipMeTitle": "BLIP me - Burner Contact Link",
+    "blipMeDescription": "Create a disposable contact link. Share it anywhere — when someone clicks, a secret chat starts."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -640,5 +655,27 @@
     "removeConfirm": "Remove this room from your list?",
     "cancel": "Cancel",
     "confirmRemove": "Remove"
+  },
+  "BlipMe": {
+    "pageTitle": "BLIP me - Burner Contact Link",
+    "pageDescription": "Create your BLIP me link and share it on social media. When someone clicks, a secret chat starts instantly.",
+    "createTitle": "Create Your Contact Link",
+    "createDescription": "Share your link on your social profile or anywhere. When someone clicks, an instant 1:1 encrypted chat room is created.",
+    "createButton": "Create BLIP me Link",
+    "yourLink": "Your Link",
+    "totalConnections": "Total Connections",
+    "howItWorks": "Keep this page open to receive real-time notifications when someone clicks your link. Each connection creates an independent disposable chat room.",
+    "regenerate": "Change URL",
+    "delete": "Delete",
+    "confirmDelete": "Really delete?",
+    "listening": "Listening",
+    "offline": "Offline",
+    "incomingTitle": "Someone wants to talk!",
+    "incomingDescription": "A connection request arrived via your BLIP me link.",
+    "joinRoom": "Start Chat",
+    "dismiss": "Dismiss",
+    "rateLimited": "Creation limit reached. Please try again later.",
+    "error": "An error occurred. Please try again.",
+    "hero": "BLIP me"
   }
 }
