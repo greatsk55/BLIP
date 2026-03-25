@@ -94,6 +94,16 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // /{locale}/m/{linkId} → /m/{linkId} (BLIP me는 locale 없는 경로)
+      {
+        source: '/:locale(ko|en|ja|es|fr|zh|de|zh-TW)/m/:linkId*',
+        destination: '/m/:linkId*',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
