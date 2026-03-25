@@ -2,10 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Smartphone, Zap, Bell, Rocket, Code2, Users, Paperclip, ListChecks } from "lucide-react";
+import { Smartphone, Zap, Bell, Rocket, Code2, Users, Paperclip, ListChecks, Link2 } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const VERSION_ICONS = [
+  <Link2 key="link2" className="w-5 h-5" />,
   <ListChecks key="listchecks" className="w-5 h-5" />,
   <Paperclip key="paperclip" className="w-5 h-5" />,
   <Users key="users" className="w-5 h-5" />,
@@ -17,7 +18,7 @@ const VERSION_ICONS = [
   <Rocket key="rocket2" className="w-5 h-5" />,
 ];
 
-const VERSION_COUNT = 9;
+const VERSION_COUNT = 10;
 
 export default function UpdatesClient() {
   const t = useTranslations("Changelog");
@@ -50,7 +51,7 @@ export default function UpdatesClient() {
 
           <div className="space-y-16">
             {Array.from({ length: VERSION_COUNT }, (_, i) => {
-              const key = String(i + 1);
+              const key = String(i);
               const changeKeys = Object.keys(
                 t.raw(`versions.${key}.changes`) as Record<string, string>
               );
