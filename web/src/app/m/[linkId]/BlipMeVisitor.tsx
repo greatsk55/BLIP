@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Zap, AlertCircle, Loader2 } from 'lucide-react';
 import { connectViaBlipMe, checkBlipMeLink } from '@/lib/blipme/actions';
 import { saveRoom, saveRoomPassword } from '@/lib/room/storage';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface BlipMeVisitorProps {
   linkId: string;
@@ -40,7 +41,7 @@ export default function BlipMeVisitor({ linkId }: BlipMeVisitorProps) {
       return;
     }
 
-    // 방 정보 로컬 저장
+    // 방 정보 로컬 저장 (참여자로 저장)
     saveRoom({
       roomId: result.roomId,
       roomType: 'chat',
@@ -55,6 +56,7 @@ export default function BlipMeVisitor({ linkId }: BlipMeVisitorProps) {
     setState('redirecting');
 
     // 브라우저 기본 locale 감지 후 리다이렉트
+    // #k= (참여자) — 자동 검증 후 바로 채팅 입장 (방 생성 화면 표시 안 함)
     const locale = navigator.language.startsWith('ko') ? 'ko'
       : navigator.language.startsWith('ja') ? 'ja'
       : navigator.language.startsWith('zh') ? 'zh'
@@ -63,7 +65,7 @@ export default function BlipMeVisitor({ linkId }: BlipMeVisitorProps) {
       : navigator.language.startsWith('de') ? 'de'
       : 'en';
 
-    window.location.href = `/${locale}/room/${result.roomId}#p=${encodeURIComponent(result.password)}`;
+    window.location.href = `/${locale}/room/${result.roomId}#k=${encodeURIComponent(result.password)}`;
   }, [linkId]);
 
   const errorMessages: Record<string, string> = {
@@ -74,8 +76,13 @@ export default function BlipMeVisitor({ linkId }: BlipMeVisitorProps) {
   };
 
   return (
-    <div className="min-h-screen bg-void-black flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-void-black dark:bg-void-black flex flex-col items-center justify-center px-4 selection:bg-signal-green selection:text-void-black transition-colors duration-300">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-signal-green)_0%,_transparent_10%)] opacity-10 blur-3xl pointer-events-none" />
+
+      {/* 테마 토글 */}
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
