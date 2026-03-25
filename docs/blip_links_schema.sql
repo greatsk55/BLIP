@@ -24,3 +24,4 @@ ALTER TABLE blip_links ENABLE ROW LEVEL SECURITY;
 -- 기존 테이블이 이미 있으면 아래 ALTER만 실행
 -- ────────────────────────────────────
 -- ALTER TABLE blip_links ADD COLUMN fcm_token TEXT;
+-- ALTER TABLE blip_links ADD COLUMN web_push_subscription TEXT;

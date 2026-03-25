@@ -15,6 +15,7 @@ import {
   getMyBlipMeLink,
   deleteBlipMeLink,
   regenerateBlipMeLink,
+  registerBlipMeWebPush,
 } from '@/lib/blipme/actions';
 
 export interface IncomingConnection {
@@ -44,6 +45,57 @@ interface UseBlipMeReturn {
   clearIncoming: () => void;
   /** Realtime 리스닝 활성 여부 */
   listening: boolean;
+  /** 웹 푸시 구독 상태 */
+  webPushEnabled: boolean;
+}
+
+/** Service Worker 등록 + Web Push 구독 */
+async function subscribeWebPush(
+  linkId: string,
+  ownerTokenHash: string
+): Promise<boolean> {
+  try {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) return false;
+
+    const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    if (!vapidPublicKey) return false;
+
+    // Service Worker 등록 (BLIP me 전용)
+    const registration = await navigator.serviceWorker.register('/sw-blipme.js');
+    await navigator.serviceWorker.ready;
+
+    // 알림 권한 요청
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') return false;
+
+    // 기존 구독 확인
+    let subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      // VAPID 공개키를 Uint8Array로 변환
+      const urlBase64ToUint8Array = (base64String: string) => {
+        const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        return Uint8Array.from(rawData, (char) => char.charCodeAt(0));
+      };
+
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+      });
+    }
+
+    // 서버에 구독 정보 등록
+    const result = await registerBlipMeWebPush(
+      linkId,
+      ownerTokenHash,
+      JSON.stringify(subscription.toJSON()),
+    );
+    return result.success;
+  } catch (e) {
+    console.error('[WebPush] Subscribe failed:', e);
+    return false;
+  }
 }
 
 /**
@@ -51,6 +103,7 @@ interface UseBlipMeReturn {
  * - ownerToken 자동 초기화
  * - 링크 CRUD
  * - Supabase Realtime으로 방문자 연결 알림 수신
+ * - Web Push 구독 (브라우저 백그라운드 알림)
  */
 export function useBlipMe(): UseBlipMeReturn {
   const [linkId, setLinkId] = useState<string | null>(null);
@@ -59,6 +112,7 @@ export function useBlipMe(): UseBlipMeReturn {
   const [useCount, setUseCount] = useState(0);
   const [incomingConnection, setIncomingConnection] = useState<IncomingConnection | null>(null);
   const [listening, setListening] = useState(false);
+  const [webPushEnabled, setWebPushEnabled] = useState(false);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const ownerTokenHashRef = useRef<string | null>(null);
 
@@ -69,7 +123,6 @@ export function useBlipMe(): UseBlipMeReturn {
     async function init() {
       let token = getOwnerToken();
       if (!token) {
-        // 아직 ownerToken이 없으면 생성하지 않음 (링크 생성 시 생성)
         setLoading(false);
         return;
       }
@@ -82,6 +135,10 @@ export function useBlipMe(): UseBlipMeReturn {
         setLinkId(existing.linkId);
         setUseCount(existing.useCount);
         saveLinkId(existing.linkId);
+        // 웹 푸시 자동 재등록
+        subscribeWebPush(existing.linkId, tokenHash).then((ok) => {
+          if (!cancelled) setWebPushEnabled(ok);
+        });
       } else if (!cancelled) {
         removeLinkId();
       }
@@ -146,6 +203,9 @@ export function useBlipMe(): UseBlipMeReturn {
       setLinkId(result.linkId);
       setUseCount(0);
       saveLinkId(result.linkId);
+      // 웹 푸시 구독
+      const ok = await subscribeWebPush(result.linkId, tokenHash);
+      setWebPushEnabled(ok);
     } finally {
       setLoading(false);
     }
@@ -163,6 +223,7 @@ export function useBlipMe(): UseBlipMeReturn {
       }
       setLinkId(null);
       setUseCount(0);
+      setWebPushEnabled(false);
       removeLinkId();
     } finally {
       setLoading(false);
@@ -182,6 +243,9 @@ export function useBlipMe(): UseBlipMeReturn {
       setLinkId(result.linkId);
       setUseCount(0);
       saveLinkId(result.linkId);
+      // 새 링크에 웹 푸시 재등록
+      const ok = await subscribeWebPush(result.linkId, ownerTokenHashRef.current!);
+      setWebPushEnabled(ok);
     } finally {
       setLoading(false);
     }
@@ -202,5 +266,6 @@ export function useBlipMe(): UseBlipMeReturn {
     incomingConnection,
     clearIncoming,
     listening,
+    webPushEnabled,
   };
 }

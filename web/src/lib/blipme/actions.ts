@@ -176,7 +176,7 @@ export async function connectViaBlipMe(linkId: string): Promise<{
   // 링크 조회
   const { data: link, error: linkError } = await supabase
     .from('blip_links')
-    .select('id, owner_token_hash, status, use_count, fcm_token')
+    .select('id, owner_token_hash, status, use_count, fcm_token, web_push_subscription')
     .eq('id', linkId)
     .single();
 
@@ -233,7 +233,7 @@ export async function connectViaBlipMe(linkId: string): Promise<{
   });
   supabase.removeChannel(channel);
 
-  // FCM 푸시 알림 (앱이 백그라운드/종료 상태일 때)
+  // FCM 푸시 알림 (모바일 앱 백그라운드/종료 상태)
   const fcmToken = link.fcm_token as string | null;
   if (fcmToken) {
     const { sendFcmNotification } = await import('@/lib/push/fcm');
@@ -247,7 +247,22 @@ export async function connectViaBlipMe(linkId: string): Promise<{
         password,
         linkId,
       },
-    }).catch(() => {/* 푸시 실패는 무시 — Broadcast가 메인 */});
+    }).catch(() => {/* 푸시 실패는 무시 */});
+  }
+
+  // Web Push 알림 (웹 브라우저 백그라운드/닫힌 상태)
+  const webPushSub = link.web_push_subscription as string | null;
+  if (webPushSub) {
+    const { sendWebPushNotification } = await import('@/lib/push/web-push');
+    await sendWebPushNotification({
+      subscription: webPushSub,
+      title: 'BLIP me',
+      body: 'Someone wants to talk!',
+      data: {
+        roomId,
+        password,
+      },
+    }).catch(() => {/* 푸시 실패는 무시 */});
   }
 
   return { roomId, password };
@@ -267,6 +282,31 @@ export async function registerBlipMePush(
   const { data, error } = await supabase
     .from('blip_links')
     .update({ fcm_token: fcmToken })
+    .eq('id', linkId)
+    .eq('owner_token_hash', ownerTokenHash)
+    .select('id')
+    .single();
+
+  if (error || !data) {
+    return { success: false, error: 'NOT_FOUND' };
+  }
+  return { success: true };
+}
+
+/**
+ * Web Push 구독 등록/갱신 (소유자 웹에서 호출)
+ */
+export async function registerBlipMeWebPush(
+  linkId: string,
+  ownerTokenHash: string,
+  subscription: string
+): Promise<{ success: boolean; error?: string }> {
+  if (!ownerTokenHash || !subscription) return { success: false, error: 'INVALID_PARAMS' };
+
+  const supabase = createServerSupabase();
+  const { data, error } = await supabase
+    .from('blip_links')
+    .update({ web_push_subscription: subscription })
     .eq('id', linkId)
     .eq('owner_token_hash', ownerTokenHash)
     .select('id')

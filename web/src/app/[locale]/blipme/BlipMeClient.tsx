@@ -35,6 +35,7 @@ export default function BlipMeClient() {
     incomingConnection,
     clearIncoming,
     listening,
+    webPushEnabled,
   } = useBlipMe();
 
   const [copied, setCopied] = useState(false);
@@ -78,7 +79,7 @@ export default function BlipMeClient() {
     saveRoomPassword(roomId, password);
 
     clearIncoming();
-    router.push(`/room/${roomId}#p=${encodeURIComponent(password)}`);
+    router.push(`/room/${roomId}#k=${encodeURIComponent(password)}`);
   }, [incomingConnection, clearIncoming, router]);
 
   return (
@@ -95,17 +96,22 @@ export default function BlipMeClient() {
           BLIP me
         </h1>
         {linkId && (
-          <span className="ml-auto flex items-center gap-1.5 font-mono text-xs">
+          <span className="ml-auto flex items-center gap-3 font-mono text-xs">
+            {webPushEnabled && (
+              <span className="flex items-center gap-1 text-signal-green" title="Web push enabled">
+                <Bell className="w-3 h-3" />
+              </span>
+            )}
             {listening ? (
-              <>
+              <span className="flex items-center gap-1.5">
                 <Radio className="w-3 h-3 text-signal-green animate-pulse" />
                 <span className="text-signal-green">{t('listening')}</span>
-              </>
+              </span>
             ) : (
-              <>
+              <span className="flex items-center gap-1.5">
                 <WifiOff className="w-3 h-3 text-ghost-grey" />
                 <span className="text-ghost-grey">{t('offline')}</span>
-              </>
+              </span>
             )}
           </span>
         )}
