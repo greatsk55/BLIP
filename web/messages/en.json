@@ -677,5 +677,27 @@
     "rateLimited": "Creation limit reached. Please try again later.",
     "error": "An error occurred. Please try again.",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "Your Burner Contact Link",
+    "subtitle": "Drop a link on your bio. Someone clicks it.<br></br>An encrypted 1:1 chat room appears instantly.<br></br>No accounts. No friend requests. Just talk.",
+    "steps": {
+      "create": {
+        "title": "Create Link",
+        "description": "Generate your personal BLIP me link with one tap. No sign-up needed — your device holds the key."
+      },
+      "share": {
+        "title": "Share Anywhere",
+        "description": "Put it in your social bio, website, or send it directly. Anyone with the link can reach you."
+      },
+      "connect": {
+        "title": "Instant Chat",
+        "description": "When someone clicks, a disposable encrypted room is created. Talk, then it's gone forever."
+      }
+    },
+    "flow": "Create → Share → Connect → Vanish",
+    "highlight": "Every connection creates an <strong>independent, encrypted room</strong>.<br></br>You stay anonymous. They stay anonymous.<br></br>When the conversation ends, <strong>nothing remains</strong>.",
+    "cta": "Create My BLIP me"
   }
 }

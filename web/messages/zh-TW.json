@@ -675,5 +675,27 @@
     "rateLimited": "已達到建立限制，請稍後重試。",
     "error": "發生錯誤，請重試。",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "一次性聯繫連結",
+    "subtitle": "在個人簡介放一個連結。有人點擊後，<br></br>加密的1對1聊天室即時建立。<br></br>不需帳號，不用加好友。直接對話。",
+    "steps": {
+      "create": {
+        "title": "建立連結",
+        "description": "一鍵產生你的 BLIP me 連結。免註冊——金鑰只存在你的裝置上。"
+      },
+      "share": {
+        "title": "隨處分享",
+        "description": "放在社群媒體簡介、網站，或直接傳送。有連結就能聯繫你。"
+      },
+      "connect": {
+        "title": "即時聊天",
+        "description": "有人點擊後，一次性加密房間自動建立。聊完之後，一切消失。"
+      }
+    },
+    "flow": "建立 → 分享 → 連接 → 消失",
+    "highlight": "每次連接都會建立一個<strong>獨立的加密房間</strong>。<br></br>你是匿名的，對方也是。<br></br>對話結束後，<strong>什麼都不會留下</strong>。",
+    "cta": "建立我的 BLIP me"
   }
 }

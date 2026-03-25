@@ -675,5 +675,27 @@
     "rateLimited": "Límite de creación alcanzado. Inténtalo de nuevo más tarde.",
     "error": "Se produjo un error. Inténtalo de nuevo.",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "Tu Enlace de Contacto Desechable",
+    "subtitle": "Pon un enlace en tu bio. Alguien hace clic.<br></br>Un chat 1:1 cifrado aparece al instante.<br></br>Sin cuentas. Sin solicitudes. Solo habla.",
+    "steps": {
+      "create": {
+        "title": "Crear Enlace",
+        "description": "Genera tu enlace BLIP me con un toque. Sin registro — la clave se guarda solo en tu dispositivo."
+      },
+      "share": {
+        "title": "Comparte Donde Sea",
+        "description": "Ponlo en tu bio, sitio web o envíalo directamente. Cualquiera con el enlace puede contactarte."
+      },
+      "connect": {
+        "title": "Chat Instantáneo",
+        "description": "Cuando alguien hace clic, se crea una sala cifrada desechable. Habla, y luego desaparece para siempre."
+      }
+    },
+    "flow": "Crear → Compartir → Conectar → Desaparecer",
+    "highlight": "Cada conexión crea una <strong>sala cifrada independiente</strong>.<br></br>Tú eres anónimo. Ellos son anónimos.<br></br>Cuando la conversación termina, <strong>nada queda</strong>.",
+    "cta": "Crear Mi BLIP me"
   }
 }

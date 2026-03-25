@@ -677,5 +677,27 @@
     "rateLimited": "생성 제한에 도달했습니다. 잠시 후 다시 시도해주세요.",
     "error": "오류가 발생했습니다. 다시 시도해주세요.",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "일회용 연락 링크",
+    "subtitle": "프로필에 링크 하나 걸어두세요. 누군가 클릭하면<br></br>암호화된 1:1 채팅방이 즉시 생성됩니다.<br></br>계정도, 친구 추가도 없이. 바로 대화.",
+    "steps": {
+      "create": {
+        "title": "링크 생성",
+        "description": "탭 한 번으로 나만의 BLIP me 링크를 만드세요. 가입 필요 없음 — 키는 디바이스에만 저장됩니다."
+      },
+      "share": {
+        "title": "어디든 공유",
+        "description": "SNS 프로필, 웹사이트, 또는 직접 전달. 링크만 있으면 누구나 연락할 수 있습니다."
+      },
+      "connect": {
+        "title": "즉시 채팅",
+        "description": "누군가 클릭하면 일회용 암호화 방이 생성됩니다. 대화 후, 모든 것이 사라집니다."
+      }
+    },
+    "flow": "생성 → 공유 → 연결 → 소멸",
+    "highlight": "모든 연결은 <strong>독립된 암호화 방</strong>을 만듭니다.<br></br>당신도, 상대방도 익명.<br></br>대화가 끝나면 <strong>아무것도 남지 않습니다</strong>.",
+    "cta": "내 BLIP me 만들기"
   }
 }

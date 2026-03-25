@@ -675,5 +675,27 @@
     "rateLimited": "Erstellungslimit erreicht. Bitte versuchen Sie es später erneut.",
     "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "Dein Wegwerf-Kontaktlink",
+    "subtitle": "Setz einen Link in dein Profil. Jemand klickt drauf.<br></br>Ein verschlüsselter 1:1 Chat erscheint sofort.<br></br>Kein Konto. Keine Anfragen. Einfach reden.",
+    "steps": {
+      "create": {
+        "title": "Link Erstellen",
+        "description": "Erstelle deinen BLIP me Link mit einem Tipp. Keine Anmeldung nötig — der Schlüssel bleibt auf deinem Gerät."
+      },
+      "share": {
+        "title": "Überall Teilen",
+        "description": "In dein Social-Profil, Website oder direkt senden. Jeder mit dem Link kann dich erreichen."
+      },
+      "connect": {
+        "title": "Sofort Chatten",
+        "description": "Wenn jemand klickt, wird ein einmaliger verschlüsselter Raum erstellt. Rede, dann ist alles für immer weg."
+      }
+    },
+    "flow": "Erstellen → Teilen → Verbinden → Verschwinden",
+    "highlight": "Jede Verbindung erstellt einen <strong>unabhängigen, verschlüsselten Raum</strong>.<br></br>Du bleibst anonym. Sie bleiben anonym.<br></br>Wenn das Gespräch endet, <strong>bleibt nichts zurück</strong>.",
+    "cta": "Mein BLIP me Erstellen"
   }
 }

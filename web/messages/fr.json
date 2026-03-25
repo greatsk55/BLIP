@@ -675,5 +675,27 @@
     "rateLimited": "Limite de création atteinte. Réessayez plus tard.",
     "error": "Une erreur est survenue. Veuillez réessayer.",
     "hero": "BLIP me"
+  },
+  "BlipMeSection": {
+    "label": "BLIP me",
+    "title": "Votre Lien de Contact Jetable",
+    "subtitle": "Mettez un lien dans votre bio. Quelqu'un clique.<br></br>Un chat 1:1 chiffré apparaît instantanément.<br></br>Sans compte. Sans demande d'ami. Juste parler.",
+    "steps": {
+      "create": {
+        "title": "Créer un Lien",
+        "description": "Générez votre lien BLIP me en un clic. Sans inscription — la clé reste sur votre appareil."
+      },
+      "share": {
+        "title": "Partagez Partout",
+        "description": "Mettez-le dans votre bio, site web ou envoyez-le directement. Quiconque a le lien peut vous contacter."
+      },
+      "connect": {
+        "title": "Chat Instantané",
+        "description": "Quand quelqu'un clique, une salle chiffrée jetable est créée. Parlez, puis tout disparaît."
+      }
+    },
+    "flow": "Créer → Partager → Connecter → Disparaître",
+    "highlight": "Chaque connexion crée une <strong>salle chiffrée indépendante</strong>.<br></br>Vous restez anonyme. Ils restent anonymes.<br></br>Quand la conversation se termine, <strong>rien ne reste</strong>.",
+    "cta": "Créer Mon BLIP me"
   }
 }
