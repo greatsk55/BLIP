@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/network/api_client.dart';
+import '../../../core/push/push_service.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/supabase/supabase_client.dart';
 
@@ -113,6 +114,7 @@ class BlipMeNotifier extends StateNotifier<BlipMeState> {
           loading: false,
         );
         _subscribeRealtime(linkId);
+        _registerFcmToken(linkId, _ownerTokenHash!);
       } else {
         await _storage.removeBlipMeLinkId();
         state = state.copyWith(loading: false);
@@ -168,6 +170,21 @@ class BlipMeNotifier extends StateNotifier<BlipMeState> {
     });
   }
 
+  /// FCM 토큰을 서버에 등록 (백그라운드 푸시용)
+  Future<void> _registerFcmToken(String linkId, String ownerTokenHash) async {
+    final fcmToken = PushService.instance.token;
+    if (fcmToken == null) return;
+    try {
+      await _api.registerBlipMePush(
+        linkId: linkId,
+        ownerTokenHash: ownerTokenHash,
+        fcmToken: fcmToken,
+      );
+    } catch (_) {
+      // 푸시 등록 실패는 무시 — Realtime이 메인
+    }
+  }
+
   void _unsubscribeRealtime() {
     _channel?.unsubscribe();
     _channel = null;
@@ -198,6 +215,7 @@ class BlipMeNotifier extends StateNotifier<BlipMeState> {
         loading: false,
       );
       _subscribeRealtime(linkId);
+      _registerFcmToken(linkId, tokenHash);
     } catch (e) {
       state = state.copyWith(error: 'NETWORK_ERROR', loading: false);
     }
@@ -258,6 +276,7 @@ class BlipMeNotifier extends StateNotifier<BlipMeState> {
         loading: false,
       );
       _subscribeRealtime(newLinkId);
+      _registerFcmToken(newLinkId, _ownerTokenHash!);
     } catch (e) {
       state = state.copyWith(error: 'NETWORK_ERROR', loading: false);
     }

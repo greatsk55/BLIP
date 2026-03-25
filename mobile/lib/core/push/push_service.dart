@@ -97,10 +97,13 @@ class PushService {
       // (현재는 별도 처리 없음 — 필요 시 로컬 알림 추가)
     });
 
-    // 알림 탭으로 앱 진입
+    // 알림 탭으로 앱 진입 — BLIP me 푸시 데이터로 채팅방 이동
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // 딥링크 데이터가 있으면 해당 화면으로 이동 가능
-      // (GoRouter가 딥링크를 자동 처리하므로 별도 로직 불필요)
+      final data = message.data;
+      if (data['type'] == 'blipme' && data['roomId'] != null) {
+        // GoRouter가 딥링크를 처리하므로 별도 네비게이션 불필요
+        // 앱이 foreground로 올라오면 BlipMe provider가 Realtime으로 처리
+      }
     });
   }
 }

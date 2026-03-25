@@ -18,3 +18,9 @@ ALTER TABLE blip_links ENABLE ROW LEVEL SECURITY;
 
 -- anon 사용자 접근 차단 (기존 rooms 테이블과 동일 패턴)
 -- service_role은 RLS를 우회하므로 별도 정책 불필요
+
+-- ────────────────────────────────────
+-- v1.9.1: FCM 푸시 토큰 컬럼 추가
+-- 기존 테이블이 이미 있으면 아래 ALTER만 실행
+-- ────────────────────────────────────
+-- ALTER TABLE blip_links ADD COLUMN fcm_token TEXT;

@@ -176,7 +176,7 @@ export async function connectViaBlipMe(linkId: string): Promise<{
   // 링크 조회
   const { data: link, error: linkError } = await supabase
     .from('blip_links')
-    .select('id, owner_token_hash, status, use_count')
+    .select('id, owner_token_hash, status, use_count, fcm_token')
     .eq('id', linkId)
     .single();
 
@@ -220,8 +220,7 @@ export async function connectViaBlipMe(linkId: string): Promise<{
     .update({ use_count: currentCount + 1 })
     .eq('id', linkId);
 
-  // Supabase Broadcast로 소유자에게 알림
-  // 소유자는 `blipme:{linkId}` 채널을 구독하고 있어야 함
+  // Supabase Broadcast로 소유자에게 알림 (앱/웹이 열려있을 때)
   const channel = supabase.channel(`blipme:${linkId}`);
   await channel.send({
     type: 'broadcast',
@@ -234,7 +233,49 @@ export async function connectViaBlipMe(linkId: string): Promise<{
   });
   supabase.removeChannel(channel);
 
+  // FCM 푸시 알림 (앱이 백그라운드/종료 상태일 때)
+  const fcmToken = link.fcm_token as string | null;
+  if (fcmToken) {
+    const { sendFcmNotification } = await import('@/lib/push/fcm');
+    await sendFcmNotification({
+      fcmToken,
+      title: 'BLIP me',
+      body: 'Someone wants to talk!',
+      data: {
+        type: 'blipme',
+        roomId,
+        password,
+        linkId,
+      },
+    }).catch(() => {/* 푸시 실패는 무시 — Broadcast가 메인 */});
+  }
+
   return { roomId, password };
+}
+
+/**
+ * FCM 토큰 등록/갱신 (소유자 앱에서 호출)
+ */
+export async function registerBlipMePush(
+  linkId: string,
+  ownerTokenHash: string,
+  fcmToken: string
+): Promise<{ success: boolean; error?: string }> {
+  if (!ownerTokenHash || !fcmToken) return { success: false, error: 'INVALID_PARAMS' };
+
+  const supabase = createServerSupabase();
+  const { data, error } = await supabase
+    .from('blip_links')
+    .update({ fcm_token: fcmToken })
+    .eq('id', linkId)
+    .eq('owner_token_hash', ownerTokenHash)
+    .select('id')
+    .single();
+
+  if (error || !data) {
+    return { success: false, error: 'NOT_FOUND' };
+  }
+  return { success: true };
 }
 
 /**

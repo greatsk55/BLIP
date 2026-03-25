@@ -571,6 +571,19 @@ class ApiClient {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> registerBlipMePush({
+    required String linkId,
+    required String ownerTokenHash,
+    required String fcmToken,
+  }) async {
+    final response = await _dio.post('/api/blipme/register-push', data: {
+      'linkId': linkId,
+      'ownerTokenHash': ownerTokenHash,
+      'fcmToken': fcmToken,
+    });
+    return response.data;
+  }
+
   // ─── Push API ───
 
   /// FCM 토큰을 Room에 등록
