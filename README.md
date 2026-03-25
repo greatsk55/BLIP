@@ -157,6 +157,16 @@ This service intentionally does **NOT** do the following:
 - Auto-shred: messages beyond the visible window are destroyed with blob URLs released
 - Capture protection: visibility change, keyboard shortcut, and context-menu detection
 
+## BLIP me — Disposable Contact Link
+
+Share a single link on your profile. When someone clicks it, an instant 1:1 encrypted chat starts — no accounts, no friend requests.
+
+- **Your own link** — Create a unique URL (e.g. `blip.me/yourname`)
+- **Real-time alert** — Get notified the moment someone connects
+- **Link control** — Change or delete your URL anytime
+- **No account needed** — Device-based token proves ownership
+- Visit `/blipme` on web, or tap the **BLIP me** tab on mobile
+
 ## My Chat Rooms
 
 Your recently created or joined rooms are saved locally — no server storage.

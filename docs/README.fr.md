@@ -79,6 +79,16 @@ Ce service ne fait intentionnellement **PAS** ce qui suit :
 - Auto-destruction : les messages hors de la fenêtre visible sont supprimés instantanément avec libération des blob URL
 - Protection contre les captures : détection de changement d'onglet, raccourcis clavier et menu contextuel pour flouter les messages
 
+## BLIP me — Lien de contact jetable
+
+Partagez un seul lien sur votre profil. Quand quelqu'un clique, un chat chiffré 1:1 démarre instantanément — sans compte, sans demande d'ami.
+
+- **Votre propre lien** — Créez une URL unique (ex : `blip.me/yourname`)
+- **Alerte en temps réel** — Soyez notifié dès qu'un visiteur se connecte
+- **Gestion du lien** — Modifiez ou supprimez votre URL à tout moment
+- **Sans compte requis** — Un jeton basé sur l'appareil prouve la propriété
+- Visitez `/blipme` sur le web, ou appuyez sur l'onglet **BLIP me** sur mobile
+
 ## Mes Salons
 
 Les salons récemment créés ou rejoints sont sauvegardés localement — aucun stockage serveur.

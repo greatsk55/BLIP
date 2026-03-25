@@ -79,6 +79,16 @@ Este servicio intencionalmente **NO** hace lo siguiente:
 - Auto-destrucción: los mensajes fuera de la ventana visible se eliminan al instante con liberación de blob URL
 - Protección contra capturas: detección de cambio de pestaña, atajos de teclado y menú contextual para difuminar mensajes
 
+## BLIP me — Enlace de contacto desechable
+
+Comparte un solo enlace en tu perfil. Cuando alguien hace clic, se inicia un chat cifrado 1:1 al instante — sin cuentas, sin solicitudes de amistad.
+
+- **Tu propio enlace** — Crea una URL única (ej: `blip.me/yourname`)
+- **Alerta en tiempo real** — Recibe notificación al instante cuando un visitante se conecta
+- **Gestión del enlace** — Cambia o elimina tu URL en cualquier momento
+- **Sin cuenta necesaria** — Token basado en dispositivo demuestra la propiedad
+- Visita `/blipme` en web, o toca la pestaña **BLIP me** en móvil
+
 ## Mis Salas
 
 Las salas creadas o unidas recientemente se guardan localmente — sin almacenamiento en servidor.

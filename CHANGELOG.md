@@ -4,6 +4,14 @@ All notable changes to BLIP are documented here.
 
 ---
 
+## v1.9.0 — March 24, 2026
+### BLIP me — Disposable Contact Link
+- **BLIP me link** — Create your own URL and share it on your SNS profile. When someone clicks it, an instant 1:1 encrypted chat starts
+- **Real-time connection alert** — Keep the page open and get notified the moment a visitor connects
+- **Link management** — Change or delete your URL at any time
+- **Account-free ownership** — Device-based token proves link ownership, no account needed
+- Available on both web and mobile app
+
 ## v1.8.0 — March 20, 2026
 ### My Rooms & Board Improvements
 - **My Rooms** — View and manage your saved chat rooms (1:1 & group) from a dedicated page
