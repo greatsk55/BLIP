@@ -79,7 +79,8 @@
       "updates": "更新紀錄",
       "embed": "嵌入",
       "myRooms": "我的聊天室",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "預測"
     }
   },
   "Changelog": {
@@ -441,7 +442,9 @@
     "myRoomsTitle": "我的聊天室 - BLIP",
     "myRoomsDescription": "查看您最近建立或加入的聊天室。",
     "blipMeTitle": "BLIP me - 一次性聯繫連結",
-    "blipMeDescription": "建立一次性聯繫連結。分享到任何地方 — 點擊即開始加密聊天。"
+    "blipMeDescription": "建立一次性聯繫連結。分享到任何地方 — 點擊即開始加密聊天。",
+    "voteTitle": "BLIP - 預測市場",
+    "voteDescription": "匿名預測市場。用積分押注預測結果。無需帳號。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +700,67 @@
     "flow": "建立 → 分享 → 連接 → 消失",
     "highlight": "每次連接都會建立一個<strong>獨立的加密房間</strong>。<br></br>你是匿名的，對方也是。<br></br>對話結束後，<strong>什麼都不會留下</strong>。",
     "cta": "建立我的 BLIP me"
+  },
+  "Vote": {
+    "title": "預測市場",
+    "subtitle": "匿名預測。用積分下注。贏取大獎。",
+    "createQuestion": "建立問題",
+    "categories": {
+      "all": "全部",
+      "politics": "政治",
+      "sports": "體育",
+      "tech": "科技",
+      "economy": "經濟",
+      "entertainment": "娛樂",
+      "society": "社會",
+      "gaming": "遊戲",
+      "other": "其他"
+    },
+    "betting": {
+      "placeBet": "下注",
+      "yes": "是",
+      "no": "否",
+      "odds": "賠率",
+      "expectedPayout": "預期收益",
+      "maxBet": "最大下注",
+      "betAmount": "下注金額",
+      "closesIn": "截止於",
+      "closed": "已截止",
+      "participants": "參與者"
+    },
+    "points": {
+      "balance": "餘額",
+      "bp": "BP",
+      "rank": "等級",
+      "dailyReward": "每日獎勵",
+      "claimReward": "領取 1 BP",
+      "insufficientBalance": "BP 不足"
+    },
+    "settlement": {
+      "won": "預測正確！",
+      "lost": "預測錯誤...",
+      "payout": "收益",
+      "confirm": "確認"
+    },
+    "create": {
+      "title": "建立問題",
+      "cost": "費用: {cost} BP",
+      "question": "問題",
+      "questionPlaceholder": "例: 比特幣會突破10萬美元嗎？",
+      "category": "分類",
+      "duration": "時長",
+      "submit": "建立 ({cost} BP)"
+    },
+    "landing": {
+      "title": "預測。討論。決定。",
+      "subtitle": "匿名預測。無需帳號。",
+      "feature1Title": "即時結果",
+      "feature1Desc": "即時查看賠率和結果",
+      "feature2Title": "自動討論",
+      "feature2Desc": "每次預測後自動建立聊天室",
+      "feature3Title": "完全匿名",
+      "feature3Desc": "無需註冊。無追蹤。純粹預測。",
+      "cta": "開始預測"
+    }
   }
 }

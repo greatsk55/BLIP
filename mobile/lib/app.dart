@@ -27,6 +27,9 @@ import 'features/community_list/presentation/my_community_list_screen.dart';
 import 'features/group_chat/presentation/group_create_screen.dart';
 import 'features/group_chat/presentation/group_chat_screen.dart';
 import 'features/settings/providers/theme_provider.dart';
+import 'features/prediction/presentation/prediction_list_screen.dart';
+import 'features/prediction/presentation/prediction_detail_screen.dart';
+import 'features/prediction/presentation/create_prediction_screen.dart';
 import 'features/settings/providers/locale_provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -194,6 +197,31 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
           justCreated: extra?['justCreated'] as bool? ?? false,
         );
       },
+    ),
+
+    // ── 예측 (Prediction) ──
+    GoRoute(
+      path: '/prediction',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const PredictionListScreen(),
+    ),
+    // /prediction/create가 /prediction/:id 보다 위에 있어야 'create'가 id로 매칭되지 않음
+    GoRoute(
+      path: '/prediction/create',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const CreatePredictionScreen(),
+    ),
+    GoRoute(
+      path: '/prediction/:id',
+      parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null || !_validIdPattern.hasMatch(id)) return '/prediction';
+        return null;
+      },
+      builder: (context, state) => PredictionDetailScreen(
+        predictionId: state.pathParameters['id']!,
+      ),
     ),
 
     // ── 딥링크: /m/:linkId (BLIP me 방문자) ──

@@ -79,7 +79,8 @@
       "updates": "更新履歴",
       "embed": "埋め込み",
       "myRooms": "マイルーム",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "予測"
     }
   },
   "Changelog": {
@@ -441,7 +442,9 @@
     "myRoomsTitle": "マイルーム - BLIP",
     "myRoomsDescription": "最近作成または参加したチャットルームを確認できます。",
     "blipMeTitle": "BLIP me - 使い捨て連絡リンク",
-    "blipMeDescription": "使い捨て連絡リンクを作成。どこにでも共有 — クリックで秘密チャットが始まります。"
+    "blipMeDescription": "使い捨て連絡リンクを作成。どこにでも共有 — クリックで秘密チャットが始まります。",
+    "voteTitle": "BLIP - 予測マーケット",
+    "voteDescription": "匿名予測マーケット。ポイントを賭けて結果を予測。アカウント不要。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +700,67 @@
     "flow": "作成 → 共有 → 接続 → 消滅",
     "highlight": "すべての接続は<strong>独立した暗号化ルーム</strong>を作成します。<br></br>あなたも、相手も匿名。<br></br>会話が終われば<strong>何も残りません</strong>。",
     "cta": "BLIP meを作成"
+  },
+  "Vote": {
+    "title": "予測マーケット",
+    "subtitle": "匿名で予測。ポイントを賭けて大きく勝とう。",
+    "createQuestion": "質問を作成",
+    "categories": {
+      "all": "すべて",
+      "politics": "政治",
+      "sports": "スポーツ",
+      "tech": "テクノロジー",
+      "economy": "経済",
+      "entertainment": "エンタメ",
+      "society": "社会",
+      "gaming": "ゲーム",
+      "other": "その他"
+    },
+    "betting": {
+      "placeBet": "ベットする",
+      "yes": "はい",
+      "no": "いいえ",
+      "odds": "オッズ",
+      "expectedPayout": "予想配当",
+      "maxBet": "最大ベット",
+      "betAmount": "ベット額",
+      "closesIn": "締切まで",
+      "closed": "締切済み",
+      "participants": "参加者"
+    },
+    "points": {
+      "balance": "残高",
+      "bp": "BP",
+      "rank": "ランク",
+      "dailyReward": "デイリー報酬",
+      "claimReward": "1 BPを獲得",
+      "insufficientBalance": "BP不足"
+    },
+    "settlement": {
+      "won": "正解です！",
+      "lost": "不正解...",
+      "payout": "配当金",
+      "confirm": "確認"
+    },
+    "create": {
+      "title": "質問を作成",
+      "cost": "コスト: {cost} BP",
+      "question": "質問",
+      "questionPlaceholder": "例: ビットコインは10万ドルを突破する？",
+      "category": "カテゴリー",
+      "duration": "期間",
+      "submit": "作成 ({cost} BP)"
+    },
+    "landing": {
+      "title": "予測。議論。決定。",
+      "subtitle": "匿名予測。アカウント不要。",
+      "feature1Title": "リアルタイム結果",
+      "feature1Desc": "リアルタイムでオッズと結果を確認",
+      "feature2Title": "自動ディスカッション",
+      "feature2Desc": "すべての予測後にチャットルームを自動作成",
+      "feature3Title": "完全匿名",
+      "feature3Desc": "登録不要。追跡なし。純粋な予測のみ。",
+      "cta": "予測を始める"
+    }
   }
 }

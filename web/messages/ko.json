@@ -79,7 +79,8 @@
       "updates": "업데이트",
       "embed": "임베드",
       "myRooms": "내 채팅방",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "예측"
     }
   },
   "Changelog": {
@@ -443,7 +444,9 @@
     "myRoomsTitle": "내 채팅방 - BLIP",
     "myRoomsDescription": "최근 생성하거나 참여한 채팅방을 확인하세요.",
     "blipMeTitle": "BLIP me - 일회용 연락 링크",
-    "blipMeDescription": "일회용 연락 링크를 만들어 공유하세요. 클릭 한 번으로 비밀 채팅이 시작됩니다."
+    "blipMeDescription": "일회용 연락 링크를 만들어 공유하세요. 클릭 한 번으로 비밀 채팅이 시작됩니다.",
+    "voteTitle": "BLIP - 예측 마켓",
+    "voteDescription": "익명 예측 마켓. 포인트를 걸고 결과를 예측하세요. 계정 불필요."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -699,5 +702,67 @@
     "flow": "생성 → 공유 → 연결 → 소멸",
     "highlight": "모든 연결은 <strong>독립된 암호화 방</strong>을 만듭니다.<br></br>당신도, 상대방도 익명.<br></br>대화가 끝나면 <strong>아무것도 남지 않습니다</strong>.",
     "cta": "내 BLIP me 만들기"
+  },
+  "Vote": {
+    "title": "예측 마켓",
+    "subtitle": "익명으로 예측하세요. 포인트를 걸고 크게 이기세요.",
+    "createQuestion": "질문 만들기",
+    "categories": {
+      "all": "전체",
+      "politics": "정치",
+      "sports": "스포츠",
+      "tech": "기술",
+      "economy": "경제",
+      "entertainment": "연예",
+      "society": "사회",
+      "gaming": "게임",
+      "other": "기타"
+    },
+    "betting": {
+      "placeBet": "베팅하기",
+      "yes": "예",
+      "no": "아니오",
+      "odds": "배당률",
+      "expectedPayout": "예상 배당",
+      "maxBet": "최대 베팅",
+      "betAmount": "베팅 금액",
+      "closesIn": "마감까지",
+      "closed": "마감됨",
+      "participants": "참여자"
+    },
+    "points": {
+      "balance": "잔액",
+      "bp": "BP",
+      "rank": "등급",
+      "dailyReward": "일일 보상",
+      "claimReward": "1 BP 받기",
+      "insufficientBalance": "BP 부족"
+    },
+    "settlement": {
+      "won": "맞추셨습니다!",
+      "lost": "틀린 예측...",
+      "payout": "배당금",
+      "confirm": "확인"
+    },
+    "create": {
+      "title": "질문 만들기",
+      "cost": "비용: {cost} BP",
+      "question": "질문",
+      "questionPlaceholder": "예: 비트코인이 10만 달러를 돌파할까?",
+      "category": "카테고리",
+      "duration": "기간",
+      "submit": "만들기 ({cost} BP)"
+    },
+    "landing": {
+      "title": "예측하고. 토론하고. 결정하세요.",
+      "subtitle": "익명 예측. 계정 불필요.",
+      "feature1Title": "실시간 결과",
+      "feature1Desc": "실시간 배당률과 결과를 즉시 확인",
+      "feature2Title": "자동 토론방",
+      "feature2Desc": "모든 예측 후 채팅방 자동 생성",
+      "feature3Title": "완전 익명",
+      "feature3Desc": "가입 없음. 추적 없음. 순수한 예측만.",
+      "cta": "예측 시작하기"
+    }
   }
 }

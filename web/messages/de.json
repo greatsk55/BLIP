@@ -79,7 +79,8 @@
       "updates": "Updates",
       "embed": "Einbetten",
       "myRooms": "Meine Räume",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "Vorhersagen"
     }
   },
   "Changelog": {
@@ -441,7 +442,9 @@
     "myRoomsTitle": "Meine Räume - BLIP",
     "myRoomsDescription": "Sieh dir deine kürzlich erstellten oder beigetretenen Chaträume an.",
     "blipMeTitle": "BLIP me - Einweg-Kontaktlink",
-    "blipMeDescription": "Erstellen Sie einen Einweg-Kontaktlink. Teilen Sie ihn überall — ein Klick startet einen geheimen Chat."
+    "blipMeDescription": "Erstellen Sie einen Einweg-Kontaktlink. Teilen Sie ihn überall — ein Klick startet einen geheimen Chat.",
+    "voteTitle": "BLIP - Vorhersagemarkt",
+    "voteDescription": "Anonymer Vorhersagemarkt. Setze Punkte auf reale Ergebnisse. Kein Konto erforderlich."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +700,67 @@
     "flow": "Erstellen → Teilen → Verbinden → Verschwinden",
     "highlight": "Jede Verbindung erstellt einen <strong>unabhängigen, verschlüsselten Raum</strong>.<br></br>Du bleibst anonym. Sie bleiben anonym.<br></br>Wenn das Gespräch endet, <strong>bleibt nichts zurück</strong>.",
     "cta": "Mein BLIP me Erstellen"
+  },
+  "Vote": {
+    "title": "Vorhersagemarkt",
+    "subtitle": "Anonym vorhersagen. Punkte setzen. Groß gewinnen.",
+    "createQuestion": "Frage erstellen",
+    "categories": {
+      "all": "Alle",
+      "politics": "Politik",
+      "sports": "Sport",
+      "tech": "Technologie",
+      "economy": "Wirtschaft",
+      "entertainment": "Unterhaltung",
+      "society": "Gesellschaft",
+      "gaming": "Gaming",
+      "other": "Sonstiges"
+    },
+    "betting": {
+      "placeBet": "Wette platzieren",
+      "yes": "Ja",
+      "no": "Nein",
+      "odds": "Quote",
+      "expectedPayout": "Erwartete Auszahlung",
+      "maxBet": "Maximaler Einsatz",
+      "betAmount": "Einsatzbetrag",
+      "closesIn": "Schließt in",
+      "closed": "Geschlossen",
+      "participants": "Teilnehmer"
+    },
+    "points": {
+      "balance": "Guthaben",
+      "bp": "BP",
+      "rank": "Rang",
+      "dailyReward": "Tägliche Belohnung",
+      "claimReward": "1 BP einfordern",
+      "insufficientBalance": "BP unzureichend"
+    },
+    "settlement": {
+      "won": "Richtig vorhergesagt!",
+      "lost": "Falsche Vorhersage...",
+      "payout": "Auszahlung",
+      "confirm": "Bestätigen"
+    },
+    "create": {
+      "title": "Frage erstellen",
+      "cost": "Kosten: {cost} BP",
+      "question": "Frage",
+      "questionPlaceholder": "Z.B.: Wird Bitcoin $100k überschreiten?",
+      "category": "Kategorie",
+      "duration": "Dauer",
+      "submit": "Erstellen ({cost} BP)"
+    },
+    "landing": {
+      "title": "VORHERSAGEN. DISKUTIEREN. ENTSCHEIDEN.",
+      "subtitle": "Anonyme Vorhersagen. Kein Konto nötig.",
+      "feature1Title": "Sofortige Ergebnisse",
+      "feature1Desc": "Live-Quoten und Ergebnisse in Echtzeit",
+      "feature2Title": "Auto-Diskussionen",
+      "feature2Desc": "Chatrooms werden nach jeder Vorhersage erstellt",
+      "feature3Title": "Völlig Anonym",
+      "feature3Desc": "Keine Anmeldung. Kein Tracking. Reine Vorhersagen.",
+      "cta": "Jetzt Vorhersagen"
+    }
   }
 }

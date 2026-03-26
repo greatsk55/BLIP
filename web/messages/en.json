@@ -79,7 +79,8 @@
       "updates": "Updates",
       "embed": "Embed",
       "myRooms": "My Rooms",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "Predictions"
     }
   },
   "Changelog": {
@@ -443,7 +444,9 @@
     "myRoomsTitle": "My Chat Rooms - BLIP",
     "myRoomsDescription": "View your recently created or joined chat rooms.",
     "blipMeTitle": "BLIP me - Burner Contact Link",
-    "blipMeDescription": "Create a disposable contact link. Share it anywhere — when someone clicks, a secret chat starts."
+    "blipMeDescription": "Create a disposable contact link. Share it anywhere — when someone clicks, a secret chat starts.",
+    "voteTitle": "BLIP - Prediction Market",
+    "voteDescription": "Anonymous prediction market. Bet points on real-world outcomes. No accounts needed."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -699,5 +702,67 @@
     "flow": "Create → Share → Connect → Vanish",
     "highlight": "Every connection creates an <strong>independent, encrypted room</strong>.<br></br>You stay anonymous. They stay anonymous.<br></br>When the conversation ends, <strong>nothing remains</strong>.",
     "cta": "Create My BLIP me"
+  },
+  "Vote": {
+    "title": "Prediction Market",
+    "subtitle": "Predict anonymously. Bet your points. Win big.",
+    "createQuestion": "Create Question",
+    "categories": {
+      "all": "All",
+      "politics": "Politics",
+      "sports": "Sports",
+      "tech": "Technology",
+      "economy": "Economy",
+      "entertainment": "Entertainment",
+      "society": "Society",
+      "gaming": "Gaming",
+      "other": "Other"
+    },
+    "betting": {
+      "placeBet": "Place Bet",
+      "yes": "Yes",
+      "no": "No",
+      "odds": "Odds",
+      "expectedPayout": "Expected Payout",
+      "maxBet": "Max Bet",
+      "betAmount": "Bet Amount",
+      "closesIn": "Closes in",
+      "closed": "Closed",
+      "participants": "participants"
+    },
+    "points": {
+      "balance": "Balance",
+      "bp": "BP",
+      "rank": "Rank",
+      "dailyReward": "Daily Reward",
+      "claimReward": "Claim 1 BP",
+      "insufficientBalance": "Insufficient BP"
+    },
+    "settlement": {
+      "won": "You got it right!",
+      "lost": "Wrong prediction...",
+      "payout": "Payout",
+      "confirm": "Confirm"
+    },
+    "create": {
+      "title": "Create Question",
+      "cost": "Cost: {cost} BP",
+      "question": "Question",
+      "questionPlaceholder": "e.g., Will Bitcoin break $100k?",
+      "category": "Category",
+      "duration": "Duration",
+      "submit": "Create ({cost} BP)"
+    },
+    "landing": {
+      "title": "PREDICT. DISCUSS. DECIDE.",
+      "subtitle": "Anonymous predictions. No accounts needed.",
+      "feature1Title": "Instant Results",
+      "feature1Desc": "See live odds and results in real-time",
+      "feature2Title": "Auto Discussions",
+      "feature2Desc": "Chat rooms created after every prediction",
+      "feature3Title": "Fully Anonymous",
+      "feature3Desc": "No sign-up. No tracking. Pure predictions.",
+      "cta": "Start Predicting"
+    }
   }
 }

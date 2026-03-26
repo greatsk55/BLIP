@@ -79,7 +79,8 @@
       "updates": "Mises à jour",
       "embed": "Intégrer",
       "myRooms": "Mes Salons",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "Prédictions"
     }
   },
   "Changelog": {
@@ -441,7 +442,9 @@
     "myRoomsTitle": "Mes Salons - BLIP",
     "myRoomsDescription": "Voir vos salons de discussion récemment créés ou rejoints.",
     "blipMeTitle": "BLIP me - Lien de contact jetable",
-    "blipMeDescription": "Créez un lien de contact jetable. Partagez-le n'importe où — un clic et un chat secret démarre."
+    "blipMeDescription": "Créez un lien de contact jetable. Partagez-le n'importe où — un clic et un chat secret démarre.",
+    "voteTitle": "BLIP - Marché de Prédictions",
+    "voteDescription": "Marché de prédictions anonyme. Pariez des points sur des résultats réels. Aucun compte requis."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +700,67 @@
     "flow": "Créer → Partager → Connecter → Disparaître",
     "highlight": "Chaque connexion crée une <strong>salle chiffrée indépendante</strong>.<br></br>Vous restez anonyme. Ils restent anonymes.<br></br>Quand la conversation se termine, <strong>rien ne reste</strong>.",
     "cta": "Créer Mon BLIP me"
+  },
+  "Vote": {
+    "title": "Marché de Prédictions",
+    "subtitle": "Prédisez anonymement. Pariez vos points. Gagnez gros.",
+    "createQuestion": "Créer une Question",
+    "categories": {
+      "all": "Tous",
+      "politics": "Politique",
+      "sports": "Sports",
+      "tech": "Technologie",
+      "economy": "Économie",
+      "entertainment": "Divertissement",
+      "society": "Société",
+      "gaming": "Jeux Vidéo",
+      "other": "Autres"
+    },
+    "betting": {
+      "placeBet": "Parier",
+      "yes": "Oui",
+      "no": "Non",
+      "odds": "Cotes",
+      "expectedPayout": "Gain Attendu",
+      "maxBet": "Mise Maximum",
+      "betAmount": "Montant du Pari",
+      "closesIn": "Ferme dans",
+      "closed": "Fermé",
+      "participants": "participants"
+    },
+    "points": {
+      "balance": "Solde",
+      "bp": "BP",
+      "rank": "Rang",
+      "dailyReward": "Récompense Quotidienne",
+      "claimReward": "Réclamer 1 BP",
+      "insufficientBalance": "BP insuffisant"
+    },
+    "settlement": {
+      "won": "Vous avez vu juste !",
+      "lost": "Mauvaise prédiction...",
+      "payout": "Gain",
+      "confirm": "Confirmer"
+    },
+    "create": {
+      "title": "Créer une Question",
+      "cost": "Coût : {cost} BP",
+      "question": "Question",
+      "questionPlaceholder": "Ex : Le Bitcoin dépassera-t-il 100k $ ?",
+      "category": "Catégorie",
+      "duration": "Durée",
+      "submit": "Créer ({cost} BP)"
+    },
+    "landing": {
+      "title": "PRÉDIRE. DISCUTER. DÉCIDER.",
+      "subtitle": "Prédictions anonymes. Aucun compte requis.",
+      "feature1Title": "Résultats Instantanés",
+      "feature1Desc": "Consultez les cotes et résultats en temps réel",
+      "feature2Title": "Discussions Automatiques",
+      "feature2Desc": "Des salons de chat créés après chaque prédiction",
+      "feature3Title": "Totalement Anonyme",
+      "feature3Desc": "Pas d'inscription. Pas de suivi. Des prédictions pures.",
+      "cta": "Commencer à Prédire"
+    }
   }
 }

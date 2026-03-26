@@ -79,7 +79,8 @@
       "updates": "更新日志",
       "embed": "嵌入",
       "myRooms": "我的聊天室",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "预测"
     }
   },
   "Changelog": {
@@ -441,7 +442,9 @@
     "myRoomsTitle": "我的聊天室 - BLIP",
     "myRoomsDescription": "查看您最近创建或加入的聊天室。",
     "blipMeTitle": "BLIP me - 一次性联系链接",
-    "blipMeDescription": "创建一次性联系链接。分享到任何地方 — 点击即开始加密聊天。"
+    "blipMeDescription": "创建一次性联系链接。分享到任何地方 — 点击即开始加密聊天。",
+    "voteTitle": "BLIP - 预测市场",
+    "voteDescription": "匿名预测市场。用积分押注预测结果。无需账号。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +700,67 @@
     "flow": "创建 → 分享 → 连接 → 消失",
     "highlight": "每次连接都会创建一个<strong>独立的加密房间</strong>。<br></br>你是匿名的，对方也是。<br></br>对话结束后，<strong>什么都不会留下</strong>。",
     "cta": "创建我的 BLIP me"
+  },
+  "Vote": {
+    "title": "预测市场",
+    "subtitle": "匿名预测。用积分下注。赢取大奖。",
+    "createQuestion": "创建问题",
+    "categories": {
+      "all": "全部",
+      "politics": "政治",
+      "sports": "体育",
+      "tech": "科技",
+      "economy": "经济",
+      "entertainment": "娱乐",
+      "society": "社会",
+      "gaming": "游戏",
+      "other": "其他"
+    },
+    "betting": {
+      "placeBet": "下注",
+      "yes": "是",
+      "no": "否",
+      "odds": "赔率",
+      "expectedPayout": "预期收益",
+      "maxBet": "最大下注",
+      "betAmount": "下注金额",
+      "closesIn": "截止于",
+      "closed": "已截止",
+      "participants": "参与者"
+    },
+    "points": {
+      "balance": "余额",
+      "bp": "BP",
+      "rank": "等级",
+      "dailyReward": "每日奖励",
+      "claimReward": "领取 1 BP",
+      "insufficientBalance": "BP 不足"
+    },
+    "settlement": {
+      "won": "预测正确！",
+      "lost": "预测错误...",
+      "payout": "收益",
+      "confirm": "确认"
+    },
+    "create": {
+      "title": "创建问题",
+      "cost": "费用: {cost} BP",
+      "question": "问题",
+      "questionPlaceholder": "例: 比特币会突破10万美元吗？",
+      "category": "分类",
+      "duration": "时长",
+      "submit": "创建 ({cost} BP)"
+    },
+    "landing": {
+      "title": "预测。讨论。决定。",
+      "subtitle": "匿名预测。无需账号。",
+      "feature1Title": "实时结果",
+      "feature1Desc": "实时查看赔率和结果",
+      "feature2Title": "自动讨论",
+      "feature2Desc": "每次预测后自动创建聊天室",
+      "feature3Title": "完全匿名",
+      "feature3Desc": "无需注册。无追踪。纯粹预测。",
+      "cta": "开始预测"
+    }
   }
 }
