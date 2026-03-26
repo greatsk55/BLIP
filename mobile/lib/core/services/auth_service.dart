@@ -9,7 +9,21 @@ import '../network/api_client.dart';
 /// - BLIP 철학: 최소한의 인증, 최대한의 프라이버시
 class AuthService {
   AuthService._();
-  static final instance = AuthService._();
+
+  /// 테스트 전용 생성자 — 서브클래스/Mock에서 사용
+  @visibleForTesting
+  AuthService.forTesting();
+
+  static AuthService _instance = AuthService._();
+  static AuthService get instance => _instance;
+
+  /// 테스트 전용: mock 인스턴스 주입
+  @visibleForTesting
+  static set testInstance(AuthService value) => _instance = value;
+
+  /// 테스트 전용: 원래 인스턴스로 복원
+  @visibleForTesting
+  static void resetInstance() => _instance = AuthService._();
 
   SupabaseClient get _client => Supabase.instance.client;
 

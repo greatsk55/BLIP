@@ -1,7 +1,7 @@
 name: blip
 description: "BLIP - Talk. Then Vanish. E2EE ephemeral chat."
 publish_to: 'none'
-version: 1.10.0+13
+version: 1.10.0+14
 
 environment:
   sdk: ^3.10.4
@@ -75,6 +75,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   flutter_lints: ^6.0.0
   riverpod_generator: ^2.6.1
