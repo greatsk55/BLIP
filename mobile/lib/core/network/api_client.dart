@@ -584,6 +584,20 @@ class ApiClient {
     return response.data;
   }
 
+  // ─── Auth API ───
+
+  /// 계정 삭제: Apple 토큰 철회 + Supabase 유저 삭제
+  Future<Map<String, dynamic>> deleteAccount({
+    required String accessToken,
+    required String authorizationCode,
+  }) async {
+    final response = await _dio.post('/api/auth/delete-account', data: {
+      'accessToken': accessToken,
+      'authorizationCode': authorizationCode,
+    });
+    return response.data;
+  }
+
   // ─── Push API ───
 
   /// FCM 토큰을 Room에 등록
