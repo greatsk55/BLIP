@@ -6,7 +6,7 @@ import 'package:blip/l10n/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/banner_ad_widget.dart';
 
-/// 바텀 네비게이션 Shell (3탭: 홈 / 채팅 / 커뮤니티)
+/// 바텀 네비게이션 Shell (4탭: 홈 / 채팅 / 커뮤니티 / 예측)
 class MainShell extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -64,6 +64,11 @@ class MainShell extends ConsumerWidget {
                   icon: Icon(Icons.forum_outlined, color: ghostGrey),
                   selectedIcon: Icon(Icons.forum, color: signalGreen),
                   label: l10n.navCommunity,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.trending_up_outlined, color: ghostGrey),
+                  selectedIcon: Icon(Icons.trending_up, color: signalGreen),
+                  label: l10n.navVote,
                 ),
               ],
             ),

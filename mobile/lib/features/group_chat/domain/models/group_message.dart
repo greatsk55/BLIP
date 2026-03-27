@@ -15,4 +15,23 @@ class GroupMessage {
     required this.timestamp,
     required this.isMine,
   });
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'senderId': senderId,
+    'senderName': senderName,
+    'content': content,
+    'timestamp': timestamp,
+  };
+
+  factory GroupMessage.fromJson(Map<String, dynamic> json, {String? myId}) {
+    return GroupMessage(
+      id: json['id'] as String? ?? '',
+      senderId: json['senderId'] as String? ?? '',
+      senderName: json['senderName'] as String? ?? '',
+      content: json['content'] as String? ?? '',
+      timestamp: json['timestamp'] as int? ?? 0,
+      isMine: json['senderId'] == myId,
+    );
+  }
 }

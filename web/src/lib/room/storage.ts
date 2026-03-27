@@ -26,6 +26,8 @@ export interface SavedRoom {
 const STORAGE_KEY = 'blip-saved-rooms';
 const PASSWORD_PREFIX = 'blip-room-pwd-';
 const ADMIN_TOKEN_PREFIX = 'blip-room-admin-';
+const CHAT_HISTORY_PREFIX = 'blip-chat-history-';
+const MAX_STORED_MESSAGES = 100;
 
 // ─── 인메모리 캐시 ───
 
@@ -140,4 +142,49 @@ export function touchRoom(roomId: string): void {
     room.lastAccessedAt = Date.now();
     writeRooms(rooms);
   }
+}
+
+// ─── 채팅 히스토리 (그룹채팅 로컬 저장) ───
+
+export interface StoredMessage {
+  id: string;
+  sender: string;
+  text: string;
+  timestamp: number;
+}
+
+/** 채팅 메시지 저장 (최대 MAX_STORED_MESSAGES개) */
+export function saveChatMessages(roomId: string, messages: StoredMessage[]): void {
+  if (!isBrowser) return;
+  const trimmed = messages.slice(-MAX_STORED_MESSAGES);
+  localStorage.setItem(
+    `${CHAT_HISTORY_PREFIX}${roomId}`,
+    JSON.stringify(trimmed)
+  );
+}
+
+/** 채팅 메시지 추가 (기존 + 새 메시지) */
+export function appendChatMessage(roomId: string, message: StoredMessage): void {
+  if (!isBrowser) return;
+  const existing = getChatMessages(roomId);
+  existing.push(message);
+  saveChatMessages(roomId, existing);
+}
+
+/** 저장된 채팅 메시지 조회 */
+export function getChatMessages(roomId: string): StoredMessage[] {
+  if (!isBrowser) return [];
+  try {
+    const raw = localStorage.getItem(`${CHAT_HISTORY_PREFIX}${roomId}`);
+    if (!raw) return [];
+    return JSON.parse(raw) as StoredMessage[];
+  } catch {
+    return [];
+  }
+}
+
+/** 채팅 히스토리 삭제 */
+export function clearChatMessages(roomId: string): void {
+  if (!isBrowser) return;
+  localStorage.removeItem(`${CHAT_HISTORY_PREFIX}${roomId}`);
 }

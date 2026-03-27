@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
+import PredictionSection from "@/components/PredictionSection";
 import CommunityBoard from "@/components/CommunityBoard";
 import BlipMeSection from "@/components/BlipMeSection";
 import Philosophy from "@/components/Philosophy";
@@ -58,6 +59,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Hero />
       <Problem />
       <Solution />
+      <PredictionSection />
       <CommunityBoard />
       <BlipMeSection />
       <Philosophy />

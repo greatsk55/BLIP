@@ -626,4 +626,19 @@ class ApiClient {
     });
     return response.data;
   }
+
+  // ─── Prediction API ───
+
+  /// 예측 목록 조회 (locale 기반, fallback to 'en')
+  Future<List<dynamic>> fetchPredictions({
+    required String locale,
+    String? category,
+  }) async {
+    final params = <String, String>{'locale': locale};
+    if (category != null && category != 'all') {
+      params['category'] = category;
+    }
+    final response = await _dio.get('/api/prediction', queryParameters: params);
+    return (response.data['predictions'] as List?) ?? [];
+  }
 }

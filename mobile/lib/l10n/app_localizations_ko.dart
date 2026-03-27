@@ -605,6 +605,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get navCommunity => '커뮤니티';
 
   @override
+  String get navVote => '투표';
+
+  @override
+  String get predictionTabAll => '전체';
+
+  @override
+  String get predictionTabMyBets => '내 베팅';
+
+  @override
+  String get predictionTabCreated => '내 질문';
+
+  @override
   String get chatListTitle => '내 채팅방';
 
   @override
@@ -988,6 +1000,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get blipMeCreateButton => 'BLIP me 링크 생성';
 
   @override
+  String get blipMeWidgetPrompt => '링크를 공유하여 채팅을 시작하세요';
+
+  @override
+  String get blipMeWidgetConnections => '연결';
+
+  @override
   String get blipMeYourLink => '나의 링크';
 
   @override
@@ -1026,4 +1044,125 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get blipMeHero => 'BLIP me';
+
+  @override
+  String get predictionTitle => '예측';
+
+  @override
+  String get predictionCreateTitle => '질문 만들기';
+
+  @override
+  String predictionCost(int cost) {
+    return '비용: $cost BP';
+  }
+
+  @override
+  String get predictionQuestion => '질문';
+
+  @override
+  String get predictionQuestionHint => '예: 비트코인이 10만 달러를 돌파할까?';
+
+  @override
+  String get predictionCategory => '카테고리';
+
+  @override
+  String get predictionDuration => '마감 시간';
+
+  @override
+  String predictionSubmit(int cost) {
+    return '생성 ($cost BP)';
+  }
+
+  @override
+  String get predictionBet => '베팅하기';
+
+  @override
+  String get predictionDiscuss => '토론 참여';
+
+  @override
+  String get predictionOdds => '배당률';
+
+  @override
+  String get predictionExpectedPayout => '예상 수익';
+
+  @override
+  String predictionClosesIn(String time) {
+    return '$time 후 마감';
+  }
+
+  @override
+  String get predictionClosed => '마감됨';
+
+  @override
+  String predictionParticipants(int count) {
+    return '$count명 참여';
+  }
+
+  @override
+  String get predictionWon => '정답입니다!';
+
+  @override
+  String get predictionLost => '예측 실패...';
+
+  @override
+  String predictionPayout(int amount) {
+    return '정산: $amount BP';
+  }
+
+  @override
+  String get predictionBalance => '잔액';
+
+  @override
+  String get predictionRank => '등급';
+
+  @override
+  String get predictionDailyReward => '일일 보상';
+
+  @override
+  String get predictionClaimReward => '1 BP 받기';
+
+  @override
+  String get predictionInsufficientBP => 'BP가 부족합니다';
+
+  @override
+  String get predictionYes => '예';
+
+  @override
+  String get predictionNo => '아니오';
+
+  @override
+  String get predictionAll => '전체';
+
+  @override
+  String get predictionPolitics => '정치';
+
+  @override
+  String get predictionSports => '스포츠';
+
+  @override
+  String get predictionTech => '기술';
+
+  @override
+  String get predictionEconomy => '경제';
+
+  @override
+  String get predictionEntertainment => '엔터테인먼트';
+
+  @override
+  String get predictionSociety => '사회';
+
+  @override
+  String get predictionGaming => '게임';
+
+  @override
+  String get predictionOther => '기타';
+
+  @override
+  String get predictionLandingTitle => '예측하고. 토론하고. 결정하세요.';
+
+  @override
+  String get predictionLandingSubtitle => '익명 예측. 계정 불필요.';
+
+  @override
+  String get predictionStartPredicting => '예측 시작하기';
 }

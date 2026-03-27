@@ -627,6 +627,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navCommunity => 'Comunidad';
 
   @override
+  String get navVote => 'Votar';
+
+  @override
+  String get predictionTabAll => 'Todo';
+
+  @override
+  String get predictionTabMyBets => 'Mis apuestas';
+
+  @override
+  String get predictionTabCreated => 'Creadas';
+
+  @override
   String get chatListTitle => 'Mis Salas de Chat';
 
   @override
@@ -1025,6 +1037,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get blipMeCreateButton => 'Crear enlace BLIP me';
 
   @override
+  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+
+  @override
+  String get blipMeWidgetConnections => 'connections';
+
+  @override
   String get blipMeYourLink => 'Tu enlace';
 
   @override
@@ -1065,4 +1083,125 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get blipMeHero => 'BLIP me';
+
+  @override
+  String get predictionTitle => 'Predicciones';
+
+  @override
+  String get predictionCreateTitle => 'Crear pregunta';
+
+  @override
+  String predictionCost(int cost) {
+    return 'Costo: $cost BP';
+  }
+
+  @override
+  String get predictionQuestion => 'Pregunta';
+
+  @override
+  String get predictionQuestionHint => 'Ej., ¿Bitcoin superará los \$100k?';
+
+  @override
+  String get predictionCategory => 'Categoría';
+
+  @override
+  String get predictionDuration => 'Duración';
+
+  @override
+  String predictionSubmit(int cost) {
+    return 'Crear ($cost BP)';
+  }
+
+  @override
+  String get predictionBet => 'Apostar';
+
+  @override
+  String get predictionDiscuss => 'Unirse a la discusión';
+
+  @override
+  String get predictionOdds => 'Cuotas';
+
+  @override
+  String get predictionExpectedPayout => 'Pago esperado';
+
+  @override
+  String predictionClosesIn(String time) {
+    return 'Cierra en $time';
+  }
+
+  @override
+  String get predictionClosed => 'Cerrado';
+
+  @override
+  String predictionParticipants(int count) {
+    return '$count participantes';
+  }
+
+  @override
+  String get predictionWon => '¡Acertaste!';
+
+  @override
+  String get predictionLost => 'Predicción incorrecta...';
+
+  @override
+  String predictionPayout(int amount) {
+    return 'Pago: $amount BP';
+  }
+
+  @override
+  String get predictionBalance => 'Saldo';
+
+  @override
+  String get predictionRank => 'Rango';
+
+  @override
+  String get predictionDailyReward => 'Recompensa diaria';
+
+  @override
+  String get predictionClaimReward => 'Reclamar 1 BP';
+
+  @override
+  String get predictionInsufficientBP => 'BP insuficiente';
+
+  @override
+  String get predictionYes => 'Sí';
+
+  @override
+  String get predictionNo => 'No';
+
+  @override
+  String get predictionAll => 'Todos';
+
+  @override
+  String get predictionPolitics => 'Política';
+
+  @override
+  String get predictionSports => 'Deportes';
+
+  @override
+  String get predictionTech => 'Tecnología';
+
+  @override
+  String get predictionEconomy => 'Economía';
+
+  @override
+  String get predictionEntertainment => 'Entretenimiento';
+
+  @override
+  String get predictionSociety => 'Sociedad';
+
+  @override
+  String get predictionGaming => 'Videojuegos';
+
+  @override
+  String get predictionOther => 'Otros';
+
+  @override
+  String get predictionLandingTitle => 'PREDICE. DISCUTE. DECIDE.';
+
+  @override
+  String get predictionLandingSubtitle => 'Predicciones anónimas. Sin cuentas.';
+
+  @override
+  String get predictionStartPredicting => 'Comenzar a predecir';
 }

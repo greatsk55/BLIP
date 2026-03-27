@@ -351,6 +351,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ),
           ),
+          const SizedBox(height: 12),
+
+          // Prediction CTA
+          FadeTransition(
+            opacity: _ctaFade,
+            child: SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: OutlinedButton.icon(
+                onPressed: () => context.push('/prediction'),
+                icon: Icon(Icons.trending_up, color: signalGreen),
+                label: Text(l10n.predictionStartPredicting),
+              ),
+            ),
+          ),
           const SizedBox(height: 24),
 
           // Link share

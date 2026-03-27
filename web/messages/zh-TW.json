@@ -79,7 +79,8 @@
       "updates": "更新紀錄",
       "embed": "嵌入",
       "myRooms": "我的聊天室",
-      "blipme": "BLIP me"
+      "blipme": "BLIP me",
+      "vote": "預測"
     }
   },
   "Changelog": {
@@ -87,103 +88,32 @@
     "subtitle": "更新紀錄",
     "description": "每一項改進，透明追蹤。",
     "versions": {
-      "9": {
-        "version": "v1.0.0",
-        "date": "2026年2月1日",
-        "title": "首次發布",
+      "0": {
+        "version": "v1.10.0",
+        "date": "2026年3月26日",
+        "title": "預測市場 — 匿名積分投注",
         "changes": {
-          "1": "E2EE 文字聊天（Curve25519 ECDH + XSalsa20-Poly1305）",
-          "2": "一鍵建立房間，附帶可分享連結",
-          "3": "完全匿名——無需任何帳號",
-          "4": "支援8種語言（EN、KO、JA、ZH、ZH-TW、ES、FR、DE）",
-          "5": "100% 開源程式碼"
-        }
-      },
-      "8": {
-        "version": "v1.1.0",
-        "date": "2026年2月10日",
-        "title": "即時房間銷毀與通知",
-        "changes": {
-          "1": "所有參與者離開時立即銷毀房間",
-          "2": "瀏覽器推播通知接收新訊息",
-          "3": "房間建立速率限制（防濫用）",
-          "4": "加密文章的私密社群功能"
-        }
-      },
-      "7": {
-        "version": "v1.2.0",
-        "date": "2026年2月15日",
-        "title": "加密媒體傳輸",
-        "changes": {
-          "1": "透過加密 P2P（WebRTC DataChannel）傳輸圖片與影片",
-          "2": "僅使用 TURN 中繼，防止對等方之間的 IP 暴露",
-          "3": "自動圖片壓縮（最大 2048px，JPEG 80%）",
-          "4": "全螢幕圖片檢視器，支援雙指縮放",
-          "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
-        }
-      },
-      "6": {
-        "version": "v1.3.0",
-        "date": "2026年2月26日",
-        "title": "行動應用程式與穩定性提升",
-        "changes": {
-          "1": "Android 行動應用程式上線（Google Play Store）",
-          "2": "深層連結支援 — 透過分享連結直接在應用程式中開啟聊天室",
-          "3": "一鍵入場 — 連結中包含密碼，無需手動輸入即可連線",
-          "4": "60秒重連寬限期 — 退出後不會立即銷毀房間",
-          "5": "社群儀表板及貼文影片附件支援",
-          "6": "10種語言支援（+德語、繁體中文）"
-        }
-      },
-      "5": {
-        "version": "v1.4.0",
-        "date": "2026年2月28日",
-        "title": "社群邀請碼系統",
-        "changes": {
-          "1": "社群邀請碼 — 無需密碼，透過連結自動加入",
-          "2": "管理面板中更新邀請碼 — 舊連結失效，不影響現有成員",
-          "3": "邀請碼（可分享）與加密金鑰（不可變）分離，增強安全性",
-          "4": "行動應用程式支援社群邀請碼深層連結"
-        }
-      },
-      "4": {
-        "version": "v1.5.0",
-        "date": "2026年3月14日",
-        "title": "嵌入式聊天小工具",
-        "changes": {
-          "1": "透過iframe將BLIP聊天嵌入任何網站 — 一行HTML即可新增加密聊天",
-          "2": "輕量嵌入佈局 — 無廣告、無導航，專注聊天",
-          "3": "postMessage API與父頁面事件通訊（建立房間、加入、銷毀）",
-          "4": "嵌入模式下分享連結保持在嵌入上下文中",
-          "5": "嵌入模式下保持完整的端對端加密"
-        }
-      },
-      "3": {
-        "version": "v1.6.0",
-        "date": "March 18, 2026",
-        "title": "Group Chat",
-        "changes": {
-          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
-          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
-          "3": "Participant list — see who’s online in real-time",
-          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
-          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
-          "6": "Available on both web and mobile app"
-        }
-      },
-      "2": {
-        "version": "v1.7.0",
-        "date": "March 18, 2026",
-        "title": "Universal File Transfer",
-        "changes": {
-          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
-          "2": "File message bubble with icon, filename, size, and download button",
-          "3": "Transfer progress indicator during send/receive",
-          "4": "200MB max file size (P2P — no server storage)",
-          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+          "1": "預測市場 — 用BP（BLIP積分）對現實結果下注，完全匿名",
+          "2": "同注分彩賠率 — 從總獎池動態計算賠率，10%佣金",
+          "3": "6級等級系統 — Static → Receiver → Signal → Decoder → Control → Oracle",
+          "4": "建立問題 — 任何人都可以建立預測（150 BP，等級折扣）",
+          "5": "自動結算 — 建立者輸入結果後自動分配",
+          "6": "網頁和行動應用程式均支援"
         }
       },
       "1": {
+        "version": "v1.9.0",
+        "date": "2026年3月24日",
+        "title": "BLIP me — 一次性聯繫連結",
+        "changes": {
+          "1": "BLIP me連結 — 建立個人URL並分享到社群媒體。有人點擊後即刻開始1:1加密聊天",
+          "2": "即時連接提醒 — 保持頁面開啟，訪客連接時即時收到通知",
+          "3": "連結管理 — 隨時更換URL或刪除連結",
+          "4": "無帳號所有權 — 基於設備的令牌證明連結所有權，無需帳號",
+          "5": "網頁和行動應用程式均可使用"
+        }
+      },
+      "2": {
         "version": "v1.8.0",
         "date": "2026年3月20日",
         "title": "我的聊天室 & 自動重新加入",
@@ -196,16 +126,100 @@
           "6": "網頁端和行動端均可使用"
         }
       },
-      "0": {
-        "version": "v1.9.0",
-        "date": "2026年3月24日",
-        "title": "BLIP me — 一次性聯繫連結",
+      "3": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
         "changes": {
-          "1": "BLIP me連結 — 建立個人URL並分享到社群媒體。有人點擊後即刻開始1:1加密聊天",
-          "2": "即時連接提醒 — 保持頁面開啟，訪客連接時即時收到通知",
-          "3": "連結管理 — 隨時更換URL或刪除連結",
-          "4": "無帳號所有權 — 基於設備的令牌證明連結所有權，無需帳號",
-          "5": "網頁和行動應用程式均可使用"
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "4": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
+        "changes": {
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
+        }
+      },
+      "5": {
+        "version": "v1.5.0",
+        "date": "2026年3月14日",
+        "title": "嵌入式聊天小工具",
+        "changes": {
+          "1": "透過iframe將BLIP聊天嵌入任何網站 — 一行HTML即可新增加密聊天",
+          "2": "輕量嵌入佈局 — 無廣告、無導航，專注聊天",
+          "3": "postMessage API與父頁面事件通訊（建立房間、加入、銷毀）",
+          "4": "嵌入模式下分享連結保持在嵌入上下文中",
+          "5": "嵌入模式下保持完整的端對端加密"
+        }
+      },
+      "6": {
+        "version": "v1.4.0",
+        "date": "2026年2月28日",
+        "title": "社群邀請碼系統",
+        "changes": {
+          "1": "社群邀請碼 — 無需密碼，透過連結自動加入",
+          "2": "管理面板中更新邀請碼 — 舊連結失效，不影響現有成員",
+          "3": "邀請碼（可分享）與加密金鑰（不可變）分離，增強安全性",
+          "4": "行動應用程式支援社群邀請碼深層連結"
+        }
+      },
+      "7": {
+        "version": "v1.3.0",
+        "date": "2026年2月26日",
+        "title": "行動應用程式與穩定性提升",
+        "changes": {
+          "1": "Android 行動應用程式上線（Google Play Store）",
+          "2": "深層連結支援 — 透過分享連結直接在應用程式中開啟聊天室",
+          "3": "一鍵入場 — 連結中包含密碼，無需手動輸入即可連線",
+          "4": "60秒重連寬限期 — 退出後不會立即銷毀房間",
+          "5": "社群儀表板及貼文影片附件支援",
+          "6": "10種語言支援（+德語、繁體中文）"
+        }
+      },
+      "8": {
+        "version": "v1.2.0",
+        "date": "2026年2月15日",
+        "title": "加密媒體傳輸",
+        "changes": {
+          "1": "透過加密 P2P（WebRTC DataChannel）傳輸圖片與影片",
+          "2": "僅使用 TURN 中繼，防止對等方之間的 IP 暴露",
+          "3": "自動圖片壓縮（最大 2048px，JPEG 80%）",
+          "4": "全螢幕圖片檢視器，支援雙指縮放",
+          "5": "使用 SHA-256 校驗碼進行檔案完整性驗證"
+        }
+      },
+      "9": {
+        "version": "v1.1.0",
+        "date": "2026年2月10日",
+        "title": "即時房間銷毀與通知",
+        "changes": {
+          "1": "所有參與者離開時立即銷毀房間",
+          "2": "瀏覽器推播通知接收新訊息",
+          "3": "房間建立速率限制（防濫用）",
+          "4": "加密文章的私密社群功能"
+        }
+      },
+      "10": {
+        "version": "v1.0.0",
+        "date": "2026年2月1日",
+        "title": "首次發布",
+        "changes": {
+          "1": "E2EE 文字聊天（Curve25519 ECDH + XSalsa20-Poly1305）",
+          "2": "一鍵建立房間，附帶可分享連結",
+          "3": "完全匿名——無需任何帳號",
+          "4": "支援8種語言（EN、KO、JA、ZH、ZH-TW、ES、FR、DE）",
+          "5": "100% 開源程式碼"
         }
       }
     }
@@ -441,7 +455,9 @@
     "myRoomsTitle": "我的聊天室 - BLIP",
     "myRoomsDescription": "查看您最近建立或加入的聊天室。",
     "blipMeTitle": "BLIP me - 一次性聯繫連結",
-    "blipMeDescription": "建立一次性聯繫連結。分享到任何地方 — 點擊即開始加密聊天。"
+    "blipMeDescription": "建立一次性聯繫連結。分享到任何地方 — 點擊即開始加密聊天。",
+    "voteTitle": "BLIP - 預測市場",
+    "voteDescription": "匿名預測市場。用積分押注預測結果。無需帳號。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -697,5 +713,75 @@
     "flow": "建立 → 分享 → 連接 → 消失",
     "highlight": "每次連接都會建立一個<strong>獨立的加密房間</strong>。<br></br>你是匿名的，對方也是。<br></br>對話結束後，<strong>什麼都不會留下</strong>。",
     "cta": "建立我的 BLIP me"
+  },
+  "BlipMeWidget": {
+    "createPrompt": "建立您的 BLIP me 連結 — 分享後即可開始加密聊天。",
+    "create": "建立",
+    "connections": "{count} 次連接",
+    "refresh": "重新整理",
+    "manage": "管理"
+  },
+  "Vote": {
+    "title": "預測市場",
+    "subtitle": "匿名預測。用積分下注。贏取大獎。",
+    "createQuestion": "建立問題",
+    "categories": {
+      "all": "全部",
+      "politics": "政治",
+      "sports": "體育",
+      "tech": "科技",
+      "economy": "經濟",
+      "entertainment": "娛樂",
+      "society": "社會",
+      "gaming": "遊戲",
+      "other": "其他"
+    },
+    "betting": {
+      "placeBet": "下注",
+      "yes": "是",
+      "no": "否",
+      "odds": "賠率",
+      "expectedPayout": "預期收益",
+      "maxBet": "最大下注",
+      "betAmount": "下注金額",
+      "closesIn": "截止於",
+      "closed": "已截止",
+      "participants": "參與者"
+    },
+    "points": {
+      "balance": "餘額",
+      "bp": "BP",
+      "rank": "等級",
+      "dailyReward": "每日獎勵",
+      "claimReward": "領取 1 BP",
+      "insufficientBalance": "BP 不足"
+    },
+    "settlement": {
+      "won": "預測正確！",
+      "lost": "預測錯誤...",
+      "payout": "收益",
+      "confirm": "確認"
+    },
+    "create": {
+      "title": "建立問題",
+      "cost": "費用: {cost} BP",
+      "question": "問題",
+      "questionPlaceholder": "例: 比特幣會突破10萬美元嗎？",
+      "category": "分類",
+      "duration": "時長",
+      "submit": "建立 ({cost} BP)"
+    },
+    "landing": {
+      "title": "預測。討論。決定。",
+      "subtitle": "匿名預測。無需帳號。",
+      "feature1Title": "即時結果",
+      "feature1Desc": "即時查看賠率和結果",
+      "feature2Title": "自動討論",
+      "feature2Desc": "每次預測後自動建立聊天室",
+      "feature3Title": "完全匿名",
+      "feature3Desc": "無需註冊。無追蹤。純粹預測。",
+      "cta": "開始預測"
+    },
+    "discuss": "參與討論"
   }
 }
