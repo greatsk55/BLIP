@@ -88,103 +88,32 @@
     "subtitle": "Änderungsprotokoll",
     "description": "Jede Verbesserung, transparent dokumentiert.",
     "versions": {
-      "9": {
-        "version": "v1.0.0",
-        "date": "1. Februar 2026",
-        "title": "Erstveröffentlichung",
+      "0": {
+        "version": "v1.10.0",
+        "date": "26. März 2026",
+        "title": "Vorhersagemarkt — Anonyme Punktewetten",
         "changes": {
-          "1": "E2EE-Textchat (Curve25519 ECDH + XSalsa20-Poly1305)",
-          "2": "Ein-Klick-Raumerstellung mit teilbaren Links",
-          "3": "Keine Kontoerfordernis — vollständig anonym",
-          "4": "8 Sprachen unterstützt (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
-          "5": "100% quelloffene Codebasis"
-        }
-      },
-      "8": {
-        "version": "v1.1.0",
-        "date": "10. Februar 2026",
-        "title": "Sofortige Raumvernichtung & Benachrichtigungen",
-        "changes": {
-          "1": "Räume werden sofort zerstört, wenn alle Teilnehmer gehen",
-          "2": "Browser-Push-Benachrichtigungen für eingehende Nachrichten",
-          "3": "Rate-Limiting für Raumerstellung (Anti-Missbrauch)",
-          "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
-        }
-      },
-      "7": {
-        "version": "v1.2.0",
-        "date": "15. Februar 2026",
-        "title": "Verschlüsselte Medienübertragung",
-        "changes": {
-          "1": "Bild- & Videoübertragung über verschlüsseltes P2P (WebRTC DataChannel)",
-          "2": "TURN-only-Relay zur Vermeidung von IP-Offenlegung zwischen Teilnehmern",
-          "3": "Automatische Bildkomprimierung (max. 2048px, JPEG 80%)",
-          "4": "Vollbild-Bildbetrachter mit Pinch-to-Zoom",
-          "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
-        }
-      },
-      "6": {
-        "version": "v1.3.0",
-        "date": "26. Februar 2026",
-        "title": "Mobile App & Stabilität",
-        "changes": {
-          "1": "Android-App veröffentlicht (Google Play Store)",
-          "2": "Deep-Links — Chaträume direkt über geteilte Links in der App öffnen",
-          "3": "Ein-Klick-Eintritt — Passwort im Link für sofortige Verbindung",
-          "4": "60-Sekunden-Karenzzeit — Räume werden nicht sofort beim Verlassen zerstört",
-          "5": "Community-Dashboard & Videoanlagen in Beiträgen",
-          "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
-        }
-      },
-      "5": {
-        "version": "v1.4.0",
-        "date": "28. Februar 2026",
-        "title": "Community-Einladungscode-System",
-        "changes": {
-          "1": "Einladungscodes für Communities — automatischer Beitritt per Link ohne Passwort",
-          "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
-          "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
-          "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
-        }
-      },
-      "4": {
-        "version": "v1.5.0",
-        "date": "14. März 2026",
-        "title": "Einbettbares Chat-Widget",
-        "changes": {
-          "1": "BLIP-Chat per iframe in jede Website einbetten — verschlüsselten Chat mit einer HTML-Zeile hinzufügen",
-          "2": "Leichtes Einbettungs-Layout — keine Werbung, keine Navigation, nur der Chat",
-          "3": "postMessage-API für Kommunikation mit der Elternseite (Raumerstellung, Beitritt, Zerstörung)",
-          "4": "Geteilte Links im Einbettungsmodus bleiben im Einbettungskontext",
-          "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
-        }
-      },
-      "3": {
-        "version": "v1.6.0",
-        "date": "March 18, 2026",
-        "title": "Group Chat",
-        "changes": {
-          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
-          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
-          "3": "Participant list — see who’s online in real-time",
-          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
-          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
-          "6": "Available on both web and mobile app"
-        }
-      },
-      "2": {
-        "version": "v1.7.0",
-        "date": "March 18, 2026",
-        "title": "Universal File Transfer",
-        "changes": {
-          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
-          "2": "File message bubble with icon, filename, size, and download button",
-          "3": "Transfer progress indicator during send/receive",
-          "4": "200MB max file size (P2P — no server storage)",
-          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+          "1": "Vorhersagemarkt — Setze BP (BLIP-Punkte) auf reale Ergebnisse, vollständig anonym",
+          "2": "Parimutuel-Quoten — Dynamische Quoten aus dem Gesamtpool berechnet, 10% Provision",
+          "3": "6-stufiges Rangsystem — Static → Receiver → Signal → Decoder → Control → Oracle",
+          "4": "Fragen erstellen — Jeder Nutzer kann Vorhersagen erstellen (150 BP, Rang-Rabatte)",
+          "5": "Automatische Abrechnung — Der Ersteller gibt das Ergebnis ein, Auszahlung erfolgt automatisch",
+          "6": "Verfügbar auf Web und mobiler App"
         }
       },
       "1": {
+        "version": "v1.9.0",
+        "date": "24. März 2026",
+        "title": "BLIP me — Einweg-Kontaktlink",
+        "changes": {
+          "1": "BLIP me-Link — Erstellen Sie Ihre persönliche URL und teilen Sie sie in sozialen Medien. Wenn jemand klickt, startet sofort ein verschlüsselter 1:1-Chat",
+          "2": "Echtzeit-Verbindungsbenachrichtigungen — Lassen Sie die Seite geöffnet, um sofortige Benachrichtigungen zu erhalten, wenn ein Besucher sich verbindet",
+          "3": "Link-Verwaltung — URL jederzeit ändern oder Link löschen",
+          "4": "Kontolose Eigentumsrechte — Gerätebasierter Token beweist Link-Eigentum, kein Konto erforderlich",
+          "5": "Verfügbar im Web und in der mobilen App"
+        }
+      },
+      "2": {
         "version": "v1.8.0",
         "date": "20. März 2026",
         "title": "Meine Räume & Automatischer Wiedereintritt",
@@ -197,16 +126,100 @@
           "6": "Verfügbar auf Web und mobiler App"
         }
       },
-      "0": {
-        "version": "v1.9.0",
-        "date": "24. März 2026",
-        "title": "BLIP me — Einweg-Kontaktlink",
+      "3": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
         "changes": {
-          "1": "BLIP me-Link — Erstellen Sie Ihre persönliche URL und teilen Sie sie in sozialen Medien. Wenn jemand klickt, startet sofort ein verschlüsselter 1:1-Chat",
-          "2": "Echtzeit-Verbindungsbenachrichtigungen — Lassen Sie die Seite geöffnet, um sofortige Benachrichtigungen zu erhalten, wenn ein Besucher sich verbindet",
-          "3": "Link-Verwaltung — URL jederzeit ändern oder Link löschen",
-          "4": "Kontolose Eigentumsrechte — Gerätebasierter Token beweist Link-Eigentum, kein Konto erforderlich",
-          "5": "Verfügbar im Web und in der mobilen App"
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "4": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
+        "changes": {
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
+        }
+      },
+      "5": {
+        "version": "v1.5.0",
+        "date": "14. März 2026",
+        "title": "Einbettbares Chat-Widget",
+        "changes": {
+          "1": "BLIP-Chat per iframe in jede Website einbetten — verschlüsselten Chat mit einer HTML-Zeile hinzufügen",
+          "2": "Leichtes Einbettungs-Layout — keine Werbung, keine Navigation, nur der Chat",
+          "3": "postMessage-API für Kommunikation mit der Elternseite (Raumerstellung, Beitritt, Zerstörung)",
+          "4": "Geteilte Links im Einbettungsmodus bleiben im Einbettungskontext",
+          "5": "Vollständige E2E-Verschlüsselung auch im eingebetteten Modus"
+        }
+      },
+      "6": {
+        "version": "v1.4.0",
+        "date": "28. Februar 2026",
+        "title": "Community-Einladungscode-System",
+        "changes": {
+          "1": "Einladungscodes für Communities — automatischer Beitritt per Link ohne Passwort",
+          "2": "Einladungscode-Rotation im Admin-Panel — alte Links ungültig machen, bestehende Mitglieder nicht betroffen",
+          "3": "Trennung von Einladungscode (teilbar) und Verschlüsselungsschlüssel (unveränderlich) für mehr Sicherheit",
+          "4": "Deep-Link-Unterstützung für Einladungscodes in der mobilen App"
+        }
+      },
+      "7": {
+        "version": "v1.3.0",
+        "date": "26. Februar 2026",
+        "title": "Mobile App & Stabilität",
+        "changes": {
+          "1": "Android-App veröffentlicht (Google Play Store)",
+          "2": "Deep-Links — Chaträume direkt über geteilte Links in der App öffnen",
+          "3": "Ein-Klick-Eintritt — Passwort im Link für sofortige Verbindung",
+          "4": "60-Sekunden-Karenzzeit — Räume werden nicht sofort beim Verlassen zerstört",
+          "5": "Community-Dashboard & Videoanlagen in Beiträgen",
+          "6": "Unterstützung für 10 Sprachen (+Deutsch, Traditionelles Chinesisch)"
+        }
+      },
+      "8": {
+        "version": "v1.2.0",
+        "date": "15. Februar 2026",
+        "title": "Verschlüsselte Medienübertragung",
+        "changes": {
+          "1": "Bild- & Videoübertragung über verschlüsseltes P2P (WebRTC DataChannel)",
+          "2": "TURN-only-Relay zur Vermeidung von IP-Offenlegung zwischen Teilnehmern",
+          "3": "Automatische Bildkomprimierung (max. 2048px, JPEG 80%)",
+          "4": "Vollbild-Bildbetrachter mit Pinch-to-Zoom",
+          "5": "Dateiintegritätsprüfung mit SHA-256-Prüfsummen"
+        }
+      },
+      "9": {
+        "version": "v1.1.0",
+        "date": "10. Februar 2026",
+        "title": "Sofortige Raumvernichtung & Benachrichtigungen",
+        "changes": {
+          "1": "Räume werden sofort zerstört, wenn alle Teilnehmer gehen",
+          "2": "Browser-Push-Benachrichtigungen für eingehende Nachrichten",
+          "3": "Rate-Limiting für Raumerstellung (Anti-Missbrauch)",
+          "4": "Private Community-Funktion mit verschlüsselten Beiträgen"
+        }
+      },
+      "10": {
+        "version": "v1.0.0",
+        "date": "1. Februar 2026",
+        "title": "Erstveröffentlichung",
+        "changes": {
+          "1": "E2EE-Textchat (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Ein-Klick-Raumerstellung mit teilbaren Links",
+          "3": "Keine Kontoerfordernis — vollständig anonym",
+          "4": "8 Sprachen unterstützt (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "100% quelloffene Codebasis"
         }
       }
     }
@@ -701,6 +714,13 @@
     "highlight": "Jede Verbindung erstellt einen <strong>unabhängigen, verschlüsselten Raum</strong>.<br></br>Du bleibst anonym. Sie bleiben anonym.<br></br>Wenn das Gespräch endet, <strong>bleibt nichts zurück</strong>.",
     "cta": "Mein BLIP me Erstellen"
   },
+  "BlipMeWidget": {
+    "createPrompt": "Erstelle deinen BLIP me Link — teile ihn für sofortigen verschlüsselten Chat.",
+    "create": "Erstellen",
+    "connections": "{count} Verbindungen",
+    "refresh": "Aktualisieren",
+    "manage": "Verwalten"
+  },
   "Vote": {
     "title": "Vorhersagemarkt",
     "subtitle": "Anonym vorhersagen. Punkte setzen. Groß gewinnen.",
@@ -761,6 +781,7 @@
       "feature3Title": "Völlig Anonym",
       "feature3Desc": "Keine Anmeldung. Kein Tracking. Reine Vorhersagen.",
       "cta": "Jetzt Vorhersagen"
-    }
+    },
+    "discuss": "Diskussion beitreten"
   }
 }

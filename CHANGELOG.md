@@ -4,6 +4,16 @@ All notable changes to BLIP are documented here.
 
 ---
 
+## v1.10.0 — March 26, 2026
+### Prediction Market — Anonymous Point Betting
+- **Prediction Market** — Bet BP (BLIP Points) on real-world outcomes. No accounts, fully anonymous
+- **Parimutuel odds** — Dynamic odds calculated from the total pool, with 10% rake
+- **6-tier rank system** — Static → Receiver → Signal → Decoder → Control → Oracle, based on total points
+- **Question creation** — Any user can create predictions (costs 150 BP, rank discounts available)
+- **Auto-settlement** — Results settled by creator, with automatic payouts and rake distribution
+- **Anti-abuse** — Device fingerprint registry, idempotency keys, rate limiting, self-bet prevention
+- Available on both web and mobile app
+
 ## v1.9.0 — March 24, 2026
 ### BLIP me — Disposable Contact Link
 - **BLIP me link** — Create your own URL and share it on your SNS profile. When someone clicks it, an instant 1:1 encrypted chat starts

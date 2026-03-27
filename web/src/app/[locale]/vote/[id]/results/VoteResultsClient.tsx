@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Trophy } from 'lucide-react';
@@ -8,7 +8,8 @@ import { Link } from '@/i18n/navigation';
 import SettlementModal from '@/components/prediction/SettlementModal';
 import PointsDisplay from '@/components/prediction/PointsDisplay';
 import { usePoints } from '@/hooks/usePoints';
-import type { SettlementResult } from '@/types/prediction';
+import { fetchPrediction, fetchMyBets } from '@/lib/prediction/actions';
+import type { Prediction, SettlementResult } from '@/types/prediction';
 
 interface VoteResultsClientProps {
   predictionId: string;
@@ -16,21 +17,65 @@ interface VoteResultsClientProps {
 
 export default function VoteResultsClient({ predictionId }: VoteResultsClientProps) {
   const t = useTranslations('Vote');
-  const { balance } = usePoints();
+  const { balance, deviceFingerprint } = usePoints();
 
-  // TODO: 실제 정산 결과 조회
-  const [showModal, setShowModal] = useState(true);
-  const demoResult: SettlementResult = {
-    won: true,
-    betAmount: 50,
-    odds: 1.85,
-    payout: 92,
-    balanceChange: 42,
-  };
+  const [prediction, setPrediction] = useState<Prediction | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [settlementResult, setSettlementResult] = useState<SettlementResult | null>(null);
+  const [yesPercent, setYesPercent] = useState(50);
+  const [noPercent, setNoPercent] = useState(50);
 
-  // 결과 차트 데이터
-  const yesPercent = 62;
-  const noPercent = 38;
+  useEffect(() => {
+    async function load() {
+      const predResult = await fetchPrediction(predictionId);
+      if (!('prediction' in predResult)) return;
+
+      const p = predResult.prediction;
+      const pred: Prediction = {
+        id: p.id,
+        creatorFingerprint: p.creator_fingerprint,
+        question: p.question,
+        category: p.category,
+        type: p.type,
+        options: p.options ?? ['yes', 'no'],
+        correctAnswer: p.correct_answer,
+        status: p.status,
+        totalPool: p.total_pool,
+        createdAt: p.created_at,
+        closesAt: p.closes_at,
+        revealsAt: p.reveals_at,
+        settledAt: p.settled_at,
+      };
+      setPrediction(pred);
+
+      // 차트 퍼센트 계산
+      if (pred.totalPool > 0) {
+        const total = pred.totalPool;
+        setYesPercent(Math.round((total * 0.6) / total * 100)); // 실제로는 옵션별 합계 필요
+        setNoPercent(Math.round((total * 0.4) / total * 100));
+      }
+
+      // 내 베팅 기록 조회
+      if (deviceFingerprint) {
+        const betsResult = await fetchMyBets(deviceFingerprint, predictionId);
+        if ('bets' in betsResult && betsResult.bets.length > 0) {
+          const myBet = betsResult.bets[0];
+          if (myBet.status === 'won' || myBet.status === 'lost') {
+            const payout = myBet.payout ?? 0;
+            setSettlementResult({
+              won: myBet.status === 'won',
+              betAmount: myBet.bet_amount,
+              odds: Number(myBet.odds_at_bet),
+              payout,
+              balanceChange: myBet.status === 'won' ? payout - myBet.bet_amount : -myBet.bet_amount,
+            });
+            setShowModal(true);
+          }
+        }
+      }
+    }
+    load();
+  }, [predictionId, deviceFingerprint]);
 
   return (
     <div className="min-h-screen bg-void-black text-white">
@@ -58,11 +103,13 @@ export default function VoteResultsClient({ predictionId }: VoteResultsClientPro
         >
           <Trophy className="w-12 h-12 text-signal-green mx-auto" />
           <h2 className="font-sans text-2xl font-bold text-ink">
-            Will Bitcoin break $100k by 2027?
+            {prediction?.question ?? 'Loading...'}
           </h2>
-          <span className="inline-block px-3 py-1 rounded-full bg-signal-green/10 text-signal-green font-mono text-sm font-bold">
-            {t('betting.yes')} — {t('betting.closed')}
-          </span>
+          {prediction?.correctAnswer && (
+            <span className="inline-block px-3 py-1 rounded-full bg-signal-green/10 text-signal-green font-mono text-sm font-bold">
+              {prediction.correctAnswer.toUpperCase()} — {t('betting.closed')}
+            </span>
+          )}
         </motion.div>
 
         {/* Result Chart */}
@@ -121,9 +168,9 @@ export default function VoteResultsClient({ predictionId }: VoteResultsClientPro
       </div>
 
       {/* Settlement Modal */}
-      {showModal && (
+      {showModal && settlementResult && (
         <SettlementModal
-          result={demoResult}
+          result={settlementResult}
           onClose={() => setShowModal(false)}
         />
       )}

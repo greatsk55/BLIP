@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function VotePage() {
-  return <VoteClient />;
+export default async function VotePage({ params }: Props) {
+  const { locale } = await params;
+  return <VoteClient locale={locale} />;
 }

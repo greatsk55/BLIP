@@ -37,6 +37,11 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 /// 딥링크 ID 검증: 영숫자 6~32자만 허용 (injection 방지)
 final _validIdPattern = RegExp(r'^[a-zA-Z0-9]{6,32}$');
 
+/// UUID 검증 (predictions 등 Supabase 생성 ID)
+final _validUuidPattern = RegExp(
+  r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
+);
+
 final routerProvider = Provider<GoRouter>((ref) {
   // authState 변경 시 라우터 redirect가 재평가되도록 watch
   ref.watch(authStateProvider);
@@ -79,7 +84,7 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const LoginScreen(),
     ),
-    // ── 바텀 네비게이션 Shell (3탭) ──
+    // ── 바텀 네비게이션 Shell (4탭) ──
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainShell(navigationShell: navigationShell);
@@ -109,6 +114,15 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
             GoRoute(
               path: '/communities',
               builder: (context, state) => const MyCommunityListScreen(),
+            ),
+          ],
+        ),
+        // Tab 3: 예측 (Vote)
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/prediction',
+              builder: (context, state) => const PredictionListScreen(),
             ),
           ],
         ),
@@ -199,12 +213,7 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       },
     ),
 
-    // ── 예측 (Prediction) ──
-    GoRoute(
-      path: '/prediction',
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) => const PredictionListScreen(),
-    ),
+    // ── 예측 (Prediction) — 생성/상세는 Shell 바깥 (풀스크린) ──
     // /prediction/create가 /prediction/:id 보다 위에 있어야 'create'가 id로 매칭되지 않음
     GoRoute(
       path: '/prediction/create',
@@ -216,7 +225,7 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       redirect: (context, state) {
         final id = state.pathParameters['id'];
-        if (id == null || !_validIdPattern.hasMatch(id)) return '/prediction';
+        if (id == null || !_validUuidPattern.hasMatch(id)) return '/prediction';
         return null;
       },
       builder: (context, state) => PredictionDetailScreen(

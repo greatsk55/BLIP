@@ -596,6 +596,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get navCommunity => '社区';
 
   @override
+  String get navVote => '预测';
+
+  @override
+  String get predictionTabAll => '全部';
+
+  @override
+  String get predictionTabMyBets => '我的投注';
+
+  @override
+  String get predictionTabCreated => '我创建的';
+
+  @override
   String get chatListTitle => '我的聊天室';
 
   @override
@@ -972,6 +984,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get blipMeCreateButton => '创建BLIP me链接';
 
   @override
+  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+
+  @override
+  String get blipMeWidgetConnections => 'connections';
+
+  @override
   String get blipMeYourLink => '您的链接';
 
   @override
@@ -1009,6 +1027,127 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get blipMeHero => 'BLIP me';
+
+  @override
+  String get predictionTitle => '预测';
+
+  @override
+  String get predictionCreateTitle => '创建问题';
+
+  @override
+  String predictionCost(int cost) {
+    return '费用: $cost BP';
+  }
+
+  @override
+  String get predictionQuestion => '问题';
+
+  @override
+  String get predictionQuestionHint => '例如：比特币会突破10万美元吗？';
+
+  @override
+  String get predictionCategory => '分类';
+
+  @override
+  String get predictionDuration => '截止时间';
+
+  @override
+  String predictionSubmit(int cost) {
+    return '创建 ($cost BP)';
+  }
+
+  @override
+  String get predictionBet => '下注';
+
+  @override
+  String get predictionDiscuss => '参与讨论';
+
+  @override
+  String get predictionOdds => '赔率';
+
+  @override
+  String get predictionExpectedPayout => '预期收益';
+
+  @override
+  String predictionClosesIn(String time) {
+    return '$time后截止';
+  }
+
+  @override
+  String get predictionClosed => '已截止';
+
+  @override
+  String predictionParticipants(int count) {
+    return '$count人参与';
+  }
+
+  @override
+  String get predictionWon => '预测正确！';
+
+  @override
+  String get predictionLost => '预测失败...';
+
+  @override
+  String predictionPayout(int amount) {
+    return '结算: $amount BP';
+  }
+
+  @override
+  String get predictionBalance => '余额';
+
+  @override
+  String get predictionRank => '等级';
+
+  @override
+  String get predictionDailyReward => '每日奖励';
+
+  @override
+  String get predictionClaimReward => '领取 1 BP';
+
+  @override
+  String get predictionInsufficientBP => 'BP不足';
+
+  @override
+  String get predictionYes => '是';
+
+  @override
+  String get predictionNo => '否';
+
+  @override
+  String get predictionAll => '全部';
+
+  @override
+  String get predictionPolitics => '政治';
+
+  @override
+  String get predictionSports => '体育';
+
+  @override
+  String get predictionTech => '科技';
+
+  @override
+  String get predictionEconomy => '经济';
+
+  @override
+  String get predictionEntertainment => '娱乐';
+
+  @override
+  String get predictionSociety => '社会';
+
+  @override
+  String get predictionGaming => '游戏';
+
+  @override
+  String get predictionOther => '其他';
+
+  @override
+  String get predictionLandingTitle => '预测。讨论。决定。';
+
+  @override
+  String get predictionLandingSubtitle => '匿名预测。无需账号。';
+
+  @override
+  String get predictionStartPredicting => '开始预测';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1597,6 +1736,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get navCommunity => '社群';
 
   @override
+  String get navVote => '預測';
+
+  @override
+  String get predictionTabAll => '全部';
+
+  @override
+  String get predictionTabMyBets => '我的投注';
+
+  @override
+  String get predictionTabCreated => '我建立的';
+
+  @override
   String get chatListTitle => '我的聊天室';
 
   @override
@@ -2010,4 +2161,125 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get blipMeHero => 'BLIP me';
+
+  @override
+  String get predictionTitle => '預測';
+
+  @override
+  String get predictionCreateTitle => '建立問題';
+
+  @override
+  String predictionCost(int cost) {
+    return '費用: $cost BP';
+  }
+
+  @override
+  String get predictionQuestion => '問題';
+
+  @override
+  String get predictionQuestionHint => '例如：比特幣會突破10萬美元嗎？';
+
+  @override
+  String get predictionCategory => '分類';
+
+  @override
+  String get predictionDuration => '截止時間';
+
+  @override
+  String predictionSubmit(int cost) {
+    return '建立 ($cost BP)';
+  }
+
+  @override
+  String get predictionBet => '下注';
+
+  @override
+  String get predictionDiscuss => '參與討論';
+
+  @override
+  String get predictionOdds => '賠率';
+
+  @override
+  String get predictionExpectedPayout => '預期收益';
+
+  @override
+  String predictionClosesIn(String time) {
+    return '$time後截止';
+  }
+
+  @override
+  String get predictionClosed => '已截止';
+
+  @override
+  String predictionParticipants(int count) {
+    return '$count人參與';
+  }
+
+  @override
+  String get predictionWon => '預測正確！';
+
+  @override
+  String get predictionLost => '預測失敗...';
+
+  @override
+  String predictionPayout(int amount) {
+    return '結算: $amount BP';
+  }
+
+  @override
+  String get predictionBalance => '餘額';
+
+  @override
+  String get predictionRank => '等級';
+
+  @override
+  String get predictionDailyReward => '每日獎勵';
+
+  @override
+  String get predictionClaimReward => '領取 1 BP';
+
+  @override
+  String get predictionInsufficientBP => 'BP不足';
+
+  @override
+  String get predictionYes => '是';
+
+  @override
+  String get predictionNo => '否';
+
+  @override
+  String get predictionAll => '全部';
+
+  @override
+  String get predictionPolitics => '政治';
+
+  @override
+  String get predictionSports => '體育';
+
+  @override
+  String get predictionTech => '科技';
+
+  @override
+  String get predictionEconomy => '經濟';
+
+  @override
+  String get predictionEntertainment => '娛樂';
+
+  @override
+  String get predictionSociety => '社會';
+
+  @override
+  String get predictionGaming => '遊戲';
+
+  @override
+  String get predictionOther => '其他';
+
+  @override
+  String get predictionLandingTitle => '預測。討論。決定。';
+
+  @override
+  String get predictionLandingSubtitle => '匿名預測。無需帳號。';
+
+  @override
+  String get predictionStartPredicting => '開始預測';
 }

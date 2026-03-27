@@ -207,4 +207,52 @@ class LocalStorageService {
       jsonEncode(boards.map((b) => b.toJson()).toList()),
     );
   }
+
+  // ═══════════ Chat History (그룹채팅 로컬 저장) ═══════════
+
+  static const _chatHistoryPrefix = 'blip-chat-history-';
+  static const _maxStoredMessages = 100;
+
+  /// 채팅 메시지 저장 (최대 _maxStoredMessages개)
+  Future<void> saveChatMessages(
+    String roomId,
+    List<Map<String, dynamic>> messages,
+  ) async {
+    final prefs = await _preferences;
+    final trimmed = messages.length > _maxStoredMessages
+        ? messages.sublist(messages.length - _maxStoredMessages)
+        : messages;
+    await prefs.setString(
+      '$_chatHistoryPrefix$roomId',
+      jsonEncode(trimmed),
+    );
+  }
+
+  /// 채팅 메시지 추가
+  Future<void> appendChatMessage(
+    String roomId,
+    Map<String, dynamic> message,
+  ) async {
+    final existing = await getChatMessages(roomId);
+    existing.add(message);
+    await saveChatMessages(roomId, existing);
+  }
+
+  /// 저장된 채팅 메시지 조회
+  Future<List<Map<String, dynamic>>> getChatMessages(String roomId) async {
+    final prefs = await _preferences;
+    final raw = prefs.getString('$_chatHistoryPrefix$roomId');
+    if (raw == null) return [];
+    try {
+      return List<Map<String, dynamic>>.from(jsonDecode(raw));
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// 채팅 히스토리 삭제
+  Future<void> clearChatMessages(String roomId) async {
+    final prefs = await _preferences;
+    await prefs.remove('$_chatHistoryPrefix$roomId');
+  }
 }

@@ -88,103 +88,32 @@
     "subtitle": "Journal des modifications",
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
-      "9": {
-        "version": "v1.0.0",
-        "date": "1er février 2026",
-        "title": "Version initiale",
+      "0": {
+        "version": "v1.10.0",
+        "date": "26 mars 2026",
+        "title": "Marché de Prédictions — Paris Anonymes par Points",
         "changes": {
-          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
-          "2": "Création de salon en un clic avec liens partageables",
-          "3": "Aucun compte requis — totalement anonyme",
-          "4": "Support de 8 langues (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
-          "5": "Code source 100% ouvert"
-        }
-      },
-      "8": {
-        "version": "v1.1.0",
-        "date": "10 février 2026",
-        "title": "Destruction instantanée et notifications",
-        "changes": {
-          "1": "Salons détruits immédiatement lorsque tous les participants partent",
-          "2": "Notifications push du navigateur pour les messages entrants",
-          "3": "Limitation de création de salons (anti-abus)",
-          "4": "Communauté privée avec publications chiffrées"
-        }
-      },
-      "7": {
-        "version": "v1.2.0",
-        "date": "15 février 2026",
-        "title": "Transfert de médias chiffré",
-        "changes": {
-          "1": "Transfert d’images et vidéos par P2P chiffré (WebRTC DataChannel)",
-          "2": "Relais TURN uniquement pour empêcher l’exposition IP entre pairs",
-          "3": "Compression automatique des images (max 2048px, JPEG 80%)",
-          "4": "Visionneuse d’images plein écran avec zoom par pincement",
-          "5": "Vérification d’intégrité par sommes de contrôle SHA-256"
-        }
-      },
-      "6": {
-        "version": "v1.3.0",
-        "date": "26 février 2026",
-        "title": "Application mobile et stabilité",
-        "changes": {
-          "1": "Application Android lancée (Google Play Store)",
-          "2": "Liens profonds — ouvrir les salons directement depuis les liens partagés dans l’app",
-          "3": "Entrée en un clic — inclure le mot de passe dans le lien pour connexion instantanée",
-          "4": "Période de grâce de 60 secondes — les salons ne sont pas détruits immédiatement à la sortie",
-          "5": "Tableau de bord communautaire et vidéos dans les publications",
-          "6": "Support de 10 langues (+allemand, chinois traditionnel)"
-        }
-      },
-      "5": {
-        "version": "v1.4.0",
-        "date": "28 février 2026",
-        "title": "Système de codes d’invitation communautaire",
-        "changes": {
-          "1": "Codes d’invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
-          "2": "Rotation du code d’invitation dans le panneau d’administration — invalider les anciens liens sans affecter les membres existants",
-          "3": "Séparation du code d’invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
-          "4": "Prise en charge des liens profonds pour les codes d’invitation dans l’application mobile"
-        }
-      },
-      "4": {
-        "version": "v1.5.0",
-        "date": "14 mars 2026",
-        "title": "Widget de chat intégrable",
-        "changes": {
-          "1": "Intégrez le chat BLIP dans n’importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
-          "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
-          "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
-          "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
-          "5": "Chiffrement E2E complet maintenu en mode intégré"
-        }
-      },
-      "3": {
-        "version": "v1.6.0",
-        "date": "March 18, 2026",
-        "title": "Group Chat",
-        "changes": {
-          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
-          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
-          "3": "Participant list — see who’s online in real-time",
-          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
-          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
-          "6": "Available on both web and mobile app"
-        }
-      },
-      "2": {
-        "version": "v1.7.0",
-        "date": "March 18, 2026",
-        "title": "Universal File Transfer",
-        "changes": {
-          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
-          "2": "File message bubble with icon, filename, size, and download button",
-          "3": "Transfer progress indicator during send/receive",
-          "4": "200MB max file size (P2P — no server storage)",
-          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+          "1": "Marché de Prédictions — Pariez des BP (Points BLIP) sur des résultats réels, totalement anonyme",
+          "2": "Cotes pari mutuel — Cotes dynamiques calculées à partir du pool total, 10% de commission",
+          "3": "Système de 6 rangs — Static → Receiver → Signal → Decoder → Control → Oracle",
+          "4": "Créer des questions — Tout utilisateur peut créer des prédictions (150 BP, réductions par rang)",
+          "5": "Règlement automatique — Le créateur saisit le résultat et la distribution est automatique",
+          "6": "Disponible sur web et application mobile"
         }
       },
       "1": {
+        "version": "v1.9.0",
+        "date": "24 mars 2026",
+        "title": "BLIP me — Lien de contact jetable",
+        "changes": {
+          "1": "Lien BLIP me — Créez votre URL personnelle et partagez-la sur les réseaux sociaux. Quand quelqu'un clique, un chat 1:1 chiffré démarre instantanément",
+          "2": "Alertes de connexion en temps réel — Gardez la page ouverte pour recevoir des notifications instantanées quand un visiteur se connecte",
+          "3": "Gestion des liens — Changez l'URL ou supprimez votre lien à tout moment",
+          "4": "Propriété sans compte — Un token basé sur l'appareil prouve la propriété du lien, aucun compte nécessaire",
+          "5": "Disponible sur le web et l'application mobile"
+        }
+      },
+      "2": {
         "version": "v1.8.0",
         "date": "20 mars 2026",
         "title": "Mes Salons & Reconnexion Automatique",
@@ -197,16 +126,100 @@
           "6": "Disponible sur web et app mobile"
         }
       },
-      "0": {
-        "version": "v1.9.0",
-        "date": "24 mars 2026",
-        "title": "BLIP me — Lien de contact jetable",
+      "3": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
         "changes": {
-          "1": "Lien BLIP me — Créez votre URL personnelle et partagez-la sur les réseaux sociaux. Quand quelqu'un clique, un chat 1:1 chiffré démarre instantanément",
-          "2": "Alertes de connexion en temps réel — Gardez la page ouverte pour recevoir des notifications instantanées quand un visiteur se connecte",
-          "3": "Gestion des liens — Changez l'URL ou supprimez votre lien à tout moment",
-          "4": "Propriété sans compte — Un token basé sur l'appareil prouve la propriété du lien, aucun compte nécessaire",
-          "5": "Disponible sur le web et l'application mobile"
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "4": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
+        "changes": {
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
+        }
+      },
+      "5": {
+        "version": "v1.5.0",
+        "date": "14 mars 2026",
+        "title": "Widget de chat intégrable",
+        "changes": {
+          "1": "Intégrez le chat BLIP dans n’importe quel site web via iframe — ajoutez un chat chiffré avec une seule ligne HTML",
+          "2": "Mise en page intégrée légère — pas de publicité, pas de navigation, juste le chat",
+          "3": "API postMessage pour la communication avec la page parente (création de salon, rejoindre, destruction)",
+          "4": "Les liens partagés en mode intégré restent dans le contexte intégré",
+          "5": "Chiffrement E2E complet maintenu en mode intégré"
+        }
+      },
+      "6": {
+        "version": "v1.4.0",
+        "date": "28 février 2026",
+        "title": "Système de codes d’invitation communautaire",
+        "changes": {
+          "1": "Codes d’invitation pour les tableaux — rejoindre automatiquement via un lien sans mot de passe",
+          "2": "Rotation du code d’invitation dans le panneau d’administration — invalider les anciens liens sans affecter les membres existants",
+          "3": "Séparation du code d’invitation (partageable) et de la clé de chiffrement (immuable) pour une sécurité renforcée",
+          "4": "Prise en charge des liens profonds pour les codes d’invitation dans l’application mobile"
+        }
+      },
+      "7": {
+        "version": "v1.3.0",
+        "date": "26 février 2026",
+        "title": "Application mobile et stabilité",
+        "changes": {
+          "1": "Application Android lancée (Google Play Store)",
+          "2": "Liens profonds — ouvrir les salons directement depuis les liens partagés dans l’app",
+          "3": "Entrée en un clic — inclure le mot de passe dans le lien pour connexion instantanée",
+          "4": "Période de grâce de 60 secondes — les salons ne sont pas détruits immédiatement à la sortie",
+          "5": "Tableau de bord communautaire et vidéos dans les publications",
+          "6": "Support de 10 langues (+allemand, chinois traditionnel)"
+        }
+      },
+      "8": {
+        "version": "v1.2.0",
+        "date": "15 février 2026",
+        "title": "Transfert de médias chiffré",
+        "changes": {
+          "1": "Transfert d’images et vidéos par P2P chiffré (WebRTC DataChannel)",
+          "2": "Relais TURN uniquement pour empêcher l’exposition IP entre pairs",
+          "3": "Compression automatique des images (max 2048px, JPEG 80%)",
+          "4": "Visionneuse d’images plein écran avec zoom par pincement",
+          "5": "Vérification d’intégrité par sommes de contrôle SHA-256"
+        }
+      },
+      "9": {
+        "version": "v1.1.0",
+        "date": "10 février 2026",
+        "title": "Destruction instantanée et notifications",
+        "changes": {
+          "1": "Salons détruits immédiatement lorsque tous les participants partent",
+          "2": "Notifications push du navigateur pour les messages entrants",
+          "3": "Limitation de création de salons (anti-abus)",
+          "4": "Communauté privée avec publications chiffrées"
+        }
+      },
+      "10": {
+        "version": "v1.0.0",
+        "date": "1er février 2026",
+        "title": "Version initiale",
+        "changes": {
+          "1": "Chat E2EE (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "Création de salon en un clic avec liens partageables",
+          "3": "Aucun compte requis — totalement anonyme",
+          "4": "Support de 8 langues (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "Code source 100% ouvert"
         }
       }
     }
@@ -701,6 +714,13 @@
     "highlight": "Chaque connexion crée une <strong>salle chiffrée indépendante</strong>.<br></br>Vous restez anonyme. Ils restent anonymes.<br></br>Quand la conversation se termine, <strong>rien ne reste</strong>.",
     "cta": "Créer Mon BLIP me"
   },
+  "BlipMeWidget": {
+    "createPrompt": "Créez votre lien BLIP me — partagez-le pour démarrer un chat chiffré instantanément.",
+    "create": "Créer",
+    "connections": "{count} connexions",
+    "refresh": "Actualiser",
+    "manage": "Gérer"
+  },
   "Vote": {
     "title": "Marché de Prédictions",
     "subtitle": "Prédisez anonymement. Pariez vos points. Gagnez gros.",
@@ -761,6 +781,7 @@
       "feature3Title": "Totalement Anonyme",
       "feature3Desc": "Pas d'inscription. Pas de suivi. Des prédictions pures.",
       "cta": "Commencer à Prédire"
-    }
+    },
+    "discuss": "Rejoindre la Discussion"
   }
 }

@@ -13,6 +13,7 @@ import {
   hashAuthKey,
 } from '@/lib/crypto';
 import { generateUsername } from '@/lib/username';
+import { getChatMessages, saveChatMessages, appendChatMessage, type StoredMessage } from '@/lib/room/storage';
 import { updateParticipantCount } from '@/lib/room/actions';
 import type {
   DecryptedMessage,
@@ -71,6 +72,8 @@ interface UseChatOptions {
   roomId: string;
   password: string;
   onMessageReceived?: (senderName: string) => void;
+  /** 그룹채팅 메시지를 localStorage에 저장 */
+  persistMessages?: boolean;
 }
 
 export type WebRTCSignalingHandlers = {
@@ -98,7 +101,7 @@ interface UseChatReturn {
   setWebrtcHandlers: (handlers: WebRTCSignalingHandlers | null) => void;
 }
 
-export function useChat({ roomId, password, onMessageReceived }: UseChatOptions): UseChatReturn {
+export function useChat({ roomId, password, onMessageReceived, persistMessages = false }: UseChatOptions): UseChatReturn {
   const [messages, setMessages] = useState<DecryptedMessage[]>([]);
   const [status, setStatus] = useState<ChatStatus>('connecting');
   const [peerUsername, setPeerUsername] = useState<string | null>(null);
@@ -116,6 +119,38 @@ export function useChat({ roomId, password, onMessageReceived }: UseChatOptions)
   const authKeyHashRef = useRef<string | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
+  const persistRef = useRef(persistMessages);
+
+  // 그룹채팅 히스토리 로드
+  useEffect(() => {
+    if (!persistRef.current) return;
+    const saved = getChatMessages(roomId);
+    if (saved.length > 0) {
+      setMessages(saved.map((m): DecryptedMessage => ({
+        id: m.id,
+        senderId: m.sender,
+        senderName: m.sender,
+        content: m.text,
+        isMine: m.sender === myUsernameRef.current,
+        timestamp: m.timestamp,
+        type: 'text',
+      })));
+    }
+  }, [roomId]);
+
+  // 메시지 변경 시 로컬 저장
+  useEffect(() => {
+    if (!persistRef.current || messages.length === 0) return;
+    const stored: StoredMessage[] = messages
+      .filter((m) => m.type === 'text')
+      .map((m) => ({
+        id: m.id,
+        sender: m.senderName,
+        text: m.content,
+        timestamp: m.timestamp,
+      }));
+    saveChatMessages(roomId, stored);
+  }, [messages, roomId]);
 
   // Presence leave grace period 타이머 (모바일 백그라운드 전환 허용)
   const peerLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

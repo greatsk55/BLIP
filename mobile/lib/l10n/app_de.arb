@@ -405,6 +405,11 @@
   "navChat": "Chat",
   "@navChat": { "description": "Bottom nav chat tab" },
   "navCommunity": "Community",
+  "navVote": "Vorhersage",
+  "predictionTabAll": "Alle",
+  "predictionTabMyBets": "Meine Wetten",
+  "predictionTabCreated": "Erstellt",
+  "@navVote": { "description": "Bottom nav vote tab" },
   "@navCommunity": { "description": "Bottom nav community tab" },
 
   "chatListTitle": "Meine Chaträume",

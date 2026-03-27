@@ -253,6 +253,10 @@
   "navHome": "Inicio",
   "navChat": "Chat",
   "navCommunity": "Comunidad",
+  "navVote": "Votar",
+  "predictionTabAll": "Todo",
+  "predictionTabMyBets": "Mis apuestas",
+  "predictionTabCreated": "Creadas",
 
   "chatListTitle": "Mis Salas de Chat",
   "chatListEmpty": "Aún no hay salas de chat.\nCrea una sala desde la pestaña Inicio.",
@@ -412,6 +416,7 @@
   "predictionSubmit": "Crear ({cost} BP)",
   "@predictionSubmit": { "placeholders": { "cost": { "type": "int" } } },
   "predictionBet": "Apostar",
+  "predictionDiscuss": "Unirse a la discusión",
   "predictionOdds": "Cuotas",
   "predictionExpectedPayout": "Pago esperado",
   "predictionClosesIn": "Cierra en {time}",

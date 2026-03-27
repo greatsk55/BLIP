@@ -41,7 +41,8 @@ export default function BettingCard({
   const handleBet = (option: 'YES' | 'NO') => {
     if (isDisabled) return;
     if (selectedOption === option) {
-      onBet(option, betAmount);
+      onBet(option.toLowerCase(), betAmount);
+      setSelectedOption(null); // 리셋 → 추가 베팅 가능
     } else {
       setSelectedOption(option);
     }

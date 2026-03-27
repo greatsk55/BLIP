@@ -253,6 +253,10 @@
   "navHome": "Accueil",
   "navChat": "Chat",
   "navCommunity": "Communauté",
+  "navVote": "Prédiction",
+  "predictionTabAll": "Tout",
+  "predictionTabMyBets": "Mes paris",
+  "predictionTabCreated": "Créées",
 
   "chatListTitle": "Mes Salons de Chat",
   "chatListEmpty": "Aucun salon de chat.\nCréez un salon depuis l'onglet Accueil.",
@@ -412,6 +416,7 @@
   "predictionSubmit": "Créer ({cost} BP)",
   "@predictionSubmit": { "placeholders": { "cost": { "type": "int" } } },
   "predictionBet": "Parier",
+  "predictionDiscuss": "Rejoindre la discussion",
   "predictionOdds": "Cotes",
   "predictionExpectedPayout": "Gain attendu",
   "predictionClosesIn": "Ferme dans {time}",

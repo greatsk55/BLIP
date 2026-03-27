@@ -253,6 +253,10 @@
   "navHome": "首页",
   "navChat": "聊天",
   "navCommunity": "社区",
+  "navVote": "预测",
+  "predictionTabAll": "全部",
+  "predictionTabMyBets": "我的投注",
+  "predictionTabCreated": "我创建的",
 
   "chatListTitle": "我的聊天室",
   "chatListEmpty": "还没有聊天室。\n请从首页标签创建房间。",
@@ -412,6 +416,7 @@
   "predictionSubmit": "创建 ({cost} BP)",
   "@predictionSubmit": { "placeholders": { "cost": { "type": "int" } } },
   "predictionBet": "下注",
+  "predictionDiscuss": "参与讨论",
   "predictionOdds": "赔率",
   "predictionExpectedPayout": "预期收益",
   "predictionClosesIn": "{time}后截止",

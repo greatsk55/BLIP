@@ -603,6 +603,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get navCommunity => 'コミュニティ';
 
   @override
+  String get navVote => '予測';
+
+  @override
+  String get predictionTabAll => 'すべて';
+
+  @override
+  String get predictionTabMyBets => 'マイベット';
+
+  @override
+  String get predictionTabCreated => '作成済み';
+
+  @override
   String get chatListTitle => 'マイチャットルーム';
 
   @override
@@ -986,6 +998,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get blipMeCreateButton => 'BLIP meリンクを作成';
 
   @override
+  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+
+  @override
+  String get blipMeWidgetConnections => 'connections';
+
+  @override
   String get blipMeYourLink => 'あなたのリンク';
 
   @override
@@ -1024,4 +1042,125 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get blipMeHero => 'BLIP me';
+
+  @override
+  String get predictionTitle => '予測';
+
+  @override
+  String get predictionCreateTitle => '質問を作成';
+
+  @override
+  String predictionCost(int cost) {
+    return 'コスト: $cost BP';
+  }
+
+  @override
+  String get predictionQuestion => '質問';
+
+  @override
+  String get predictionQuestionHint => '例: ビットコインは10万ドルを突破する？';
+
+  @override
+  String get predictionCategory => 'カテゴリ';
+
+  @override
+  String get predictionDuration => '締め切り';
+
+  @override
+  String predictionSubmit(int cost) {
+    return '作成 ($cost BP)';
+  }
+
+  @override
+  String get predictionBet => 'ベットする';
+
+  @override
+  String get predictionDiscuss => 'ディスカッション参加';
+
+  @override
+  String get predictionOdds => 'オッズ';
+
+  @override
+  String get predictionExpectedPayout => '予想配当';
+
+  @override
+  String predictionClosesIn(String time) {
+    return 'あと$timeで締切';
+  }
+
+  @override
+  String get predictionClosed => '締切済み';
+
+  @override
+  String predictionParticipants(int count) {
+    return '$count人参加';
+  }
+
+  @override
+  String get predictionWon => '正解です！';
+
+  @override
+  String get predictionLost => '予測失敗...';
+
+  @override
+  String predictionPayout(int amount) {
+    return '配当: $amount BP';
+  }
+
+  @override
+  String get predictionBalance => '残高';
+
+  @override
+  String get predictionRank => 'ランク';
+
+  @override
+  String get predictionDailyReward => 'デイリー報酬';
+
+  @override
+  String get predictionClaimReward => '1 BPを受け取る';
+
+  @override
+  String get predictionInsufficientBP => 'BPが不足しています';
+
+  @override
+  String get predictionYes => 'はい';
+
+  @override
+  String get predictionNo => 'いいえ';
+
+  @override
+  String get predictionAll => 'すべて';
+
+  @override
+  String get predictionPolitics => '政治';
+
+  @override
+  String get predictionSports => 'スポーツ';
+
+  @override
+  String get predictionTech => 'テクノロジー';
+
+  @override
+  String get predictionEconomy => '経済';
+
+  @override
+  String get predictionEntertainment => 'エンタメ';
+
+  @override
+  String get predictionSociety => '社会';
+
+  @override
+  String get predictionGaming => 'ゲーム';
+
+  @override
+  String get predictionOther => 'その他';
+
+  @override
+  String get predictionLandingTitle => '予測せよ。議論せよ。決定せよ。';
+
+  @override
+  String get predictionLandingSubtitle => '匿名予測。アカウント不要。';
+
+  @override
+  String get predictionStartPredicting => '予測を始める';
 }

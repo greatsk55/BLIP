@@ -10,6 +10,7 @@ import '../../../core/crypto/symmetric.dart';
 import '../../../core/crypto/encrypt.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/supabase/supabase_client.dart';
+import '../../../core/storage/local_storage_service.dart';
 import '../../../core/utils/username.dart';
 import '../domain/models/group_message.dart';
 import '../domain/models/group_participant.dart';
@@ -97,6 +98,7 @@ class GroupChatParams {
 class GroupChatNotifier extends StateNotifier<GroupChatState> {
   final GroupChatParams params;
   final ApiClient _api;
+  final LocalStorageService _storage = LocalStorageService();
 
   RealtimeChannel? _channel;
   Uint8List? _symmetricKey;
@@ -112,7 +114,28 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
           myId: const Uuid().v4(),
           isAdmin: params.isAdmin,
         )) {
+    _loadHistory();
     _init();
+  }
+
+  /// 로컬 히스토리 로드
+  Future<void> _loadHistory() async {
+    final saved = await _storage.getChatMessages(params.roomId);
+    if (saved.isNotEmpty && mounted) {
+      state = state.copyWith(
+        messages: saved
+            .map((m) => GroupMessage.fromJson(m, myId: state.myId))
+            .toList(),
+      );
+    }
+  }
+
+  /// 메시지 로컬 저장
+  Future<void> _persistMessages() async {
+    await _storage.saveChatMessages(
+      params.roomId,
+      state.messages.map((m) => m.toJson()).toList(),
+    );
   }
 
   String? get authKeyHash => _authKeyHash;
@@ -192,6 +215,7 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
             ),
           ]),
         );
+        _persistMessages();
       }
     });
 
@@ -313,6 +337,7 @@ class GroupChatNotifier extends StateNotifier<GroupChatState> {
         ),
       ]),
     );
+    _persistMessages();
   }
 
   /// 강퇴 (관리자 → broadcast)

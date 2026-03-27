@@ -118,6 +118,6 @@ describe('BettingCard', () => {
     expect(onBet).not.toHaveBeenCalled();
     // 두 번째 클릭: 베팅 확정
     fireEvent.click(yesButton);
-    expect(onBet).toHaveBeenCalledWith('YES', expect.any(Number));
+    expect(onBet).toHaveBeenCalledWith('yes', expect.any(Number));
   });
 });

@@ -12,6 +12,7 @@ interface BettingSliderProps {
 
 export default function BettingSlider({ amount, maxBet, odds, onChange }: BettingSliderProps) {
   const expectedPayout = Math.floor(amount * odds);
+  const poolAmount = Math.floor(amount * 0.9);
 
   return (
     <motion.div
@@ -32,6 +33,12 @@ export default function BettingSlider({ amount, maxBet, odds, onChange }: Bettin
         onChange={(e) => onChange(Number(e.target.value))}
         className="w-full accent-signal-green cursor-pointer"
       />
+      <div className="flex items-center gap-1.5 mt-1 px-1">
+        <span className="text-orange-400 text-xs">⚠</span>
+        <span className="font-mono text-xs text-orange-400/80">
+          10% fee — {amount} BP bet → {poolAmount} BP in pool. Non-refundable.
+        </span>
+      </div>
     </motion.div>
   );
 }

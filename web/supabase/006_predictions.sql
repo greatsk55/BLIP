@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS predictions (
   creator_fingerprint TEXT NOT NULL,
   question TEXT NOT NULL,
   category TEXT NOT NULL,
+  locale TEXT NOT NULL DEFAULT 'en',
   type TEXT NOT NULL DEFAULT 'yes_no' CHECK (type IN ('yes_no', 'multiple')),
   options JSONB NOT NULL DEFAULT '["yes","no"]',
   correct_answer TEXT,
@@ -161,6 +162,63 @@ BEGIN
   VALUES (p_device_fingerprint, 100, p_hardware_hash);
 
   RETURN QUERY SELECT TRUE, p_device_fingerprint, 100, TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+
+-- ─── 1b. 예측 생성 (원자적: balance 차감 + prediction INSERT) ───
+
+CREATE OR REPLACE FUNCTION create_prediction_atomic(
+  p_device_fingerprint TEXT,
+  p_question TEXT,
+  p_category TEXT,
+  p_options JSONB,
+  p_closes_at TIMESTAMPTZ,
+  p_reveals_at TIMESTAMPTZ,
+  p_cost INT,
+  p_locale TEXT DEFAULT 'en'
+) RETURNS TABLE(success BOOLEAN, prediction_id UUID) AS $$
+DECLARE
+  v_balance INT;
+  v_new_id UUID;
+BEGIN
+  -- 잔액 확인 + 잠금
+  SELECT dp.balance INTO v_balance
+  FROM device_points dp
+  WHERE dp.device_fingerprint = p_device_fingerprint
+  FOR UPDATE;
+
+  IF v_balance IS NULL THEN
+    RAISE EXCEPTION '등록되지 않은 디바이스입니다';
+  END IF;
+
+  IF v_balance < p_cost THEN
+    RAISE EXCEPTION '잔액이 부족합니다 (잔액: %, 비용: %)', v_balance, p_cost;
+  END IF;
+
+  -- 잔액 차감
+  UPDATE device_points
+  SET balance = balance - p_cost,
+      total_spent = total_spent + p_cost
+  WHERE device_points.device_fingerprint = p_device_fingerprint;
+
+  -- 예측 생성
+  INSERT INTO predictions (
+    creator_fingerprint, question, category, locale, options,
+    closes_at, reveals_at
+  ) VALUES (
+    p_device_fingerprint, p_question, p_category, p_locale, p_options,
+    p_closes_at, p_reveals_at
+  ) RETURNING id INTO v_new_id;
+
+  -- 생성 기록
+  INSERT INTO prediction_creations (
+    prediction_id, creator_fingerprint, creation_cost
+  ) VALUES (
+    v_new_id, p_device_fingerprint, p_cost
+  );
+
+  RETURN QUERY SELECT TRUE, v_new_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -632,26 +690,5 @@ SELECT cron.schedule(
   $$
 );
 
--- 매일 03:00 UTC: settled 상태 30일 이상 된 기록 정리
-SELECT cron.schedule(
-  'cleanup-old-predictions',
-  '0 3 * * *',
-  $$
-    -- 정산 완료 30일 이상 된 베팅 기록 삭제
-    DELETE FROM prediction_bets
-    WHERE status IN ('won', 'lost', 'refunded')
-      AND settled_at IS NOT NULL
-      AND settled_at < NOW() - INTERVAL '30 days';
-
-    -- 정산 완료 30일 이상 된 생성 기록 삭제
-    DELETE FROM prediction_creations
-    WHERE settled_at IS NOT NULL
-      AND settled_at < NOW() - INTERVAL '30 days';
-
-    -- settled/cancelled 상태 30일 이상 된 예측 삭제
-    DELETE FROM predictions
-    WHERE status IN ('settled', 'cancelled')
-      AND settled_at IS NOT NULL
-      AND settled_at < NOW() - INTERVAL '30 days';
-  $$
-);
+-- 데이터 영구 보존: 베팅/예측 기록 삭제 크론 없음
+-- 유저가 과거 투표 히스토리를 계속 조회할 수 있도록 함

@@ -1255,6 +1255,30 @@ abstract class AppLocalizations {
   /// **'Community'**
   String get navCommunity;
 
+  /// Bottom nav vote tab
+  ///
+  /// In en, this message translates to:
+  /// **'Vote'**
+  String get navVote;
+
+  /// No description provided for @predictionTabAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get predictionTabAll;
+
+  /// No description provided for @predictionTabMyBets.
+  ///
+  /// In en, this message translates to:
+  /// **'My Bets'**
+  String get predictionTabMyBets;
+
+  /// No description provided for @predictionTabCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get predictionTabCreated;
+
   /// Chat list page title
   ///
   /// In en, this message translates to:
@@ -1993,6 +2017,18 @@ abstract class AppLocalizations {
   /// **'Create BLIP me Link'**
   String get blipMeCreateButton;
 
+  /// No description provided for @blipMeWidgetPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your link to start chatting'**
+  String get blipMeWidgetPrompt;
+
+  /// No description provided for @blipMeWidgetConnections.
+  ///
+  /// In en, this message translates to:
+  /// **'connections'**
+  String get blipMeWidgetConnections;
+
   /// BLIP me your link label
   ///
   /// In en, this message translates to:
@@ -2070,6 +2106,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'BLIP me'**
   String get blipMeHero;
+
+  /// Prediction list title
+  ///
+  /// In en, this message translates to:
+  /// **'Predictions'**
+  String get predictionTitle;
+
+  /// Create prediction title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Question'**
+  String get predictionCreateTitle;
+
+  /// Creation cost
+  ///
+  /// In en, this message translates to:
+  /// **'Cost: {cost} BP'**
+  String predictionCost(int cost);
+
+  /// Question label
+  ///
+  /// In en, this message translates to:
+  /// **'Question'**
+  String get predictionQuestion;
+
+  /// Question hint
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Will Bitcoin break \$100k?'**
+  String get predictionQuestionHint;
+
+  /// Category label
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get predictionCategory;
+
+  /// Duration label
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get predictionDuration;
+
+  /// Submit button
+  ///
+  /// In en, this message translates to:
+  /// **'Create ({cost} BP)'**
+  String predictionSubmit(int cost);
+
+  /// Bet button
+  ///
+  /// In en, this message translates to:
+  /// **'Place Bet'**
+  String get predictionBet;
+
+  /// No description provided for @predictionDiscuss.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Discussion'**
+  String get predictionDiscuss;
+
+  /// Odds label
+  ///
+  /// In en, this message translates to:
+  /// **'Odds'**
+  String get predictionOdds;
+
+  /// Expected payout label
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Payout'**
+  String get predictionExpectedPayout;
+
+  /// Time remaining
+  ///
+  /// In en, this message translates to:
+  /// **'Closes in {time}'**
+  String predictionClosesIn(String time);
+
+  /// Closed status
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get predictionClosed;
+
+  /// Participant count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} participants'**
+  String predictionParticipants(int count);
+
+  /// Win message
+  ///
+  /// In en, this message translates to:
+  /// **'You got it right!'**
+  String get predictionWon;
+
+  /// Lose message
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong prediction...'**
+  String get predictionLost;
+
+  /// Payout amount
+  ///
+  /// In en, this message translates to:
+  /// **'Payout: {amount} BP'**
+  String predictionPayout(int amount);
+
+  /// Balance label
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get predictionBalance;
+
+  /// Rank label
+  ///
+  /// In en, this message translates to:
+  /// **'Rank'**
+  String get predictionRank;
+
+  /// Daily reward label
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reward'**
+  String get predictionDailyReward;
+
+  /// Claim reward button
+  ///
+  /// In en, this message translates to:
+  /// **'Claim 1 BP'**
+  String get predictionClaimReward;
+
+  /// Insufficient balance
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient BP'**
+  String get predictionInsufficientBP;
+
+  /// Yes option
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get predictionYes;
+
+  /// No option
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get predictionNo;
+
+  /// All category
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get predictionAll;
+
+  /// Politics category
+  ///
+  /// In en, this message translates to:
+  /// **'Politics'**
+  String get predictionPolitics;
+
+  /// Sports category
+  ///
+  /// In en, this message translates to:
+  /// **'Sports'**
+  String get predictionSports;
+
+  /// Technology category
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get predictionTech;
+
+  /// Economy category
+  ///
+  /// In en, this message translates to:
+  /// **'Economy'**
+  String get predictionEconomy;
+
+  /// Entertainment category
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get predictionEntertainment;
+
+  /// Society category
+  ///
+  /// In en, this message translates to:
+  /// **'Society'**
+  String get predictionSociety;
+
+  /// Gaming category
+  ///
+  /// In en, this message translates to:
+  /// **'Gaming'**
+  String get predictionGaming;
+
+  /// Other category
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get predictionOther;
+
+  /// Landing title
+  ///
+  /// In en, this message translates to:
+  /// **'PREDICT. DISCUSS. DECIDE.'**
+  String get predictionLandingTitle;
+
+  /// Landing subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous predictions. No accounts needed.'**
+  String get predictionLandingSubtitle;
+
+  /// Start predicting button
+  ///
+  /// In en, this message translates to:
+  /// **'Start Predicting'**
+  String get predictionStartPredicting;
 }
 
 class _AppLocalizationsDelegate

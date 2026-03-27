@@ -88,103 +88,32 @@
     "subtitle": "Changelog",
     "description": "Every improvement, tracked transparently.",
     "versions": {
-      "9": {
-        "version": "v1.0.0",
-        "date": "February 1, 2026",
-        "title": "Initial Release",
+      "0": {
+        "version": "v1.10.0",
+        "date": "March 26, 2026",
+        "title": "Prediction Market — Anonymous Point Betting",
         "changes": {
-          "1": "E2EE text chat (Curve25519 ECDH + XSalsa20-Poly1305)",
-          "2": "One-click room creation with shareable links",
-          "3": "Zero account requirement — fully anonymous",
-          "4": "8 language support (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
-          "5": "100% open source codebase"
-        }
-      },
-      "8": {
-        "version": "v1.1.0",
-        "date": "February 10, 2026",
-        "title": "Instant Room Destruction & Notifications",
-        "changes": {
-          "1": "Rooms destroyed immediately when all participants leave",
-          "2": "Browser push notifications for incoming messages",
-          "3": "Rate limiting for room creation (anti-abuse)",
-          "4": "Private community feature with encrypted posts"
-        }
-      },
-      "7": {
-        "version": "v1.2.0",
-        "date": "February 15, 2026",
-        "title": "Encrypted Media Transfer",
-        "changes": {
-          "1": "Image & video transfer via encrypted P2P (WebRTC DataChannel)",
-          "2": "TURN-only relay to prevent IP exposure between peers",
-          "3": "Automatic image compression (max 2048px, JPEG 80%)",
-          "4": "Fullscreen image viewer with pinch-to-zoom",
-          "5": "File integrity verification with SHA-256 checksums"
-        }
-      },
-      "6": {
-        "version": "v1.3.0",
-        "date": "February 26, 2026",
-        "title": "Mobile App & Stability",
-        "changes": {
-          "1": "Android mobile app launched (Google Play Store)",
-          "2": "Deep link support — open chat rooms directly from shared links in the app",
-          "3": "One-click entry — include password in link for instant connection",
-          "4": "60-second reconnection grace period — rooms aren't destroyed immediately on exit",
-          "5": "Community dashboard & video attachments in posts",
-          "6": "10 language support (+German, Traditional Chinese)"
-        }
-      },
-      "5": {
-        "version": "v1.4.0",
-        "date": "February 28, 2026",
-        "title": "Community Invite Code System",
-        "changes": {
-          "1": "Rotatable invite codes for communities — share a link that auto-joins without password",
-          "2": "Invite code rotation in admin panel — invalidate old links while existing members keep access",
-          "3": "Separated invite code (shareable) from encryption key (immutable) for stronger security",
-          "4": "Mobile app deep link support for community invite codes"
-        }
-      },
-      "4": {
-        "version": "v1.5.0",
-        "date": "March 14, 2026",
-        "title": "Embeddable Chat Widget",
-        "changes": {
-          "1": "Embed BLIP chat into any website via iframe — add encrypted chat with a single HTML snippet",
-          "2": "Lightweight embed layout — no ads, no navigation, just the chat",
-          "3": "postMessage API for parent page communication (room created, joined, destroyed events)",
-          "4": "Shared links in embed mode stay within the embed context",
-          "5": "Full E2E encryption maintained in embedded mode"
-        }
-      },
-      "3": {
-        "version": "v1.6.0",
-        "date": "March 18, 2026",
-        "title": "Group Chat",
-        "changes": {
-          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
-          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
-          "3": "Participant list — see who’s online in real-time",
-          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
-          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "1": "Prediction Market — Bet BP (BLIP Points) on real-world outcomes, fully anonymous",
+          "2": "Parimutuel odds — Dynamic odds calculated from the total pool with 10% rake",
+          "3": "6-tier rank system — Static → Receiver → Signal → Decoder → Control → Oracle",
+          "4": "Question creation — Any user can create predictions (150 BP, rank discounts available)",
+          "5": "Auto-settlement — Results settled by creator with automatic payouts",
           "6": "Available on both web and mobile app"
         }
       },
-      "2": {
-        "version": "v1.7.0",
-        "date": "March 18, 2026",
-        "title": "Universal File Transfer",
+      "1": {
+        "version": "v1.9.0",
+        "date": "March 24, 2026",
+        "title": "BLIP me — Burner Contact Link",
         "changes": {
-          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
-          "2": "File message bubble with icon, filename, size, and download button",
-          "3": "Transfer progress indicator during send/receive",
-          "4": "200MB max file size (P2P — no server storage)",
-          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+          "1": "BLIP me link — Create your personal URL and share it on social media. When someone clicks, an instant 1:1 encrypted chat starts",
+          "2": "Real-time connection alerts — Keep the page open to receive instant notifications when a visitor connects",
+          "3": "Link management — Change URL or delete your link anytime",
+          "4": "Accountless ownership — Device-based token proves link ownership, no account needed",
+          "5": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "2": {
         "version": "v1.8.0",
         "date": "March 20, 2026",
         "title": "My Chat Rooms & Auto-Rejoin",
@@ -197,16 +126,100 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "0": {
-        "version": "v1.9.0",
-        "date": "March 24, 2026",
-        "title": "BLIP me — Burner Contact Link",
+      "3": {
+        "version": "v1.7.0",
+        "date": "March 18, 2026",
+        "title": "Universal File Transfer",
         "changes": {
-          "1": "BLIP me link — Create your personal URL and share it on social media. When someone clicks, an instant 1:1 encrypted chat starts",
-          "2": "Real-time connection alerts — Keep the page open to receive instant notifications when a visitor connects",
-          "3": "Link management — Change URL or delete your link anytime",
-          "4": "Accountless ownership — Device-based token proves link ownership, no account needed",
-          "5": "Available on both web and mobile app"
+          "1": "Send any file type — PDFs, ZIPs, documents, audio, or anything via encrypted P2P",
+          "2": "File message bubble with icon, filename, size, and download button",
+          "3": "Transfer progress indicator during send/receive",
+          "4": "200MB max file size (P2P — no server storage)",
+          "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
+        }
+      },
+      "4": {
+        "version": "v1.6.0",
+        "date": "March 18, 2026",
+        "title": "Group Chat",
+        "changes": {
+          "1": "Ephemeral group chat — create a room, share the link, chat with multiple people. All messages vanish when the room closes.",
+          "2": "Room admin controls — kick, ban, lock the room, or destroy it instantly",
+          "3": "Participant list — see who’s online in real-time",
+          "4": "Same E2E encryption as 1:1 — symmetric key (NaCl secretbox) derived from room password",
+          "5": "Auto-destruct — room disappears when the last person leaves or admin destroys it",
+          "6": "Available on both web and mobile app"
+        }
+      },
+      "5": {
+        "version": "v1.5.0",
+        "date": "March 14, 2026",
+        "title": "Embeddable Chat Widget",
+        "changes": {
+          "1": "Embed BLIP chat into any website via iframe — add encrypted chat with a single HTML snippet",
+          "2": "Lightweight embed layout — no ads, no navigation, just the chat",
+          "3": "postMessage API for parent page communication (room created, joined, destroyed events)",
+          "4": "Shared links in embed mode stay within the embed context",
+          "5": "Full E2E encryption maintained in embedded mode"
+        }
+      },
+      "6": {
+        "version": "v1.4.0",
+        "date": "February 28, 2026",
+        "title": "Community Invite Code System",
+        "changes": {
+          "1": "Rotatable invite codes for communities — share a link that auto-joins without password",
+          "2": "Invite code rotation in admin panel — invalidate old links while existing members keep access",
+          "3": "Separated invite code (shareable) from encryption key (immutable) for stronger security",
+          "4": "Mobile app deep link support for community invite codes"
+        }
+      },
+      "7": {
+        "version": "v1.3.0",
+        "date": "February 26, 2026",
+        "title": "Mobile App & Stability",
+        "changes": {
+          "1": "Android mobile app launched (Google Play Store)",
+          "2": "Deep link support — open chat rooms directly from shared links in the app",
+          "3": "One-click entry — include password in link for instant connection",
+          "4": "60-second reconnection grace period — rooms aren't destroyed immediately on exit",
+          "5": "Community dashboard & video attachments in posts",
+          "6": "10 language support (+German, Traditional Chinese)"
+        }
+      },
+      "8": {
+        "version": "v1.2.0",
+        "date": "February 15, 2026",
+        "title": "Encrypted Media Transfer",
+        "changes": {
+          "1": "Image & video transfer via encrypted P2P (WebRTC DataChannel)",
+          "2": "TURN-only relay to prevent IP exposure between peers",
+          "3": "Automatic image compression (max 2048px, JPEG 80%)",
+          "4": "Fullscreen image viewer with pinch-to-zoom",
+          "5": "File integrity verification with SHA-256 checksums"
+        }
+      },
+      "9": {
+        "version": "v1.1.0",
+        "date": "February 10, 2026",
+        "title": "Instant Room Destruction & Notifications",
+        "changes": {
+          "1": "Rooms destroyed immediately when all participants leave",
+          "2": "Browser push notifications for incoming messages",
+          "3": "Rate limiting for room creation (anti-abuse)",
+          "4": "Private community feature with encrypted posts"
+        }
+      },
+      "10": {
+        "version": "v1.0.0",
+        "date": "February 1, 2026",
+        "title": "Initial Release",
+        "changes": {
+          "1": "E2EE text chat (Curve25519 ECDH + XSalsa20-Poly1305)",
+          "2": "One-click room creation with shareable links",
+          "3": "Zero account requirement — fully anonymous",
+          "4": "8 language support (EN, KO, JA, ZH, ZH-TW, ES, FR, DE)",
+          "5": "100% open source codebase"
         }
       }
     }
@@ -703,6 +716,13 @@
     "highlight": "Every connection creates an <strong>independent, encrypted room</strong>.<br></br>You stay anonymous. They stay anonymous.<br></br>When the conversation ends, <strong>nothing remains</strong>.",
     "cta": "Create My BLIP me"
   },
+  "BlipMeWidget": {
+    "createPrompt": "Create your BLIP me link — share it anywhere for instant encrypted chat.",
+    "create": "Create",
+    "connections": "{count} connections",
+    "refresh": "Refresh",
+    "manage": "Manage"
+  },
   "Vote": {
     "title": "Prediction Market",
     "subtitle": "Predict anonymously. Bet your points. Win big.",
@@ -763,6 +783,7 @@
       "feature3Title": "Fully Anonymous",
       "feature3Desc": "No sign-up. No tracking. Pure predictions.",
       "cta": "Start Predicting"
-    }
+    },
+    "discuss": "Join Discussion"
   }
 }

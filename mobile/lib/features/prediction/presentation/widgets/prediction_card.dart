@@ -14,6 +14,8 @@ class PredictionCard extends StatelessWidget {
   final int participants;
   final DateTime closesAt;
   final bool isClosed;
+  final String status;
+  final String? correctAnswer;
   final VoidCallback? onTap;
 
   const PredictionCard({
@@ -26,6 +28,8 @@ class PredictionCard extends StatelessWidget {
     required this.participants,
     required this.closesAt,
     this.isClosed = false,
+    this.status = 'active',
+    this.correctAnswer,
     this.onTap,
   });
 
@@ -87,6 +91,43 @@ class PredictionCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (status == 'settled') ...[
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: signalGreen.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      correctAnswer?.toUpperCase() ?? 'SETTLED',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: 'monospace',
+                        color: signalGreen,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ] else if (status == 'closed') ...[
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Text(
+                      'CLOSED',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: 'monospace',
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
                 const Spacer(),
                 Icon(
                   isExpired ? Icons.lock : Icons.access_time,

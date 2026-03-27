@@ -5,9 +5,6 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { validateBetAmount, validateCreatePrediction } from './validation';
 import {
-  CREATION_COST,
-  CREATION_COST_DISCOUNT,
-  DAILY_REWARD,
   DAILY_REWARD_INTERVAL_HOURS,
 } from './constants';
 import { getRank } from './rank';
@@ -18,6 +15,222 @@ const BET_LIMIT = { windowMs: 60_000, maxRequests: 20 };
 const CREATE_LIMIT = { windowMs: 3_600_000, maxRequests: 5 };
 const SETTLE_LIMIT = { windowMs: 60_000, maxRequests: 3 };
 const REWARD_LIMIT = { windowMs: 3_600_000, maxRequests: 1 };
+
+// ── registerDevice ───────────────────────────────────────────
+
+export async function registerDevice(
+  deviceFingerprint: string,
+  hardwareHash: string | null
+): Promise<{ success: true; balance: number; isNew: boolean } | { error: string }> {
+  if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
+
+  const supabase = createServerSupabase();
+
+  const { data, error } = await supabase.rpc('register_device', {
+    p_device_fingerprint: deviceFingerprint,
+    p_hardware_hash: hardwareHash,
+  });
+
+  if (error) return { error: error.message };
+
+  const row = Array.isArray(data) ? data[0] : data;
+  return {
+    success: true,
+    balance: row.balance,
+    isNew: row.is_new,
+  };
+}
+
+// ── getDevicePoints ──────────────────────────────────────────
+
+export async function getDevicePoints(
+  deviceFingerprint: string
+): Promise<{
+  balance: number;
+  totalEarned: number;
+  totalWon: number;
+  totalLost: number;
+} | { error: string }> {
+  if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
+
+  const supabase = createServerSupabase();
+
+  const { data, error } = await supabase
+    .from('device_points')
+    .select('balance, total_earned, total_won, total_lost')
+    .eq('device_fingerprint', deviceFingerprint)
+    .single();
+
+  if (error || !data) return { error: 'DEVICE_NOT_FOUND' };
+
+  return {
+    balance: data.balance,
+    totalEarned: data.total_earned,
+    totalWon: data.total_won,
+    totalLost: data.total_lost,
+  };
+}
+
+// ── fetchPredictions ─────────────────────────────────────────
+
+export async function fetchPredictions(
+  locale: string = 'en',
+  category?: string,
+  limit = 20
+): Promise<{ predictions: any[] } | { error: string }> {
+  const supabase = createServerSupabase();
+
+  let query = supabase
+    .from('predictions')
+    .select('*')
+    .eq('locale', locale)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (category && category !== 'all') {
+    query = query.eq('category', category);
+  }
+
+  const { data, error } = await query;
+
+  if (error) return { error: error.message };
+
+  // fallback: 해당 locale에 데이터 없으면 'en'으로 재조회
+  if ((!data || data.length === 0) && locale !== 'en') {
+    let fallbackQuery = supabase
+      .from('predictions')
+      .select('*')
+      .eq('locale', 'en')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (category && category !== 'all') {
+      fallbackQuery = fallbackQuery.eq('category', category);
+    }
+
+    const { data: fallbackData } = await fallbackQuery;
+    return { predictions: fallbackData ?? [] };
+  }
+
+  return { predictions: data ?? [] };
+}
+
+// ── fetchPrediction (단건) ───────────────────────────────────
+
+export async function fetchPrediction(
+  predictionId: string
+): Promise<{ prediction: any } | { error: string }> {
+  if (!predictionId) return { error: 'INVALID_PREDICTION' };
+
+  const supabase = createServerSupabase();
+
+  const { data, error } = await supabase
+    .from('predictions')
+    .select('*')
+    .eq('id', predictionId)
+    .single();
+
+  if (error || !data) return { error: 'PREDICTION_NOT_FOUND' };
+
+  return { prediction: data };
+}
+
+// ── fetchOdds (특정 예측의 현재 배당률) ──────────────────────
+
+export async function fetchOdds(
+  predictionId: string
+): Promise<{ odds: Record<string, number> } | { error: string }> {
+  if (!predictionId) return { error: 'INVALID_PREDICTION' };
+
+  const supabase = createServerSupabase();
+
+  // 예측 정보
+  const { data: prediction } = await supabase
+    .from('predictions')
+    .select('total_pool, options')
+    .eq('id', predictionId)
+    .single();
+
+  if (!prediction) return { error: 'PREDICTION_NOT_FOUND' };
+
+  const totalPool = prediction.total_pool ?? 0;
+  const options: string[] = prediction.options ?? ['yes', 'no'];
+
+  // 각 옵션별 베팅 합계
+  const { data: bets } = await supabase
+    .from('prediction_bets')
+    .select('option_id, bet_amount')
+    .eq('prediction_id', predictionId)
+    .eq('status', 'pending');
+
+  const optionTotals: Record<string, number> = {};
+  for (const opt of options) {
+    optionTotals[opt] = 0;
+  }
+  for (const bet of bets ?? []) {
+    optionTotals[bet.option_id] = (optionTotals[bet.option_id] ?? 0) + bet.bet_amount;
+  }
+
+  // 배당률 계산
+  const effectivePool = totalPool * 0.9;
+  const odds: Record<string, number> = {};
+  for (const opt of options) {
+    if (optionTotals[opt] > 0) {
+      odds[opt] = Math.min(20.0, Math.max(1.05, effectivePool / optionTotals[opt]));
+    } else {
+      odds[opt] = 20.0;
+    }
+  }
+
+  return { odds };
+}
+
+// ── fetchMyBets (내 베팅 기록) ────────────────────────────────
+
+export async function fetchMyBets(
+  deviceFingerprint: string,
+  predictionId?: string
+): Promise<{ bets: any[] } | { error: string }> {
+  if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
+
+  const supabase = createServerSupabase();
+
+  let query = supabase
+    .from('prediction_bets')
+    .select('*, predictions(question, category, status, correct_answer, closes_at)')
+    .eq('device_fingerprint', deviceFingerprint)
+    .order('created_at', { ascending: false });
+
+  if (predictionId) {
+    query = query.eq('prediction_id', predictionId);
+  }
+
+  const { data, error } = await query;
+
+  if (error) return { error: error.message };
+
+  return { bets: data ?? [] };
+}
+
+// ── fetchMyPredictions (내가 만든 예측) ──────────────────────
+
+export async function fetchMyPredictions(
+  deviceFingerprint: string
+): Promise<{ predictions: any[] } | { error: string }> {
+  if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
+
+  const supabase = createServerSupabase();
+
+  const { data, error } = await supabase
+    .from('predictions')
+    .select('*')
+    .eq('creator_fingerprint', deviceFingerprint)
+    .order('created_at', { ascending: false });
+
+  if (error) return { error: error.message };
+
+  return { predictions: data ?? [] };
+}
 
 // ── placeBet ─────────────────────────────────────────────────
 
@@ -43,9 +256,9 @@ export async function placeBet(
 
   // 디바이스 잔액 조회
   const { data: device } = await supabase
-    .from('prediction_devices')
+    .from('device_points')
     .select('balance')
-    .eq('fingerprint_hash', deviceFingerprint)
+    .eq('device_fingerprint', deviceFingerprint)
     .single();
 
   if (!device) return { error: 'DEVICE_NOT_FOUND' };
@@ -77,12 +290,12 @@ export async function placeBet(
   });
 
   if (error) {
-    // 멱등성 키 중복은 성공으로 처리 (이미 처리된 베팅)
     if (error.code === '23505') return { error: 'DUPLICATE_BET' };
     return { error: error.message };
   }
 
-  return { success: true, odds: data.odds, newBalance: data.new_balance };
+  const row = Array.isArray(data) ? data[0] : data;
+  return { success: true, odds: row.odds, newBalance: row.new_balance };
 }
 
 // ── createPrediction ─────────────────────────────────────────
@@ -93,7 +306,8 @@ export async function createPrediction(
   category: string,
   options: string[],
   closesAt: string,
-  revealsAt: string
+  revealsAt: string,
+  locale: string = 'en'
 ): Promise<{ success: true; predictionId: string } | { error: string }> {
   // 1. Rate limit
   const headersList = await headers();
@@ -108,15 +322,15 @@ export async function createPrediction(
 
   // 디바이스 정보 조회
   const { data: device } = await supabase
-    .from('prediction_devices')
-    .select('balance, total_points')
-    .eq('fingerprint_hash', deviceFingerprint)
+    .from('device_points')
+    .select('balance, total_earned')
+    .eq('device_fingerprint', deviceFingerprint)
     .single();
 
   if (!device) return { error: 'DEVICE_NOT_FOUND' };
 
   // 2. 등급별 할인 적용
-  const rank = getRank(device.total_points);
+  const rank = getRank(device.total_earned);
   const validation = validateCreatePrediction(question, device.balance, rank.name);
   if (!validation.valid) return { error: validation.error! };
 
@@ -131,11 +345,13 @@ export async function createPrediction(
     p_closes_at: closesAt,
     p_reveals_at: revealsAt,
     p_cost: cost,
+    p_locale: locale,
   });
 
   if (error) return { error: error.message };
 
-  return { success: true, predictionId: data.prediction_id };
+  const row = Array.isArray(data) ? data[0] : data;
+  return { success: true, predictionId: row.prediction_id };
 }
 
 // ── settlePrediction ─────────────────────────────────────────
@@ -171,9 +387,9 @@ export async function settlePrediction(
   if (prediction.settled_at) return { error: 'ALREADY_SETTLED' };
 
   // option 유효성 검증
-  const validOptions: string[] = (prediction.options ?? []).map(
-    (o: { id: string }) => o.id
-  );
+  const validOptions: string[] = Array.isArray(prediction.options)
+    ? prediction.options
+    : [];
   if (!validOptions.includes(resultOptionId)) {
     return { error: 'INVALID_OPTION' };
   }
@@ -182,15 +398,15 @@ export async function settlePrediction(
   const { data, error } = await supabase.rpc('settle_prediction', {
     p_prediction_id: predictionId,
     p_result_option_id: resultOptionId,
-    p_creator_fingerprint: creatorFingerprint,
   });
 
   if (error) return { error: error.message };
 
+  const row = Array.isArray(data) ? data[0] : data;
   return {
     success: true,
-    totalPaid: data.total_paid,
-    creatorEarned: data.creator_earned,
+    totalPaid: row.total_paid,
+    creatorEarned: row.creator_earned,
   };
 }
 
@@ -209,35 +425,13 @@ export async function claimDailyReward(
 
   const supabase = createServerSupabase();
 
-  // 디바이스 조회
-  const { data: device } = await supabase
-    .from('prediction_devices')
-    .select('balance, last_reward_at')
-    .eq('fingerprint_hash', deviceFingerprint)
-    .single();
-
-  if (!device) return { error: 'DEVICE_NOT_FOUND' };
-
-  // 2. 시간 검증
-  if (device.last_reward_at) {
-    const intervalMs = DAILY_REWARD_INTERVAL_HOURS * 60 * 60 * 1000;
-    const elapsed = Date.now() - new Date(device.last_reward_at).getTime();
-    if (elapsed < intervalMs) {
-      return { error: 'NOT_YET_AVAILABLE' };
-    }
-  }
-
-  // 3. 보상 지급
-  const newBalance = device.balance + DAILY_REWARD;
-  const { error } = await supabase
-    .from('prediction_devices')
-    .update({
-      balance: newBalance,
-      last_reward_at: new Date().toISOString(),
-    })
-    .eq('fingerprint_hash', deviceFingerprint);
+  // RPC로 보상 지급 (48시간 체크 + 팜 방지 모두 DB에서 처리)
+  const { data, error } = await supabase.rpc('claim_daily_reward', {
+    p_device_fingerprint: deviceFingerprint,
+  });
 
   if (error) return { error: error.message };
 
-  return { success: true, newBalance };
+  const row = Array.isArray(data) ? data[0] : data;
+  return { success: true, newBalance: row.new_balance };
 }

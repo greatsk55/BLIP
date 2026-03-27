@@ -9,6 +9,7 @@ import {
 import { encryptSymmetric, decryptSymmetric } from '@/lib/crypto/symmetric';
 import { generateUsername } from '@/lib/username';
 import { updateGroupParticipantCount } from '@/lib/group/actions';
+import { getChatMessages, saveChatMessages, type StoredMessage } from '@/lib/room/storage';
 import type { DecryptedMessage, ChatStatus } from '@/types/chat';
 
 function generateUUID(): string {
@@ -83,6 +84,36 @@ export function useGroupChat({
   const sharedKeyRef = useRef<Uint8Array | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
   onMessageReceivedRef.current = onMessageReceived;
+
+  // 히스토리 로드
+  useEffect(() => {
+    const saved = getChatMessages(roomId);
+    if (saved.length > 0) {
+      setMessages(saved.map((m): DecryptedMessage => ({
+        id: m.id,
+        senderId: m.sender,
+        senderName: m.sender,
+        content: m.text,
+        isMine: m.sender === myUsernameRef.current,
+        timestamp: m.timestamp,
+        type: 'text',
+      })));
+    }
+  }, [roomId]);
+
+  // 메시지 변경 시 로컬 저장
+  useEffect(() => {
+    if (messages.length === 0) return;
+    const stored: StoredMessage[] = messages
+      .filter((m) => m.type === 'text')
+      .map((m) => ({
+        id: m.id,
+        sender: m.senderName,
+        text: m.content,
+        timestamp: m.timestamp,
+      }));
+    saveChatMessages(roomId, stored);
+  }, [messages, roomId]);
 
   const sendMessage = useCallback(
     (content: string) => {

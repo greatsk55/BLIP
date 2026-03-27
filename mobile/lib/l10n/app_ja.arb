@@ -253,6 +253,10 @@
   "navHome": "ホーム",
   "navChat": "チャット",
   "navCommunity": "コミュニティ",
+  "navVote": "予測",
+  "predictionTabAll": "すべて",
+  "predictionTabMyBets": "マイベット",
+  "predictionTabCreated": "作成済み",
 
   "chatListTitle": "マイチャットルーム",
   "chatListEmpty": "チャットルームがありません。\nホームタブからルームを作成してください。",
@@ -412,6 +416,7 @@
   "predictionSubmit": "作成 ({cost} BP)",
   "@predictionSubmit": { "placeholders": { "cost": { "type": "int" } } },
   "predictionBet": "ベットする",
+  "predictionDiscuss": "ディスカッション参加",
   "predictionOdds": "オッズ",
   "predictionExpectedPayout": "予想配当",
   "predictionClosesIn": "あと{time}で締切",
