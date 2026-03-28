@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
@@ -7,6 +8,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/storage/local_storage_service.dart';
 import '../../../core/storage/models/saved_room.dart';
 import '../../../core/utils/room_creator.dart';
+import '../../blipme/providers/blipme_provider.dart';
 import '../../chat/presentation/widgets/terms_confirm_dialog.dart';
 import '../providers/chat_list_provider.dart';
 
@@ -24,6 +26,7 @@ class MyChatListScreen extends ConsumerWidget {
         isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
 
     final listState = ref.watch(chatListProvider);
+    final blipMe = ref.watch(blipMeProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,21 +50,54 @@ class MyChatListScreen extends ConsumerWidget {
       body: listState.loading
           ? const Center(child: CircularProgressIndicator())
           : listState.rooms.isEmpty
-              ? _EmptyState(
-                  l10n: l10n,
-                  signalGreen: signalGreen,
-                  ghostGrey: ghostGrey,
+              ? Column(
+                  children: [
+                    _BlipMeWidget(
+                      state: blipMe,
+                      l10n: l10n,
+                      isDark: isDark,
+                      signalGreen: signalGreen,
+                      ghostGrey: ghostGrey,
+                      onCreateLink: () =>
+                          ref.read(blipMeProvider.notifier).createLink(),
+                      onRegenerate: () =>
+                          ref.read(blipMeProvider.notifier).regenerateLink(),
+                    ),
+                    Expanded(
+                      child: _EmptyState(
+                        l10n: l10n,
+                        signalGreen: signalGreen,
+                        ghostGrey: ghostGrey,
+                      ),
+                    ),
+                  ],
                 )
               : RefreshIndicator(
                   color: signalGreen,
-                  onRefresh: () =>
-                      ref.read(chatListProvider.notifier).refresh(),
+                  onRefresh: () async {
+                    ref.invalidate(blipMeProvider);
+                    await ref.read(chatListProvider.notifier).refresh();
+                  },
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 8),
-                    itemCount: listState.rooms.length,
+                    // +1 for BLIP me widget at index 0
+                    itemCount: listState.rooms.length + 1,
                     itemBuilder: (context, index) {
-                      final room = listState.rooms[index];
+                      if (index == 0) {
+                        return _BlipMeWidget(
+                          state: blipMe,
+                          l10n: l10n,
+                          isDark: isDark,
+                          signalGreen: signalGreen,
+                          ghostGrey: ghostGrey,
+                          onCreateLink: () =>
+                              ref.read(blipMeProvider.notifier).createLink(),
+                          onRegenerate: () =>
+                              ref.read(blipMeProvider.notifier).regenerateLink(),
+                        );
+                      }
+                      final room = listState.rooms[index - 1];
                       return _RoomCard(
                         room: room,
                         isDark: isDark,
@@ -445,5 +481,279 @@ class _RoomCard extends StatelessWidget {
     if (hours < 24) return '${hours}h';
     final days = hours ~/ 24;
     return '${days}d';
+  }
+}
+
+/// 채팅탭 상단 BLIP me 컴팩트 위젯
+class _BlipMeWidget extends StatelessWidget {
+  final BlipMeState state;
+  final AppLocalizations l10n;
+  final bool isDark;
+  final Color signalGreen;
+  final Color ghostGrey;
+  final VoidCallback onCreateLink;
+  final VoidCallback onRegenerate;
+
+  const _BlipMeWidget({
+    required this.state,
+    required this.l10n,
+    required this.isDark,
+    required this.signalGreen,
+    required this.ghostGrey,
+    required this.onCreateLink,
+    required this.onRegenerate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // 로딩 중
+    if (state.loading) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: ghostGrey,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                'BLIP me',
+                style: TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 12,
+                  color: ghostGrey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // 링크 미생성 — CTA
+    if (state.linkId == null) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+        child: Material(
+          color: signalGreen.withValues(alpha: isDark ? 0.08 : 0.05),
+          borderRadius: BorderRadius.circular(12),
+          child: InkWell(
+            onTap: onCreateLink,
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: signalGreen.withValues(alpha: 0.2)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.bolt, size: 20, color: signalGreen),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      l10n.blipMeWidgetPrompt,
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 11,
+                        color: ghostGrey,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: signalGreen),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      l10n.blipMeCreateButton,
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: signalGreen,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // 링크 활성 — 상태 표시 + URL + 복사 + 새로고침
+    final blipMeUrl = 'https://blip-blip.vercel.app/m/${state.linkId}';
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+      child: Material(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.03)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: () => context.push('/blipme'),
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 상단: 라벨 + 상태 + 새로고침
+                Row(
+                  children: [
+                    Icon(Icons.bolt, size: 16, color: signalGreen),
+                    const SizedBox(width: 6),
+                    Text(
+                      'BLIP me',
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: signalGreen,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    if (state.listening)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.radio_button_on,
+                              size: 10, color: signalGreen),
+                          const SizedBox(width: 4),
+                          Text(
+                            l10n.blipMeListening,
+                            style: TextStyle(
+                              fontFamily: 'monospace',
+                              fontSize: 10,
+                              color: signalGreen,
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Text(
+                        l10n.blipMeOffline,
+                        style: TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 10,
+                          color: ghostGrey.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    const Spacer(),
+                    Text(
+                      '${state.useCount} ${l10n.blipMeWidgetConnections}',
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 10,
+                        color: ghostGrey,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    GestureDetector(
+                      onTap: () => _showRegenerateDialog(context),
+                      child: Icon(Icons.refresh, size: 16, color: ghostGrey),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                // 하단: URL + 복사
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        blipMeUrl,
+                        style: TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 11,
+                          color: signalGreen.withValues(alpha: 0.8),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () {
+                        Clipboard.setData(ClipboardData(text: blipMeUrl));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Copied!'),
+                            duration: const Duration(seconds: 1),
+                            backgroundColor: signalGreen,
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.copy, size: 16, color: ghostGrey),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showRegenerateDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.blipMeRegenerate),
+        content: Text(
+          l10n.blipMeConfirmDelete,
+          style: TextStyle(
+            fontFamily: 'monospace',
+            fontSize: 13,
+            color: ghostGrey,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              onRegenerate();
+            },
+            child: Text(
+              l10n.blipMeRegenerate,
+              style: TextStyle(
+                color: signalGreen,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

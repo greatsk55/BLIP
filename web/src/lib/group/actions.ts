@@ -303,3 +303,104 @@ export async function isUserBanned(
   if (!room) return false;
   return (room.banned_tokens || []).includes(userToken);
 }
+
+/**
+ * 예측(투표) 전용 토론방 생성 또는 기존 방 반환
+ * - 예측 ID당 하나의 그룹채팅방만 존재
+ * - 이미 있으면 기존 방 정보 반환
+ */
+export async function getOrCreateDiscussionRoom(
+  predictionId: string,
+  predictionQuestion: string,
+): Promise<{
+  roomId: string;
+  password: string;
+} | { error: string }> {
+  const headersList = await headers();
+  const ip = getClientIp(headersList);
+  const rateCheck = await checkRateLimit(`discuss:${ip}`, CREATE_LIMIT);
+  if (!rateCheck.allowed) {
+    return { error: 'TOO_MANY_REQUESTS' };
+  }
+
+  const supabase = createServerSupabase();
+
+  // 기존 토론방 조회
+  const { data: existing } = await supabase
+    .from('rooms')
+    .select('id, auth_key_hash, status, expires_at')
+    .eq('prediction_id', predictionId)
+    .neq('status', 'destroyed')
+    .single();
+
+  if (existing && new Date(existing.expires_at) > new Date()) {
+    // 기존 방이 있고 유효함 → 비밀번호는 prediction ID 기반 고정 생성
+    const password = await derivePredictionPassword(predictionId);
+    return { roomId: existing.id, password };
+  }
+
+  // 새 방 생성
+  const roomId = generateRoomId();
+  const password = await derivePredictionPassword(predictionId);
+  const adminToken = generateAdminToken();
+
+  const { authKey } = await deriveKeysFromPassword(password, roomId);
+  const authKeyHash = await hashAuthKey(authKey);
+  const adminTokenHash = await hashAdminToken(adminToken);
+
+  const title = predictionQuestion.length > 40
+    ? predictionQuestion.slice(0, 40) + '...'
+    : predictionQuestion;
+
+  // 토론방은 7일 TTL (예측 마감까지 충분한 시간)
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
+  const { error } = await supabase.from('rooms').insert({
+    id: roomId,
+    auth_key_hash: authKeyHash,
+    created_at: new Date().toISOString(),
+    expires_at: expiresAt,
+    status: 'waiting',
+    participant_count: 0,
+    type: 'group',
+    max_participants: null,
+    title: `💬 ${title}`,
+    admin_token_hash: adminTokenHash,
+    is_locked: false,
+    banned_tokens: [],
+    prediction_id: predictionId,
+  });
+
+  if (error) {
+    // UNIQUE 제약 위반 → 동시 생성 경쟁 → 재조회
+    if (error.code === '23505') {
+      const { data: race } = await supabase
+        .from('rooms')
+        .select('id')
+        .eq('prediction_id', predictionId)
+        .neq('status', 'destroyed')
+        .single();
+      if (race) {
+        return { roomId: race.id, password };
+      }
+    }
+    return { error: 'CREATION_FAILED' };
+  }
+
+  return { roomId, password };
+}
+
+/**
+ * prediction ID로부터 결정적 비밀번호 파생
+ * - 같은 예측 → 같은 비밀번호 → 누구나 참여 가능
+ */
+async function derivePredictionPassword(predictionId: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(`blip-discuss:${predictionId}`);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  // 처음 12바이트로 비밀번호 생성 (Base32-like)
+  const charset = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const chars = hashArray.slice(0, 12).map((b) => charset[b % charset.length]);
+  return `${chars.slice(0, 4).join('')}-${chars.slice(4, 8).join('')}-${chars.slice(8, 12).join('')}`;
+}

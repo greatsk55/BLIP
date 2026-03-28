@@ -52,3 +52,25 @@ CLAUDE.md
 
 # Playwright MCP
 .playwright-mcp/
+
+# Temporary scripts
+insert_*.py
+insert_*.sh
+
+# Supabase CLI temp
+web/supabase/.temp/
+
+# Unused migrations (applied manually)
+web/supabase/migrations/
+web/supabase/007_system_bot.sql
+web/supabase/008_prediction_locale.sql
+
+# Unused cron/bot (not deployed)
+web/src/app/api/cron/daily-news-vote/
+web/src/lib/prediction/daily-news-cron.ts
+web/src/lib/prediction/news-crawler.ts
+web/src/lib/prediction/system-bot.ts
+web/src/lib/prediction/vote-generator.ts
+
+# Vercel config (managed by Vercel dashboard)
+web/vercel.json
