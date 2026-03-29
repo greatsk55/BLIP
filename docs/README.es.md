@@ -43,6 +43,17 @@ Pero la mayoría de las conversaciones en la vida son solo **charlas rápidas qu
 4. Terminar      →  Todos los datos destruidos al instante
 ```
 
+## Juego de Predicciones ✨ NEW
+
+Haz predicciones sobre resultados del mundo real y gana **BP (BLIP Points)** — completamente anónimo.
+
+- 🔮 **Vota en predicciones** — ¿Bitcoin llegará a $100k? ¿GTA 6 se lanzará en 2026?
+- 🏆 **Gana recompensas** — Los votos correctos ganan puntos según distribución ponderada por popularidad
+- 📊 **Sistema de 6 rangos** — Static → Receiver → Signal → Decoder → Control → Oracle
+- ✏️ **Crea las tuyas** — Cualquiera puede crear preguntas de predicción (150 BP, descuentos por rango)
+- 🕵️ **Totalmente anónimo** — Solo huella del dispositivo, sin cuentas necesarias
+- 🌍 **8 idiomas** — Disponible en EN, KO, JA, ZH, ZH-TW, ES, FR, DE
+
 ## Casos de uso
 
 - "Charla rápida, luego destruir la sala"

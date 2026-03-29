@@ -80,6 +80,17 @@ Send **any file** — PDFs, ZIPs, documents, audio, anything — via encrypted P
 - 📊 Real-time transfer progress
 - ⬇️ Explicit download button — nothing auto-saves
 
+## Prediction Game ✨ NEW
+
+Make predictions on real-world outcomes and earn **BP (BLIP Points)** — completely anonymous.
+
+- 🔮 **Vote on predictions** — Will Bitcoin hit $100k? Will GTA 6 launch in 2026?
+- 🏆 **Earn rewards** — Correct votes earn points based on popularity-weighted distribution
+- 📊 **6-tier rank system** — Static → Receiver → Signal → Decoder → Control → Oracle
+- ✏️ **Create your own** — Anyone can create prediction questions (150 BP, rank discounts)
+- 🕵️ **Fully anonymous** — Device fingerprint only, no accounts needed
+- 🌍 **8 languages** — Available in EN, KO, JA, ZH, ZH-TW, ES, FR, DE
+
 ## Use Cases
 
 - "Quick chat, then blow up the room"

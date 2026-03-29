@@ -43,6 +43,17 @@ Mais la plupart des conversations dans la vie ne sont que des **échanges rapide
 4. Terminer        →  Toutes les données détruites instantanément
 ```
 
+## Jeu de Prédictions ✨ NEW
+
+Faites des prédictions sur des résultats réels et gagnez des **BP (BLIP Points)** — totalement anonyme.
+
+- 🔮 **Votez sur des prédictions** — Le Bitcoin atteindra-t-il 100k $ ? GTA 6 sortira-t-il en 2026 ?
+- 🏆 **Gagnez des récompenses** — Les votes corrects rapportent des points selon une distribution pondérée par la popularité
+- 📊 **Système de 6 rangs** — Static → Receiver → Signal → Decoder → Control → Oracle
+- ✏️ **Créez les vôtres** — N'importe qui peut créer des questions de prédiction (150 BP, réductions de rang)
+- 🕵️ **Totalement anonyme** — Empreinte d'appareil uniquement, aucun compte nécessaire
+- 🌍 **8 langues** — Disponible en EN, KO, JA, ZH, ZH-TW, ES, FR, DE
+
 ## Cas d'utilisation
 
 - « Discussion rapide, puis détruire le salon »
