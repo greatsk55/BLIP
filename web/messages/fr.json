@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "26 mars 2026",
-        "title": "Marché de Prédictions — Paris Anonymes par Points",
+        "title": "Jeu de Prédictions — Votes Anonymes par Points",
         "changes": {
-          "1": "Marché de Prédictions — Pariez des BP (Points BLIP) sur des résultats réels, totalement anonyme",
-          "2": "Cotes pari mutuel — Cotes dynamiques calculées à partir du pool total, 10% de commission",
+          "1": "Jeu de Prédictions — Votez avec des BP (Points BLIP) sur des résultats réels, totalement anonyme",
+          "2": "Popularité dynamique — Calculée dynamiquement à partir du pool total, 10% de commission",
           "3": "Système de 6 rangs — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "Créer des questions — Tout utilisateur peut créer des prédictions (150 BP, réductions par rang)",
           "5": "Règlement automatique — Le créateur saisit le résultat et la distribution est automatique",
@@ -456,8 +456,8 @@
     "myRoomsDescription": "Voir vos salons de discussion récemment créés ou rejoints.",
     "blipMeTitle": "BLIP me - Lien de contact jetable",
     "blipMeDescription": "Créez un lien de contact jetable. Partagez-le n'importe où — un clic et un chat secret démarre.",
-    "voteTitle": "BLIP - Marché de Prédictions",
-    "voteDescription": "Marché de prédictions anonyme. Pariez des points sur des résultats réels. Aucun compte requis."
+    "voteTitle": "BLIP - Jeu de Prédictions",
+    "voteDescription": "Jeu de prédictions anonyme. Votez avec des points sur des résultats réels. Aucun compte requis."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -722,8 +722,8 @@
     "manage": "Gérer"
   },
   "Vote": {
-    "title": "Marché de Prédictions",
-    "subtitle": "Prédisez anonymement. Pariez vos points. Gagnez gros.",
+    "title": "Jeu de Prédictions",
+    "subtitle": "Prédisez anonymement. Votez avec vos points. Gagnez des récompenses.",
     "createQuestion": "Créer une Question",
     "categories": {
       "all": "Tous",
@@ -737,13 +737,13 @@
       "other": "Autres"
     },
     "betting": {
-      "placeBet": "Parier",
+      "placeBet": "Voter",
       "yes": "Oui",
       "no": "Non",
-      "odds": "Cotes",
-      "expectedPayout": "Gain Attendu",
-      "maxBet": "Mise Maximum",
-      "betAmount": "Montant du Pari",
+      "odds": "Popularité",
+      "expectedPayout": "Récompense Attendue",
+      "maxBet": "Vote Maximum",
+      "betAmount": "Montant du Vote",
       "closesIn": "Ferme dans",
       "closed": "Fermé",
       "participants": "participants"
@@ -775,7 +775,7 @@
       "title": "PRÉDIRE. DISCUTER. DÉCIDER.",
       "subtitle": "Prédictions anonymes. Aucun compte requis.",
       "feature1Title": "Résultats Instantanés",
-      "feature1Desc": "Consultez les cotes et résultats en temps réel",
+      "feature1Desc": "Consultez la popularité et résultats en temps réel",
       "feature2Title": "Discussions Automatiques",
       "feature2Desc": "Des salons de chat créés après chaque prédiction",
       "feature3Title": "Totalement Anonyme",

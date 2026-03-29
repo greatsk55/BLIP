@@ -91,13 +91,13 @@
       "0": {
         "version": "v1.10.0",
         "date": "26. März 2026",
-        "title": "Vorhersagemarkt — Anonyme Punktewetten",
+        "title": "Vorhersagespiel — Anonyme Punkteabstimmung",
         "changes": {
-          "1": "Vorhersagemarkt — Setze BP (BLIP-Punkte) auf reale Ergebnisse, vollständig anonym",
-          "2": "Parimutuel-Quoten — Dynamische Quoten aus dem Gesamtpool berechnet, 10% Provision",
+          "1": "Vorhersagespiel — Stimme mit BP (BLIP-Punkte) über reale Ergebnisse ab, vollständig anonym",
+          "2": "Dynamische Beliebtheit — Dynamisch aus dem Gesamtpool berechnet, 10% Provision",
           "3": "6-stufiges Rangsystem — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "Fragen erstellen — Jeder Nutzer kann Vorhersagen erstellen (150 BP, Rang-Rabatte)",
-          "5": "Automatische Abrechnung — Der Ersteller gibt das Ergebnis ein, Auszahlung erfolgt automatisch",
+          "5": "Automatische Abrechnung — Der Ersteller gibt das Ergebnis ein, Belohnung erfolgt automatisch",
           "6": "Verfügbar auf Web und mobiler App"
         }
       },
@@ -456,8 +456,8 @@
     "myRoomsDescription": "Sieh dir deine kürzlich erstellten oder beigetretenen Chaträume an.",
     "blipMeTitle": "BLIP me - Einweg-Kontaktlink",
     "blipMeDescription": "Erstellen Sie einen Einweg-Kontaktlink. Teilen Sie ihn überall — ein Klick startet einen geheimen Chat.",
-    "voteTitle": "BLIP - Vorhersagemarkt",
-    "voteDescription": "Anonymer Vorhersagemarkt. Setze Punkte auf reale Ergebnisse. Kein Konto erforderlich."
+    "voteTitle": "BLIP - Vorhersagespiel",
+    "voteDescription": "Anonymes Vorhersagespiel. Stimme mit Punkten über reale Ergebnisse ab. Kein Konto erforderlich."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -722,8 +722,8 @@
     "manage": "Verwalten"
   },
   "Vote": {
-    "title": "Vorhersagemarkt",
-    "subtitle": "Anonym vorhersagen. Punkte setzen. Groß gewinnen.",
+    "title": "Vorhersagespiel",
+    "subtitle": "Anonym vorhersagen. Mit Punkten abstimmen. Belohnungen erhalten.",
     "createQuestion": "Frage erstellen",
     "categories": {
       "all": "Alle",
@@ -737,13 +737,13 @@
       "other": "Sonstiges"
     },
     "betting": {
-      "placeBet": "Wette platzieren",
+      "placeBet": "Abstimmen",
       "yes": "Ja",
       "no": "Nein",
-      "odds": "Quote",
-      "expectedPayout": "Erwartete Auszahlung",
-      "maxBet": "Maximaler Einsatz",
-      "betAmount": "Einsatzbetrag",
+      "odds": "Beliebtheit",
+      "expectedPayout": "Erwartete Belohnung",
+      "maxBet": "Maximale Stimme",
+      "betAmount": "Stimmenbetrag",
       "closesIn": "Schließt in",
       "closed": "Geschlossen",
       "participants": "Teilnehmer"
@@ -759,7 +759,7 @@
     "settlement": {
       "won": "Richtig vorhergesagt!",
       "lost": "Falsche Vorhersage...",
-      "payout": "Auszahlung",
+      "payout": "Belohnung",
       "confirm": "Bestätigen"
     },
     "create": {
@@ -775,7 +775,7 @@
       "title": "VORHERSAGEN. DISKUTIEREN. ENTSCHEIDEN.",
       "subtitle": "Anonyme Vorhersagen. Kein Konto nötig.",
       "feature1Title": "Sofortige Ergebnisse",
-      "feature1Desc": "Live-Quoten und Ergebnisse in Echtzeit",
+      "feature1Desc": "Live-Ergebnisse und Beliebtheit in Echtzeit",
       "feature2Title": "Auto-Diskussionen",
       "feature2Desc": "Chatrooms werden nach jeder Vorhersage erstellt",
       "feature3Title": "Völlig Anonym",

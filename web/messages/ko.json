@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "2026년 3월 26일",
-        "title": "예측 마켓 — 익명 포인트 베팅",
+        "title": "예측 게임 — 익명 포인트 투표",
         "changes": {
-          "1": "예측 마켓 — BP(BLIP 포인트)로 실제 결과에 베팅, 완전 익명",
-          "2": "파리뮤추얼 배당률 — 총 풀에서 동적으로 계산, 10% 수수료",
+          "1": "예측 게임 — BP(BLIP 포인트)로 실제 결과에 투표, 완전 익명",
+          "2": "파리뮤추얼 인기도 점수 — 총 풀에서 동적으로 계산, 10% 수수료",
           "3": "6단계 등급 시스템 — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "질문 생성 — 누구나 예측 질문 생성 가능 (150 BP, 등급별 할인)",
           "5": "자동 정산 — 생성자가 결과 입력 시 자동 배분",
@@ -458,8 +458,8 @@
     "myRoomsDescription": "최근 생성하거나 참여한 채팅방을 확인하세요.",
     "blipMeTitle": "BLIP me - 일회용 연락 링크",
     "blipMeDescription": "일회용 연락 링크를 만들어 공유하세요. 클릭 한 번으로 비밀 채팅이 시작됩니다.",
-    "voteTitle": "BLIP - 예측 마켓",
-    "voteDescription": "익명 예측 마켓. 포인트를 걸고 결과를 예측하세요. 계정 불필요."
+    "voteTitle": "BLIP - 예측 게임",
+    "voteDescription": "익명 예측 게임. 포인트로 투표하고 결과를 예측하세요. 계정 불필요."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -724,8 +724,8 @@
     "manage": "관리"
   },
   "Vote": {
-    "title": "예측 마켓",
-    "subtitle": "익명으로 예측하세요. 포인트를 걸고 크게 이기세요.",
+    "title": "예측 게임",
+    "subtitle": "익명으로 예측하세요. 포인트로 투표하고 보상을 받으세요.",
     "createQuestion": "질문 만들기",
     "categories": {
       "all": "전체",
@@ -739,13 +739,13 @@
       "other": "기타"
     },
     "betting": {
-      "placeBet": "베팅하기",
+      "placeBet": "투표하기",
       "yes": "예",
       "no": "아니오",
-      "odds": "배당률",
-      "expectedPayout": "예상 배당",
-      "maxBet": "최대 베팅",
-      "betAmount": "베팅 금액",
+      "odds": "인기도",
+      "expectedPayout": "예상 보상",
+      "maxBet": "최대 투표",
+      "betAmount": "투표 금액",
       "closesIn": "마감까지",
       "closed": "마감됨",
       "participants": "참여자"
@@ -761,7 +761,7 @@
     "settlement": {
       "won": "맞추셨습니다!",
       "lost": "틀린 예측...",
-      "payout": "배당금",
+      "payout": "보상금",
       "confirm": "확인"
     },
     "create": {
@@ -777,7 +777,7 @@
       "title": "예측하고. 토론하고. 결정하세요.",
       "subtitle": "익명 예측. 계정 불필요.",
       "feature1Title": "실시간 결과",
-      "feature1Desc": "실시간 배당률과 결과를 즉시 확인",
+      "feature1Desc": "실시간 인기도와 결과를 즉시 확인",
       "feature2Title": "자동 토론방",
       "feature2Desc": "모든 예측 후 채팅방 자동 생성",
       "feature3Title": "완전 익명",

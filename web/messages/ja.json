@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "2026年3月26日",
-        "title": "予測マーケット — 匿名ポイントベッティング",
+        "title": "予測ゲーム — 匿名ポイント投票",
         "changes": {
-          "1": "予測マーケット — BP（BLIPポイント）で実世界の結果にベット、完全匿名",
-          "2": "パリミュチュエル方式 — プール総額から動的にオッズ計算、10%手数料",
+          "1": "予測ゲーム — BP（BLIPポイント）で実世界の結果に投票、完全匿名",
+          "2": "パリミュチュエル方式 — プール総額から動的に人気度計算、10%手数料",
           "3": "6段階ランクシステム — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "質問作成 — 誰でも予測質問を作成可能（150 BP、ランク割引あり）",
           "5": "自動精算 — 作成者が結果入力で自動配分",
@@ -456,8 +456,8 @@
     "myRoomsDescription": "最近作成または参加したチャットルームを確認できます。",
     "blipMeTitle": "BLIP me - 使い捨て連絡リンク",
     "blipMeDescription": "使い捨て連絡リンクを作成。どこにでも共有 — クリックで秘密チャットが始まります。",
-    "voteTitle": "BLIP - 予測マーケット",
-    "voteDescription": "匿名予測マーケット。ポイントを賭けて結果を予測。アカウント不要。"
+    "voteTitle": "BLIP - 予測ゲーム",
+    "voteDescription": "匿名予測ゲーム。ポイントで投票して結果を予測。アカウント不要。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -722,8 +722,8 @@
     "manage": "管理"
   },
   "Vote": {
-    "title": "予測マーケット",
-    "subtitle": "匿名で予測。ポイントを賭けて大きく勝とう。",
+    "title": "予測ゲーム",
+    "subtitle": "匿名で予測。ポイントで投票して結果を予測しよう。",
     "createQuestion": "質問を作成",
     "categories": {
       "all": "すべて",
@@ -737,13 +737,13 @@
       "other": "その他"
     },
     "betting": {
-      "placeBet": "ベットする",
+      "placeBet": "投票する",
       "yes": "はい",
       "no": "いいえ",
-      "odds": "オッズ",
-      "expectedPayout": "予想配当",
-      "maxBet": "最大ベット",
-      "betAmount": "ベット額",
+      "odds": "人気度",
+      "expectedPayout": "予想報酬",
+      "maxBet": "最大投票",
+      "betAmount": "投票額",
       "closesIn": "締切まで",
       "closed": "締切済み",
       "participants": "参加者"
@@ -775,7 +775,7 @@
       "title": "予測。議論。決定。",
       "subtitle": "匿名予測。アカウント不要。",
       "feature1Title": "リアルタイム結果",
-      "feature1Desc": "リアルタイムでオッズと結果を確認",
+      "feature1Desc": "リアルタイムで人気度と結果を確認",
       "feature2Title": "自動ディスカッション",
       "feature2Desc": "すべての予測後にチャットルームを自動作成",
       "feature3Title": "完全匿名",

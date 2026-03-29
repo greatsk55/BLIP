@@ -36,7 +36,7 @@ export default function BettingSlider({ amount, maxBet, odds, onChange }: Bettin
       <div className="flex items-center gap-1.5 mt-1 px-1">
         <span className="text-orange-400 text-xs">⚠</span>
         <span className="font-mono text-xs text-orange-400/80">
-          10% fee — {amount} BP bet → {poolAmount} BP in pool. Non-refundable.
+          10% fee — {amount} BP vote → {poolAmount} BP in pool. Non-refundable.
         </span>
       </div>
     </motion.div>

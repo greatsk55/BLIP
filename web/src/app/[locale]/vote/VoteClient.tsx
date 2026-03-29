@@ -174,7 +174,7 @@ export default function VoteClient({ locale }: VoteClientProps) {
         <div className="flex gap-1 bg-ghost-grey/5 rounded-lg p-1">
           {([
             { key: 'all' as Tab, icon: Globe, label: 'All' },
-            { key: 'myBets' as Tab, icon: History, label: 'My Bets' },
+            { key: 'myBets' as Tab, icon: History, label: 'My Votes' },
             { key: 'myPredictions' as Tab, icon: User, label: 'Created' },
           ]).map(({ key, icon: Icon, label }) => (
             <button

@@ -5,12 +5,12 @@ All notable changes to BLIP are documented here.
 ---
 
 ## v1.10.0 — March 26, 2026
-### Prediction Market — Anonymous Point Betting
-- **Prediction Market** — Bet BP (BLIP Points) on real-world outcomes. No accounts, fully anonymous
-- **Parimutuel odds** — Dynamic odds calculated from the total pool, with 10% rake
+### Prediction Game — Anonymous Point Voting
+- **Prediction Game** — Vote with BP (BLIP Points) on real-world outcomes. No accounts, fully anonymous
+- **Dynamic scoring** — Popularity-based rewards calculated from the total pool
 - **6-tier rank system** — Static → Receiver → Signal → Decoder → Control → Oracle, based on total points
 - **Question creation** — Any user can create predictions (costs 150 BP, rank discounts available)
-- **Auto-settlement** — Results settled by creator, with automatic payouts and rake distribution
+- **Auto-settlement** — Results settled by creator, with automatic reward distribution
 - **Anti-abuse** — Device fingerprint registry, idempotency keys, rate limiting, self-bet prevention
 - Available on both web and mobile app
 

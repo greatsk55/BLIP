@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "26 de marzo de 2026",
-        "title": "Mercado de Predicciones — Apuestas Anónimas con Puntos",
+        "title": "Juego de Predicciones — Votación Anónima con Puntos",
         "changes": {
-          "1": "Mercado de Predicciones — Apuesta BP (Puntos BLIP) en resultados reales, totalmente anónimo",
-          "2": "Cuotas parimutuel — Cuotas dinámicas calculadas del pool total, 10% de comisión",
+          "1": "Juego de Predicciones — Vota con BP (Puntos BLIP) sobre resultados reales, totalmente anónimo",
+          "2": "Popularidad dinámica — Calculada dinámicamente del pool total, 10% de comisión",
           "3": "Sistema de 6 rangos — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "Crear preguntas — Cualquier usuario puede crear predicciones (150 BP, descuentos por rango)",
           "5": "Liquidación automática — El creador ingresa el resultado y se distribuye automáticamente",
@@ -456,8 +456,8 @@
     "myRoomsDescription": "Ver tus salas de chat creadas o unidas recientemente.",
     "blipMeTitle": "BLIP me - Enlace de contacto desechable",
     "blipMeDescription": "Crea un enlace de contacto desechable. Compártelo en cualquier lugar — al hacer clic, comienza un chat secreto.",
-    "voteTitle": "BLIP - Mercado de Predicciones",
-    "voteDescription": "Mercado de predicciones anónimo. Apuesta puntos en resultados reales. Sin cuentas."
+    "voteTitle": "BLIP - Juego de Predicciones",
+    "voteDescription": "Juego de predicciones anónimo. Vota con puntos sobre resultados reales. Sin cuentas."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -722,8 +722,8 @@
     "manage": "Gestionar"
   },
   "Vote": {
-    "title": "Mercado de Predicciones",
-    "subtitle": "Predice anónimamente. Apuesta tus puntos. Gana en grande.",
+    "title": "Juego de Predicciones",
+    "subtitle": "Predice anónimamente. Vota con tus puntos. Gana recompensas.",
     "createQuestion": "Crear Pregunta",
     "categories": {
       "all": "Todos",
@@ -737,13 +737,13 @@
       "other": "Otros"
     },
     "betting": {
-      "placeBet": "Apostar",
+      "placeBet": "Votar",
       "yes": "Sí",
       "no": "No",
-      "odds": "Cuotas",
-      "expectedPayout": "Pago Esperado",
-      "maxBet": "Apuesta Máxima",
-      "betAmount": "Monto de Apuesta",
+      "odds": "Popularidad",
+      "expectedPayout": "Recompensa Esperada",
+      "maxBet": "Voto Máximo",
+      "betAmount": "Monto de Voto",
       "closesIn": "Cierra en",
       "closed": "Cerrado",
       "participants": "participantes"
@@ -775,7 +775,7 @@
       "title": "PREDICE. DISCUTE. DECIDE.",
       "subtitle": "Predicciones anónimas. Sin cuentas necesarias.",
       "feature1Title": "Resultados Instantáneos",
-      "feature1Desc": "Ve las cuotas y resultados en tiempo real",
+      "feature1Desc": "Ve la popularidad y resultados en tiempo real",
       "feature2Title": "Discusiones Automáticas",
       "feature2Desc": "Salas de chat creadas después de cada predicción",
       "feature3Title": "Totalmente Anónimo",

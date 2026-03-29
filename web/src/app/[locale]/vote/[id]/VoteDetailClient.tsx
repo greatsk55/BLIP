@@ -228,7 +228,7 @@ export default function VoteDetailClient({ predictionId }: VoteDetailClientProps
             className="border border-ghost-grey/20 rounded-xl p-4 space-y-3"
           >
             <h3 className="font-mono text-sm text-ghost-grey uppercase tracking-wider">
-              My Bets
+              My Votes
             </h3>
             {myBets.map((bet: any) => {
               const isYes = bet.option_id === 'yes';

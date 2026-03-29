@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "2026年3月26日",
-        "title": "预测市场 — 匿名积分投注",
+        "title": "预测游戏 — 匿名积分投票",
         "changes": {
-          "1": "预测市场 — 用BP（BLIP积分）对现实结果下注，完全匿名",
-          "2": "同注分彩赔率 — 从总奖池动态计算赔率，10%佣金",
+          "1": "预测游戏 — 用BP（BLIP积分）对现实结果投票，完全匿名",
+          "2": "同注分彩人气度 — 从总奖池动态计算人气度，10%佣金",
           "3": "6级等级系统 — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "创建问题 — 任何人都可以创建预测（150 BP，等级折扣）",
           "5": "自动结算 — 创建者输入结果后自动分配",
@@ -456,8 +456,8 @@
     "myRoomsDescription": "查看您最近创建或加入的聊天室。",
     "blipMeTitle": "BLIP me - 一次性联系链接",
     "blipMeDescription": "创建一次性联系链接。分享到任何地方 — 点击即开始加密聊天。",
-    "voteTitle": "BLIP - 预测市场",
-    "voteDescription": "匿名预测市场。用积分押注预测结果。无需账号。"
+    "voteTitle": "BLIP - 预测游戏",
+    "voteDescription": "匿名预测游戏。用积分投票预测结果。无需账号。"
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -722,8 +722,8 @@
     "manage": "管理"
   },
   "Vote": {
-    "title": "预测市场",
-    "subtitle": "匿名预测。用积分下注。赢取大奖。",
+    "title": "预测游戏",
+    "subtitle": "匿名预测。用积分投票。赢取奖励。",
     "createQuestion": "创建问题",
     "categories": {
       "all": "全部",
@@ -737,13 +737,13 @@
       "other": "其他"
     },
     "betting": {
-      "placeBet": "下注",
+      "placeBet": "投票",
       "yes": "是",
       "no": "否",
-      "odds": "赔率",
-      "expectedPayout": "预期收益",
-      "maxBet": "最大下注",
-      "betAmount": "下注金额",
+      "odds": "人气度",
+      "expectedPayout": "预期奖励",
+      "maxBet": "最大投票",
+      "betAmount": "投票金额",
       "closesIn": "截止于",
       "closed": "已截止",
       "participants": "参与者"
@@ -775,7 +775,7 @@
       "title": "预测。讨论。决定。",
       "subtitle": "匿名预测。无需账号。",
       "feature1Title": "实时结果",
-      "feature1Desc": "实时查看赔率和结果",
+      "feature1Desc": "实时查看人气度和结果",
       "feature2Title": "自动讨论",
       "feature2Desc": "每次预测后自动创建聊天室",
       "feature3Title": "完全匿名",

@@ -91,10 +91,10 @@
       "0": {
         "version": "v1.10.0",
         "date": "March 26, 2026",
-        "title": "Prediction Market — Anonymous Point Betting",
+        "title": "Prediction Game — Anonymous Point Voting",
         "changes": {
-          "1": "Prediction Market — Bet BP (BLIP Points) on real-world outcomes, fully anonymous",
-          "2": "Parimutuel odds — Dynamic odds calculated from the total pool with 10% rake",
+          "1": "Prediction Game — Vote with BP (BLIP Points) on real-world outcomes, fully anonymous",
+          "2": "Dynamic scoring — Popularity-based rewards calculated from the total pool",
           "3": "6-tier rank system — Static → Receiver → Signal → Decoder → Control → Oracle",
           "4": "Question creation — Any user can create predictions (150 BP, rank discounts available)",
           "5": "Auto-settlement — Results settled by creator with automatic payouts",
@@ -458,8 +458,8 @@
     "myRoomsDescription": "View your recently created or joined chat rooms.",
     "blipMeTitle": "BLIP me - Burner Contact Link",
     "blipMeDescription": "Create a disposable contact link. Share it anywhere — when someone clicks, a secret chat starts.",
-    "voteTitle": "BLIP - Prediction Market",
-    "voteDescription": "Anonymous prediction market. Bet points on real-world outcomes. No accounts needed."
+    "voteTitle": "BLIP - Prediction Game",
+    "voteDescription": "Anonymous prediction game. Vote with points on real-world outcomes. No accounts needed."
   },
   "EmbedGuide": {
     "subtitle": "Embed",
@@ -724,8 +724,8 @@
     "manage": "Manage"
   },
   "Vote": {
-    "title": "Prediction Market",
-    "subtitle": "Predict anonymously. Bet your points. Win big.",
+    "title": "Prediction Game",
+    "subtitle": "Predict anonymously. Vote with your points. Earn rewards.",
     "createQuestion": "Create Question",
     "categories": {
       "all": "All",
@@ -739,13 +739,13 @@
       "other": "Other"
     },
     "betting": {
-      "placeBet": "Place Bet",
+      "placeBet": "Place Vote",
       "yes": "Yes",
       "no": "No",
-      "odds": "Odds",
-      "expectedPayout": "Expected Payout",
-      "maxBet": "Max Bet",
-      "betAmount": "Bet Amount",
+      "odds": "Popularity",
+      "expectedPayout": "Expected Reward",
+      "maxBet": "Max Vote",
+      "betAmount": "Vote Amount",
       "closesIn": "Closes in",
       "closed": "Closed",
       "participants": "participants"
