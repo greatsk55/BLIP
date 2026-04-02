@@ -14,14 +14,12 @@ interface BettingCardProps {
   onBet: (option: string, amount: number) => void;
 }
 
-function formatClosesAt(iso: string): string {
+function formatDate(iso: string): string {
   const d = new Date(iso);
   return d.toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
   });
 }
 
@@ -101,9 +99,17 @@ export default function BettingCard({
         )}
       </AnimatePresence>
 
-      {/* Closes at */}
-      <div className="text-xs font-mono text-ghost-grey text-right">
-        {formatClosesAt(prediction.closesAt)}
+      {/* 시작일 / 마감일 */}
+      <div className="flex items-center justify-between text-xs font-mono text-ghost-grey border-t border-ghost-grey/10 pt-3">
+        <span>
+          <span className="text-ghost-grey/50 mr-1">START</span>
+          {formatDate(prediction.createdAt)}
+        </span>
+        <span className="text-ghost-grey/30">→</span>
+        <span className={prediction.status !== 'active' ? 'text-glitch-red' : ''}>
+          <span className="text-ghost-grey/50 mr-1">END</span>
+          {formatDate(prediction.closesAt)}
+        </span>
       </div>
     </motion.div>
   );

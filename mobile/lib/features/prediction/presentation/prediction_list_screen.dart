@@ -155,7 +155,10 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
     if (category != null) {
       query = query.eq('category', category);
     }
-    final data = await query.order('created_at', ascending: false).limit(30);
+    final data = await query
+        .order('status', ascending: true)
+        .order('created_at', ascending: false)
+        .limit(30);
     return List<Map<String, dynamic>>.from(data);
   }
 
@@ -213,6 +216,7 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           .from('predictions')
           .select()
           .eq('creator_fingerprint', _fingerprint!)
+          .order('status', ascending: true)
           .order('created_at', ascending: false);
 
       if (mounted) {
@@ -328,6 +332,7 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
                         separatorBuilder: (_, _) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final p = _predictions[index];
+                          final createdAt = DateTime.tryParse(p['created_at'] ?? '') ?? DateTime.now();
                           final closesAt = DateTime.tryParse(p['closes_at'] ?? '') ?? DateTime.now();
                           return PredictionCard(
                             id: p['id'] ?? '',
@@ -335,6 +340,7 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
                             category: _parseCategory(p['category']),
                             yesOdds: 0, noOdds: 0, // 상세에서 조회
                             participants: ((p['total_pool'] as int?) ?? 0) ~/ 50,
+                            createdAt: createdAt,
                             closesAt: closesAt,
                             status: p['status'] ?? 'active',
                             correctAnswer: p['correct_answer'],
@@ -491,6 +497,7 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
         separatorBuilder: (_, _) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final p = _myPredictions[index];
+          final createdAt = DateTime.tryParse(p['created_at'] ?? '') ?? DateTime.now();
           final closesAt = DateTime.tryParse(p['closes_at'] ?? '') ?? DateTime.now();
           return PredictionCard(
             id: p['id'] ?? '',
@@ -498,6 +505,7 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
             category: _parseCategory(p['category']),
             yesOdds: 0, noOdds: 0,
             participants: ((p['total_pool'] as int?) ?? 0) ~/ 50,
+            createdAt: createdAt,
             closesAt: closesAt,
             status: p['status'] ?? 'active',
             correctAnswer: p['correct_answer'],

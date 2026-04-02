@@ -12,6 +12,7 @@ class PredictionCard extends StatelessWidget {
   final double yesOdds;
   final double noOdds;
   final int participants;
+  final DateTime createdAt;
   final DateTime closesAt;
   final bool isClosed;
   final String status;
@@ -26,6 +27,7 @@ class PredictionCard extends StatelessWidget {
     required this.yesOdds,
     required this.noOdds,
     required this.participants,
+    required this.createdAt,
     required this.closesAt,
     this.isClosed = false,
     this.status = 'active',
@@ -41,6 +43,10 @@ class PredictionCard extends StatelessWidget {
       return l10n.predictionClosesIn('${diff.inHours}h');
     }
     return l10n.predictionClosesIn('${diff.inMinutes}m');
+  }
+
+  String _formatDate(DateTime dt) {
+    return '${dt.year}.${dt.month.toString().padLeft(2, '0')}.${dt.day.toString().padLeft(2, '0')}';
   }
 
   @override
@@ -185,6 +191,37 @@ class PredictionCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     color: ghostGrey,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // 시작일 / 마감일
+            Row(
+              children: [
+                Icon(Icons.calendar_today_outlined, size: 11, color: ghostGrey),
+                const SizedBox(width: 4),
+                Text(
+                  _formatDate(createdAt),
+                  style: TextStyle(fontSize: 10, fontFamily: 'monospace', color: ghostGrey),
+                ),
+                const SizedBox(width: 8),
+                Icon(Icons.arrow_forward, size: 10, color: ghostGrey),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.flag_outlined,
+                  size: 11,
+                  color: isExpired ? AppColors.glitchRed : ghostGrey,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  _formatDate(closesAt),
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontFamily: 'monospace',
+                    color: isExpired ? AppColors.glitchRed : ghostGrey,
+                    fontWeight: isExpired ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
               ],

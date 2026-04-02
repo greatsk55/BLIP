@@ -84,6 +84,7 @@ export async function fetchPredictions(
     .from('predictions')
     .select('*')
     .eq('locale', locale)
+    .order('status', { ascending: true })
     .order('created_at', { ascending: false })
     .limit(limit);
 
@@ -101,6 +102,7 @@ export async function fetchPredictions(
       .from('predictions')
       .select('*')
       .eq('locale', 'en')
+      .order('status', { ascending: true })
       .order('created_at', { ascending: false })
       .limit(limit);
 
