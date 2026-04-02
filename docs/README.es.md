@@ -149,6 +149,7 @@ window.addEventListener('message', (e) => {
 ## Descargar
 
 <a href="https://play.google.com/store/apps/details?id=com.bakkum.blip" target="_blank"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Disponible en Google Play" width="200"></a>
+<a href="https://apps.apple.com/us/app/blip-ephemeral-chat/id6759429660" target="_blank"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Descargar en el App Store" width="170"></a>
 
 ## Apoyo
 

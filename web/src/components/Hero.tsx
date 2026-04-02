@@ -210,22 +210,38 @@ export default function Hero() {
         {t("linkShare")}
       </motion.p>
 
-      <motion.a
-        href="https://play.google.com/store/apps/details?id=com.bakkum.blip"
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        whileHover={{ opacity: 1, scale: 1.05 }}
-        transition={{ delay: 1.3, duration: 0.8 }}
-        className="mt-6"
-      >
-        <img
-          src="/google-play-badge.svg"
-          alt="Get it on Google Play"
-          className="h-12 md:h-14"
-        />
-      </motion.a>
+      <div className="mt-6 flex flex-wrap justify-center gap-4">
+        <motion.a
+          href="https://play.google.com/store/apps/details?id=com.bakkum.blip"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          whileHover={{ opacity: 1, scale: 1.05 }}
+          transition={{ delay: 1.3, duration: 0.8 }}
+        >
+          <img
+            src="/google-play-badge.svg"
+            alt="Get it on Google Play"
+            className="h-12 md:h-14"
+          />
+        </motion.a>
+        <motion.a
+          href="https://apps.apple.com/us/app/blip-ephemeral-chat/id6759429660"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          whileHover={{ opacity: 1, scale: 1.05 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+        >
+          <img
+            src="/app-store-badge.svg"
+            alt="Download on the App Store"
+            className="h-12 md:h-14"
+          />
+        </motion.a>
+      </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20">
         <span className="text-xs font-mono text-zinc-500 dark:text-white">SCROLL_TO_DECRYPT</span>
