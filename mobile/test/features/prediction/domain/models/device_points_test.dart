@@ -96,11 +96,11 @@ void main() {
     });
 
     test('creationCost: Control → 120 (20% 할인)', () {
-      expect(create(balance: 1000).creationCost, 120);
+      expect(create(balance: 1000).copyWith(totalEarned: 1000).creationCost, 120);
     });
 
     test('creationCost: Oracle → 75 (50% 할인)', () {
-      expect(create(balance: 5000).creationCost, 75);
+      expect(create(balance: 5000).copyWith(totalEarned: 5000).creationCost, 75);
     });
   });
 }

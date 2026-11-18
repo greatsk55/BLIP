@@ -8,6 +8,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import 'core/constants/app_theme.dart';
 import 'core/network/api_client.dart';
+import 'core/utils/chat_link.dart';
 import 'core/storage/local_storage_service.dart';
 import 'core/storage/models/saved_room.dart';
 import 'core/services/analytics_service.dart';
@@ -42,16 +43,25 @@ final _validUuidPattern = RegExp(
   r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
 );
 
+/// auth 상태 변경 시 GoRouter redirect만 재평가 (GoRouter 재생성 방지)
+class _RouterRefreshNotifier extends ChangeNotifier {
+  void refresh() => notifyListeners();
+}
+
 final routerProvider = Provider<GoRouter>((ref) {
-  // authState 변경 시 라우터 redirect가 재평가되도록 watch
-  ref.watch(authStateProvider);
-  return _buildRouter(ref);
+  final refreshNotifier = _RouterRefreshNotifier();
+  ref.listen(authStateProvider, (_, _) {
+    refreshNotifier.refresh();
+  });
+  ref.onDispose(refreshNotifier.dispose);
+  return _buildRouter(ref, refreshNotifier);
 });
 
-GoRouter _buildRouter(Ref ref) => GoRouter(
+GoRouter _buildRouter(Ref ref, Listenable refreshListenable) => GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
   observers: [AnalyticsService.instance.observer],
+  refreshListenable: refreshListenable,
   redirect: (context, state) {
     final isLoggedIn = ref.read(isLoggedInProvider);
     final isOnLogin = state.matchedLocation == '/login';
@@ -65,9 +75,13 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       return null;
     }
     // iOS: 미로그인 → 로그인 화면으로
-    if (!isLoggedIn && !isOnLogin) return '/login';
+    if (!isLoggedIn && !isOnLogin) {
+      return Uri(path: '/login', queryParameters: {'from': state.uri.toString()}).toString();
+    }
     // iOS: 로그인 상태인데 로그인 화면 → 홈으로
-    if (isLoggedIn && isOnLogin) return '/';
+    if (isLoggedIn && isOnLogin) {
+      return safePostLoginPath(state.uri.queryParameters['from']);
+    }
 
     return null;
   },
@@ -93,10 +107,7 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
         // Tab 0: 홈
         StatefulShellBranch(
           routes: [
-            GoRoute(
-              path: '/',
-              builder: (context, state) => const HomeScreen(),
-            ),
+            GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
           ],
         ),
         // Tab 1: 내 채팅
@@ -141,14 +152,10 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       builder: (context, state) {
         // 딥링크: extra(앱 내부) > ?k=(쿼리) > #(프래그먼트) 순으로 비밀번호 추출
         final passwordFromExtra = state.extra as String?;
-        final passwordFromQuery = state.uri.queryParameters['k'];
-        final fragment = state.uri.fragment;
-        final passwordFromFragment =
-            fragment.isNotEmpty ? Uri.decodeComponent(fragment) : null;
+        final passwordFromLink = passwordFromChatUri(state.uri);
         return ChatScreen(
           roomId: state.pathParameters['roomId']!,
-          initialPassword:
-              passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment,
+          initialPassword: passwordFromExtra ?? passwordFromLink,
         );
       },
     ),
@@ -166,9 +173,8 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
         if (boardId == null || !_validIdPattern.hasMatch(boardId)) return '/';
         return null;
       },
-      builder: (context, state) => BoardScreen(
-        boardId: state.pathParameters['boardId']!,
-      ),
+      builder: (context, state) =>
+          BoardScreen(boardId: state.pathParameters['boardId']!),
     ),
     GoRoute(
       path: '/blipme',
@@ -198,14 +204,10 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
         final passwordFromExtra = extra?['password'] as String?;
-        final passwordFromQuery = state.uri.queryParameters['k'];
-        final fragment = state.uri.fragment;
-        final passwordFromFragment =
-            fragment.isNotEmpty ? Uri.decodeComponent(fragment) : null;
+        final passwordFromLink = passwordFromChatUri(state.uri);
         return GroupChatScreen(
           roomId: state.pathParameters['roomId']!,
-          initialPassword:
-              passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment,
+          initialPassword: passwordFromExtra ?? passwordFromLink,
           adminToken: extra?['adminToken'] as String?,
           isAdmin: extra?['isAdmin'] as bool? ?? false,
           justCreated: extra?['justCreated'] as bool? ?? false,
@@ -228,9 +230,8 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
         if (id == null || !_validUuidPattern.hasMatch(id)) return '/prediction';
         return null;
       },
-      builder: (context, state) => PredictionDetailScreen(
-        predictionId: state.pathParameters['id']!,
-      ),
+      builder: (context, state) =>
+          PredictionDetailScreen(predictionId: state.pathParameters['id']!),
     ),
 
     // ── 딥링크: /m/:linkId (BLIP me 방문자) ──
@@ -244,9 +245,29 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
         // BlipMeConnectScreen에서 처리하거나, 웹으로 리다이렉트
         return null;
       },
-      builder: (context, state) => _BlipMeConnectRedirect(
-        linkId: state.pathParameters['linkId']!,
-      ),
+      builder: (context, state) =>
+          _BlipMeConnectRedirect(linkId: state.pathParameters['linkId']!),
+    ),
+
+    GoRoute(
+      path: '/:locale/group/create',
+      redirect: (context, state) => '/group/create',
+    ),
+    GoRoute(
+      path: '/:locale/group/:roomId',
+      redirect: (context, state) {
+        final id = state.pathParameters['roomId'];
+        if (id == null || !_validIdPattern.hasMatch(id)) return '/';
+        return withoutLocalePrefix(state.uri);
+      },
+    ),
+    GoRoute(
+      path: '/:locale/m/:linkId',
+      redirect: (context, state) {
+        final id = state.pathParameters['linkId'];
+        if (id == null || !_validIdPattern.hasMatch(id)) return '/';
+        return withoutLocalePrefix(state.uri);
+      },
     ),
 
     // ── 딥링크: /{locale}/room, /{locale}/board (next-intl 로캘 프리픽스 제거) ──
@@ -256,12 +277,7 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       redirect: (context, state) {
         final roomId = state.pathParameters['roomId'];
         if (roomId == null || !_validIdPattern.hasMatch(roomId)) return '/';
-        // ?k= query param 또는 #fragment 유지 (비밀번호 포함 딥링크)
-        final k = state.uri.queryParameters['k'];
-        final fragment = state.uri.fragment;
-        if (k != null) return '/room/$roomId?k=$k';
-        if (fragment.isNotEmpty) return '/room/$roomId#$fragment';
-        return '/room/$roomId';
+        return withoutLocalePrefix(state.uri);
       },
     ),
     GoRoute(
@@ -394,7 +410,10 @@ class _BlipMeConnectRedirectState extends State<_BlipMeConnectRedirect> {
                   const SizedBox(height: 16),
                   Text(
                     _error ?? 'Something went wrong.',
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   TextButton(

@@ -5,7 +5,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/services/auth_service.dart';
 
 /// 로그인 화면 (iOS 전용 — Apple Sign In)
-/// - 유저 데이터 저장 없음, 세션만 유지
+/// - Apple-linked account data and deletion choices are disclosed to the user.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

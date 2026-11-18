@@ -140,10 +140,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatMediaUnsupportedType => 'Type de fichier non pris en charge';
 
   @override
-  String get chatMediaAttachAllFiles => 'Attach file';
+  String get chatMediaAttachAllFiles => 'Joindre un fichier';
 
   @override
-  String get chatMediaDownloadFile => 'Download';
+  String get chatMediaDownloadFile => 'Télécharger';
 
   @override
   String get boardCreateTitle => 'COMMUNAUTÉ CRÉÉE';
@@ -637,7 +637,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get predictionTabAll => 'Tout';
 
   @override
-  String get predictionTabMyBets => 'Mes paris';
+  String get predictionTabMyBets => 'Mes Votes';
 
   @override
   String get predictionTabCreated => 'Créées';
@@ -803,11 +803,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'BLIP est un service de chat éphémère gratuit, open source et chiffré de bout en bout. Il fournit des canaux de communication temporaires détruits après utilisation.';
 
   @override
-  String get termsSection2Title => 'Pas de compte requis';
+  String get termsSection2Title => 'Accès et comptes';
 
   @override
   String get termsSection2Content =>
-      'BLIP fonctionne sans inscription, identifiants de connexion ni profils personnels. L\'accès est accordé via des liens temporaires et des mots de passe partagés.';
+      'Les chats web et Android ne nécessitent pas de compte BLIP. iOS nécessite une connexion avec Apple et conserve l’identifiant et l’e-mail fourni. Les salons nécessitent une invitation et un mot de passe partagé. Les clés perdues ne peuvent pas être récupérées.';
 
   @override
   String get termsSection3Title => 'Utilisation acceptable';
@@ -817,11 +817,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous acceptez de ne pas utiliser BLIP pour : distribuer du contenu illégal, du harcèlement, de la transmission de logiciels malveillants, du spam automatisé ou toute activité violant la loi.';
 
   @override
-  String get termsSection4Title => 'Pas de récupération de données';
+  String get termsSection4Title => 'Messages et signalements';
 
   @override
   String get termsSection4Content =>
-      'Les messages ne sont stockés dans aucune base de données. Une fois le salon détruit, toutes les données sont définitivement perdues. C\'est par conception, pas une limitation.';
+      'L’historique individuel ordinaire n’est pas conservé dans notre base de données. Les publications privées sont conservées chiffrées. Seuls les textes récents explicitement joints à un signalement sont conservés pour examen humain. Consultez la politique de confidentialité pour les comptes, la publicité et l’analyse.';
 
   @override
   String get termsSection5Title => 'Open Source';
@@ -887,7 +887,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authPrivacyNote =>
-      'Nous ne stockons pas vos informations personnelles.\nLa connexion est uniquement utilisée pour accéder à l\'application.';
+      'L’identifiant Apple et l’e-mail fourni servent à la connexion.\nVous pouvez supprimer le compte dans Réglages.';
 
   @override
   String get authSignOut => 'Se déconnecter';
@@ -1042,10 +1042,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get blipMeCreateButton => 'Créer un lien BLIP me';
 
   @override
-  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+  String get blipMeWidgetPrompt =>
+      'Partagez votre lien pour démarrer une discussion';
 
   @override
-  String get blipMeWidgetConnections => 'connections';
+  String get blipMeWidgetConnections => 'connexions';
 
   @override
   String get blipMeYourLink => 'Votre lien';
@@ -1119,16 +1120,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => 'Parier';
+  String get predictionBet => 'Voter';
 
   @override
   String get predictionDiscuss => 'Rejoindre la discussion';
 
   @override
-  String get predictionOdds => 'Cotes';
+  String get predictionOdds => 'Popularité';
 
   @override
-  String get predictionExpectedPayout => 'Gain attendu';
+  String get predictionExpectedPayout => 'Récompense attendue';
 
   @override
   String predictionClosesIn(String time) {
@@ -1211,4 +1212,64 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => 'Commencer à prédire';
+
+  @override
+  String get safetyTitle => 'Signaler ou bloquer';
+
+  @override
+  String get safetyNotice =>
+      'Vous choisissez les preuves à partager. Le chat ordinaire n’est pas enregistré automatiquement.';
+
+  @override
+  String get safetyReason => 'Motif';
+
+  @override
+  String get safetyHarassment => 'Harcèlement';
+
+  @override
+  String get safetySexual => 'Contenu sexuel';
+
+  @override
+  String get safetyHate => 'Haine ou discrimination';
+
+  @override
+  String get safetyViolence => 'Menaces ou violence';
+
+  @override
+  String get safetyScam => 'Escroquerie ou spam';
+
+  @override
+  String get safetyOther => 'Autre';
+
+  @override
+  String get safetyEvidence =>
+      'Envoyer jusqu’à 4 messages visibles sous forme lisible pour examen humain.';
+
+  @override
+  String get safetyReport => 'Envoyer le signalement';
+
+  @override
+  String get safetyReported =>
+      'Signalement reçu. Notre assistance l’examinera.';
+
+  @override
+  String get safetyFailed =>
+      'Action impossible. Réessayez ou contactez l’assistance.';
+
+  @override
+  String get safetyBlock => 'Bloquer et quitter ce chat';
+
+  @override
+  String get safetyBlockNotice =>
+      'Ferme le salon pour tous et empêche de revenir avec cette invitation. Ne bloque pas la personne dans les autres salons.';
+
+  @override
+  String get safetyClose => 'Fermer';
+
+  @override
+  String get safetyAdPrivacy => 'Choix de confidentialité publicitaire';
+
+  @override
+  String get safetyAdPrivacyUnavailable =>
+      'Aucun choix supplémentaire requis ici, ou chargement en cours.';
 }

@@ -627,7 +627,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get predictionTabAll => 'All';
 
   @override
-  String get predictionTabMyBets => 'My Bets';
+  String get predictionTabMyBets => 'My Votes';
 
   @override
   String get predictionTabCreated => 'Created';
@@ -791,11 +791,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'BLIP is a free, open-source, end-to-end encrypted ephemeral chat service. It provides temporary communication channels that are destroyed after use. BLIP is not a messenger, social network, or data storage platform. It\'s a disposable communication tool.';
 
   @override
-  String get termsSection2Title => 'No Accounts Required';
+  String get termsSection2Title => 'Access and accounts';
 
   @override
   String get termsSection2Content =>
-      'BLIP operates without user registration, login credentials, or personal profiles. Access is granted through temporary room links and shared passwords. You are responsible for safeguarding your room passwords—we cannot recover them.';
+      'Web and Android chats do not require a BLIP account. The iOS app requires Sign in with Apple and retains the account ID and email if provided. Rooms require an invitation and shared password; protect your keys because we cannot recover them.';
 
   @override
   String get termsSection3Title => 'Acceptable Use';
@@ -805,11 +805,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'You agree not to use BLIP for: distributing illegal content, harassment or threats, transmission of malware, automated spam or abuse, or any activity that violates applicable law. While we cannot monitor encrypted content, we reserve the right to restrict access to our infrastructure if abuse is detected at the network level.';
 
   @override
-  String get termsSection4Title => 'No Data Recovery';
+  String get termsSection4Title => 'Messages and reports';
 
   @override
   String get termsSection4Content =>
-      'Messages are not stored in any database. Once a chat room is destroyed, all conversation data is permanently and irreversibly lost. This is by design, not a limitation. Do not use BLIP for communications that you need to preserve.';
+      'Ordinary 1:1 chat history is not stored in our database. Private community posts are stored encrypted. Only recent text you explicitly choose to submit in a safety report is retained for human review. See the privacy policy for account, advertising and analytics data.';
 
   @override
   String get termsSection5Title => 'Open Source';
@@ -875,7 +875,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authPrivacyNote =>
-      'We don\'t store your personal information.\nSign-in is only used for app access.';
+      'Apple account ID and email, if provided, are used for sign-in.\nYou can delete your account in Settings.';
 
   @override
   String get authSignOut => 'Sign Out';
@@ -1104,16 +1104,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => 'Place Bet';
+  String get predictionBet => 'Place Vote';
 
   @override
   String get predictionDiscuss => 'Join Discussion';
 
   @override
-  String get predictionOdds => 'Odds';
+  String get predictionOdds => 'Popularity';
 
   @override
-  String get predictionExpectedPayout => 'Expected Payout';
+  String get predictionExpectedPayout => 'Expected Reward';
 
   @override
   String predictionClosesIn(String time) {
@@ -1196,4 +1196,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => 'Start Predicting';
+
+  @override
+  String get safetyTitle => 'Report or block';
+
+  @override
+  String get safetyNotice =>
+      'You choose whether to share evidence. Normal chat messages are not automatically saved.';
+
+  @override
+  String get safetyReason => 'Reason';
+
+  @override
+  String get safetyHarassment => 'Harassment or bullying';
+
+  @override
+  String get safetySexual => 'Sexual content';
+
+  @override
+  String get safetyHate => 'Hate or discrimination';
+
+  @override
+  String get safetyViolence => 'Threats or violence';
+
+  @override
+  String get safetyScam => 'Scam or spam';
+
+  @override
+  String get safetyOther => 'Other';
+
+  @override
+  String get safetyEvidence =>
+      'Send up to 4 visible text messages in readable form for human review.';
+
+  @override
+  String get safetyReport => 'Send report';
+
+  @override
+  String get safetyReported =>
+      'Report received. Our support team will review it.';
+
+  @override
+  String get safetyFailed =>
+      'Could not complete this action. Try again or contact support.';
+
+  @override
+  String get safetyBlock => 'Block and leave this chat';
+
+  @override
+  String get safetyBlockNotice =>
+      'This closes the room for everyone and prevents re-entry with this invitation. It does not block the person in other rooms.';
+
+  @override
+  String get safetyClose => 'Close';
+
+  @override
+  String get safetyAdPrivacy => 'Ad privacy choices';
+
+  @override
+  String get safetyAdPrivacyUnavailable =>
+      'Ad privacy choices are not required here or are still loading.';
 }

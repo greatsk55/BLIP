@@ -133,10 +133,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatMediaUnsupportedType => '不支持的文件格式';
 
   @override
-  String get chatMediaAttachAllFiles => 'Attach file';
+  String get chatMediaAttachAllFiles => '添加文件';
 
   @override
-  String get chatMediaDownloadFile => 'Download';
+  String get chatMediaDownloadFile => '下载';
 
   @override
   String get boardCreateTitle => '社区已创建';
@@ -602,7 +602,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get predictionTabAll => '全部';
 
   @override
-  String get predictionTabMyBets => '我的投注';
+  String get predictionTabMyBets => '我的投票';
 
   @override
   String get predictionTabCreated => '我创建的';
@@ -760,10 +760,11 @@ class AppLocalizationsZh extends AppLocalizations {
       'BLIP是一个免费的开源端到端加密临时聊天服务。它提供使用后即销毁的临时通信频道。';
 
   @override
-  String get termsSection2Title => '无需账户';
+  String get termsSection2Title => '访问与账户';
 
   @override
-  String get termsSection2Content => 'BLIP无需用户注册、登录凭证或个人资料。通过临时房间链接和共享密码即可访问。';
+  String get termsSection2Content =>
+      '网页和 Android 聊天不需要 BLIP 账户。iOS 需要通过 Apple 登录，并保留账户 ID 和提供的邮箱。进入房间需要邀请和共享密码，丢失的密钥无法恢复。';
 
   @override
   String get termsSection3Title => '可接受的使用';
@@ -773,11 +774,11 @@ class AppLocalizationsZh extends AppLocalizations {
       '你同意不将BLIP用于：分发非法内容、骚扰或威胁、传播恶意软件、自动垃圾信息或滥用，或任何违反法律的活动。';
 
   @override
-  String get termsSection4Title => '数据不可恢复';
+  String get termsSection4Title => '消息与举报存储';
 
   @override
   String get termsSection4Content =>
-      '消息不存储在任何数据库中。聊天室销毁后，所有对话数据将永久不可逆地丢失。这是设计特性，不是限制。';
+      '普通一对一聊天记录不保存在数据库中。私密社区帖子以加密形式保存。只有用户主动选择附加到举报中的最近文字才会被保留供人工审核。账户、广告与分析数据详见隐私政策。';
 
   @override
   String get termsSection5Title => '开源';
@@ -838,7 +839,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get authSignInGoogle => '通过Google登录';
 
   @override
-  String get authPrivacyNote => '我们不存储您的个人信息。\n登录仅用于访问应用。';
+  String get authPrivacyNote => 'Apple 账户 ID 和提供的邮箱用于登录。\n你可以在设置中删除账户。';
 
   @override
   String get authSignOut => '退出登录';
@@ -984,10 +985,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get blipMeCreateButton => '创建BLIP me链接';
 
   @override
-  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+  String get blipMeWidgetPrompt => '分享你的链接，开始聊天';
 
   @override
-  String get blipMeWidgetConnections => 'connections';
+  String get blipMeWidgetConnections => '次连接';
 
   @override
   String get blipMeYourLink => '您的链接';
@@ -1057,16 +1058,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => '下注';
+  String get predictionBet => '投票';
 
   @override
   String get predictionDiscuss => '参与讨论';
 
   @override
-  String get predictionOdds => '赔率';
+  String get predictionOdds => '人气';
 
   @override
-  String get predictionExpectedPayout => '预期收益';
+  String get predictionExpectedPayout => '预期奖励';
 
   @override
   String predictionClosesIn(String time) {
@@ -1148,6 +1149,60 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => '开始预测';
+
+  @override
+  String get safetyTitle => '举报或屏蔽';
+
+  @override
+  String get safetyNotice => '是否分享证据由您决定。普通聊天不会自动保存。';
+
+  @override
+  String get safetyReason => '原因';
+
+  @override
+  String get safetyHarassment => '骚扰或欺凌';
+
+  @override
+  String get safetySexual => '色情内容';
+
+  @override
+  String get safetyHate => '仇恨或歧视';
+
+  @override
+  String get safetyViolence => '威胁或暴力';
+
+  @override
+  String get safetyScam => '诈骗或垃圾信息';
+
+  @override
+  String get safetyOther => '其他';
+
+  @override
+  String get safetyEvidence => '将当前可见的最多4条文本消息以可读形式发送供人工审核。';
+
+  @override
+  String get safetyReport => '发送举报';
+
+  @override
+  String get safetyReported => '举报已收到，支持团队将审核。';
+
+  @override
+  String get safetyFailed => '操作未完成，请重试或联系支持。';
+
+  @override
+  String get safetyBlock => '屏蔽并离开此聊天';
+
+  @override
+  String get safetyBlockNotice => '此操作关闭所有人的房间，阻止通过此邀请重新加入，但不会在其他房间屏蔽此人。';
+
+  @override
+  String get safetyClose => '关闭';
+
+  @override
+  String get safetyAdPrivacy => '广告隐私选项';
+
+  @override
+  String get safetyAdPrivacyUnavailable => '此地区无需额外选择，或广告设置仍在加载。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1277,6 +1332,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get chatMediaUnsupportedType => '不支援的檔案類型';
+
+  @override
+  String get chatMediaAttachAllFiles => '附加檔案';
+
+  @override
+  String get chatMediaDownloadFile => '下載';
 
   @override
   String get boardCreateTitle => '社群已建立';
@@ -1742,7 +1803,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get predictionTabAll => '全部';
 
   @override
-  String get predictionTabMyBets => '我的投注';
+  String get predictionTabMyBets => '我的投票';
 
   @override
   String get predictionTabCreated => '我建立的';
@@ -1900,10 +1961,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
       'BLIP是一個免費的開源端對端加密臨時聊天服務。它提供使用後即銷毀的臨時通訊頻道。';
 
   @override
-  String get termsSection2Title => '無需帳戶';
+  String get termsSection2Title => '存取與帳號';
 
   @override
-  String get termsSection2Content => 'BLIP無需用戶註冊、登入憑證或個人資料。透過臨時房間連結和共享密碼即可存取。';
+  String get termsSection2Content =>
+      '網頁和 Android 聊天不需要 BLIP 帳號。iOS 需要透過 Apple 登入，並保留帳號 ID 和提供的電子郵件。進入房間需要邀請與共享密碼，遺失的金鑰無法復原。';
 
   @override
   String get termsSection3Title => '可接受的使用';
@@ -1913,11 +1975,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
       '你同意不將BLIP用於：散布非法內容、騷擾或威脅、傳播惡意軟體、自動垃圾訊息或濫用，或任何違反法律的活動。';
 
   @override
-  String get termsSection4Title => '資料不可復原';
+  String get termsSection4Title => '訊息與檢舉儲存';
 
   @override
   String get termsSection4Content =>
-      '訊息不儲存在任何資料庫中。聊天室銷毀後，所有對話資料將永久不可逆地遺失。這是設計特性，不是限制。';
+      '一般一對一聊天記錄不儲存在資料庫中。私人社群貼文以加密形式儲存。只有使用者主動選擇附加到檢舉中的最近文字才會被保留供人工審核。帳號、廣告與分析資料詳見隱私權政策。';
 
   @override
   String get termsSection5Title => '開源';
@@ -1978,7 +2040,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get authSignInGoogle => '透過Google登入';
 
   @override
-  String get authPrivacyNote => '我們不儲存您的個人資訊。\n登入僅用於存取應用程式。';
+  String get authPrivacyNote => 'Apple 帳號 ID 和提供的電子郵件用於登入。\n你可以在設定中刪除帳號。';
 
   @override
   String get authSignOut => '登出';
@@ -2124,6 +2186,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get blipMeCreateButton => '建立BLIP me連結';
 
   @override
+  String get blipMeWidgetPrompt => '分享你的連結，開始聊天';
+
+  @override
+  String get blipMeWidgetConnections => '次連線';
+
+  @override
   String get blipMeYourLink => '您的連結';
 
   @override
@@ -2191,16 +2259,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   }
 
   @override
-  String get predictionBet => '下注';
+  String get predictionBet => '投票';
 
   @override
   String get predictionDiscuss => '參與討論';
 
   @override
-  String get predictionOdds => '賠率';
+  String get predictionOdds => '人氣';
 
   @override
-  String get predictionExpectedPayout => '預期收益';
+  String get predictionExpectedPayout => '預期獎勵';
 
   @override
   String predictionClosesIn(String time) {
@@ -2282,4 +2350,58 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get predictionStartPredicting => '開始預測';
+
+  @override
+  String get safetyTitle => '檢舉或封鎖';
+
+  @override
+  String get safetyNotice => '是否分享證據由您決定。一般對話不會自動儲存。';
+
+  @override
+  String get safetyReason => '原因';
+
+  @override
+  String get safetyHarassment => '騷擾或霸凌';
+
+  @override
+  String get safetySexual => '色情內容';
+
+  @override
+  String get safetyHate => '仇恨或歧視';
+
+  @override
+  String get safetyViolence => '威脅或暴力';
+
+  @override
+  String get safetyScam => '詐騙或垃圾訊息';
+
+  @override
+  String get safetyOther => '其他';
+
+  @override
+  String get safetyEvidence => '將目前可見的最多4則文字訊息以可讀形式傳送供人工審查。';
+
+  @override
+  String get safetyReport => '傳送檢舉';
+
+  @override
+  String get safetyReported => '已收到檢舉，支援團隊將審查。';
+
+  @override
+  String get safetyFailed => '操作未完成，請重試或聯絡支援。';
+
+  @override
+  String get safetyBlock => '封鎖並離開此聊天';
+
+  @override
+  String get safetyBlockNotice => '此操作關閉所有人的房間，阻止透過此邀請再次加入，但不會在其他房間封鎖此人。';
+
+  @override
+  String get safetyClose => '關閉';
+
+  @override
+  String get safetyAdPrivacy => '廣告隱私選項';
+
+  @override
+  String get safetyAdPrivacyUnavailable => '此地區無須額外選擇，或廣告設定仍在載入。';
 }

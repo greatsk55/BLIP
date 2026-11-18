@@ -7,6 +7,7 @@ import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/auth_service.dart';
+import '../../../core/services/ad_service.dart';
 import '../providers/theme_provider.dart';
 import '../providers/locale_provider.dart';
 
@@ -20,20 +21,20 @@ class SettingsScreen extends ConsumerWidget {
     final isDark = themeMode == ThemeMode.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settingsTitle),
-      ),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         children: [
           // ─── Theme ───
           ListTile(
             leading: Icon(isDark ? Icons.dark_mode : Icons.light_mode),
             title: Text(l10n.settingsTheme),
-            subtitle: Text(isDark ? l10n.settingsThemeDark : l10n.settingsThemeLight),
+            subtitle: Text(
+              isDark ? l10n.settingsThemeDark : l10n.settingsThemeLight,
+            ),
             trailing: Switch(
               value: isDark,
               onChanged: (_) => ref.read(themeModeProvider.notifier).toggle(),
-              activeColor: AppColors.signalGreenDark,
+              activeThumbColor: AppColors.signalGreenDark,
             ),
           ),
           const Divider(),
@@ -42,22 +43,44 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.language),
             title: Text(l10n.settingsLanguage),
-            subtitle: Text(_getLanguageName(
-              ref.watch(localeProvider) ?? const Locale('en'),
-            )),
+            subtitle: Text(
+              _getLanguageName(ref.watch(localeProvider) ?? const Locale('en')),
+            ),
             onTap: () => _showLanguagePicker(context, ref),
           ),
           const Divider(),
 
+          ListTile(
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: Text(l10n.safetyAdPrivacy),
+            onTap: () async {
+              try {
+                final shown = await AdService.instance.showPrivacyOptions();
+                if (!shown && context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.safetyAdPrivacyUnavailable)),
+                  );
+                }
+              } catch (_) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.safetyFailed)));
+                }
+              }
+            },
+          ),
+          const Divider(),
           // ─── About ───
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l10n.settingsAbout),
-            subtitle: const Text('BLIP v1.0.0'),
+            subtitle: const Text('BLIP'),
           ),
 
           // ─── Account (iOS only) ───
-          if (Platform.isIOS && AuthService.instance.currentSession != null) ...[
+          if (Platform.isIOS &&
+              AuthService.instance.currentSession != null) ...[
             const Divider(height: 32),
             _AccountSection(),
           ],
@@ -78,11 +101,15 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(l10n.settingsLanguage,
-                  style: Theme.of(context).textTheme.titleMedium),
+              child: Text(
+                l10n.settingsLanguage,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
             ...supportedLocales.map((locale) {
-              final isSelected = locale.languageCode == (currentLocale?.languageCode ?? 'en') &&
+              final isSelected =
+                  locale.languageCode ==
+                      (currentLocale?.languageCode ?? 'en') &&
                   locale.countryCode == currentLocale?.countryCode;
               return ListTile(
                 title: Text(_getLanguageName(locale)),

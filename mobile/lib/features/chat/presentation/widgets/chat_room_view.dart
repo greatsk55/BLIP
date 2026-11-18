@@ -10,8 +10,12 @@ import 'package:file_picker/file_picker.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/media/media_processor.dart'
-    show compressImage, compressVideo, generateVideoThumbnail,
-         VideoTooLongException, VideoTooLargeException;
+    show
+        compressImage,
+        compressVideo,
+        generateVideoThumbnail,
+        VideoTooLongException,
+        VideoTooLargeException;
 import '../../../../core/push/push_service.dart';
 import '../../../../core/services/notification_service.dart';
 import '../../providers/chat_provider.dart';
@@ -19,6 +23,7 @@ import '../../providers/webrtc_provider.dart';
 import 'message_bubble.dart';
 import 'leave_confirm_dialog.dart';
 import 'terms_dialog.dart';
+import 'chat_safety_dialog.dart';
 
 /// 실제 채팅 화면 (메시지 목록 + 입력)
 /// ChatNotifier (Riverpod)와 연동된 E2EE 채팅 UI
@@ -70,8 +75,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final signalGreen =
-        isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight;
+    final signalGreen = isDark
+        ? AppColors.signalGreenDark
+        : AppColors.signalGreenLight;
 
     final chatState = ref.watch(chatNotifierProvider(_params));
     final webrtcState = ref.watch(webRtcNotifierProvider(_params));
@@ -87,7 +93,8 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
     // length 비교 + 마지막 메시지 ID/mediaBytes 비교 (HEADER→DONE 교체 감지)
     ref.listen(chatNotifierProvider(_params), (prev, next) {
       final lengthChanged = prev?.messages.length != next.messages.length;
-      final lastChanged = prev != null &&
+      final lastChanged =
+          prev != null &&
           next.messages.isNotEmpty &&
           prev.messages.isNotEmpty &&
           prev.messages.last.id == next.messages.last.id &&
@@ -116,6 +123,17 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
           l10n: l10n,
           onExit: () => _handleExit(chatState),
           onContact: () => _handleContact(l10n),
+          onSafety: () => showDialog<void>(
+            context: context,
+            builder: (_) => ChatSafetyDialog(
+              roomId: widget.roomId,
+              password: widget.password,
+              messages: chatState.messages,
+              onBlock: () => ref
+                  .read(chatNotifierProvider(_params).notifier)
+                  .blockAndLeave(),
+            ),
+          ),
         ),
 
         // ─── Messages ───
@@ -157,7 +175,8 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
             children: [
               // Media attach (WebRTC connected일 때만 활성)
               IconButton(
-                onPressed: webrtcState.status == WebRtcStatus.connected &&
+                onPressed:
+                    webrtcState.status == WebRtcStatus.connected &&
                         !_sendingFile
                     ? _pickAndSendMedia
                     : null,
@@ -166,13 +185,14 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                   color: webrtcState.status == WebRtcStatus.connected
                       ? signalGreen
                       : (isDark
-                          ? AppColors.ghostGreyDark
-                          : AppColors.ghostGreyLight),
+                            ? AppColors.ghostGreyDark
+                            : AppColors.ghostGreyLight),
                 ),
               ),
               // File attach (모든 파일)
               IconButton(
-                onPressed: webrtcState.status == WebRtcStatus.connected &&
+                onPressed:
+                    webrtcState.status == WebRtcStatus.connected &&
                         !_sendingFile
                     ? _pickAndSendFile
                     : null,
@@ -181,8 +201,8 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                   color: webrtcState.status == WebRtcStatus.connected
                       ? signalGreen
                       : (isDark
-                          ? AppColors.ghostGreyDark
-                          : AppColors.ghostGreyLight),
+                            ? AppColors.ghostGreyDark
+                            : AppColors.ghostGreyLight),
                 ),
               ),
               // Text input
@@ -194,8 +214,10 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
                   decoration: InputDecoration(
                     hintText: l10n.chatInputPlaceholder,
                     border: InputBorder.none,
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
                   ),
                   textInputAction: TextInputAction.send,
                   onSubmitted: (_) => _sendMessage(),
@@ -248,15 +270,16 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(sent ? l10n.contactSent : l10n.contactNotReady),
-      ),
+      SnackBar(content: Text(sent ? l10n.contactSent : l10n.contactNotReady)),
     );
   }
 
   Future<void> _handleExit(ChatState chatState) async {
     final isLast = !chatState.peerConnected;
-    final confirmed = await LeaveConfirmDialog.show(context, isLastPerson: isLast);
+    final confirmed = await LeaveConfirmDialog.show(
+      context,
+      isLastPerson: isLast,
+    );
     if (confirmed && mounted) {
       ref.read(webRtcNotifierProvider(_params).notifier).cleanup();
       ref.read(chatNotifierProvider(_params).notifier).disconnect();
@@ -312,30 +335,42 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
 
       await ref
           .read(webRtcNotifierProvider(_params).notifier)
-          .sendFile(sendBytes, sendFileName, sendMimeType,
-              thumbnailBytes: thumbnailBytes);
+          .sendFile(
+            sendBytes,
+            sendFileName,
+            sendMimeType,
+            thumbnailBytes: thumbnailBytes,
+          );
       NotificationService.instance.notifyMessageSent();
     } on VideoTooLongException {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.chatMediaFileTooLarge(
-            '${AppConstants.maxVideoDurationSec}s',
-          ))),
+          SnackBar(
+            content: Text(
+              l10n.chatMediaFileTooLarge(
+                '${AppConstants.maxVideoDurationSec}s',
+              ),
+            ),
+          ),
         );
       }
     } on VideoTooLargeException {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.chatMediaFileTooLarge(
-            '${AppConstants.maxVideoCompressedMb}MB',
-          ))),
+          SnackBar(
+            content: Text(
+              l10n.chatMediaFileTooLarge(
+                '${AppConstants.maxVideoCompressedMb}MB',
+              ),
+            ),
+          ),
         );
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _sendingFile = false);
@@ -376,9 +411,9 @@ class _ChatRoomViewState extends ConsumerState<ChatRoomView> {
       NotificationService.instance.notifyMessageSent();
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     } finally {
       if (mounted) setState(() => _sendingFile = false);
@@ -408,6 +443,7 @@ class _ChatHeader extends StatelessWidget {
   final bool peerConnected;
   final AppLocalizations l10n;
   final VoidCallback onExit;
+  final VoidCallback onSafety;
   final VoidCallback? onContact;
 
   const _ChatHeader({
@@ -417,6 +453,7 @@ class _ChatHeader extends StatelessWidget {
     required this.peerConnected,
     required this.l10n,
     required this.onExit,
+    required this.onSafety,
     this.onContact,
   });
 
@@ -445,16 +482,23 @@ class _ChatHeader extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: Icon(Icons.arrow_back, size: 20,
-                color: isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight),
+              child: Icon(
+                Icons.arrow_back,
+                size: 20,
+                color: isDark
+                    ? AppColors.ghostGreyDark
+                    : AppColors.ghostGreyLight,
+              ),
             ),
           ),
           Icon(Icons.lock, size: 16, color: signalGreen),
           const SizedBox(width: 6),
-          Text(
+          Flexible(child: Text(
             l10n.chatHeaderE2ee,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(color: signalGreen, fontSize: 12),
-          ),
+          )),
           if (peerConnected && peerUsername != null) ...[
             const SizedBox(width: 12),
             Container(
@@ -466,20 +510,33 @@ class _ChatHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Text(
+            Flexible(child: Text(
               peerUsername!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 12,
-                color: isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight,
+                color: isDark
+                    ? AppColors.ghostGreyDark
+                    : AppColors.ghostGreyLight,
               ),
-            ),
+            )),
           ],
           const Spacer(),
+          IconButton(
+            onPressed: onSafety,
+            tooltip: l10n.safetyTitle,
+            icon: const Icon(Icons.flag_outlined, size: 20),
+          ),
           // 연락하기 (상대방 오프라인일 때만)
           if (!peerConnected && peerUsername != null)
             TextButton.icon(
               onPressed: onContact,
-              icon: Icon(Icons.notifications_active, size: 14, color: signalGreen),
+              icon: Icon(
+                Icons.notifications_active,
+                size: 14,
+                color: signalGreen,
+              ),
               label: Text(
                 l10n.contactButton,
                 style: TextStyle(color: signalGreen, fontSize: 12),
@@ -488,8 +545,13 @@ class _ChatHeader extends StatelessWidget {
           // 이용약관 버튼
           IconButton(
             onPressed: () => TermsDialog.show(context),
-            icon: Icon(Icons.description_outlined, size: 18,
-              color: isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight),
+            icon: Icon(
+              Icons.description_outlined,
+              size: 18,
+              color: isDark
+                  ? AppColors.ghostGreyDark
+                  : AppColors.ghostGreyLight,
+            ),
             tooltip: l10n.termsViewInChat,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(minWidth: 36, minHeight: 36),

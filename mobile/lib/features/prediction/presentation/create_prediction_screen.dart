@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/device_identity_service.dart';
+import '../../../core/supabase/supabase_client.dart';
+import '../../../core/network/api_client.dart';
 import '../domain/models/device_points.dart';
 import 'widgets/category_filter.dart';
 
@@ -21,19 +24,34 @@ class _CreatePredictionScreenState
   PredictionCategory _selectedCategory = PredictionCategory.other;
   int _durationHours = 24;
 
-  // TODO: Riverpod provider로 교체
-  final _mockPoints = DevicePoints(
-    deviceFingerprint: 'mock',
-    balance: 100,
-    totalEarned: 500,
-    totalSpent: 400,
-    createdAt: DateTime.now(),
-  );
+  DevicePoints? _points;
+  bool _busy = false;
+  bool _loadFailed = false;
 
-  int get _cost => _mockPoints.creationCost;
-  bool get _canCreate =>
-      _questionController.text.trim().isNotEmpty &&
-      _mockPoints.canAfford(_cost);
+  int get _cost => _points?.creationCost ?? 150;
+  bool get _canCreate => !_busy && _points != null &&
+      _questionController.text.trim().isNotEmpty && _points!.canAfford(_cost);
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPoints();
+  }
+
+  Future<void> _loadPoints() async {
+    setState(() => _loadFailed = false);
+    try {
+      final fingerprint = await DeviceIdentityService.instance.getFingerprint();
+      await supabase.rpc('register_device', params: {
+        'p_device_fingerprint': fingerprint, 'p_hardware_hash': null,
+      });
+      final data = await supabase.from('device_points').select()
+          .eq('device_fingerprint', fingerprint).single();
+      if (mounted) setState(() => _points = DevicePoints.fromJson(data));
+    } catch (_) {
+      if (mounted) setState(() => _loadFailed = true);
+    }
+  }
 
   @override
   void dispose() {
@@ -41,28 +59,44 @@ class _CreatePredictionScreenState
     super.dispose();
   }
 
-  void _onCreate() {
+  Future<void> _onCreate() async {
     if (!_canCreate) return;
-    // TODO: API 연동
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Prediction created!'),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    final locale = Localizations.localeOf(context);
+    final localeCode = locale.countryCode == 'TW' ? 'zh-TW' : locale.languageCode;
+    setState(() => _busy = true);
+    try {
+      final closes = DateTime.now().toUtc().add(Duration(hours: _durationHours));
+      final response = await ApiClient().dio.post('/api/prediction', data: {
+        'deviceFingerprint': _points!.deviceFingerprint,
+        'question': _questionController.text.trim(),
+        'category': _selectedCategory.name,
+        'closesAt': closes.toIso8601String(),
+        'revealsAt': closes.add(const Duration(hours: 1)).toIso8601String(),
+        'locale': localeCode,
+      });
+      if (response.data['success'] != true) throw StateError('Creation rejected');
+      if (mounted) Navigator.of(context).pop(true);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.commonError)));
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final signalGreen =
-        isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight;
-    final ghostGrey =
-        isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
-    final borderColor =
-        isDark ? AppColors.borderDark : AppColors.borderLight;
+    final signalGreen = isDark
+        ? AppColors.signalGreenDark
+        : AppColors.signalGreenLight;
+    final ghostGrey = isDark
+        ? AppColors.ghostGreyDark
+        : AppColors.ghostGreyLight;
+    final borderColor = isDark ? AppColors.borderDark : AppColors.borderLight;
 
     // 카테고리 목록 (all 제외)
     final categories = PredictionCategory.values
@@ -86,12 +120,14 @@ class _CreatePredictionScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (_points == null && !_loadFailed) const LinearProgressIndicator(),
+              if (_loadFailed) TextButton(onPressed: _loadPoints, child: Text(l10n.commonRetry)),
               // 질문 입력
               Text(
                 l10n.predictionQuestion,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -113,9 +149,9 @@ class _CreatePredictionScreenState
               // 카테고리 선택
               Text(
                 l10n.predictionCategory,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               Wrap(
@@ -135,17 +171,15 @@ class _CreatePredictionScreenState
                         : Colors.grey.shade100,
                     labelStyle: TextStyle(
                       fontSize: 12,
-                      fontWeight:
-                          isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                       color: isSelected
-                          ? (isDark
-                              ? AppColors.voidBlackDark
-                              : AppColors.white)
+                          ? (isDark ? AppColors.voidBlackDark : AppColors.white)
                           : ghostGrey,
                     ),
                     side: BorderSide.none,
-                    onSelected: (_) =>
-                        setState(() => _selectedCategory = cat),
+                    onSelected: (_) => setState(() => _selectedCategory = cat),
                   );
                 }).toList(),
               ),
@@ -154,9 +188,9 @@ class _CreatePredictionScreenState
               // 마감 시간
               Text(
                 l10n.predictionDuration,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               Row(
@@ -216,20 +250,11 @@ class _CreatePredictionScreenState
                             color: signalGreen,
                           ),
                         ),
-                        if (_mockPoints.rank == 'Oracle' ||
-                            _mockPoints.rank == 'Control')
-                          Text(
-                            '${l10n.predictionRank}: ${_mockPoints.rank} discount',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: ghostGrey,
-                              fontFamily: 'monospace',
-                            ),
-                          ),
+
                       ],
                     ),
                     Text(
-                      '${l10n.predictionBalance}: ${_mockPoints.balance} BP',
+                      '${l10n.predictionBalance}: ${_points?.balance ?? '…'} BP',
                       style: TextStyle(
                         fontSize: 12,
                         color: ghostGrey,
@@ -247,14 +272,12 @@ class _CreatePredictionScreenState
                 height: 52,
                 child: ElevatedButton(
                   onPressed: _canCreate ? _onCreate : null,
-                  child: Text(
-                    l10n.predictionSubmit(_cost),
-                  ),
+                  child: Text(l10n.predictionSubmit(_cost)),
                 ),
               ),
 
               // BP 부족 경고
-              if (!_mockPoints.canAfford(_cost))
+              if (_points != null && !_points!.canAfford(_cost))
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Text(
@@ -303,8 +326,8 @@ class _DurationChip extends StatelessWidget {
           color: isSelected
               ? signalGreen.withValues(alpha: 0.15)
               : (isDark
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.grey.shade100),
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.grey.shade100),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? signalGreen : Colors.transparent,

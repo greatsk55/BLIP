@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../network/api_client.dart';
 
 /// Supabase Auth 래퍼 (SSOT) — iOS 전용 Apple Sign In
-/// - 세션 기반: 로그인 상태만 유지, 유저 데이터 저장/관리 없음
+/// - Supabase keeps the Apple-linked account ID and supplied email for sign-in.
 /// - BLIP 철학: 최소한의 인증, 최대한의 프라이버시
 class AuthService {
   AuthService._();

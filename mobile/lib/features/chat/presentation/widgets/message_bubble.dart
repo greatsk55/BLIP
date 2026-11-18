@@ -35,11 +35,13 @@ class MessageBubble extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
           color: message.isMine
-              ? (isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight)
-                  .withValues(alpha: 0.15)
+              ? (isDark
+                        ? AppColors.signalGreenDark
+                        : AppColors.signalGreenLight)
+                    .withValues(alpha: 0.15)
               : isDark
-                  ? AppColors.surfaceDark
-                  : AppColors.surfaceLight,
+              ? AppColors.surfaceDark
+              : AppColors.surfaceLight,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -48,8 +50,10 @@ class MessageBubble extends StatelessWidget {
           ),
           border: Border.all(
             color: message.isMine
-                ? (isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight)
-                    .withValues(alpha: 0.3)
+                ? (isDark
+                          ? AppColors.signalGreenDark
+                          : AppColors.signalGreenLight)
+                      .withValues(alpha: 0.3)
                 : (isDark ? AppColors.borderDark : AppColors.borderLight),
           ),
         ),
@@ -81,10 +85,11 @@ class MessageBubble extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: LinearProgressIndicator(
                   value: message.transferProgress,
-                  backgroundColor: (isDark
-                          ? AppColors.ghostGreyDark
-                          : AppColors.ghostGreyLight)
-                      .withValues(alpha: 0.2),
+                  backgroundColor:
+                      (isDark
+                              ? AppColors.ghostGreyDark
+                              : AppColors.ghostGreyLight)
+                          .withValues(alpha: 0.2),
                   valueColor: AlwaysStoppedAnimation(
                     isDark
                         ? AppColors.signalGreenDark
@@ -94,27 +99,21 @@ class MessageBubble extends StatelessWidget {
               ),
 
             // 미디어 이미지 (탭 → 풀스크린 확대)
-            if (message.type == MessageType.image &&
-                message.mediaBytes != null)
+            if (message.type == MessageType.image && message.mediaBytes != null)
               GestureDetector(
                 onTap: () => _openFullScreenImage(context, message.mediaBytes!),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.memory(
-                    message.mediaBytes!,
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.memory(message.mediaBytes!, fit: BoxFit.cover),
                 ),
               ),
 
             // 미디어 동영상 (썸네일 + 재생 버튼 → 탭 시 풀스크린 재생)
-            if (message.type == MessageType.video &&
-                message.mediaBytes != null)
+            if (message.type == MessageType.video && message.mediaBytes != null)
               _VideoThumbnail(message: message),
 
             // 일반 파일 메시지 (다운로드/공유 버튼)
-            if (message.type == MessageType.file &&
-                message.mediaBytes != null)
+            if (message.type == MessageType.file && message.mediaBytes != null)
               _FileBubbleContent(message: message),
 
             // 일반 파일 전송 중 (바이트 없음)
@@ -124,8 +123,7 @@ class MessageBubble extends StatelessWidget {
               _FileBubbleContent(message: message),
 
             // 텍스트 내용 (미디어/파일 메시지일 때는 파일명 숨김)
-            if (message.content.isNotEmpty &&
-                message.type == MessageType.text)
+            if (message.content.isNotEmpty && message.type == MessageType.text)
               Text(
                 message.content,
                 style: TextStyle(
@@ -159,7 +157,7 @@ class MessageBubble extends StatelessWidget {
       PageRouteBuilder(
         opaque: false,
         barrierColor: Colors.black87,
-        pageBuilder: (_, __, ___) => _FullScreenImageViewer(bytes: bytes),
+        pageBuilder: (_, _, _) => _FullScreenImageViewer(bytes: bytes),
       ),
     );
   }
@@ -329,13 +327,17 @@ class _FullScreenVideoPlayerState extends State<_FullScreenVideoPlayer> {
           // 동영상 or 로딩
           Center(
             child: _error
-                ? const Icon(Icons.error_outline, color: Colors.white38, size: 48)
+                ? const Icon(
+                    Icons.error_outline,
+                    color: Colors.white38,
+                    size: 48,
+                  )
                 : _controller != null && _controller!.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: _controller!.value.aspectRatio,
-                        child: VideoPlayer(_controller!),
-                      )
-                    : const CircularProgressIndicator(color: Colors.white38),
+                ? AspectRatio(
+                    aspectRatio: _controller!.value.aspectRatio,
+                    child: VideoPlayer(_controller!),
+                  )
+                : const CircularProgressIndicator(color: Colors.white38),
           ),
 
           // 닫기 버튼
@@ -408,9 +410,7 @@ class _VideoControlsState extends State<_VideoControls> {
           // 재생/일시정지
           GestureDetector(
             onTap: () {
-              isPlaying
-                  ? widget.controller.pause()
-                  : widget.controller.play();
+              isPlaying ? widget.controller.pause() : widget.controller.play();
             },
             child: Icon(
               isPlaying ? Icons.pause : Icons.play_arrow,
@@ -442,7 +442,9 @@ class _VideoControlsState extends State<_VideoControls> {
                     : 0.0,
                 onChanged: (v) {
                   widget.controller.seekTo(
-                    Duration(milliseconds: (v * duration.inMilliseconds).toInt()),
+                    Duration(
+                      milliseconds: (v * duration.inMilliseconds).toInt(),
+                    ),
                   );
                 },
               ),
@@ -576,8 +578,9 @@ class _SystemMessage extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: (isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight)
-              .withValues(alpha: 0.1),
+          color:
+              (isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight)
+                  .withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(

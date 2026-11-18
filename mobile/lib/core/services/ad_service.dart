@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
@@ -18,6 +19,8 @@ class AdService with WidgetsBindingObserver {
   static const _appOpenMinLaunches = 3; // 3회차부터 App Open 광고
 
   bool _initialized = false;
+  Future<void>? _initializing;
+  final canLoadAds = ValueNotifier<bool>(false);
   InterstitialAd? _interstitialAd;
   AppOpenAd? _appOpenAd;
   bool _isShowingAd = false;
@@ -31,8 +34,29 @@ class AdService with WidgetsBindingObserver {
       ? AppConstants.admobAppOpenAndroid
       : AppConstants.admobAppOpenIos;
 
-  Future<void> init() async {
+  Future<void> init() => _initializing ??= _initialize();
+
+  Future<void> _initialize() async {
     if (_initialized) return;
+
+    // UMP decides whether ads may be requested before any ad format loads.
+    final consentUpdate = Completer<void>();
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      ConsentRequestParameters(),
+      () async {
+        await ConsentForm.loadAndShowConsentFormIfRequired((_) {});
+        if (!consentUpdate.isCompleted) consentUpdate.complete();
+      },
+      (_) {
+        if (!consentUpdate.isCompleted) consentUpdate.complete();
+      },
+    );
+    try {
+      await consentUpdate.future.timeout(const Duration(seconds: 15));
+    } on TimeoutException {
+      return;
+    }
+    if (!await ConsentInformation.instance.canRequestAds()) return;
 
     // iOS: ATT 권한 요청 (14.5+ 필수 — 없으면 광고 fill rate 급감)
     if (Platform.isIOS) {
@@ -56,6 +80,7 @@ class AdService with WidgetsBindingObserver {
       return; // AdMob 실패 시 광고 기능 비활성 상태로 유지
     }
     _initialized = true;
+    canLoadAds.value = true;
 
     // 런치 카운트 증가 및 저장
     try {
@@ -71,6 +96,26 @@ class AdService with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
+  Future<bool> showPrivacyOptions() async {
+    if (await ConsentInformation.instance
+            .getPrivacyOptionsRequirementStatus() !=
+        PrivacyOptionsRequirementStatus.required) {
+      return false;
+    }
+    await ConsentForm.showPrivacyOptionsForm((error) {
+      if (error != null) throw StateError('Ad privacy form unavailable');
+    });
+    final allowed = await ConsentInformation.instance.canRequestAds();
+    canLoadAds.value = allowed && _initialized;
+    if (!allowed) {
+      _interstitialAd?.dispose();
+      _interstitialAd = null;
+      _appOpenAd?.dispose();
+      _appOpenAd = null;
+    }
+    return true;
+  }
+
   /// 앱 라이프사이클 감지 — 포그라운드 복귀 시 오프닝 광고
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -82,11 +127,18 @@ class AdService with WidgetsBindingObserver {
   // ─── 전면광고 ───
 
   void _loadInterstitial() {
+    if (!canLoadAds.value) return;
     InterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _interstitialAd = ad,
+        onAdLoaded: (ad) {
+          if (canLoadAds.value) {
+            _interstitialAd = ad;
+          } else {
+            ad.dispose();
+          }
+        },
         onAdFailedToLoad: (_) => _interstitialAd = null,
       ),
     );
@@ -114,6 +166,7 @@ class AdService with WidgetsBindingObserver {
   }
 
   Future<bool> _showAndDispose() async {
+    if (!canLoadAds.value) return false;
     final ad = _interstitialAd!;
     _interstitialAd = null;
     _isShowingAd = true;
@@ -138,11 +191,18 @@ class AdService with WidgetsBindingObserver {
   // ─── 오프닝(앱 오픈) 광고 ───
 
   void _loadAppOpenAd() {
+    if (!canLoadAds.value) return;
     AppOpenAd.load(
       adUnitId: _appOpenAdUnitId,
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
-        onAdLoaded: (ad) => _appOpenAd = ad,
+        onAdLoaded: (ad) {
+          if (canLoadAds.value) {
+            _appOpenAd = ad;
+          } else {
+            ad.dispose();
+          }
+        },
         onAdFailedToLoad: (_) => _appOpenAd = null,
       ),
     );
@@ -150,6 +210,7 @@ class AdService with WidgetsBindingObserver {
 
   /// 오프닝 광고 표시 — 3회차 실행부터만 표시
   void _showAppOpenAd() {
+    if (!canLoadAds.value) return;
     if (_launchCount < _appOpenMinLaunches) return; // 첫 2회 스킵
     if (_isShowingAd) return;
     if (_appOpenAd == null) return;
