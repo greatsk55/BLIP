@@ -4,7 +4,16 @@
     "details": [
       {
         "appID": "95ERD9S934.com.bakkum.blip",
-        "paths": ["/board/*", "/room/*", "/*/board/*", "/*/room/*"]
+        "paths": [
+          "/board/*",
+          "/room/*",
+          "/group/*",
+          "/m/*",
+          "/*/board/*",
+          "/*/room/*",
+          "/*/group/*",
+          "/*/m/*"
+        ]
       }
     ]
   }

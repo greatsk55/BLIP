@@ -15,7 +15,7 @@ export default function Philosophy() {
         transition={{ duration: 1 }}
         className="text-2xl md:text-4xl font-bold text-ink mb-4 font-sans"
       >
-        "{t("text1")}"
+        &quot;{t("text1")}&quot;
       </motion.p>
       <motion.p
         initial={{ opacity: 0 }}

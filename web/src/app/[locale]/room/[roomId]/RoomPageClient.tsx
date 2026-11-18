@@ -1,4 +1,7 @@
 'use client';
+import ClientOnly from '@/components/shared/ClientOnly';
+import { readInvitation } from '@/lib/room/invitation';
+import Link from 'next/link';
 
 import { useState, useEffect } from 'react';
 import { getRoomStatus, verifyPassword } from '@/lib/room/actions';
@@ -10,7 +13,7 @@ interface RoomPageClientProps {
   roomId: string;
 }
 
-export default function RoomPageClient({ roomId }: RoomPageClientProps) {
+function RoomPageClientContent({ roomId }: RoomPageClientProps) {
   const [roomExists, setRoomExists] = useState<boolean | null>(null);
   const [roomError, setRoomError] = useState<string | null>(null);
 
@@ -19,41 +22,15 @@ export default function RoomPageClient({ roomId }: RoomPageClientProps) {
   // #k= 또는 ?k= → 링크로 참여 (자동 검증 후 바로 채팅 입장)
   // fragment(#)는 서버로 전송되지 않아 가장 안전
   // query(?)는 메신저/SNS 공유 시 fragment 유실 대비 폴백
-  const [creatorPassword, setCreatorPassword] = useState<string | undefined>(undefined);
-  const [linkPassword, setLinkPassword] = useState<string | undefined>(undefined);
+  const [invitation] = useState(() => readInvitation(window.location.href));
+  const creatorPassword = invitation.creator;
+  const [linkPassword, setLinkPassword] = useState(invitation.creator ? undefined : invitation.password);
+  const hashParsed = true;
   const [linkVerified, setLinkVerified] = useState(false);
-  const [hashParsed, setHashParsed] = useState(false);
-
   useEffect(() => {
-    let p: string | null = null;
-    let k: string | null = null;
-
-    // 1순위: URL fragment (#k=...) — 서버로 전송되지 않으므로 가장 안전
-    const hash = window.location.hash;
-    if (hash) {
-      const hashParams = new URLSearchParams(hash.slice(1));
-      p = hashParams.get('p');
-      k = hashParams.get('k');
-    }
-
-    // 2순위: query parameter (?k=...) — 메신저/SNS 공유 시 fragment 유실 대비
-    if (!p && !k) {
-      const searchParams = new URLSearchParams(window.location.search);
-      p = searchParams.get('p');
-      k = searchParams.get('k');
-    }
-
-    if (p) {
-      setCreatorPassword(decodeURIComponent(p));
-    } else if (k) {
-      setLinkPassword(decodeURIComponent(k));
-    }
-
-    // fragment + query parameter 모두 즉시 제거 (브라우저 히스토리에서도 숨김)
-    if (hash || window.location.search.includes('k=') || window.location.search.includes('p=')) {
+    if (window.location.hash || /[?&][kp]=/.test(window.location.search)) {
       window.history.replaceState(null, '', window.location.pathname);
     }
-    setHashParsed(true);
   }, []);
 
   // #k= 링크로 참여한 경우 자동 비밀번호 검증
@@ -142,12 +119,12 @@ export default function RoomPageClient({ roomId }: RoomPageClientProps) {
         <p className="font-mono text-sm text-ghost-grey mb-10">
           This channel no longer exists.
         </p>
-        <a
+        <Link
           href="/"
           className="min-h-[48px] flex items-center px-8 py-4 bg-transparent border border-signal-green text-signal-green hover:bg-signal-green hover:text-void-black active:bg-signal-green active:text-void-black transition-all duration-300 rounded-none font-mono text-sm uppercase tracking-wider"
         >
           GO HOME
-        </a>
+        </Link>
       </div>
     );
   }
@@ -168,4 +145,8 @@ export default function RoomPageClient({ roomId }: RoomPageClientProps) {
       />
     </>
   );
+}
+
+export default function RoomPageClient(props: RoomPageClientProps) {
+  return <ClientOnly><RoomPageClientContent {...props} /></ClientOnly>;
 }

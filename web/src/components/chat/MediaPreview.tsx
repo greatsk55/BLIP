@@ -24,6 +24,8 @@ export default function MediaPreview({ file, onConfirm, onCancel }: MediaPreview
 
   useEffect(() => {
     const url = URL.createObjectURL(file);
+    // The blob URL is acquired and released with the external resource lifecycle.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPreviewUrl(url);
     return () => URL.revokeObjectURL(url);
   }, [file]);

@@ -1,4 +1,5 @@
 'use client';
+import ClientOnly from '@/components/shared/ClientOnly';
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,15 +9,11 @@ import { Link } from '@/i18n/navigation';
 import { getSavedBoards, removeSavedBoard, type SavedBoard } from '@/hooks/useBoard';
 import { destroyBoard } from '@/lib/board/actions';
 
-export default function SavedBoardsList() {
+function SavedBoardsListContent() {
   const t = useTranslations('Board.dashboard');
-  const [boards, setBoards] = useState<SavedBoard[]>([]);
+  const [boards, setBoards] = useState<SavedBoard[]>(getSavedBoards);
   const [confirmTarget, setConfirmTarget] = useState<SavedBoard | null>(null);
   const [destroying, setDestroying] = useState(false);
-
-  useEffect(() => {
-    setBoards(getSavedBoards());
-  }, []);
 
   const handleRemove = useCallback(async () => {
     if (!confirmTarget) return;
@@ -137,3 +134,5 @@ export default function SavedBoardsList() {
     </div>
   );
 }
+
+export default function SavedBoardsList() { return <ClientOnly><SavedBoardsListContent /></ClientOnly>; }

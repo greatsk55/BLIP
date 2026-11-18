@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -7,9 +8,9 @@ vi.mock('next-intl', () => ({
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    button: ({ children, onClick, ...props }: any) => <button onClick={onClick} {...props}>{children}</button>,
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    p: ({ children, ...props }: ComponentProps<'p'> & Record<string, unknown>) => <p {...props}>{children}</p>,
+    button: ({ children, onClick, ...props }: ComponentProps<'button'> & Record<string, unknown>) => <button onClick={onClick} {...props}>{children}</button>,
   },
 }));
 

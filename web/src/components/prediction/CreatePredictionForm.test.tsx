@@ -1,14 +1,15 @@
+import type { ComponentProps } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import CreatePredictionForm from './CreatePredictionForm';
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, whileHover, whileTap, ...props }: any) => (
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, ...props }: ComponentProps<'button'> & Record<string, unknown>) => (
       <button {...props}>{children}</button>
     ),
-    form: ({ children, ...props }: any) => <form {...props}>{children}</form>,
+    form: ({ children, ...props }: ComponentProps<'form'> & Record<string, unknown>) => <form {...props}>{children}</form>,
   },
 }));
 

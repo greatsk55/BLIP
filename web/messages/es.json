@@ -89,6 +89,27 @@
     "description": "Cada mejora, registrada de forma transparente.",
     "versions": {
       "0": {
+        "version": "v1.13.0",
+        "date": "2026-11-19",
+        "title": "Mejoras de conexión, privacidad y seguridad",
+        "changes": {
+          "1": "Corregimos las contraseñas de invitación y las actualizaciones autenticadas de las salas.",
+          "2": "Añadimos denuncias opcionales y la posibilidad de cerrar la sala actual.",
+          "3": "Mejoramos el inicio, las opciones de privacidad publicitaria y la identidad de cada instalación."
+        }
+      },
+      "1": {
+        "version": "v1.12.0",
+        "date": "31 de marzo de 2026",
+        "title": "Mejoras de UX y Estabilidad en Predicciones",
+        "changes": {
+          "1": "Corrección del bucle de splash — la app ya no vuelve al splash al cambiar el estado de autenticación",
+          "2": "Predicciones activas primero — las votaciones no vencidas aparecen primero en la lista",
+          "3": "Cuotas en tiempo real en la lista — las cuotas YES/NO ahora se muestran directamente en el listado",
+          "4": "Disponible en web y app móvil"
+        }
+      },
+      "2": {
         "version": "v1.10.0",
         "date": "26 de marzo de 2026",
         "title": "Juego de Predicciones — Votación Anónima con Puntos",
@@ -101,7 +122,7 @@
           "6": "Disponible en web y app móvil"
         }
       },
-      "1": {
+      "3": {
         "version": "v1.9.0",
         "date": "24 de marzo de 2026",
         "title": "BLIP me — Enlace de contacto desechable",
@@ -113,7 +134,7 @@
           "5": "Disponible en web y aplicación móvil"
         }
       },
-      "2": {
+      "4": {
         "version": "v1.8.0",
         "date": "20 de marzo de 2026",
         "title": "Mis Salas & Reingreso Automático",
@@ -126,7 +147,7 @@
           "6": "Disponible en web y app móvil"
         }
       },
-      "3": {
+      "5": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -138,7 +159,7 @@
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
         }
       },
-      "4": {
+      "6": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -151,7 +172,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "5": {
+      "7": {
         "version": "v1.5.0",
         "date": "14 de marzo de 2026",
         "title": "Widget de chat embebible",
@@ -163,7 +184,7 @@
           "5": "Cifrado E2E completo mantenido en modo embebido"
         }
       },
-      "6": {
+      "8": {
         "version": "v1.4.0",
         "date": "28 de febrero de 2026",
         "title": "Sistema de códigos de invitación de comunidad",
@@ -174,7 +195,7 @@
           "4": "Soporte de deep links para códigos de invitación en la app móvil"
         }
       },
-      "7": {
+      "9": {
         "version": "v1.3.0",
         "date": "26 de febrero de 2026",
         "title": "Aplicación móvil y estabilidad",
@@ -187,7 +208,7 @@
           "6": "Soporte para 10 idiomas (+alemán, chino tradicional)"
         }
       },
-      "8": {
+      "10": {
         "version": "v1.2.0",
         "date": "15 de febrero de 2026",
         "title": "Transferencia de medios cifrada",
@@ -199,7 +220,7 @@
           "5": "Verificación de integridad con sumas SHA-256"
         }
       },
-      "9": {
+      "11": {
         "version": "v1.1.0",
         "date": "10 de febrero de 2026",
         "title": "Destrucción instantánea y notificaciones",
@@ -210,7 +231,7 @@
           "4": "Comunidad privada con publicaciones cifradas"
         }
       },
-      "10": {
+      "12": {
         "version": "v1.0.0",
         "date": "1 de febrero de 2026",
         "title": "Lanzamiento inicial",
@@ -335,46 +356,46 @@
     }
   },
   "Privacy": {
-    "title": "Privacidad por Arquitectura",
-    "subtitle": "Política de Privacidad",
-    "lastUpdated": "Última actualización: marzo 2026",
-    "intro": "BLIP está diseñado para no saber nada sobre ti. Esto no es solo una política—es cómo construimos el sistema. Lo que no podemos recopilar, no podemos filtrar.",
+    "title": "Política de privacidad",
+    "subtitle": "Privacidad y uso de datos",
+    "lastUpdated": "2026-11-18",
+    "intro": "El chat normal usa cifrado de extremo a extremo. Esta política también cubre cuentas, conexiones, anuncios, analítica y soporte. Web y Android no requieren cuenta; iOS usa Iniciar sesión con Apple.",
     "sections": {
       "1": {
-        "title": "Nuestra Filosofía",
-        "content": "La mayoría de las políticas de privacidad explican qué datos recopilan las empresas y cómo los usan. La nuestra es diferente: explicamos por qué no podemos recopilar tus datos aunque quisiéramos. La arquitectura de BLIP hace que la vigilancia masiva sea técnicamente imposible."
+        "title": "Conversaciones cifradas",
+        "content": "Los mensajes normales y archivos P2P están cifrados y no se guardan como historial en nuestra base de datos. Las claves permanecen en los dispositivos y solo los mensajes recientes quedan en memoria."
       },
       "2": {
-        "title": "Datos que No Recopilamos",
-        "content": "No recopilamos: cuentas de usuario, direcciones de correo electrónico, números de teléfono, nombres, perfiles, contenido de mensajes, historial de chat, listas de contactos ni ninguna forma de identificación personal. Tus conversaciones están cifradas de extremo a extremo y nunca tocan nuestra base de datos. Literalmente no podemos leerlas."
+        "title": "Conexión y servicio",
+        "content": "BLIP, Supabase, Vercel y los proveedores de retransmisión procesan IP, metadatos de conexión, estado de salas e identificadores contra abusos para operar y proteger el servicio. Los registros de seguridad del proveedor pueden conservarse según sus políticas."
       },
       "3": {
-        "title": "Datos que Pasan",
-        "content": "Cuando usas BLIP, nuestros servidores procesan brevemente: cargas de mensajes cifrados (texto cifrado ilegible) y metadatos de conexión temporales (direcciones IP para enrutamiento WebSocket). Estos datos existen solo en memoria volátil (RAM) y nunca se escriben en disco. Cuando tu sesión termina, desaparecen."
+        "title": "Cuentas y comunidades",
+        "content": "Supabase almacena el ID de usuario vinculado a Apple y el correo si Apple lo facilita en iOS. Publicaciones, comentarios y nombres de autor se guardan cifrados hasta su eliminación. Se conservan invitaciones, puntos y votos para sus funciones."
       },
       "4": {
-        "title": "Cifrado de Extremo a Extremo",
-        "content": "Todos los mensajes se cifran en tu dispositivo usando intercambio de claves Curve25519 ECDH y cifrado XSalsa20-Poly1305 antes de la transmisión. Las claves de cifrado se generan localmente en tu navegador y nunca se envían a nuestros servidores. Incluso bajo compulsión legal, no podemos proporcionar el contenido de los mensajes—no lo tenemos."
+        "title": "Almacenamiento local y puntos",
+        "content": "Las claves, salas guardadas, tokens de propiedad y preferencias permanecen en el dispositivo. Las predicciones usan un identificador aleatorio de instalación. Borrar datos locales puede impedir recuperar claves o puntos anónimos."
       },
       "5": {
-        "title": "Cookies y Almacenamiento Local",
-        "content": "BLIP utiliza almacenamiento local mínimo para: preferencias de tema (modo oscuro/claro), configuración de idioma, datos de salas guardadas y claves de cifrado temporales durante sesiones activas. Utilizamos el seguimiento de conversiones de Google Ads (gtag.js), que puede establecer cookies para medir la efectividad publicitaria. No utilizamos cookies de análisis que rastreen tu comportamiento de navegación entre sitios. Las claves de cifrado se destruyen automáticamente al cerrar la pestaña del navegador."
+        "title": "Publicidad",
+        "content": "La app usa Google AdMob y la web puede usar Monetag. Pueden procesar ubicación aproximada por IP, identificadores, interacciones y diagnósticos de fallos y rendimiento para publicidad, analítica y prevención del fraude. El consentimiento y los controles del sistema limitan la personalización y el seguimiento."
       },
       "6": {
-        "title": "Servicios de Terceros",
-        "content": "BLIP utiliza Supabase para comunicación WebSocket en tiempo real (solo retransmisión de mensajes, sin almacenamiento). Utilizamos Google Ads (gtag.js, ID: AW-874567055) para el seguimiento de conversiones y medir la efectividad de las campañas publicitarias. Podemos mostrar anuncios contextuales. Los proveedores de anuncios pueden usar sus propias cookies sujetas a sus políticas de privacidad. Nunca compartimos datos de conversación con anunciantes—porque no tenemos ninguno."
+        "title": "Analítica y notificaciones",
+        "content": "Firebase Analytics procesa identificadores de instalación, datos del dispositivo e interacciones, sin texto de chat. FCM procesa tokens y datos de entrega de notificaciones. El permiso de notificaciones es opcional."
       },
       "7": {
-        "title": "Privacidad Infantil",
-        "content": "BLIP no está dirigido a usuarios menores de 13 años. Como no recopilamos información personal, no podemos verificar la edad. Si crees que un menor está usando este servicio de manera inapropiada, contáctanos."
+        "title": "Tus opciones",
+        "content": "Usa los ajustes de anuncios y notificaciones del sistema y las opciones de privacidad publicitaria de la app. Puedes borrar datos locales y claves. En iOS puedes eliminar la cuenta desde Ajustes. El administrador puede borrar una comunidad."
       },
       "8": {
-        "title": "Cambios y Contacto",
-        "content": "Podemos actualizar esta política para reflejar cambios en nuestras prácticas o por cumplimiento legal. Los cambios significativos se publicarán en esta página. Como no recopilamos direcciones de correo electrónico, no podemos enviar notificaciones—consulta esta página periódicamente. Para preguntas, visita nuestro repositorio de GitHub."
+        "title": "Solicitar la eliminación",
+        "content": "Escribe a wonwookimnida@gmail.com con el asunto “BLIP data deletion” e identifica la cuenta o enlace que controlas. Verificamos la propiedad y borramos los registros elegibles de cuenta, enlace y soporte. No almacenamos historial normal. El administrador elimina la comunidad; conservamos solo lo necesario para seguridad, fraude u obligaciones legales."
       },
       "9": {
-        "title": "Comunidad Privada",
-        "content": "Las Comunidades Privadas de BLIP almacenan publicaciones cifradas en nuestra base de datos. Todo el contenido de las publicaciones y los nombres de los autores se cifran en el lado del cliente con XSalsa20-Poly1305 antes del almacenamiento—el servidor solo contiene texto cifrado ilegible. Se conservan huellas de reportantes (hash anonimizado de metadatos de conexión) para prevenir reportes duplicados. Si eliges guardar la contraseña de la comunidad en tu navegador, se almacena únicamente en el localStorage de tu dispositivo—nunca se transmite a nuestros servidores. Los datos de la comunidad pueden ser eliminados permanentemente por el administrador en cualquier momento."
+        "title": "Seguridad y contacto",
+        "content": "BLIP utiliza enlaces de invitación, no emparejamiento aleatorio. Denuncia desde el menú de seguridad o a wonwookimnida@gmail.com. Solo el contenido que elijas enviar se revisa por personas y constituye una excepción al no almacenamiento normal. Se conserva para moderación y obligaciones legales."
       }
     }
   },
@@ -783,5 +804,24 @@
       "cta": "Empezar a Predecir"
     },
     "discuss": "Unirse a la Discusión"
+  },
+  "Safety": {
+    "title": "Denunciar o bloquear",
+    "notice": "Tú decides si compartes pruebas. El chat normal no se guarda automáticamente.",
+    "reason": "Motivo",
+    "harassment": "Acoso o intimidación",
+    "sexual": "Contenido sexual",
+    "hate": "Odio o discriminación",
+    "violence": "Amenazas o violencia",
+    "scam": "Estafa o spam",
+    "other": "Otro",
+    "evidence": "Enviar hasta 4 mensajes visibles en texto legible para revisión humana.",
+    "report": "Enviar denuncia",
+    "reported": "Denuncia recibida. El equipo de soporte la revisará.",
+    "failed": "No se pudo completar. Reintenta o contacta con soporte.",
+    "block": "Bloquear y salir del chat",
+    "blockNotice": "Cierra la sala para todos e impide volver con esta invitación. No bloquea a la persona en otras salas.",
+    "close": "Cerrar",
+    "adPrivacy": "Opciones de privacidad publicitaria"
   }
 }

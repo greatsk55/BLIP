@@ -1,4 +1,7 @@
 'use client';
+import ClientOnly from '@/components/shared/ClientOnly';
+import { readInvitation } from '@/lib/room/invitation';
+import Link from 'next/link';
 
 import { useState, useEffect } from 'react';
 import { getRoomStatus, verifyPassword } from '@/lib/room/actions';
@@ -9,42 +12,18 @@ interface EmbedRoomClientProps {
   roomId: string;
 }
 
-export default function EmbedRoomClient({ roomId }: EmbedRoomClientProps) {
+function EmbedRoomClientContent({ roomId }: EmbedRoomClientProps) {
   const [roomExists, setRoomExists] = useState<boolean | null>(null);
   const [roomError, setRoomError] = useState<string | null>(null);
-  const [creatorPassword, setCreatorPassword] = useState<string | undefined>(undefined);
-  const [linkPassword, setLinkPassword] = useState<string | undefined>(undefined);
+  const [invitation] = useState(() => readInvitation(window.location.href));
+  const creatorPassword = invitation.creator;
+  const [linkPassword, setLinkPassword] = useState(invitation.creator ? undefined : invitation.password);
+  const hashParsed = true;
   const [linkVerified, setLinkVerified] = useState(false);
-  const [hashParsed, setHashParsed] = useState(false);
-
-  // URL fragment 파싱 (RoomPageClient와 동일 로직)
   useEffect(() => {
-    let p: string | null = null;
-    let k: string | null = null;
-
-    const hash = window.location.hash;
-    if (hash) {
-      const hashParams = new URLSearchParams(hash.slice(1));
-      p = hashParams.get('p');
-      k = hashParams.get('k');
-    }
-
-    if (!p && !k) {
-      const searchParams = new URLSearchParams(window.location.search);
-      p = searchParams.get('p');
-      k = searchParams.get('k');
-    }
-
-    if (p) {
-      setCreatorPassword(decodeURIComponent(p));
-    } else if (k) {
-      setLinkPassword(decodeURIComponent(k));
-    }
-
-    if (hash || window.location.search.includes('k=') || window.location.search.includes('p=')) {
+    if (window.location.hash || /[?&][kp]=/.test(window.location.search)) {
       window.history.replaceState(null, '', window.location.pathname);
     }
-    setHashParsed(true);
   }, []);
 
   // 링크 검증
@@ -124,12 +103,12 @@ export default function EmbedRoomClient({ roomId }: EmbedRoomClientProps) {
         <p className="font-mono text-sm text-ghost-grey mb-10">
           This channel no longer exists.
         </p>
-        <a
+        <Link
           href="/embed"
           className="min-h-[48px] flex items-center px-8 py-4 bg-transparent border border-signal-green text-signal-green hover:bg-signal-green hover:text-void-black transition-all duration-300 font-mono text-sm uppercase tracking-wider"
         >
           CREATE NEW
-        </a>
+        </Link>
       </div>
     );
   }
@@ -144,4 +123,8 @@ export default function EmbedRoomClient({ roomId }: EmbedRoomClientProps) {
       initialPassword={resolvedPassword}
     />
   );
+}
+
+export default function EmbedRoomClient(props: EmbedRoomClientProps) {
+  return <ClientOnly><EmbedRoomClientContent {...props} /></ClientOnly>;
 }

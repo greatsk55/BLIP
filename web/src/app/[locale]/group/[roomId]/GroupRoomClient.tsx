@@ -1,4 +1,7 @@
 'use client';
+import ClientOnly from '@/components/shared/ClientOnly';
+import { readInvitation } from '@/lib/room/invitation';
+import Link from 'next/link';
 
 import { useState, useEffect, useCallback } from 'react';
 import { getGroupRoomStatus, verifyGroupPassword } from '@/lib/group/actions';
@@ -13,50 +16,21 @@ interface GroupRoomClientProps {
   roomId: string;
 }
 
-export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
+function GroupRoomClientContent({ roomId }: GroupRoomClientProps) {
   const [roomExists, setRoomExists] = useState<boolean | null>(null);
   const [roomError, setRoomError] = useState<string | null>(null);
   const [roomTitle, setRoomTitle] = useState<string>('');
-  const [creatorPassword, setCreatorPassword] = useState<string | undefined>();
-  const [adminToken, setAdminToken] = useState<string | undefined>();
-  const [linkPassword, setLinkPassword] = useState<string | undefined>();
+  const [invitation] = useState(() => readInvitation(window.location.href));
+  const creatorPassword = invitation.creator;
+  const [linkPassword, setLinkPassword] = useState(invitation.creator ? undefined : invitation.password);
+  const hashParsed = true;
+  const adminToken = invitation.admin;
   const [linkVerified, setLinkVerified] = useState(false);
-  const [hashParsed, setHashParsed] = useState(false);
   const [enteredChat, setEnteredChat] = useState(false);
-
-  // URL fragment 파싱
   useEffect(() => {
-    let p: string | null = null;
-    let k: string | null = null;
-    let a: string | null = null;
-
-    const hash = window.location.hash;
-    if (hash) {
-      const hashParams = new URLSearchParams(hash.slice(1));
-      p = hashParams.get('p');
-      k = hashParams.get('k');
-      a = hashParams.get('a');
-    }
-
-    if (!p && !k) {
-      const searchParams = new URLSearchParams(window.location.search);
-      p = searchParams.get('p');
-      k = searchParams.get('k');
-      a = searchParams.get('a');
-    }
-
-    if (a) setAdminToken(decodeURIComponent(a));
-
-    if (p) {
-      setCreatorPassword(decodeURIComponent(p));
-    } else if (k) {
-      setLinkPassword(decodeURIComponent(k));
-    }
-
-    if (hash || window.location.search.includes('k=') || window.location.search.includes('p=')) {
+    if (window.location.hash || /[?&][kp]=/.test(window.location.search)) {
       window.history.replaceState(null, '', window.location.pathname);
     }
-    setHashParsed(true);
   }, []);
 
   // 링크 자동 검증
@@ -150,12 +124,12 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
         <p className="font-mono text-sm text-ghost-grey mb-10">
           This group no longer exists.
         </p>
-        <a
+        <Link
           href="/"
           className="min-h-[48px] flex items-center px-8 py-4 bg-transparent border border-signal-green text-signal-green hover:bg-signal-green hover:text-void-black active:bg-signal-green active:text-void-black transition-all duration-300 rounded-none font-mono text-sm uppercase tracking-wider"
         >
           GO HOME
-        </a>
+        </Link>
       </div>
     );
   }
@@ -203,4 +177,8 @@ export default function GroupRoomClient({ roomId }: GroupRoomClientProps) {
       />
     </>
   );
+}
+
+export default function GroupRoomClient(props: GroupRoomClientProps) {
+  return <ClientOnly><GroupRoomClientContent {...props} /></ClientOnly>;
 }

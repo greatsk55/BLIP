@@ -4,6 +4,8 @@
 
 🌐 [한국어](README.ko.md) | [English](../README.md) | [日本語](README.ja.md) | [中文](README.zh.md) | [Español](#) | [Français](README.fr.md)
 
+> La app de iOS requiere iniciar sesión con Apple. Los mensajes normales de chat individual son efímeros; las publicaciones privadas se guardan cifradas. Las pruebas enviadas voluntariamente en una denuncia pueden conservarse por separado. Consulta la política de privacidad para publicidad y análisis.
+
 ---
 
 BLIP es un servicio de chat efímero que no deja rastro.
@@ -43,7 +45,13 @@ Pero la mayoría de las conversaciones en la vida son solo **charlas rápidas qu
 4. Terminar      →  Todos los datos destruidos al instante
 ```
 
-## Juego de Predicciones ✨ NEW
+## v1.12.0 — Mejoras de UX y Estabilidad ✨ NEW
+
+- Corrección del bucle de splash (la app ya no vuelve al splash al cambiar el estado de autenticación)
+- Predicciones activas primero — las votaciones no vencidas aparecen primero en la lista
+- Cuotas en tiempo real en la lista — las cuotas YES/NO ahora se muestran directamente en el listado
+
+## Juego de Predicciones
 
 Haz predicciones sobre resultados del mundo real y gana **BP (BLIP Points)** — completamente anónimo.
 

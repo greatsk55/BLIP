@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
@@ -141,12 +142,12 @@ export default function BlipMeVisitor({ linkId }: BlipMeVisitorProps) {
             <span className="font-mono text-sm">
               {errorCode ? errorMessages[errorCode] ?? 'Something went wrong.' : 'Something went wrong.'}
             </span>
-            <a
+            <Link
               href="/"
               className="mt-4 font-mono text-xs text-ghost-grey hover:text-signal-green transition-colors underline"
             >
               Go to BLIP
-            </a>
+            </Link>
           </div>
         )}
 

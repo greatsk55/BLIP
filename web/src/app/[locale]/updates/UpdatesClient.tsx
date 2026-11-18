@@ -2,10 +2,12 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Smartphone, Zap, Bell, Rocket, Code2, Users, Paperclip, ListChecks, Link2, TrendingUp } from "lucide-react";
+import { Smartphone, Zap, Bell, Rocket, Code2, Users, Paperclip, ListChecks, Link2, TrendingUp, Wrench } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const VERSION_ICONS = [
+  <Wrench key="release-health" className="w-5 h-5" />,
+  <Wrench key="wrench" className="w-5 h-5" />,
   <TrendingUp key="trendingup" className="w-5 h-5" />,
   <Link2 key="link2" className="w-5 h-5" />,
   <ListChecks key="listchecks" className="w-5 h-5" />,
@@ -19,7 +21,7 @@ const VERSION_ICONS = [
   <Rocket key="rocket2" className="w-5 h-5" />,
 ];
 
-const VERSION_COUNT = 11;
+const VERSION_COUNT = 13;
 
 export default function UpdatesClient() {
   const t = useTranslations("Changelog");

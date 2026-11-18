@@ -77,13 +77,15 @@ export function useGroupChat({
   const [authKeyHashState, setAuthKeyHashState] = useState<string | null>(null);
 
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
-  const myUsernameRef = useRef(generateUsername());
-  const myIdRef = useRef(generateUUID());
+  const [myUsername] = useState(generateUsername);
+  const [myId] = useState(generateUUID);
+  const myUsernameRef = useRef(myUsername);
+  const myIdRef = useRef(myId);
   const selfTrackedRef = useRef(false);
   const authKeyHashRef = useRef<string | null>(null);
   const sharedKeyRef = useRef<Uint8Array | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
-  onMessageReceivedRef.current = onMessageReceived;
+  useEffect(() => { onMessageReceivedRef.current = onMessageReceived; }, [onMessageReceived]);
 
   // 히스토리 로드
   useEffect(() => {
@@ -199,15 +201,11 @@ export function useGroupChat({
 
   useEffect(() => {
     if (!password) return;
-    if (!globalThis.isSecureContext) {
-      setStatus('error');
-      return;
-    }
-
     let isMounted = true;
 
     async function init() {
       try {
+        if (!globalThis.isSecureContext) throw new Error("Secure context required");
         const { authKey, encryptionSeed } = await deriveKeysFromPassword(password, roomId);
         if (!isMounted) return;
         const authHash = await hashAuthKey(authKey);
@@ -457,8 +455,8 @@ export function useGroupChat({
   return {
     messages,
     status,
-    myUsername: myUsernameRef.current,
-    myId: myIdRef.current,
+    myUsername,
+    myId,
     participants,
     sendMessage,
     disconnect,

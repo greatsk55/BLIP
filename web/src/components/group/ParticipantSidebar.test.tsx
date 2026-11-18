@@ -1,8 +1,9 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 vi.mock('next-intl', () => ({
-  useTranslations: () => (key: string, params?: any) => {
+  useTranslations: () => (key: string, params?: Record<string, string | number>) => {
     if (params?.name) return `${key}:${params.name}`;
     return key;
   },
@@ -10,9 +11,9 @@ vi.mock('next-intl', () => ({
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,
 }));
 
 import ParticipantSidebar from './ParticipantSidebar';

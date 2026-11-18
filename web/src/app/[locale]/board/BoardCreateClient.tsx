@@ -18,7 +18,6 @@ export function getCreatedInfo(boardId: string): { password: string; adminToken:
   if (typeof window === 'undefined') return null;
   const raw = sessionStorage.getItem(`${CREATED_INFO_PREFIX}${boardId}`);
   if (!raw) return null;
-  sessionStorage.removeItem(`${CREATED_INFO_PREFIX}${boardId}`);
   try {
     return JSON.parse(raw);
   } catch {

@@ -1,5 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabase } from '@/lib/supabase/server';
+import { checkOrigin, parseJsonBody, isString } from '@/lib/api-utils';
+import { createPrediction } from '@/lib/prediction/actions';
+
+export async function POST(request: Request) {
+  if (!checkOrigin(request)) return NextResponse.json({ error: 'FORBIDDEN' }, { status: 403 });
+  const body = await parseJsonBody(request);
+  if (!body || !isString(body.deviceFingerprint) || !/^[a-f0-9]{64}$/.test(body.deviceFingerprint)
+      || !isString(body.question) || !isString(body.category)
+      || !['politics', 'sports', 'tech', 'economy', 'entertainment', 'society', 'gaming', 'other'].includes(body.category)
+      || !isString(body.closesAt) || !isString(body.revealsAt)
+      || !isString(body.locale) || !['en','ko','ja','zh','zh-TW','es','fr','de'].includes(body.locale)) {
+    return NextResponse.json({ error: 'INVALID_PREDICTION' }, { status: 400 });
+  }
+  const closes = Date.parse(body.closesAt), reveals = Date.parse(body.revealsAt);
+  if (!Number.isFinite(closes) || !Number.isFinite(reveals) || closes <= Date.now()
+      || closes > Date.now() + 30 * 86400000 || reveals < closes) {
+    return NextResponse.json({ error: 'INVALID_DATES' }, { status: 400 });
+  }
+  const result = await createPrediction(body.deviceFingerprint, body.question, body.category,
+    ['yes', 'no'], body.closesAt, body.revealsAt, body.locale);
+  return NextResponse.json(result, { status: 'error' in result ? 400 : 200 });
+}
 
 /**
  * GET /api/prediction?locale=ko&category=tech

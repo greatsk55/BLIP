@@ -89,6 +89,27 @@
     "description": "Every improvement, tracked transparently.",
     "versions": {
       "0": {
+        "version": "v1.13.0",
+        "date": "2026-11-19",
+        "title": "Connection, privacy and safety fixes",
+        "changes": {
+          "1": "Fixed invitation passwords and authenticated room updates.",
+          "2": "Added optional abuse reports and the ability to close the current room.",
+          "3": "Improved startup reliability, advertising privacy choices and independent installation identities."
+        }
+      },
+      "1": {
+        "version": "v1.12.0",
+        "date": "March 31, 2026",
+        "title": "Prediction UX & Stability Fix",
+        "changes": {
+          "1": "Fixed splash screen loop — app no longer resets to splash on auth state changes",
+          "2": "Active predictions first — non-expired votes now appear at the top of the list",
+          "3": "Live odds in list — YES/NO odds now load directly in the prediction list view",
+          "4": "Available on both web and mobile app"
+        }
+      },
+      "2": {
         "version": "v1.10.0",
         "date": "March 26, 2026",
         "title": "Prediction Game — Anonymous Point Voting",
@@ -101,7 +122,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "1": {
+      "3": {
         "version": "v1.9.0",
         "date": "March 24, 2026",
         "title": "BLIP me — Burner Contact Link",
@@ -113,7 +134,7 @@
           "5": "Available on both web and mobile app"
         }
       },
-      "2": {
+      "4": {
         "version": "v1.8.0",
         "date": "March 20, 2026",
         "title": "My Chat Rooms & Auto-Rejoin",
@@ -126,7 +147,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "3": {
+      "5": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -138,7 +159,7 @@
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
         }
       },
-      "4": {
+      "6": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -151,7 +172,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "5": {
+      "7": {
         "version": "v1.5.0",
         "date": "March 14, 2026",
         "title": "Embeddable Chat Widget",
@@ -163,7 +184,7 @@
           "5": "Full E2E encryption maintained in embedded mode"
         }
       },
-      "6": {
+      "8": {
         "version": "v1.4.0",
         "date": "February 28, 2026",
         "title": "Community Invite Code System",
@@ -174,7 +195,7 @@
           "4": "Mobile app deep link support for community invite codes"
         }
       },
-      "7": {
+      "9": {
         "version": "v1.3.0",
         "date": "February 26, 2026",
         "title": "Mobile App & Stability",
@@ -187,7 +208,7 @@
           "6": "10 language support (+German, Traditional Chinese)"
         }
       },
-      "8": {
+      "10": {
         "version": "v1.2.0",
         "date": "February 15, 2026",
         "title": "Encrypted Media Transfer",
@@ -199,7 +220,7 @@
           "5": "File integrity verification with SHA-256 checksums"
         }
       },
-      "9": {
+      "11": {
         "version": "v1.1.0",
         "date": "February 10, 2026",
         "title": "Instant Room Destruction & Notifications",
@@ -210,7 +231,7 @@
           "4": "Private community feature with encrypted posts"
         }
       },
-      "10": {
+      "12": {
         "version": "v1.0.0",
         "date": "February 1, 2026",
         "title": "Initial Release",
@@ -337,46 +358,46 @@
     }
   },
   "Privacy": {
-    "title": "Privacy by Architecture",
-    "subtitle": "Privacy Policy",
-    "lastUpdated": "Last updated: March 2026",
-    "intro": "BLIP is designed to know nothing about you. This isn't just a policy—it's how we built the system. What we can't collect, we can't leak.",
+    "title": "Privacy Policy",
+    "subtitle": "Privacy and data use",
+    "lastUpdated": "2026-11-18",
+    "intro": "BLIP protects ordinary chat messages with end-to-end encryption. This policy also describes account, connection, advertising, analytics and support data. Web and Android chat do not require an account; the iOS app uses Sign in with Apple.",
     "sections": {
       "1": {
-        "title": "Our Philosophy",
-        "content": "Most privacy policies explain what data companies collect and how they use it. Ours is different: we explain why we can't collect your data even if we wanted to. BLIP's architecture makes mass surveillance technically impossible."
+        "title": "Encrypted conversations",
+        "content": "Ordinary chat messages and P2P files are end-to-end encrypted and are not saved as chat history in our database. Keys stay on participants’ devices. Only the current message window remains in memory."
       },
       "2": {
-        "title": "Data We Don't Collect",
-        "content": "We do not collect: user accounts, email addresses, phone numbers, names, profiles, message content, chat history, contact lists, or any form of personal identifier. Your conversations are end-to-end encrypted and never touch our database. We literally cannot read them."
+        "title": "Connection and service data",
+        "content": "BLIP, Supabase, Vercel and relay providers process IP addresses, connection metadata, room status and abuse-prevention identifiers to operate the service, secure requests and prevent misuse. Provider security logs may be retained under their policies."
       },
       "3": {
-        "title": "Data That Passes Through",
-        "content": "When you use BLIP, our servers briefly process: encrypted message payloads (unreadable ciphertext) and temporary connection metadata (IP addresses for WebSocket routing). This data exists only in volatile memory (RAM) and is never written to disk. Once your session ends, it's gone."
+        "title": "Accounts and community data",
+        "content": "The iOS app uses Apple sign-in. Supabase stores the Apple-linked user ID and email if Apple supplies it. Community posts, comments and author labels are stored as ciphertext until removed. Invite metadata and prediction balances and votes are stored for their features."
       },
       "4": {
-        "title": "End-to-End Encryption",
-        "content": "All messages are encrypted on your device using Curve25519 ECDH key exchange and XSalsa20-Poly1305 encryption before transmission. Encryption keys are generated locally in your browser and never sent to our servers. Even under legal compulsion, we cannot provide message content—we don't have it."
+        "title": "Device storage and anonymous points",
+        "content": "Room passwords, saved rooms, contact-link ownership tokens and preferences are stored on your device. Predictions use a random installation identifier; it is not a hardware identifier. Clearing local data can remove access to saved keys and anonymous balances."
       },
       "5": {
-        "title": "Cookies & Local Storage",
-        "content": "BLIP uses minimal local storage for: theme preferences (dark/light mode), language settings, saved room data, and temporary encryption keys during active sessions. We use Google Ads conversion tracking (gtag.js) which may set cookies to measure ad effectiveness. We do not use analytics cookies that track your browsing behavior across sites. Encryption keys are automatically destroyed when you close the browser tab."
+        "title": "Advertising",
+        "content": "The mobile app uses Google AdMob; web pages may use Monetag. Advertising providers may collect IP-derived approximate location, advertising/device identifiers, ad and app interactions, crash and performance diagnostics for ads, analytics and fraud prevention. Consent and OS controls can limit personalization or tracking."
       },
       "6": {
-        "title": "Third-Party Services",
-        "content": "BLIP uses Supabase for real-time WebSocket communication (message relay only, no storage). We use Google Ads (gtag.js, ID: AW-874567055) for conversion tracking to measure ad campaign effectiveness. We may display contextual advertisements. Ad providers may use their own cookies subject to their privacy policies. We never share any conversation data with advertisers—because we don't have any."
+        "title": "Analytics and notifications",
+        "content": "Firebase Analytics processes installation identifiers, device information and app interactions, not chat message text. Firebase Cloud Messaging processes installation/push tokens and notification delivery data. Notification permission is optional. SDK processing is separate from end-to-end chat encryption."
       },
       "7": {
-        "title": "Children's Privacy",
-        "content": "BLIP is not intended for users under 13 years of age. Since we don't collect personal information, we cannot verify age. If you believe a child is using this service inappropriately, please contact us."
+        "title": "Your choices",
+        "content": "Use device advertising and notification settings and the app’s ad privacy choices where available. You can clear local app data and saved keys. iOS users can delete their sign-in account in Settings. Community administrators can remove community data."
       },
       "8": {
-        "title": "Changes & Contact",
-        "content": "We may update this policy to reflect changes in our practices or for legal compliance. Significant changes will be posted on this page. Since we don't collect email addresses, we cannot send notifications—please check this page periodically. For questions, visit our GitHub repository."
+        "title": "Request data deletion",
+        "content": "For BLIP data deletion, email wonwookimnida@gmail.com with “BLIP data deletion” and identify the account or contact link you control. We verify ownership before deleting eligible account, link and support records. Ordinary chat history is not stored. Encrypted community data is removed by its administrator; security/fraud or legally required records are retained only as necessary."
       },
       "9": {
-        "title": "Community",
-        "content": "BLIP Community stores encrypted posts in our database. All post content and author names are encrypted client-side using XSalsa20-Poly1305 before storage—the server holds only unreadable ciphertext. Report fingerprints (anonymized hash of connection metadata) are retained to prevent duplicate reports. If you choose to save your community password in your browser, it is stored in localStorage on your device only—never transmitted to our servers. Community data can be permanently deleted by the community administrator at any time."
+        "title": "Safety and contact",
+        "content": "BLIP uses invitation links, not random matching. Report harmful content through chat safety controls or contact wonwookimnida@gmail.com. Only material you explicitly choose to submit in a report is sent for human review; reports are an exception to ordinary message non-storage. Reports are kept for moderation and necessary legal obligations."
       }
     }
   },
@@ -785,5 +806,24 @@
       "cta": "Start Predicting"
     },
     "discuss": "Join Discussion"
+  },
+  "Safety": {
+    "title": "Report or block",
+    "notice": "You choose whether to share evidence. Normal chat messages are not automatically saved.",
+    "reason": "Reason",
+    "harassment": "Harassment or bullying",
+    "sexual": "Sexual content",
+    "hate": "Hate or discrimination",
+    "violence": "Threats or violence",
+    "scam": "Scam or spam",
+    "other": "Other",
+    "evidence": "Send up to 4 visible text messages in readable form for human review.",
+    "report": "Send report",
+    "reported": "Report received. Our support team will review it.",
+    "failed": "Could not complete this action. Try again or contact support.",
+    "block": "Block and leave this chat",
+    "blockNotice": "This closes the room for everyone and prevents re-entry with this invitation. It does not block the person in other rooms.",
+    "close": "Close",
+    "adPrivacy": "Ad privacy choices"
   }
 }

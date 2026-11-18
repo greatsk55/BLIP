@@ -78,7 +78,7 @@ export default function AboutClient() {
       >
         <Quote className="absolute -top-12 -left-12 w-24 h-24 text-black/5 dark:text-white/5 -z-10" />
         <p className="text-3xl md:text-5xl font-serif italic text-zinc-800 dark:text-zinc-200 leading-tight">
-          "{t("closing")}"
+          &quot;{t("closing")}&quot;
         </p>
       </motion.div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ShieldCheck, LogOut, Users, FileText } from 'lucide-react';
+import { ShieldCheck, LogOut, Users, FileText, Flag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import TermsModal from './TermsModal';
@@ -10,14 +10,17 @@ interface ChatHeaderProps {
   roomId: string;
   peerConnected: boolean;
   onLeave: () => void;
+  onSafety: () => void;
 }
 
 export default function ChatHeader({
   roomId,
   peerConnected,
   onLeave,
+  onSafety,
 }: ChatHeaderProps) {
   const t = useTranslations('Chat');
+  const safety = useTranslations('Safety');
   const onlineCount = peerConnected ? 2 : 1;
   const [termsOpen, setTermsOpen] = useState(false);
 
@@ -60,6 +63,10 @@ export default function ChatHeader({
           </button>
 
           <ThemeToggle />
+          <button onClick={onSafety} title={safety('title')} aria-label={safety('title')}
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center text-ink/60">
+            <Flag className="w-4 h-4" />
+          </button>
 
           {/* EXIT 버튼 - 최소 44px 터치 타겟 */}
           <button

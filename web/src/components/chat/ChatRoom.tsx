@@ -7,12 +7,13 @@ import { useWebRTC } from '@/hooks/useWebRTC';
 import { useNotification } from '@/hooks/useNotification';
 import { useVisualViewport } from '@/hooks/useVisualViewport';
 import { useScreenProtection } from '@/hooks/useScreenProtection';
-import { verifyPassword, getRoomStatus, updateParticipantCount } from '@/lib/room/actions';
+import { verifyPassword, getRoomStatus, updateParticipantCount, destroyRoom } from '@/lib/room/actions';
 import { deriveKeysFromPassword, hashAuthKey } from '@/lib/crypto';
 import { compressImage, createImageThumbnail } from '@/lib/media/compress';
 import { createVideoThumbnail, getMediaType } from '@/lib/media/thumbnail';
 import type { ChatStatus, DecryptedMessage } from '@/types/chat';
 import ChatHeader from './ChatHeader';
+import ChatSafetyDialog from './ChatSafetyDialog';
 import ChatMessageArea, { type ChatMessageAreaHandle } from './ChatMessageArea';
 import ChatInput from './ChatInput';
 import PasswordEntry from './PasswordEntry';
@@ -40,6 +41,7 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [showSafety, setShowSafety] = useState(false);
   const [viewerImage, setViewerImage] = useState<string | null>(null);
   const messageAreaRef = useRef<ChatMessageAreaHandle>(null);
   const blobUrlsRef = useRef<Set<string>>(new Set());
@@ -248,7 +250,18 @@ export default function ChatRoom({ roomId, isCreator, initialPassword }: ChatRoo
         roomId={roomId}
         peerConnected={chat.peerConnected}
         onLeave={handleLeave}
+        onSafety={() => setShowSafety(true)}
       />
+
+      {showSafety && password && <ChatSafetyDialog roomId={roomId} password={password}
+        messages={chat.messages} onClose={() => setShowSafety(false)} onBlock={async () => {
+          const keys = await deriveKeysFromPassword(password, roomId);
+          const auth = await hashAuthKey(keys.authKey);
+          keys.authKey.fill(0); keys.encryptionSeed.fill(0);
+          await destroyRoom(roomId, auth);
+          chat.disconnect();
+          setViewState('destroyed');
+        }} />}
 
       {/* E2EE 시스템 메시지 */}
       {chat.messages.length === 0 && (

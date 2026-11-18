@@ -13,7 +13,7 @@ import {
   fetchPredictions, fetchOdds, createPrediction,
   fetchMyBets, fetchMyPredictions,
 } from '@/lib/prediction/actions';
-import type { Prediction } from '@/types/prediction';
+import type { Prediction, PredictionRow, PredictionBetRow } from '@/types/prediction';
 
 const CATEGORY_KEYS = [
   'all', 'politics', 'sports', 'tech', 'economy',
@@ -26,7 +26,7 @@ interface VoteClientProps {
   locale: string;
 }
 
-function mapPrediction(p: any): Prediction {
+function mapPrediction(p: PredictionRow): Prediction {
   return {
     id: p.id,
     creatorFingerprint: p.creator_fingerprint,
@@ -46,6 +46,11 @@ function mapPrediction(p: any): Prediction {
 
 export default function VoteClient({ locale }: VoteClientProps) {
   const t = useTranslations('Vote');
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const { balance, deviceFingerprint, refreshBalance } = usePoints();
   const [activeTab, setActiveTab] = useState<Tab>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -57,7 +62,7 @@ export default function VoteClient({ locale }: VoteClientProps) {
   const [loadingPredictions, setLoadingPredictions] = useState(true);
 
   // My bets
-  const [myBets, setMyBets] = useState<any[]>([]);
+  const [myBets, setMyBets] = useState<PredictionBetRow[]>([]);
   const [loadingBets, setLoadingBets] = useState(false);
 
   // My predictions
@@ -109,6 +114,8 @@ export default function VoteClient({ locale }: VoteClientProps) {
 
   // 탭 변경 시 데이터 로드
   useEffect(() => {
+    // This effect synchronizes the selected tab with its asynchronous server data.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (activeTab === 'all') loadPredictions();
     else if (activeTab === 'myBets') loadMyBets();
     else if (activeTab === 'myPredictions') loadMyPredictions();
@@ -360,7 +367,7 @@ export default function VoteClient({ locale }: VoteClientProps) {
                     <span className="bg-ghost-grey/10 px-2 py-0.5 rounded">{pred.category}</span>
                     <span>{pred.totalPool.toLocaleString()} BP pool</span>
                     {pred.status === 'active' && (
-                      <span>{Math.ceil((new Date(pred.closesAt).getTime() - Date.now()) / 86400000)}d left</span>
+                      <span>{Math.ceil((new Date(pred.closesAt).getTime() - now) / 86400000)}d left</span>
                     )}
                     {pred.status === 'closed' && (
                       <span className="text-orange-400 font-bold">Needs settlement</span>

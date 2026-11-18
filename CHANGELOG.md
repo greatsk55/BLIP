@@ -4,6 +4,22 @@ All notable changes to BLIP are documented here.
 
 ---
 
+## v1.13.0 — November 19, 2026
+### Connections, privacy and release health
+- Invitation links now decode the shared password once on mobile and web; group/contact links are included in app-link routing.
+- Mobile room status updates include room authorization, preserving server access controls.
+- Independent persistent installation identities replace the shared timezone-derived points identifier. Shared old balances are not assigned to new identities.
+- The first screen no longer waits for optional advertising/analytics SDK initialization. All advertising formats wait for the consent decision.
+- Chat safety controls support explicit reports and closing the current room. Only user-selected recent text is retained as moderation evidence in private storage; this is not a global person block.
+- Updated privacy/deletion notices and restored reproducible native build/signing setup. Store approval and rollout are tracked separately from code verification.
+
+## v1.12.0 — March 31, 2026
+### Prediction UX & Stability Fix
+- **Splash screen fix** — Fixed a bug where the app kept looping back to the splash screen on auth state changes
+- **Active predictions first** — Non-expired votes now appear at the top of the prediction list
+- **Live odds in list** — YES/NO odds are now loaded and displayed directly in the prediction list view
+- Available on both web and mobile app
+
 ## v1.10.0 — March 26, 2026
 ### Prediction Game — Anonymous Point Voting
 - **Prediction Game** — Vote with BP (BLIP Points) on real-world outcomes. No accounts, fully anonymous
