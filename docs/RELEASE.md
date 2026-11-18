@@ -13,9 +13,11 @@ Use a clean checkout. Keep production keys and SDK configuration out of Git.
 
 ## Android signing
 
-The existing upload keystore is `/Users/sunggookkim/upload-keystore.jks`. Its working configuration was recovered from an external backup and saved privately at `/Users/sunggookkim/.config/blip/signing/key.properties` (mode 0600). Copy that configuration to `mobile/android/key.properties` on this Mac. Do not commit either file or put passwords in shell commands/logs. The original keystore was preserved; no upload-key reset was performed.
+Google rejected `/Users/sunggookkim/upload-keystore.jks` for BLIP: its SHA-1 starts `A6:22:9C`, while BLIP requires `95:CF:51:71:9D:53:D0:F9:C2:3B:90:E7:27:CC:A0:E7:66:13:ED:67`. Its recovered configuration is retained privately as `~/.config/blip/signing/rejected-home-key.properties`; do not use it for BLIP releases. The original keystore is unchanged.
 
-Run `flutter build appbundle --release`. Release tasks fail with an explicit message if the signing configuration is missing. Upload the resulting AAB as an update to `com.bakkum.blip`, never as a new app. Verify that Play accepts the existing upload certificate.
+A BLIP-only replacement key and its private configuration are prepared at `~/.config/blip/signing/blip-upload-20261119.jks` and `pending-key.properties` (mode 0600). Its public certificate is `~/Downloads/BLIP-upload-certificate-20261119.pem` (SHA-1 `50:D3:6E:F4:71:8B:DD:CB:84:BF:EC:93:1C:82:00:E0:28:48:76:4E`). No reset has been submitted. The owner must upload the public certificate and submit the prepared Play Console reset form. Wait for Google to confirm activation before copying the pending configuration to `mobile/android/key.properties` and rebuilding. Never commit signing secrets or print passwords in logs.
+
+Run `flutter build appbundle --release`. Release tasks fail with an explicit message if the signing configuration is missing. Upload the resulting AAB as an update to `com.bakkum.blip`, never as a new app. Verify that Play accepts the registered upload certificate. The rejected build did not publish an Android update.
 
 ## iOS
 
