@@ -411,16 +411,16 @@
         "content": "BLIP es un servicio de chat efímero gratuito, de código abierto y cifrado de extremo a extremo. Proporciona canales de comunicación temporales que se destruyen después del uso. BLIP no es un mensajero, red social ni plataforma de almacenamiento de datos. Es una herramienta de comunicación desechable."
       },
       "2": {
-        "title": "Sin Cuentas Necesarias",
-        "content": "BLIP funciona sin registro de usuario, credenciales de inicio de sesión ni perfiles personales. El acceso se otorga a través de enlaces de sala temporales y contraseñas compartidas. Eres responsable de proteger tus contraseñas de sala—no podemos recuperarlas."
+        "title": "Acceso y cuentas",
+        "content": "Los chats web y Android no requieren cuenta BLIP. iOS requiere iniciar sesión con Apple y conserva el ID y el correo si se proporciona. Las salas requieren invitación y contraseña compartida. No podemos recuperar claves perdidas."
       },
       "3": {
         "title": "Uso Aceptable",
         "content": "Aceptas no usar BLIP para: distribuir contenido ilegal, acoso o amenazas, transmisión de malware, spam automatizado o abuso, ni ninguna actividad que viole la ley aplicable. Aunque no podemos monitorear contenido cifrado, nos reservamos el derecho de restringir el acceso a nuestra infraestructura si se detecta abuso a nivel de red."
       },
       "4": {
-        "title": "Sin Recuperación de Datos",
-        "content": "Los mensajes no se almacenan en ninguna base de datos. Una vez que una sala de chat se destruye, todos los datos de conversación se pierden permanente e irreversiblemente. Esto es por diseño, no una limitación. No uses BLIP para comunicaciones que necesites preservar."
+        "title": "Mensajes y denuncias",
+        "content": "El historial normal de chat individual no se guarda en nuestra base de datos. Las publicaciones privadas se guardan cifradas. Solo se conservan para revisión humana los textos recientes que eliges adjuntar a una denuncia. Consulta la política de privacidad para cuentas, publicidad y análisis."
       },
       "5": {
         "title": "Código Abierto",

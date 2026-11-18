@@ -411,16 +411,16 @@
         "content": "BLIP est un service de chat éphémère gratuit, open source et chiffré de bout en bout. Il fournit des canaux de communication temporaires qui sont détruits après utilisation. BLIP n'est pas une messagerie, un réseau social ni une plateforme de stockage de données. C'est un outil de communication jetable."
       },
       "2": {
-        "title": "Aucun Compte Requis",
-        "content": "BLIP fonctionne sans inscription, identifiants de connexion ni profils personnels. L'accès est accordé via des liens de salon temporaires et des mots de passe partagés. Vous êtes responsable de la protection de vos mots de passe de salon—nous ne pouvons pas les récupérer."
+        "title": "Accès et comptes",
+        "content": "Les chats web et Android ne nécessitent pas de compte BLIP. iOS nécessite une connexion avec Apple et conserve l’identifiant et l’e-mail fourni. Les salons nécessitent une invitation et un mot de passe partagé. Les clés perdues ne peuvent pas être récupérées."
       },
       "3": {
         "title": "Utilisation Acceptable",
         "content": "Vous acceptez de ne pas utiliser BLIP pour : distribuer du contenu illégal, harceler ou menacer, transmettre des logiciels malveillants, envoyer du spam automatisé ou abuser, ni pour toute activité violant la loi applicable. Bien que nous ne puissions pas surveiller le contenu chiffré, nous nous réservons le droit de restreindre l'accès à notre infrastructure si un abus est détecté au niveau du réseau."
       },
       "4": {
-        "title": "Aucune Récupération de Données",
-        "content": "Les messages ne sont stockés dans aucune base de données. Une fois un salon de chat détruit, toutes les données de conversation sont perdues de manière permanente et irréversible. C'est par conception, pas une limitation. N'utilisez pas BLIP pour des communications que vous devez conserver."
+        "title": "Messages et signalements",
+        "content": "L’historique individuel ordinaire n’est pas conservé dans notre base de données. Les publications privées sont conservées chiffrées. Seuls les textes récents explicitement joints à un signalement sont conservés pour examen humain. Consultez la politique de confidentialité pour les comptes, la publicité et l’analyse."
       },
       "5": {
         "title": "Open Source",

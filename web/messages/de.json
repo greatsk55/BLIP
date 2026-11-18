@@ -411,16 +411,16 @@
         "content": "BLIP ist ein kostenloser, quelloffener, Ende-zu-Ende verschlüsselter ephemerer Chat-Dienst. Er bietet temporäre Kommunikationskanäle, die nach Gebrauch zerstört werden. BLIP ist kein Messenger, kein soziales Netzwerk und keine Datenspeicherplattform. Es ist ein Einweg-Kommunikationswerkzeug."
       },
       "2": {
-        "title": "Keine Konten erforderlich",
-        "content": "BLIP funktioniert ohne Benutzerregistrierung, Anmeldedaten oder persönliche Profile. Der Zugang wird über temporäre Raum-Links und geteilte Passwörter gewährt. Du bist für die Sicherung deiner Raum-Passwörter verantwortlich — wir können sie nicht wiederherstellen."
+        "title": "Zugang und Konten",
+        "content": "Web- und Android-Chats benötigen kein BLIP-Konto. iOS erfordert die Anmeldung mit Apple und speichert Konto-ID und gegebenenfalls E-Mail. Räume benötigen eine Einladung und ein gemeinsames Passwort. Verlorene Schlüssel können nicht wiederhergestellt werden."
       },
       "3": {
         "title": "Akzeptable Nutzung",
         "content": "Du stimmst zu, BLIP nicht zu verwenden für: Verbreitung illegaler Inhalte, Belästigung oder Drohungen, Übertragung von Malware, automatisierten Spam oder Missbrauch, oder jede Aktivität, die gegen geltendes Recht verstößt. Obwohl wir verschlüsselte Inhalte nicht überwachen können, behalten wir uns das Recht vor, den Zugang zu unserer Infrastruktur einzuschränken, wenn Missbrauch auf Netzwerkebene erkannt wird."
       },
       "4": {
-        "title": "Keine Datenwiederherstellung",
-        "content": "Nachrichten werden in keiner Datenbank gespeichert. Sobald ein Chatraum zerstört wird, sind alle Gesprächsdaten dauerhaft und unwiderruflich verloren. Das ist beabsichtigt, keine Einschränkung. Verwende BLIP nicht für Kommunikation, die du aufbewahren musst."
+        "title": "Nachrichten und Meldungen",
+        "content": "Normale Einzelchat-Verläufe werden nicht in unserer Datenbank gespeichert. Private Community-Beiträge werden verschlüsselt gespeichert. Nur ausdrücklich einer Meldung beigefügte aktuelle Texte werden zur menschlichen Prüfung aufbewahrt. Informationen zu Konto-, Werbe- und Analysedaten stehen in der Datenschutzerklärung."
       },
       "5": {
         "title": "Open Source",

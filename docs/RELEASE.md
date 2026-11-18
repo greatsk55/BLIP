@@ -30,3 +30,13 @@ Bundle ID `com.bakkum.blip`, team `95ERD9S934`. The project and Pods have a cons
 - Advertising and simulated betting with non-cash points are present. The iOS age questionnaire must reflect both. Current computed rating is 18+.
 - The iOS review notes must explain native Sign in with Apple and invitation-only room setup. Do not invent a demo username/password or remove authentication to match old metadata.
 - Recheck room authentication, invitation links, encrypted messages, safety reports, ending a room, startup without advertising SDK availability and points identity persistence before release.
+
+### Current Mac iOS signing
+
+The App Store profile `BLIP AppStore 2026-11-19` uses the existing BAKKUM distribution certificate and expires on 2027-05-19. The ignored file `mobile/ios/Flutter/Signing.xcconfig` supplies manual signing to the Runner release configuration only. Do not pass a provisioning profile globally to `xcodebuild`: Pods/framework targets do not use app provisioning profiles.
+
+The existing App Store Connect key is at `/Users/sunggookkim/.private_keys/AuthKey_9TA7V35A5U.p8`; access to BLIP was verified. Do not copy its contents into source or logs. Store submission also requires the owner's real review contact details.
+
+### Apple account deletion
+
+The server requires `APPLE_TEAM_ID`, `APPLE_CLIENT_ID` (`com.bakkum.blip`), `APPLE_KEY_ID` and `APPLE_PRIVATE_KEY` for Apple token revocation. Use a Sign in with Apple key configured for BLIP's primary App ID; APNs keys and keys configured for another primary app are not substitutes. A new BLIP key needs the owner's final security confirmation before registration. JWT signatures use raw 64-byte ES256 format, and Apple network calls have a timeout so an outage cannot leave deletion requests hanging.

@@ -413,16 +413,16 @@
         "content": "BLIP is a free, open-source, end-to-end encrypted ephemeral chat service. It provides temporary communication channels that are destroyed after use. BLIP is not a messenger, social network, or data storage platform. It's a disposable communication tool."
       },
       "2": {
-        "title": "No Accounts Required",
-        "content": "BLIP operates without user registration, login credentials, or personal profiles. Access is granted through temporary room links and shared passwords. You are responsible for safeguarding your room passwords—we cannot recover them."
+        "title": "Access and accounts",
+        "content": "Web and Android chats do not require a BLIP account. The iOS app requires Sign in with Apple and retains the account ID and email if provided. Rooms require an invitation and shared password; protect your keys because we cannot recover them."
       },
       "3": {
         "title": "Acceptable Use",
         "content": "You agree not to use BLIP for: distributing illegal content, harassment or threats, transmission of malware, automated spam or abuse, or any activity that violates applicable law. While we cannot monitor encrypted content, we reserve the right to restrict access to our infrastructure if abuse is detected at the network level."
       },
       "4": {
-        "title": "No Data Recovery",
-        "content": "Messages are not stored in any database. Once a chat room is destroyed, all conversation data is permanently and irreversibly lost. This is by design, not a limitation. Do not use BLIP for communications that you need to preserve."
+        "title": "Messages and reports",
+        "content": "Ordinary 1:1 chat history is not stored in our database. Private community posts are stored encrypted. Only recent text you explicitly choose to submit in a safety report is retained for human review. See the privacy policy for account, advertising and analytics data."
       },
       "5": {
         "title": "Open Source",
