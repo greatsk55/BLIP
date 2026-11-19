@@ -772,7 +772,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      'WebとAndroidのチャットにBLIPアカウントは不要です。iOSはAppleでのサインインが必要で、アカウントIDと提供されたメールアドレスを保持します。ルームへのアクセスには招待と共有パスワードが必要です。紛失したキーは復元できません。';
+      'BLIP 1.13は全プラットフォームでアカウント不要です。以前のiOS版で使われたApple連携IDと提供メールは削除まで保持されます。部屋には招待と共有パスワードが必要です。鍵は復元できないため大切に保管してください。';
 
   @override
   String get termsSection3Title => '許容される使用';
@@ -1219,4 +1219,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get safetyAdPrivacyUnavailable => 'この地域では追加の選択が不要か、設定を読み込み中です。';
+
+  @override
+  String get settingsDataDeletion => 'データ削除をリクエスト';
 }

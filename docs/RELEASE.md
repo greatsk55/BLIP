@@ -30,7 +30,7 @@ Bundle ID `com.bakkum.blip`, team `95ERD9S934`. The project and Pods have a cons
 - Publish the updated privacy/deletion page before submitting the data-safety change.
 - Mainland China sales were excluded by the owner on 2026-11-18. Do not submit fictitious regulatory certificates.
 - Advertising and simulated betting with non-cash points are present. The iOS age questionnaire must reflect both. Current computed rating is 18+.
-- The iOS review notes must explain native Sign in with Apple and invitation-only room setup. Do not invent a demo username/password or remove authentication to match old metadata.
+- BLIP 1.13 no longer requires an Apple account. History inspection found the gate was added with group chat, but no chat/board/points operation depends on the Apple identity. Existing sessions retain account-deletion controls; do not delete existing account records. Review notes must explain accountless invitation-only access and legacy deletion. See Apple guideline 5.1.1(v): https://developer.apple.com/app-store/review/guidelines/#data-collection-and-storage .
 - Recheck room authentication, invitation links, encrypted messages, safety reports, ending a room, startup without advertising SDK availability and points identity persistence before release.
 
 ### Current Mac iOS signing
@@ -41,4 +41,4 @@ The existing App Store Connect key is at `/Users/sunggookkim/.private_keys/AuthK
 
 ### Apple account deletion
 
-The server requires `APPLE_TEAM_ID`, `APPLE_CLIENT_ID` (`com.bakkum.blip`), `APPLE_KEY_ID` and `APPLE_PRIVATE_KEY` for Apple token revocation. Use a Sign in with Apple key configured for BLIP's primary App ID; APNs keys and keys configured for another primary app are not substitutes. A new BLIP key needs the owner's final security confirmation before registration. JWT signatures use raw 64-byte ES256 format, and Apple network calls have a timeout so an outage cannot leave deletion requests hanging.
+The server requires `APPLE_TEAM_ID`, `APPLE_CLIENT_ID` (`com.bakkum.blip`), `APPLE_KEY_ID` and `APPLE_PRIVATE_KEY` for Apple token revocation. Use a Sign in with Apple key configured for BLIP's primary App ID; APNs keys and keys configured for another primary app are not substitutes. The owner approved registering a BLIP-only key on 2026-11-19 for legacy account deletion. Registration still needs a valid Apple Developer session. JWT signatures use raw 64-byte ES256 format, and Apple network calls have a timeout so an outage cannot leave deletion requests hanging.

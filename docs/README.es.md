@@ -4,7 +4,7 @@
 
 🌐 [한국어](README.ko.md) | [English](../README.md) | [日本語](README.ja.md) | [中文](README.zh.md) | [Español](#) | [Français](README.fr.md)
 
-> La app de iOS requiere iniciar sesión con Apple. Los mensajes normales de chat individual son efímeros; las publicaciones privadas se guardan cifradas. Las pruebas enviadas voluntariamente en una denuncia pueden conservarse por separado. Consulta la política de privacidad para publicidad y análisis.
+> BLIP 1.13 funciona sin iniciar sesión en todas las plataformas y conserva la eliminación de cuentas Apple anteriores. Los mensajes normales de chat individual son efímeros; las publicaciones privadas se guardan cifradas. Las pruebas enviadas voluntariamente en una denuncia pueden conservarse por separado. Consulta la política de privacidad para publicidad y análisis.
 
 ---
 

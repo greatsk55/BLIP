@@ -795,7 +795,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      'Web and Android chats do not require a BLIP account. The iOS app requires Sign in with Apple and retains the account ID and email if provided. Rooms require an invitation and shared password; protect your keys because we cannot recover them.';
+      'BLIP 1.13 does not require an account on any platform. Older iOS versions used Apple sign-in; existing account IDs and supplied emails are retained until deletion. Rooms require an invitation and shared password. Protect your keys because we cannot recover them.';
 
   @override
   String get termsSection3Title => 'Acceptable Use';
@@ -1256,4 +1256,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get safetyAdPrivacyUnavailable =>
       'Ad privacy choices are not required here or are still loading.';
+
+  @override
+  String get settingsDataDeletion => 'Request data deletion';
 }

@@ -316,7 +316,7 @@
   "termsSection1Title": "BLIP이란",
   "termsSection1Content": "BLIP은 무료 오픈소스 종단간 암호화 일회용 채팅 서비스입니다. 사용 후 파기되는 임시 통신 채널을 제공합니다. BLIP은 메신저, 소셜 네트워크, 데이터 저장 플랫폼이 아닙니다. 쓰고 버리는 통신 도구입니다.",
   "termsSection2Title": "접근과 계정",
-  "termsSection2Content": "웹과 Android 채팅은 BLIP 계정이 필요 없습니다. iOS 앱은 Apple 로그인이 필요하며 계정 ID와 제공된 경우 이메일을 보관합니다. 대화방은 초대와 공유 비밀번호로 접근합니다. 키를 잃으면 복구할 수 없습니다.",
+  "termsSection2Content": "BLIP 1.13부터 모든 플랫폼에서 계정 없이 사용할 수 있습니다. 이전 iOS 버전의 Apple 연결 계정 ID와 제공된 이메일은 삭제할 때까지 보관합니다. 대화방은 초대와 공유 비밀번호로 접근합니다. 키를 잃으면 복구할 수 없습니다.",
   "termsSection3Title": "허용되는 사용",
   "termsSection3Content": "다음 목적으로 BLIP을 사용하지 않을 것에 동의합니다: 불법 콘텐츠 배포, 괴롭힘이나 위협, 악성 소프트웨어 전송, 자동화된 스팸 또는 남용, 관련 법률을 위반하는 활동.",
   "termsSection4Title": "메시지와 신고 보관",
@@ -469,5 +469,6 @@
   "safetyBlockNotice": "모든 참여자의 방이 종료되고 이 초대 링크로 다시 들어올 수 없게 됩니다. 다른 방에서의 상대방까지 차단하지는 않습니다.",
   "safetyClose": "닫기",
   "safetyAdPrivacy": "광고 개인정보 선택",
-  "safetyAdPrivacyUnavailable": "현재 지역에서는 추가 선택이 필요하지 않거나 광고 설정을 준비 중입니다."
+  "safetyAdPrivacyUnavailable": "현재 지역에서는 추가 선택이 필요하지 않거나 광고 설정을 준비 중입니다.",
+  "settingsDataDeletion": "데이터 삭제 요청"
 }

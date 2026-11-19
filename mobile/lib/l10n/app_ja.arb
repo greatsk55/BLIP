@@ -314,7 +314,7 @@
   "termsSection1Title": "BLIPとは",
   "termsSection1Content": "BLIPは無料のオープンソース、エンドツーエンド暗号化の使い捨てチャットサービスです。使用後に破棄される一時的な通信チャネルを提供します。",
   "termsSection2Title": "アクセスとアカウント",
-  "termsSection2Content": "WebとAndroidのチャットにBLIPアカウントは不要です。iOSはAppleでのサインインが必要で、アカウントIDと提供されたメールアドレスを保持します。ルームへのアクセスには招待と共有パスワードが必要です。紛失したキーは復元できません。",
+  "termsSection2Content": "BLIP 1.13は全プラットフォームでアカウント不要です。以前のiOS版で使われたApple連携IDと提供メールは削除まで保持されます。部屋には招待と共有パスワードが必要です。鍵は復元できないため大切に保管してください。",
   "termsSection3Title": "許容される使用",
   "termsSection3Content": "BLIPを違法コンテンツの配布、ハラスメント、マルウェアの送信、自動スパム、または法律に違反する活動に使用しないことに同意します。",
   "termsSection4Title": "メッセージと通報の保管",
@@ -469,5 +469,6 @@
   "chatMediaAttachAllFiles": "ファイルを添付",
   "chatMediaDownloadFile": "ダウンロード",
   "blipMeWidgetPrompt": "リンクを共有してチャットを始めましょう",
-  "blipMeWidgetConnections": "件の接続"
+  "blipMeWidgetConnections": "件の接続",
+  "settingsDataDeletion": "データ削除をリクエスト"
 }

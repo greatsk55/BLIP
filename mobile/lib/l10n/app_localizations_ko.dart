@@ -774,7 +774,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      '웹과 Android 채팅은 BLIP 계정이 필요 없습니다. iOS 앱은 Apple 로그인이 필요하며 계정 ID와 제공된 경우 이메일을 보관합니다. 대화방은 초대와 공유 비밀번호로 접근합니다. 키를 잃으면 복구할 수 없습니다.';
+      'BLIP 1.13부터 모든 플랫폼에서 계정 없이 사용할 수 있습니다. 이전 iOS 버전의 Apple 연결 계정 ID와 제공된 이메일은 삭제할 때까지 보관합니다. 대화방은 초대와 공유 비밀번호로 접근합니다. 키를 잃으면 복구할 수 없습니다.';
 
   @override
   String get termsSection3Title => '허용되는 사용';
@@ -1222,4 +1222,7 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get safetyAdPrivacyUnavailable =>
       '현재 지역에서는 추가 선택이 필요하지 않거나 광고 설정을 준비 중입니다.';
+
+  @override
+  String get settingsDataDeletion => '데이터 삭제 요청';
 }

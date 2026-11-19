@@ -95,7 +95,8 @@
         "changes": {
           "1": "Fixed invitation passwords and authenticated room updates.",
           "2": "Added optional abuse reports and the ability to close the current room.",
-          "3": "Improved startup reliability, advertising privacy choices and independent installation identities."
+          "3": "Improved startup reliability, advertising privacy choices and independent installation identities.",
+          "4": "Removed required iOS sign-in; existing Apple account deletion remains available."
         }
       },
       "1": {
@@ -360,8 +361,8 @@
   "Privacy": {
     "title": "Privacy Policy",
     "subtitle": "Privacy and data use",
-    "lastUpdated": "2026-11-18",
-    "intro": "BLIP protects ordinary chat messages with end-to-end encryption. This policy also describes account, connection, advertising, analytics and support data. Web and Android chat do not require an account; the iOS app uses Sign in with Apple.",
+    "lastUpdated": "2026-11-19",
+    "intro": "BLIP 1.13 removes required sign-in on iOS. Chat works without an account on every platform. This policy also explains connection, advertising, analytics, support and legacy Apple account data.",
     "sections": {
       "1": {
         "title": "Encrypted conversations",
@@ -373,7 +374,7 @@
       },
       "3": {
         "title": "Accounts and community data",
-        "content": "The iOS app uses Apple sign-in. Supabase stores the Apple-linked user ID and email if Apple supplies it. Community posts, comments and author labels are stored as ciphertext until removed. Invite metadata and prediction balances and votes are stored for their features."
+        "content": "Earlier iOS versions used Sign in with Apple. Supabase retains the existing Apple-linked user ID and supplied email until deletion; the current app does not create new sign-in accounts. Community posts, comments and author labels are stored encrypted until removed. Invitation data, prediction balances and votes are stored for their features."
       },
       "4": {
         "title": "Device storage and anonymous points",
@@ -389,7 +390,7 @@
       },
       "7": {
         "title": "Your choices",
-        "content": "Use device advertising and notification settings and the app’s ad privacy choices where available. You can clear local app data and saved keys. iOS users can delete their sign-in account in Settings. Community administrators can remove community data."
+        "content": "Use device advertising and notification settings and in-app ad privacy choices where available. You can clear local app data and saved keys. Previously signed-in iOS users can delete their existing account in Settings; other deletion requests can use the contact below. Community administrators can remove community data."
       },
       "8": {
         "title": "Request data deletion",
@@ -414,7 +415,7 @@
       },
       "2": {
         "title": "Access and accounts",
-        "content": "Web and Android chats do not require a BLIP account. The iOS app requires Sign in with Apple and retains the account ID and email if provided. Rooms require an invitation and shared password; protect your keys because we cannot recover them."
+        "content": "BLIP 1.13 does not require an account on any platform. Older iOS versions used Apple sign-in; existing account IDs and supplied emails are retained until deletion. Rooms require an invitation and shared password. Protect your keys because we cannot recover them."
       },
       "3": {
         "title": "Acceptable Use",

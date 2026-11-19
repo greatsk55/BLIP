@@ -807,7 +807,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      'Les chats web et Android ne nécessitent pas de compte BLIP. iOS nécessite une connexion avec Apple et conserve l’identifiant et l’e-mail fourni. Les salons nécessitent une invitation et un mot de passe partagé. Les clés perdues ne peuvent pas être récupérées.';
+      'BLIP 1.13 ne nécessite aucun compte sur toutes les plateformes. Les identifiants et e-mails fournis par l’ancienne connexion Apple sont conservés jusqu’à suppression. Les salons nécessitent une invitation et un mot de passe partagé. Protégez vos clés : nous ne pouvons pas les récupérer.';
 
   @override
   String get termsSection3Title => 'Utilisation acceptable';
@@ -1272,4 +1272,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get safetyAdPrivacyUnavailable =>
       'Aucun choix supplémentaire requis ici, ou chargement en cours.';
+
+  @override
+  String get settingsDataDeletion => 'Demander la suppression des données';
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -76,6 +77,16 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.info_outline),
             title: Text(l10n.settingsAbout),
             subtitle: const Text('BLIP'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: Text(l10n.settingsDataDeletion),
+            onTap: () => launchUrl(
+              Uri.parse(
+                'https://blip-blip.vercel.app/${Localizations.localeOf(context).toLanguageTag()}/privacy#data-deletion',
+              ),
+              mode: LaunchMode.externalApplication,
+            ),
           ),
 
           // ─── Account (iOS only) ───
@@ -155,7 +166,7 @@ class _AccountSectionState extends State<_AccountSection> {
 
   Future<void> _signOut() async {
     await AuthService.instance.signOut();
-    if (mounted) context.go('/login');
+    if (mounted) context.go('/');
   }
 
   Future<void> _deleteAccount() async {
@@ -187,7 +198,7 @@ class _AccountSectionState extends State<_AccountSection> {
 
     try {
       await AuthService.instance.deleteAccount();
-      if (mounted) context.go('/login');
+      if (mounted) context.go('/');
     } catch (e) {
       if (mounted) {
         setState(() => _deleting = false);

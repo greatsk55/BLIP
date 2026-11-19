@@ -764,7 +764,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      '网页和 Android 聊天不需要 BLIP 账户。iOS 需要通过 Apple 登录，并保留账户 ID 和提供的邮箱。进入房间需要邀请和共享密码，丢失的密钥无法恢复。';
+      'BLIP 1.13在所有平台均无需账号。旧版iOS的Apple关联用户ID和已提供的邮箱会保留至删除。进入房间需要邀请和共享密码。请保管好密钥，因为我们无法恢复。';
 
   @override
   String get termsSection3Title => '可接受的使用';
@@ -1203,6 +1203,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get safetyAdPrivacyUnavailable => '此地区无需额外选择，或广告设置仍在加载。';
+
+  @override
+  String get settingsDataDeletion => '请求删除数据';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1965,7 +1968,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get termsSection2Content =>
-      '網頁和 Android 聊天不需要 BLIP 帳號。iOS 需要透過 Apple 登入，並保留帳號 ID 和提供的電子郵件。進入房間需要邀請與共享密碼，遺失的金鑰無法復原。';
+      'BLIP 1.13在所有平台均無需帳號。舊版iOS的Apple關聯ID及已提供的電子郵件會保留至刪除。進入房間需要邀請及共享密碼。請妥善保存金鑰，因為我們無法復原。';
 
   @override
   String get termsSection3Title => '可接受的使用';
@@ -2404,4 +2407,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get safetyAdPrivacyUnavailable => '此地區無須額外選擇，或廣告設定仍在載入。';
+
+  @override
+  String get settingsDataDeletion => '要求刪除資料';
 }

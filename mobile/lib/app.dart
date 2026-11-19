@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,8 +11,6 @@ import 'core/storage/local_storage_service.dart';
 import 'core/storage/models/saved_room.dart';
 import 'core/services/analytics_service.dart';
 import 'core/security/security_overlay.dart';
-import 'features/auth/presentation/login_screen.dart';
-import 'features/auth/providers/auth_provider.dart';
 import 'features/splash/presentation/splash_screen.dart';
 import 'features/home/presentation/home_screen.dart';
 import 'features/chat/presentation/chat_screen.dart';
@@ -43,48 +39,17 @@ final _validUuidPattern = RegExp(
   r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
 );
 
-/// auth 상태 변경 시 GoRouter redirect만 재평가 (GoRouter 재생성 방지)
-class _RouterRefreshNotifier extends ChangeNotifier {
-  void refresh() => notifyListeners();
-}
-
+/// Chat authorization comes from room keys; an Apple account is not required.
 final routerProvider = Provider<GoRouter>((ref) {
-  final refreshNotifier = _RouterRefreshNotifier();
-  ref.listen(authStateProvider, (_, _) {
-    refreshNotifier.refresh();
-  });
-  ref.onDispose(refreshNotifier.dispose);
-  return _buildRouter(ref, refreshNotifier);
+  final router = _buildRouter();
+  ref.onDispose(router.dispose);
+  return router;
 });
 
-GoRouter _buildRouter(Ref ref, Listenable refreshListenable) => GoRouter(
+GoRouter _buildRouter() => GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
   observers: [AnalyticsService.instance.observer],
-  refreshListenable: refreshListenable,
-  redirect: (context, state) {
-    final isLoggedIn = ref.read(isLoggedInProvider);
-    final isOnLogin = state.matchedLocation == '/login';
-    final isOnSplash = state.matchedLocation == '/splash';
-
-    // 스플래시는 항상 허용
-    if (isOnSplash) return null;
-    // Android는 로그인 불필요 — iOS만 Apple Sign In 적용
-    if (!Platform.isIOS) {
-      if (isOnLogin) return '/';
-      return null;
-    }
-    // iOS: 미로그인 → 로그인 화면으로
-    if (!isLoggedIn && !isOnLogin) {
-      return Uri(path: '/login', queryParameters: {'from': state.uri.toString()}).toString();
-    }
-    // iOS: 로그인 상태인데 로그인 화면 → 홈으로
-    if (isLoggedIn && isOnLogin) {
-      return safePostLoginPath(state.uri.queryParameters['from']);
-    }
-
-    return null;
-  },
   routes: [
     // ── 스플래시 (브랜드 인트로) ──
     GoRoute(
@@ -92,11 +57,11 @@ GoRouter _buildRouter(Ref ref, Listenable refreshListenable) => GoRouter(
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const SplashScreen(),
     ),
-    // ── 로그인 ──
+    // Previously saved login redirects still resume the complete invitation.
     GoRoute(
       path: '/login',
-      parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) => const LoginScreen(),
+      redirect: (context, state) =>
+          safePostLoginPath(state.uri.queryParameters['from']),
     ),
     // ── 바텀 네비게이션 Shell (4탭) ──
     StatefulShellRoute.indexedStack(

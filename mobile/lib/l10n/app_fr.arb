@@ -314,7 +314,7 @@
   "termsSection1Title": "Qu'est-ce que BLIP",
   "termsSection1Content": "BLIP est un service de chat éphémère gratuit, open source et chiffré de bout en bout. Il fournit des canaux de communication temporaires détruits après utilisation.",
   "termsSection2Title": "Accès et comptes",
-  "termsSection2Content": "Les chats web et Android ne nécessitent pas de compte BLIP. iOS nécessite une connexion avec Apple et conserve l’identifiant et l’e-mail fourni. Les salons nécessitent une invitation et un mot de passe partagé. Les clés perdues ne peuvent pas être récupérées.",
+  "termsSection2Content": "BLIP 1.13 ne nécessite aucun compte sur toutes les plateformes. Les identifiants et e-mails fournis par l’ancienne connexion Apple sont conservés jusqu’à suppression. Les salons nécessitent une invitation et un mot de passe partagé. Protégez vos clés : nous ne pouvons pas les récupérer.",
   "termsSection3Title": "Utilisation acceptable",
   "termsSection3Content": "Vous acceptez de ne pas utiliser BLIP pour : distribuer du contenu illégal, du harcèlement, de la transmission de logiciels malveillants, du spam automatisé ou toute activité violant la loi.",
   "termsSection4Title": "Messages et signalements",
@@ -469,5 +469,6 @@
   "chatMediaAttachAllFiles": "Joindre un fichier",
   "chatMediaDownloadFile": "Télécharger",
   "blipMeWidgetPrompt": "Partagez votre lien pour démarrer une discussion",
-  "blipMeWidgetConnections": "connexions"
+  "blipMeWidgetConnections": "connexions",
+  "settingsDataDeletion": "Demander la suppression des données"
 }

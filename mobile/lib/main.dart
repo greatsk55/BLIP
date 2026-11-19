@@ -14,7 +14,7 @@ import 'core/services/analytics_service.dart';
 import 'core/supabase/supabase_client.dart';
 import 'core/widgets/deferred_startup.dart';
 
-void main() async {
+Future<void> main() async {
   // 최상위 에러 핸들러 — 어떤 초기화가 실패해도 앱은 열려야 함
   FlutterError.onError = (details) {
     FlutterError.presentError(details);

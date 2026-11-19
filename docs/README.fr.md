@@ -4,7 +4,7 @@
 
 🌐 [한국어](README.ko.md) | [English](../README.md) | [日本語](README.ja.md) | [中文](README.zh.md) | [Español](README.es.md) | [Français](#)
 
-> L’app iOS nécessite une connexion avec Apple. Les messages individuels ordinaires sont éphémères ; les publications privées sont conservées chiffrées. Les preuves de signalement explicitement envoyées peuvent être conservées séparément. Consultez la politique de confidentialité pour les données publicitaires et analytiques.
+> BLIP 1.13 fonctionne sans connexion sur toutes les plateformes et conserve la suppression des anciens comptes Apple. Les messages individuels ordinaires sont éphémères ; les publications privées sont conservées chiffrées. Les preuves de signalement explicitement envoyées peuvent être conservées séparément. Consultez la politique de confidentialité pour les données publicitaires et analytiques.
 
 ---
 

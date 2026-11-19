@@ -807,7 +807,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get termsSection2Content =>
-      'Web- und Android-Chats benötigen kein BLIP-Konto. iOS erfordert die Anmeldung mit Apple und speichert Konto-ID und gegebenenfalls E-Mail. Räume benötigen eine Einladung und ein gemeinsames Passwort. Verlorene Schlüssel können nicht wiederhergestellt werden.';
+      'BLIP 1.13 benötigt auf keiner Plattform ein Konto. IDs und bereitgestellte E-Mail-Adressen der früheren Apple-Anmeldung bleiben bis zur Löschung gespeichert. Räume benötigen eine Einladung und ein gemeinsames Passwort. Bewahren Sie Schlüssel sicher auf, da wir sie nicht wiederherstellen können.';
 
   @override
   String get termsSection3Title => 'Akzeptable Nutzung';
@@ -1271,4 +1271,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get safetyAdPrivacyUnavailable =>
       'Hier sind keine weiteren Angaben nötig oder sie werden noch geladen.';
+
+  @override
+  String get settingsDataDeletion => 'Datenlöschung anfordern';
 }

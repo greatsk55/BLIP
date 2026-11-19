@@ -95,7 +95,8 @@
         "changes": {
           "1": "Einladungspasswörter und authentifizierte Raumaktualisierungen korrigiert.",
           "2": "Optionale Meldungen und das Schließen des aktuellen Raums hinzugefügt.",
-          "3": "App-Start, Werbedatenschutz und unabhängige Installationskennungen verbessert."
+          "3": "App-Start, Werbedatenschutz und unabhängige Installationskennungen verbessert.",
+          "4": "Pflichtanmeldung unter iOS entfernt; bestehende Apple-Konten können weiterhin gelöscht werden."
         }
       },
       "1": {
@@ -358,8 +359,8 @@
   "Privacy": {
     "title": "Datenschutzerklärung",
     "subtitle": "Datenschutz und Datennutzung",
-    "lastUpdated": "2026-11-18",
-    "intro": "Normale Chats sind Ende-zu-Ende-verschlüsselt. Diese Erklärung behandelt auch Konten, Verbindungen, Werbung, Analyse und Support. Web und Android benötigen kein Konto; iOS verwendet Mit Apple anmelden.",
+    "lastUpdated": "2026-11-19",
+    "intro": "BLIP 1.13 entfernt die verpflichtende Anmeldung unter iOS. Chats benötigen auf keiner Plattform ein Konto. Diese Erklärung beschreibt auch Verbindungs-, Werbe-, Analyse-, Supportdaten und frühere Apple-Konten.",
     "sections": {
       "1": {
         "title": "Verschlüsselte Gespräche",
@@ -371,7 +372,7 @@
       },
       "3": {
         "title": "Konten und Communitys",
-        "content": "Supabase speichert die Apple-verknüpfte Nutzer-ID und gegebenenfalls die von Apple gelieferte E-Mail-Adresse für iOS. Beiträge, Kommentare und Autorennamen bleiben bis zur Löschung verschlüsselt gespeichert. Einladungen, Punkte und Stimmen werden für ihre Funktionen aufbewahrt."
+        "content": "Frühere iOS-Versionen verwendeten Mit Apple anmelden. Supabase speichert bestehende verknüpfte IDs und bereitgestellte E-Mail-Adressen bis zur Löschung; die aktuelle App erstellt keine neuen Anmeldekonten. Community-Beiträge, Kommentare und Autorennamen bleiben bis zur Löschung verschlüsselt gespeichert. Einladungen, Punktestände und Abstimmungen werden für ihre Funktionen gespeichert."
       },
       "4": {
         "title": "Lokaler Speicher und Punkte",
@@ -387,7 +388,7 @@
       },
       "7": {
         "title": "Ihre Möglichkeiten",
-        "content": "Nutzen Sie die Werbe- und Benachrichtigungseinstellungen des Systems und die Datenschutzoptionen für Werbung in der App. Lokale Daten und Schlüssel lassen sich löschen. iOS-Konten können in Einstellungen gelöscht werden. Administratoren können Community-Daten entfernen."
+        "content": "Nutzen Sie die Werbe- und Mitteilungseinstellungen des Geräts sowie verfügbare Datenschutzoptionen der App. Lokale Daten und gespeicherte Schlüssel können gelöscht werden. Bereits angemeldete iOS-Nutzer können ihr bisheriges Konto in den Einstellungen löschen; andere Löschanfragen können an den unten genannten Kontakt gehen. Administratoren können Community-Daten entfernen."
       },
       "8": {
         "title": "Datenlöschung beantragen",
@@ -412,7 +413,7 @@
       },
       "2": {
         "title": "Zugang und Konten",
-        "content": "Web- und Android-Chats benötigen kein BLIP-Konto. iOS erfordert die Anmeldung mit Apple und speichert Konto-ID und gegebenenfalls E-Mail. Räume benötigen eine Einladung und ein gemeinsames Passwort. Verlorene Schlüssel können nicht wiederhergestellt werden."
+        "content": "BLIP 1.13 benötigt auf keiner Plattform ein Konto. IDs und bereitgestellte E-Mail-Adressen der früheren Apple-Anmeldung bleiben bis zur Löschung gespeichert. Räume benötigen eine Einladung und ein gemeinsames Passwort. Bewahren Sie Schlüssel sicher auf, da wir sie nicht wiederherstellen können."
       },
       "3": {
         "title": "Akzeptable Nutzung",

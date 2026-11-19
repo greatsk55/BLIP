@@ -509,7 +509,7 @@
   "termsSection1Title": "BLIP是什麼",
   "termsSection1Content": "BLIP是一個免費的開源端對端加密臨時聊天服務。它提供使用後即銷毀的臨時通訊頻道。",
   "termsSection2Title": "存取與帳號",
-  "termsSection2Content": "網頁和 Android 聊天不需要 BLIP 帳號。iOS 需要透過 Apple 登入，並保留帳號 ID 和提供的電子郵件。進入房間需要邀請與共享密碼，遺失的金鑰無法復原。",
+  "termsSection2Content": "BLIP 1.13在所有平台均無需帳號。舊版iOS的Apple關聯ID及已提供的電子郵件會保留至刪除。進入房間需要邀請及共享密碼。請妥善保存金鑰，因為我們無法復原。",
   "termsSection3Title": "可接受的使用",
   "termsSection3Content": "你同意不將BLIP用於：散布非法內容、騷擾或威脅、傳播惡意軟體、自動垃圾訊息或濫用，或任何違反法律的活動。",
   "termsSection4Title": "訊息與檢舉儲存",
@@ -664,5 +664,6 @@
   "chatMediaAttachAllFiles": "附加檔案",
   "chatMediaDownloadFile": "下載",
   "blipMeWidgetPrompt": "分享你的連結，開始聊天",
-  "blipMeWidgetConnections": "次連線"
+  "blipMeWidgetConnections": "次連線",
+  "settingsDataDeletion": "要求刪除資料"
 }

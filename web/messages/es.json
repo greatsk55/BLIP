@@ -95,7 +95,8 @@
         "changes": {
           "1": "Corregimos las contraseñas de invitación y las actualizaciones autenticadas de las salas.",
           "2": "Añadimos denuncias opcionales y la posibilidad de cerrar la sala actual.",
-          "3": "Mejoramos el inicio, las opciones de privacidad publicitaria y la identidad de cada instalación."
+          "3": "Mejoramos el inicio, las opciones de privacidad publicitaria y la identidad de cada instalación.",
+          "4": "Eliminado el acceso obligatorio en iOS; se mantiene la eliminación de cuentas Apple anteriores."
         }
       },
       "1": {
@@ -358,8 +359,8 @@
   "Privacy": {
     "title": "Política de privacidad",
     "subtitle": "Privacidad y uso de datos",
-    "lastUpdated": "2026-11-18",
-    "intro": "El chat normal usa cifrado de extremo a extremo. Esta política también cubre cuentas, conexiones, anuncios, analítica y soporte. Web y Android no requieren cuenta; iOS usa Iniciar sesión con Apple.",
+    "lastUpdated": "2026-11-19",
+    "intro": "BLIP 1.13 elimina el inicio de sesión obligatorio en iOS. El chat no requiere cuenta en ninguna plataforma. Esta política también explica los datos de conexión, publicidad, análisis, soporte y cuentas Apple anteriores.",
     "sections": {
       "1": {
         "title": "Conversaciones cifradas",
@@ -371,7 +372,7 @@
       },
       "3": {
         "title": "Cuentas y comunidades",
-        "content": "Supabase almacena el ID de usuario vinculado a Apple y el correo si Apple lo facilita en iOS. Publicaciones, comentarios y nombres de autor se guardan cifrados hasta su eliminación. Se conservan invitaciones, puntos y votos para sus funciones."
+        "content": "Las versiones anteriores de iOS usaban Iniciar sesión con Apple. Supabase conserva el ID vinculado y el correo proporcionado hasta su eliminación; la aplicación actual no crea nuevas cuentas de acceso. Las publicaciones, comentarios y etiquetas de autor se guardan cifrados hasta su eliminación. También se guardan invitaciones, saldos y votos para sus funciones."
       },
       "4": {
         "title": "Almacenamiento local y puntos",
@@ -387,7 +388,7 @@
       },
       "7": {
         "title": "Tus opciones",
-        "content": "Usa los ajustes de anuncios y notificaciones del sistema y las opciones de privacidad publicitaria de la app. Puedes borrar datos locales y claves. En iOS puedes eliminar la cuenta desde Ajustes. El administrador puede borrar una comunidad."
+        "content": "Puedes usar los ajustes de publicidad y notificaciones del dispositivo y las opciones de privacidad publicitaria disponibles. Puedes borrar datos locales y claves guardadas. Los usuarios de iOS que ya iniciaron sesión pueden eliminar su cuenta anterior en Ajustes; otras solicitudes pueden usar el contacto indicado abajo. Los administradores pueden eliminar datos comunitarios."
       },
       "8": {
         "title": "Solicitar la eliminación",
@@ -412,7 +413,7 @@
       },
       "2": {
         "title": "Acceso y cuentas",
-        "content": "Los chats web y Android no requieren cuenta BLIP. iOS requiere iniciar sesión con Apple y conserva el ID y el correo si se proporciona. Las salas requieren invitación y contraseña compartida. No podemos recuperar claves perdidas."
+        "content": "BLIP 1.13 no exige una cuenta en ninguna plataforma. Los ID y correos proporcionados por el antiguo acceso con Apple se conservan hasta su eliminación. Las salas requieren invitación y contraseña compartida. Protege tus claves: no podemos recuperarlas."
       },
       "3": {
         "title": "Uso Aceptable",

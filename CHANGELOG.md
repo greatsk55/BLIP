@@ -6,6 +6,7 @@ All notable changes to BLIP are documented here.
 
 ## v1.13.0 — November 19, 2026
 ### Connections, privacy and release health
+- Removed required iOS sign-in. Existing Apple sessions retain account-deletion controls; room authentication remains based on room keys.
 - Invitation links now decode the shared password once on mobile and web; group/contact links are included in app-link routing.
 - Mobile room status updates include room authorization, preserving server access controls.
 - Independent persistent installation identities replace the shared timezone-derived points identifier. Shared old balances are not assigned to new identities.

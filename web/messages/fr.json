@@ -95,7 +95,8 @@
         "changes": {
           "1": "Correction des mots de passe d’invitation et des mises à jour authentifiées des salons.",
           "2": "Ajout de signalements facultatifs et de la fermeture du salon en cours.",
-          "3": "Amélioration du démarrage, des choix publicitaires et des identifiants propres à chaque installation."
+          "3": "Amélioration du démarrage, des choix publicitaires et des identifiants propres à chaque installation.",
+          "4": "Connexion obligatoire supprimée sur iOS ; suppression des anciens comptes Apple conservée."
         }
       },
       "1": {
@@ -358,8 +359,8 @@
   "Privacy": {
     "title": "Politique de confidentialité",
     "subtitle": "Confidentialité et données",
-    "lastUpdated": "2026-11-18",
-    "intro": "Le chat ordinaire est chiffré de bout en bout. Cette politique couvre aussi comptes, connexions, publicité, analyse et assistance. Le Web et Android ne nécessitent pas de compte ; iOS utilise Se connecter avec Apple.",
+    "lastUpdated": "2026-11-19",
+    "intro": "BLIP 1.13 supprime la connexion obligatoire sur iOS. Le chat fonctionne sans compte sur toutes les plateformes. Cette politique décrit aussi les données de connexion, publicité, analyse, assistance et anciens comptes Apple.",
     "sections": {
       "1": {
         "title": "Conversations chiffrées",
@@ -371,7 +372,7 @@
       },
       "3": {
         "title": "Comptes et communautés",
-        "content": "Supabase conserve l’identifiant lié à Apple et l’adresse e-mail si Apple la fournit sur iOS. Publications, commentaires et noms sont stockés chiffrés jusqu’à suppression. Invitations, points et votes sont conservés pour leurs fonctions."
+        "content": "Les anciennes versions iOS utilisaient Se connecter avec Apple. Supabase conserve les identifiants liés et les e-mails fournis jusqu’à leur suppression ; l’application actuelle ne crée plus de nouveaux comptes de connexion. Les publications, commentaires et noms d’auteur sont conservés chiffrés jusqu’à suppression. Les invitations, soldes et votes sont aussi conservés pour leurs fonctions."
       },
       "4": {
         "title": "Stockage local et points",
@@ -387,7 +388,7 @@
       },
       "7": {
         "title": "Vos choix",
-        "content": "Utilisez les réglages système de publicité et notifications et les options de confidentialité publicitaire. Vous pouvez effacer données locales et clés. Sur iOS, le compte peut être supprimé dans Réglages. L’administrateur peut supprimer la communauté."
+        "content": "Utilisez les réglages de publicité et de notifications du système et les options publicitaires disponibles dans l’application. Vous pouvez effacer les données locales et clés enregistrées. Les utilisateurs iOS déjà connectés peuvent supprimer leur ancien compte dans Réglages ; les autres demandes peuvent utiliser le contact ci-dessous. Les administrateurs peuvent supprimer les données communautaires."
       },
       "8": {
         "title": "Demander la suppression",
@@ -412,7 +413,7 @@
       },
       "2": {
         "title": "Accès et comptes",
-        "content": "Les chats web et Android ne nécessitent pas de compte BLIP. iOS nécessite une connexion avec Apple et conserve l’identifiant et l’e-mail fourni. Les salons nécessitent une invitation et un mot de passe partagé. Les clés perdues ne peuvent pas être récupérées."
+        "content": "BLIP 1.13 ne nécessite aucun compte sur toutes les plateformes. Les identifiants et e-mails fournis par l’ancienne connexion Apple sont conservés jusqu’à suppression. Les salons nécessitent une invitation et un mot de passe partagé. Protégez vos clés : nous ne pouvons pas les récupérer."
       },
       "3": {
         "title": "Utilisation Acceptable",

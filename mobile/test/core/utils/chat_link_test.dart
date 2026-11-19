@@ -2,7 +2,7 @@ import 'package:blip/core/utils/chat_link.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Apple login preserves the complete local invitation and rejects external redirects', () {
+  test('Legacy login redirects preserve the complete local invitation and rejects external redirects', () {
     const invitation = '/ko/group/ABCDEF12#k=AB%2BCD%2FEF%3D%3D';
     final login = Uri(path: '/login', queryParameters: {'from': invitation});
     expect(safePostLoginPath(login.queryParameters['from']), invitation);

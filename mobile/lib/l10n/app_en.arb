@@ -523,7 +523,7 @@
   "@termsSection1Content": { "description": "Terms section 1 content" },
   "termsSection2Title": "Access and accounts",
   "@termsSection2Title": { "description": "Terms section 2 title" },
-  "termsSection2Content": "Web and Android chats do not require a BLIP account. The iOS app requires Sign in with Apple and retains the account ID and email if provided. Rooms require an invitation and shared password; protect your keys because we cannot recover them.",
+  "termsSection2Content": "BLIP 1.13 does not require an account on any platform. Older iOS versions used Apple sign-in; existing account IDs and supplied emails are retained until deletion. Rooms require an invitation and shared password. Protect your keys because we cannot recover them.",
   "@termsSection2Content": { "description": "Terms section 2 content" },
   "termsSection3Title": "Acceptable Use",
   "@termsSection3Title": { "description": "Terms section 3 title" },
@@ -793,5 +793,6 @@
   "safetyBlockNotice": "This closes the room for everyone and prevents re-entry with this invitation. It does not block the person in other rooms.",
   "safetyClose": "Close",
   "safetyAdPrivacy": "Ad privacy choices",
-  "safetyAdPrivacyUnavailable": "Ad privacy choices are not required here or are still loading."
+  "safetyAdPrivacyUnavailable": "Ad privacy choices are not required here or are still loading.",
+  "settingsDataDeletion": "Request data deletion"
 }

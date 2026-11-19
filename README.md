@@ -4,7 +4,7 @@
 
 🌐 [한국어](docs/README.ko.md) | [English](#) | [日本語](docs/README.ja.md) | [中文](docs/README.zh.md) | [Español](docs/README.es.md) | [Français](docs/README.fr.md)
 
-> iOS requires Sign in with Apple. Ordinary 1:1 text is ephemeral; private community posts are stored encrypted. Explicitly submitted abuse evidence is a separate exception. Advertising and analytics data are described in the privacy policy. See [release setup](docs/RELEASE.md).
+> BLIP 1.13 works without sign-in on iOS, Android and web. Existing Apple accounts retain deletion controls. Ordinary 1:1 text is ephemeral; private community posts are stored encrypted. Explicitly submitted abuse evidence is a separate exception. Advertising and analytics data are described in the privacy policy. See [release setup](docs/RELEASE.md).
 
 ---
 
