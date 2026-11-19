@@ -39,6 +39,8 @@ The App Store profile `BLIP AppStore 2026-11-19` uses the existing BAKKUM distri
 
 The existing App Store Connect key is at `/Users/sunggookkim/.private_keys/AuthKey_9TA7V35A5U.p8`; access to BLIP was verified. Do not copy its contents into source or logs. Store submission also requires the owner's real review contact details.
 
+After simulator testing, build the distribution archive with `flutter build ipa --release --export-options-plist=<ExportOptions.plist>`. Before uploading, run `python3 mobile/tool/verify_ios_archive.py <Runner.xcarchive>` from the repository root. This checks every embedded executable's platform and signature. An observed Flutter native-assets cache reused `objective_c.framework` for IOSSIMULATOR in a device archive; a successful Xcode archive/export alone did not detect it. If this check fails, preserve and move aside only this checkout's `.dart_tool/flutter_build` and `build/native_assets/ios` generated outputs, then rebuild. Do not clear shared Flutter, CocoaPods, SDK or simulator caches.
+
 ### Apple account deletion
 
 The server requires `APPLE_TEAM_ID`, `APPLE_CLIENT_ID` (`com.bakkum.blip`), `APPLE_KEY_ID` and `APPLE_PRIVATE_KEY` for Apple token revocation. Use a Sign in with Apple key configured for BLIP's primary App ID; APNs keys and keys configured for another primary app are not substitutes. The owner approved registering a BLIP-only key on 2026-11-19 for legacy account deletion. Registration still needs a valid Apple Developer session. JWT signatures use raw 64-byte ES256 format, and Apple network calls have a timeout so an outage cannot leave deletion requests hanging.
