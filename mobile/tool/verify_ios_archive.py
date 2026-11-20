@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reject simulator code in an App Store archive before an upload consumes time."""
+"""Check iOS launch configuration, device executables, and archive signatures."""
 import plistlib
 from pathlib import Path
 import re
@@ -12,6 +12,22 @@ def verify(archive: Path) -> None:
     if len(apps) != 1:
         raise ValueError("Expected one app in the .xcarchive")
     app = apps[0]
+    with (app / "Info.plist").open("rb") as source:
+        info = plistlib.load(source)
+    scenes = (
+        info.get("UIApplicationSceneManifest", {})
+        .get("UISceneConfigurations", {})
+        .get("UIWindowSceneSessionRoleApplication", [])
+    )
+    if not any(
+        scene.get("UISceneDelegateClassName") == "FlutterSceneDelegate"
+        and scene.get("UISceneStoryboardFile") == "Main"
+        for scene in scenes
+    ):
+        raise ValueError("Missing Flutter UIScene launch configuration required by iOS 27")
+    if not (app / "Base.lproj" / "Main.storyboardc").is_dir():
+        raise ValueError("Missing compiled Main storyboard used by the launch scene")
+
     bundles = [app, *app.rglob("*.framework"), *app.rglob("*.appex")]
     failures = []
     for bundle in bundles:
@@ -35,7 +51,7 @@ def verify(archive: Path) -> None:
     if failures:
         raise ValueError("Non-device executable(s):\n" + "\n".join(failures))
     subprocess.run(["codesign", "--verify", "--deep", "--strict", str(app)], check=True)
-    print(f"PASS: {len(bundles)} signed bundles contain iOS device code only")
+    print(f"PASS: Flutter UIScene configured; {len(bundles)} signed iOS device bundles")
 
 
 if __name__ == "__main__":

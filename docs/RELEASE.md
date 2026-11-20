@@ -23,6 +23,8 @@ Run `flutter build appbundle --release`. Release tasks fail with an explicit mes
 
 Bundle ID `com.bakkum.blip`, team `95ERD9S934`. The project and Pods have a consistent iOS 15 minimum. Use the existing paired iPhone simulator UDID `8862F754-FCC1-417C-8B54-E51090FB0B18` explicitly for simulator builds and execution. Do not erase or clone it. Build the signed archive only after simulator validation. The uploaded build version must match the App Store version being submitted.
 
+The iOS 27 SDK requires a scene-based launch. BLIP's app scene uses `FlutterSceneDelegate` and the Main storyboard. Register native plugins and BLIP's audio and screenshot channels through `FlutterImplicitEngineDelegate`; at process launch there may be no root view controller yet. App Review rejected 1.13.0 build 18 for a launch crash. The submitted archive was compiled with the iOS 27.1 SDK and lacked the required scene configuration, which older simulators allowed.
+
 ## Store declarations and runtime checks
 
 - AdMob/Firebase identifiers, approximate location, app interactions and diagnostics must be disclosed. iOS also uses Apple account ID/email for authentication.
@@ -39,7 +41,7 @@ The App Store profile `BLIP AppStore 2026-11-19` uses the existing BAKKUM distri
 
 The existing App Store Connect key is at `/Users/sunggookkim/.private_keys/AuthKey_9TA7V35A5U.p8`; access to BLIP was verified. Do not copy its contents into source or logs. Store submission also requires the owner's real review contact details.
 
-After simulator testing, build the distribution archive with `flutter build ipa --release --export-options-plist=<ExportOptions.plist>`. Before uploading, run `python3 mobile/tool/verify_ios_archive.py <Runner.xcarchive>` from the repository root. This checks every embedded executable's platform and signature. An observed Flutter native-assets cache reused `objective_c.framework` for IOSSIMULATOR in a device archive; a successful Xcode archive/export alone did not detect it. If this check fails, preserve and move aside only this checkout's `.dart_tool/flutter_build` and `build/native_assets/ios` generated outputs, then rebuild. Do not clear shared Flutter, CocoaPods, SDK or simulator caches.
+Build simulator and device artifacts in separate working directories so one platform cannot reuse the other's generated files. Build the distribution archive with `flutter build ipa --release --build-number=<next available iOS build number> --export-options-plist=<ExportOptions.plist>`. Before uploading, run `python3 mobile/tool/verify_ios_archive.py <Runner.xcarchive>` from the repository root. This checks the launch scene and storyboard, then verifies embedded executable platforms and signatures. An observed Flutter native-assets cache reused `objective_c.framework` for IOSSIMULATOR in a device archive; a successful Xcode archive/export alone did not detect it. If the executable platform check fails, preserve and move aside only this checkout's `.dart_tool/flutter_build` and `build/native_assets/ios` generated outputs, then rebuild. Do not clear shared Flutter, CocoaPods, SDK or simulator caches.
 
 ### Apple account deletion
 
