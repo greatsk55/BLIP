@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../constants/app_constants.dart';
+import '../services/ad_service.dart';
 
 /// 재사용 가능한 AdMob 배너 광고 위젯
 /// - Adaptive banner: 디바이스 화면 너비에 맞게 자동 확장
@@ -20,6 +21,21 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
   bool _wasHidden = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AdService.instance.canLoadAds.addListener(_adsReadinessChanged);
+  }
+
+  void _adsReadinessChanged() {
+    if (!mounted) return;
+    if (!AdService.instance.canLoadAds.value) {
+      setState(_disposeAd);
+    } else if (ModalRoute.of(context)?.isCurrent ?? true) {
+      _loadAd();
+    }
+  }
 
   static String get _adUnitId => Platform.isAndroid
       ? AppConstants.admobBannerAndroid
@@ -49,6 +65,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   void _loadAd() {
+    if (!AdService.instance.canLoadAds.value || _bannerAd != null) return;
     final width = MediaQuery.of(context).size.width.truncate();
     final adSize = AdSize(width: width, height: 50);
 
@@ -61,8 +78,10 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           if (mounted) setState(() => _isLoaded = true);
         },
         onAdFailedToLoad: (ad, error) {
-          debugPrint('[BLIP] BannerAd failed: code=${error.code} '
-              'domain=${error.domain} message=${error.message}');
+          debugPrint(
+            '[BLIP] BannerAd failed: code=${error.code} '
+            'domain=${error.domain} message=${error.message}',
+          );
           ad.dispose();
           if (mounted) setState(() => _bannerAd = null);
         },
@@ -78,6 +97,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   void dispose() {
+    AdService.instance.canLoadAds.removeListener(_adsReadinessChanged);
     _bannerAd?.dispose();
     super.dispose();
   }

@@ -79,10 +79,12 @@ class CategoryFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final signalGreen =
-        isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight;
-    final ghostGrey =
-        isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
+    final signalGreen = isDark
+        ? AppColors.signalGreenDark
+        : AppColors.signalGreenLight;
+    final ghostGrey = isDark
+        ? AppColors.ghostGreyDark
+        : AppColors.ghostGreyLight;
 
     return SizedBox(
       height: 42,
@@ -90,7 +92,7 @@ class CategoryFilter extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: PredictionCategory.values.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final cat = PredictionCategory.values[index];
           final isSelected = cat == selected;

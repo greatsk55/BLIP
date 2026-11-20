@@ -16,6 +16,8 @@ function useAdCooldown(key: string, cooldownMs: number) {
       const last = localStorage.getItem(key);
       const now = Date.now();
       if (!last || now - Number(last) >= cooldownMs) {
+        // Publish the persisted cooldown decision after reading/writing browser storage.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setAllowed(true);
         localStorage.setItem(key, String(now));
       }

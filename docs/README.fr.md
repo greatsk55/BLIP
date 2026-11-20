@@ -4,6 +4,8 @@
 
 🌐 [한국어](README.ko.md) | [English](../README.md) | [日本語](README.ja.md) | [中文](README.zh.md) | [Español](README.es.md) | [Français](#)
 
+> BLIP 1.13 fonctionne sans connexion sur toutes les plateformes et conserve la suppression des anciens comptes Apple. Les messages individuels ordinaires sont éphémères ; les publications privées sont conservées chiffrées. Les preuves de signalement explicitement envoyées peuvent être conservées séparément. Consultez la politique de confidentialité pour les données publicitaires et analytiques.
+
 ---
 
 BLIP est un service de chat éphémère qui ne laisse aucune trace.
@@ -43,7 +45,13 @@ Mais la plupart des conversations dans la vie ne sont que des **échanges rapide
 4. Terminer        →  Toutes les données détruites instantanément
 ```
 
-## Jeu de Prédictions ✨ NEW
+## v1.12.0 — Améliorations UX et stabilité ✨ NEW
+
+- Correction de la boucle splash (l'app ne revient plus au splash lors des changements d'authentification)
+- Prédictions actives en priorité — les votes non expirés apparaissent en haut de la liste
+- Cotes en temps réel dans la liste — les cotes YES/NO s'affichent directement dans la liste
+
+## Jeu de Prédictions
 
 Faites des prédictions sur des résultats réels et gagnez des **BP (BLIP Points)** — totalement anonyme.
 

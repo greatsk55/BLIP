@@ -8,29 +8,33 @@ class ApiClient {
   late final Dio _dio;
 
   ApiClient() {
-    _dio = Dio(BaseOptions(
-      baseUrl: dotenv.env['API_BASE_URL'] ?? 'https://blip-blip.vercel.app',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 15),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    ));
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: dotenv.env['API_BASE_URL'] ?? 'https://blip-blip.vercel.app',
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 15),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
 
-    _dio.interceptors.add(InterceptorsWrapper(
-      onError: (error, handler) {
-        // 네트워크 에러 통일 처리
-        if (error.type == DioExceptionType.connectionTimeout ||
-            error.type == DioExceptionType.receiveTimeout) {
-          return handler.reject(DioException(
-            requestOptions: error.requestOptions,
-            error: 'NETWORK_TIMEOUT',
-            type: error.type,
-          ));
-        }
-        return handler.next(error);
-      },
-    ));
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onError: (error, handler) {
+          // 네트워크 에러 통일 처리
+          if (error.type == DioExceptionType.connectionTimeout ||
+              error.type == DioExceptionType.receiveTimeout) {
+            return handler.reject(
+              DioException(
+                requestOptions: error.requestOptions,
+                error: 'NETWORK_TIMEOUT',
+                type: error.type,
+              ),
+            );
+          }
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   Dio get dio => _dio;
@@ -42,38 +46,48 @@ class ApiClient {
     return response.data;
   }
 
-  Future<Map<String, dynamic>> verifyPassword(String roomId, String password) async {
-    final response = await _dio.post('/api/room/verify', data: {
-      'roomId': roomId,
-      'password': password,
-    });
+  Future<Map<String, dynamic>> verifyPassword(
+    String roomId,
+    String password,
+  ) async {
+    final response = await _dio.post(
+      '/api/room/verify',
+      data: {'roomId': roomId, 'password': password},
+    );
     return response.data;
   }
 
   Future<Map<String, dynamic>> getRoomStatus(String roomId) async {
-    final response = await _dio.post('/api/room/status', data: {
-      'roomId': roomId,
-    });
+    final response = await _dio.post(
+      '/api/room/status',
+      data: {'roomId': roomId},
+    );
     return response.data;
   }
 
-  Future<void> updateParticipantCount(String roomId, int count) async {
-    await _dio.post('/api/room/participant', data: {
-      'roomId': roomId,
-      'count': count,
-    });
+  Future<void> updateParticipantCount(
+    String roomId,
+    int count, {
+    required String authKeyHash,
+  }) async {
+    await _dio.post(
+      '/api/room/participant',
+      data: {'roomId': roomId, 'count': count, 'authKeyHash': authKeyHash},
+    );
   }
 
-  Future<void> leaveRoom(String roomId) async {
-    await _dio.post('/api/room/leave', data: {
-      'roomId': roomId,
-    });
+  Future<void> leaveRoom(String roomId, {required String authKeyHash}) async {
+    await _dio.post(
+      '/api/room/leave',
+      data: {'roomId': roomId, 'authKeyHash': authKeyHash},
+    );
   }
 
-  Future<void> destroyRoom(String roomId) async {
-    await _dio.post('/api/room/destroy', data: {
-      'roomId': roomId,
-    });
+  Future<void> destroyRoom(String roomId, {required String authKeyHash}) async {
+    await _dio.post(
+      '/api/room/destroy',
+      data: {'roomId': roomId, 'authKeyHash': authKeyHash},
+    );
   }
 
   Future<Map<String, dynamic>> fetchTurnCredentials() async {
@@ -87,10 +101,13 @@ class ApiClient {
     required String encryptedName,
     required String encryptedNameNonce,
   }) async {
-    final response = await _dio.post('/api/board/create', data: {
-      'encryptedName': encryptedName,
-      'encryptedNameNonce': encryptedNameNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/create',
+      data: {
+        'encryptedName': encryptedName,
+        'encryptedNameNonce': encryptedNameNonce,
+      },
+    );
     return response.data;
   }
 
@@ -102,14 +119,17 @@ class ApiClient {
     String? encryptedSubtitle,
     String? encryptedSubtitleNonce,
   }) async {
-    final response = await _dio.post('/api/board/update-name', data: {
-      'boardId': boardId,
-      'authKeyHash': authKeyHash,
-      'encryptedName': encryptedName,
-      'encryptedNameNonce': encryptedNameNonce,
-      if (encryptedSubtitle != null) 'encryptedSubtitle': encryptedSubtitle,
-      if (encryptedSubtitleNonce != null) 'encryptedSubtitleNonce': encryptedSubtitleNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/update-name',
+      data: {
+        'boardId': boardId,
+        'authKeyHash': authKeyHash,
+        'encryptedName': encryptedName,
+        'encryptedNameNonce': encryptedNameNonce,
+        'encryptedSubtitle': ?encryptedSubtitle,
+        'encryptedSubtitleNonce': ?encryptedSubtitleNonce,
+      },
+    );
     return response.data;
   }
 
@@ -120,28 +140,37 @@ class ApiClient {
     String? encryptedSubtitle,
     String? encryptedSubtitleNonce,
   }) async {
-    final response = await _dio.post('/api/board/admin/update-subtitle', data: {
-      'boardId': boardId,
-      'adminToken': adminToken,
-      if (encryptedSubtitle != null) 'encryptedSubtitle': encryptedSubtitle,
-      if (encryptedSubtitleNonce != null) 'encryptedSubtitleNonce': encryptedSubtitleNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/admin/update-subtitle',
+      data: {
+        'boardId': boardId,
+        'adminToken': adminToken,
+        'encryptedSubtitle': ?encryptedSubtitle,
+        'encryptedSubtitleNonce': ?encryptedSubtitleNonce,
+      },
+    );
     return response.data;
   }
 
-  Future<Map<String, dynamic>> joinBoard(String boardId, String password) async {
-    final response = await _dio.post('/api/board/join', data: {
-      'boardId': boardId,
-      'password': password,
-    });
+  Future<Map<String, dynamic>> joinBoard(
+    String boardId,
+    String password,
+  ) async {
+    final response = await _dio.post(
+      '/api/board/join',
+      data: {'boardId': boardId, 'password': password},
+    );
     return response.data;
   }
 
-  Future<Map<String, dynamic>> getBoardMeta(String boardId, String authKeyHash) async {
-    final response = await _dio.post('/api/board/meta', data: {
-      'boardId': boardId,
-      'authKeyHash': authKeyHash,
-    });
+  Future<Map<String, dynamic>> getBoardMeta(
+    String boardId,
+    String authKeyHash,
+  ) async {
+    final response = await _dio.post(
+      '/api/board/meta',
+      data: {'boardId': boardId, 'authKeyHash': authKeyHash},
+    );
     return response.data;
   }
 
@@ -151,12 +180,15 @@ class ApiClient {
     String? cursor,
     int limit = 20,
   }) async {
-    final response = await _dio.post('/api/board/posts', data: {
-      'boardId': boardId,
-      'authKeyHash': authKeyHash,
-      if (cursor != null) 'cursor': cursor,
-      'limit': limit,
-    });
+    final response = await _dio.post(
+      '/api/board/posts',
+      data: {
+        'boardId': boardId,
+        'authKeyHash': authKeyHash,
+        'cursor': ?cursor,
+        'limit': limit,
+      },
+    );
     return response.data;
   }
 
@@ -170,16 +202,19 @@ class ApiClient {
     String? titleEncrypted,
     String? titleNonce,
   }) async {
-    final response = await _dio.post('/api/board/post/create', data: {
-      'boardId': boardId,
-      'authKeyHash': authKeyHash,
-      'authorNameEncrypted': authorNameEncrypted,
-      'authorNameNonce': authorNameNonce,
-      'contentEncrypted': contentEncrypted,
-      'contentNonce': contentNonce,
-      if (titleEncrypted != null) 'titleEncrypted': titleEncrypted,
-      if (titleNonce != null) 'titleNonce': titleNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/post/create',
+      data: {
+        'boardId': boardId,
+        'authKeyHash': authKeyHash,
+        'authorNameEncrypted': authorNameEncrypted,
+        'authorNameNonce': authorNameNonce,
+        'contentEncrypted': contentEncrypted,
+        'contentNonce': contentNonce,
+        'titleEncrypted': ?titleEncrypted,
+        'titleNonce': ?titleNonce,
+      },
+    );
     return response.data;
   }
 
@@ -194,17 +229,20 @@ class ApiClient {
     String? titleEncrypted,
     String? titleNonce,
   }) async {
-    final response = await _dio.post('/api/board/post/update', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'authKeyHash': authKeyHash,
-      'authorNameEncrypted': authorNameEncrypted,
-      'authorNameNonce': authorNameNonce,
-      'contentEncrypted': contentEncrypted,
-      'contentNonce': contentNonce,
-      if (titleEncrypted != null) 'titleEncrypted': titleEncrypted,
-      if (titleNonce != null) 'titleNonce': titleNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/post/update',
+      data: {
+        'boardId': boardId,
+        'postId': postId,
+        'authKeyHash': authKeyHash,
+        'authorNameEncrypted': authorNameEncrypted,
+        'authorNameNonce': authorNameNonce,
+        'contentEncrypted': contentEncrypted,
+        'contentNonce': contentNonce,
+        'titleEncrypted': ?titleEncrypted,
+        'titleNonce': ?titleNonce,
+      },
+    );
     return response.data;
   }
 
@@ -213,11 +251,10 @@ class ApiClient {
     required String postId,
     required String authKeyHash,
   }) async {
-    final response = await _dio.post('/api/board/post/delete', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'authKeyHash': authKeyHash,
-    });
+    final response = await _dio.post(
+      '/api/board/post/delete',
+      data: {'boardId': boardId, 'postId': postId, 'authKeyHash': authKeyHash},
+    );
     return response.data;
   }
 
@@ -227,12 +264,15 @@ class ApiClient {
     required String authKeyHash,
     required String reason,
   }) async {
-    final response = await _dio.post('/api/board/post/report', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'authKeyHash': authKeyHash,
-      'reason': reason,
-    });
+    final response = await _dio.post(
+      '/api/board/post/report',
+      data: {
+        'boardId': boardId,
+        'postId': postId,
+        'authKeyHash': authKeyHash,
+        'reason': reason,
+      },
+    );
     return response.data;
   }
 
@@ -241,11 +281,10 @@ class ApiClient {
     required String postId,
     required String adminToken,
   }) async {
-    final response = await _dio.post('/api/board/admin/delete', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'adminToken': adminToken,
-    });
+    final response = await _dio.post(
+      '/api/board/admin/delete',
+      data: {'boardId': boardId, 'postId': postId, 'adminToken': adminToken},
+    );
     return response.data;
   }
 
@@ -253,10 +292,10 @@ class ApiClient {
     required String boardId,
     required String adminToken,
   }) async {
-    final response = await _dio.post('/api/board/admin/destroy', data: {
-      'boardId': boardId,
-      'adminToken': adminToken,
-    });
+    final response = await _dio.post(
+      '/api/board/admin/destroy',
+      data: {'boardId': boardId, 'adminToken': adminToken},
+    );
     return response.data;
   }
 
@@ -267,10 +306,10 @@ class ApiClient {
     required String boardId,
     required String inviteCodeHash,
   }) async {
-    final response = await _dio.post('/api/board/join-invite', data: {
-      'boardId': boardId,
-      'inviteCodeHash': inviteCodeHash,
-    });
+    final response = await _dio.post(
+      '/api/board/join-invite',
+      data: {'boardId': boardId, 'inviteCodeHash': inviteCodeHash},
+    );
     return response.data;
   }
 
@@ -282,13 +321,16 @@ class ApiClient {
     required String newWrappedKey,
     required String newWrappedNonce,
   }) async {
-    final response = await _dio.post('/api/board/admin/rotate-invite', data: {
-      'boardId': boardId,
-      'adminToken': adminToken,
-      'newInviteCodeHash': newInviteCodeHash,
-      'newWrappedKey': newWrappedKey,
-      'newWrappedNonce': newWrappedNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/admin/rotate-invite',
+      data: {
+        'boardId': boardId,
+        'adminToken': adminToken,
+        'newInviteCodeHash': newInviteCodeHash,
+        'newWrappedKey': newWrappedKey,
+        'newWrappedNonce': newWrappedNonce,
+      },
+    );
     return response.data;
   }
 
@@ -298,11 +340,14 @@ class ApiClient {
     required String authKeyHash,
     required String encryptionKeyAuthHash,
   }) async {
-    final response = await _dio.post('/api/board/update-eauth', data: {
-      'boardId': boardId,
-      'authKeyHash': authKeyHash,
-      'encryptionKeyAuthHash': encryptionKeyAuthHash,
-    });
+    final response = await _dio.post(
+      '/api/board/update-eauth',
+      data: {
+        'boardId': boardId,
+        'authKeyHash': authKeyHash,
+        'encryptionKeyAuthHash': encryptionKeyAuthHash,
+      },
+    );
     return response.data;
   }
 
@@ -315,13 +360,16 @@ class ApiClient {
     String? cursor,
     int limit = 50,
   }) async {
-    final response = await _dio.post('/api/board/comments', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'authKeyHash': authKeyHash,
-      if (cursor != null) 'cursor': cursor,
-      'limit': limit,
-    });
+    final response = await _dio.post(
+      '/api/board/comments',
+      data: {
+        'boardId': boardId,
+        'postId': postId,
+        'authKeyHash': authKeyHash,
+        'cursor': ?cursor,
+        'limit': limit,
+      },
+    );
     return response.data;
   }
 
@@ -334,15 +382,18 @@ class ApiClient {
     required String contentEncrypted,
     required String contentNonce,
   }) async {
-    final response = await _dio.post('/api/board/comment/create', data: {
-      'boardId': boardId,
-      'postId': postId,
-      'authKeyHash': authKeyHash,
-      'authorNameEncrypted': authorNameEncrypted,
-      'authorNameNonce': authorNameNonce,
-      'contentEncrypted': contentEncrypted,
-      'contentNonce': contentNonce,
-    });
+    final response = await _dio.post(
+      '/api/board/comment/create',
+      data: {
+        'boardId': boardId,
+        'postId': postId,
+        'authKeyHash': authKeyHash,
+        'authorNameEncrypted': authorNameEncrypted,
+        'authorNameNonce': authorNameNonce,
+        'contentEncrypted': contentEncrypted,
+        'contentNonce': contentNonce,
+      },
+    );
     return response.data;
   }
 
@@ -351,11 +402,14 @@ class ApiClient {
     required String commentId,
     required String authKeyHash,
   }) async {
-    final response = await _dio.post('/api/board/comment/delete', data: {
-      'boardId': boardId,
-      'commentId': commentId,
-      'authKeyHash': authKeyHash,
-    });
+    final response = await _dio.post(
+      '/api/board/comment/delete',
+      data: {
+        'boardId': boardId,
+        'commentId': commentId,
+        'authKeyHash': authKeyHash,
+      },
+    );
     return response.data;
   }
 
@@ -365,12 +419,15 @@ class ApiClient {
     required String authKeyHash,
     required String reason,
   }) async {
-    final response = await _dio.post('/api/board/comment/report', data: {
-      'boardId': boardId,
-      'commentId': commentId,
-      'authKeyHash': authKeyHash,
-      'reason': reason,
-    });
+    final response = await _dio.post(
+      '/api/board/comment/report',
+      data: {
+        'boardId': boardId,
+        'commentId': commentId,
+        'authKeyHash': authKeyHash,
+        'reason': reason,
+      },
+    );
     return response.data;
   }
 
@@ -379,11 +436,14 @@ class ApiClient {
     required String commentId,
     required String adminToken,
   }) async {
-    final response = await _dio.post('/api/board/admin/delete-comment', data: {
-      'boardId': boardId,
-      'commentId': commentId,
-      'adminToken': adminToken,
-    });
+    final response = await _dio.post(
+      '/api/board/admin/delete-comment',
+      data: {
+        'boardId': boardId,
+        'commentId': commentId,
+        'adminToken': adminToken,
+      },
+    );
     return response.data;
   }
 
@@ -406,8 +466,8 @@ class ApiClient {
     final formData = FormData.fromMap({
       'file': MultipartFile.fromBytes(encryptedFile, filename: 'media.enc'),
       'boardId': boardId,
-      if (postId != null) 'postId': postId,
-      if (commentId != null) 'commentId': commentId,
+      'postId': ?postId,
+      'commentId': ?commentId,
       'authKeyHash': authKeyHash,
       'nonce': nonce,
       'mimeType': mimeType,
@@ -436,10 +496,7 @@ class ApiClient {
     try {
       final response = await _dio.get(
         '/api/board/image',
-        queryParameters: {
-          'imageId': imageId,
-          'authKeyHash': authKeyHash,
-        },
+        queryParameters: {'imageId': imageId, 'authKeyHash': authKeyHash},
         options: Options(
           responseType: ResponseType.bytes,
           receiveTimeout: const Duration(seconds: 60),
@@ -460,26 +517,35 @@ class ApiClient {
 
   // ─── Group Chat API ───
 
-  Future<Map<String, dynamic>> createGroupRoom({String title = 'Untitled Group'}) async {
-    final response = await _dio.post('/api/group/create', data: {
-      'title': title,
-    });
+  Future<Map<String, dynamic>> createGroupRoom({
+    String title = 'Untitled Group',
+  }) async {
+    final response = await _dio.post(
+      '/api/group/create',
+      data: {'title': title},
+    );
     return response.data;
   }
 
-  Future<Map<String, dynamic>> verifyGroupPassword(String roomId, String password) async {
-    final response = await _dio.post('/api/group/verify', data: {
-      'roomId': roomId,
-      'password': password,
-    });
+  Future<Map<String, dynamic>> verifyGroupPassword(
+    String roomId,
+    String password,
+  ) async {
+    final response = await _dio.post(
+      '/api/group/verify',
+      data: {'roomId': roomId, 'password': password},
+    );
     return response.data;
   }
 
-  Future<void> groupLeave({required String roomId, required String authKeyHash}) async {
-    await _dio.post('/api/group/leave', data: {
-      'roomId': roomId,
-      'authKeyHash': authKeyHash,
-    });
+  Future<void> groupLeave({
+    required String roomId,
+    required String authKeyHash,
+  }) async {
+    await _dio.post(
+      '/api/group/leave',
+      data: {'roomId': roomId, 'authKeyHash': authKeyHash},
+    );
   }
 
   Future<Map<String, dynamic>> groupAdmin({
@@ -488,12 +554,15 @@ class ApiClient {
     required String action,
     String? userToken,
   }) async {
-    final response = await _dio.post('/api/group/admin', data: {
-      'roomId': roomId,
-      'adminToken': adminToken,
-      'action': action,
-      if (userToken != null) 'userToken': userToken,
-    });
+    final response = await _dio.post(
+      '/api/group/admin',
+      data: {
+        'roomId': roomId,
+        'adminToken': adminToken,
+        'action': action,
+        'userToken': ?userToken,
+      },
+    );
     return response.data;
   }
 
@@ -502,9 +571,10 @@ class ApiClient {
   /// 여러 Room의 상태를 한 번에 확인
   Future<Map<String, String>> batchRoomStatus(List<String> roomIds) async {
     if (roomIds.isEmpty) return {};
-    final response = await _dio.post('/api/room/batch-status', data: {
-      'roomIds': roomIds,
-    });
+    final response = await _dio.post(
+      '/api/room/batch-status',
+      data: {'roomIds': roomIds},
+    );
     final statuses = response.data['statuses'] as Map<String, dynamic>?;
     return statuses?.map((k, v) => MapEntry(k, v as String)) ?? {};
   }
@@ -512,9 +582,10 @@ class ApiClient {
   /// 여러 Board의 상태를 한 번에 확인
   Future<Map<String, String>> batchBoardStatus(List<String> boardIds) async {
     if (boardIds.isEmpty) return {};
-    final response = await _dio.post('/api/board/batch-status', data: {
-      'boardIds': boardIds,
-    });
+    final response = await _dio.post(
+      '/api/board/batch-status',
+      data: {'boardIds': boardIds},
+    );
     final statuses = response.data['statuses'] as Map<String, dynamic>?;
     return statuses?.map((k, v) => MapEntry(k, v as String)) ?? {};
   }
@@ -522,16 +593,18 @@ class ApiClient {
   // ─── BLIP me API ───
 
   Future<Map<String, dynamic>> createBlipMeLink(String ownerTokenHash) async {
-    final response = await _dio.post('/api/blipme/create', data: {
-      'ownerTokenHash': ownerTokenHash,
-    });
+    final response = await _dio.post(
+      '/api/blipme/create',
+      data: {'ownerTokenHash': ownerTokenHash},
+    );
     return response.data;
   }
 
   Future<Map<String, dynamic>> getMyBlipMeLink(String ownerTokenHash) async {
-    final response = await _dio.post('/api/blipme/my-link', data: {
-      'ownerTokenHash': ownerTokenHash,
-    });
+    final response = await _dio.post(
+      '/api/blipme/my-link',
+      data: {'ownerTokenHash': ownerTokenHash},
+    );
     return response.data;
   }
 
@@ -539,10 +612,10 @@ class ApiClient {
     required String linkId,
     required String ownerTokenHash,
   }) async {
-    final response = await _dio.post('/api/blipme/delete', data: {
-      'linkId': linkId,
-      'ownerTokenHash': ownerTokenHash,
-    });
+    final response = await _dio.post(
+      '/api/blipme/delete',
+      data: {'linkId': linkId, 'ownerTokenHash': ownerTokenHash},
+    );
     return response.data;
   }
 
@@ -550,24 +623,26 @@ class ApiClient {
     required String oldLinkId,
     required String ownerTokenHash,
   }) async {
-    final response = await _dio.post('/api/blipme/regenerate', data: {
-      'oldLinkId': oldLinkId,
-      'ownerTokenHash': ownerTokenHash,
-    });
+    final response = await _dio.post(
+      '/api/blipme/regenerate',
+      data: {'oldLinkId': oldLinkId, 'ownerTokenHash': ownerTokenHash},
+    );
     return response.data;
   }
 
   Future<Map<String, dynamic>> connectViaBlipMe(String linkId) async {
-    final response = await _dio.post('/api/blipme/connect', data: {
-      'linkId': linkId,
-    });
+    final response = await _dio.post(
+      '/api/blipme/connect',
+      data: {'linkId': linkId},
+    );
     return response.data;
   }
 
   Future<Map<String, dynamic>> checkBlipMeLink(String linkId) async {
-    final response = await _dio.post('/api/blipme/check', data: {
-      'linkId': linkId,
-    });
+    final response = await _dio.post(
+      '/api/blipme/check',
+      data: {'linkId': linkId},
+    );
     return response.data;
   }
 
@@ -576,11 +651,14 @@ class ApiClient {
     required String ownerTokenHash,
     required String fcmToken,
   }) async {
-    final response = await _dio.post('/api/blipme/register-push', data: {
-      'linkId': linkId,
-      'ownerTokenHash': ownerTokenHash,
-      'fcmToken': fcmToken,
-    });
+    final response = await _dio.post(
+      '/api/blipme/register-push',
+      data: {
+        'linkId': linkId,
+        'ownerTokenHash': ownerTokenHash,
+        'fcmToken': fcmToken,
+      },
+    );
     return response.data;
   }
 
@@ -591,10 +669,13 @@ class ApiClient {
     required String accessToken,
     required String authorizationCode,
   }) async {
-    final response = await _dio.post('/api/auth/delete-account', data: {
-      'accessToken': accessToken,
-      'authorizationCode': authorizationCode,
-    });
+    final response = await _dio.post(
+      '/api/auth/delete-account',
+      data: {
+        'accessToken': accessToken,
+        'authorizationCode': authorizationCode,
+      },
+    );
     return response.data;
   }
 
@@ -606,11 +687,14 @@ class ApiClient {
     required String fcmToken,
     required String authKeyHash,
   }) async {
-    await _dio.post('/api/push/register', data: {
-      'roomId': roomId,
-      'fcmToken': fcmToken,
-      'authKeyHash': authKeyHash,
-    });
+    await _dio.post(
+      '/api/push/register',
+      data: {
+        'roomId': roomId,
+        'fcmToken': fcmToken,
+        'authKeyHash': authKeyHash,
+      },
+    );
   }
 
   /// 상대방에게 푸시 알림 발송
@@ -619,11 +703,14 @@ class ApiClient {
     required String authKeyHash,
     String? senderTokenHash,
   }) async {
-    final response = await _dio.post('/api/push/send', data: {
-      'roomId': roomId,
-      'authKeyHash': authKeyHash,
-      if (senderTokenHash != null) 'senderTokenHash': senderTokenHash,
-    });
+    final response = await _dio.post(
+      '/api/push/send',
+      data: {
+        'roomId': roomId,
+        'authKeyHash': authKeyHash,
+        'senderTokenHash': ?senderTokenHash,
+      },
+    );
     return response.data;
   }
 

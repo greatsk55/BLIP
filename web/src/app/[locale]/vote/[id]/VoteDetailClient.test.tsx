@@ -1,3 +1,4 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import VoteDetailClient from './VoteDetailClient';
@@ -6,13 +7,13 @@ import VoteDetailClient from './VoteDetailClient';
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, whileHover, whileTap, ...props }: any) => (
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, ...props }: ComponentProps<'button'> & Record<string, unknown>) => (
       <button {...props}>{children}</button>
     ),
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    span: ({ children, ...props }: ComponentProps<'span'> & Record<string, unknown>) => <span {...props}>{children}</span>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,
 }));
 
 vi.mock('next-intl', () => ({
@@ -24,14 +25,14 @@ vi.mock('next-intl', () => ({
       'betting.participants': 'Participants',
       'betting.closesIn': 'Closes in',
       'points.bp': 'BP',
-      'landing.feature2Title': 'Join Discussion',
+      discuss: 'Join Discussion',
     };
     return map[key] ?? key;
   },
 }));
 
 vi.mock('@/i18n/navigation', () => ({
-  Link: ({ children, href, ...props }: any) => (
+  Link: ({ children, href, ...props }: ComponentProps<'a'>) => (
     <a href={href} {...props}>{children}</a>
   ),
   useRouter: () => ({
@@ -74,6 +75,7 @@ vi.mock('@/lib/prediction/actions', () => ({
   }),
   fetchOdds: vi.fn().mockResolvedValue({ odds: { yes: 1.85, no: 2.10 } }),
   placeBet: vi.fn().mockResolvedValue({ success: true, odds: 1.85, newBalance: 450 }),
+  fetchMyBets: vi.fn().mockResolvedValue({ bets: [] }),
   settlePrediction: vi.fn().mockResolvedValue({ success: true, totalPaid: 100, creatorEarned: 10 }),
 }));
 

@@ -142,10 +142,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatMediaUnsupportedType => 'Nicht unterstützter Dateityp';
 
   @override
-  String get chatMediaAttachAllFiles => 'Attach file';
+  String get chatMediaAttachAllFiles => 'Datei anhängen';
 
   @override
-  String get chatMediaDownloadFile => 'Download';
+  String get chatMediaDownloadFile => 'Herunterladen';
 
   @override
   String get boardCreateTitle => 'COMMUNITY ERSTELLT';
@@ -638,7 +638,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get predictionTabAll => 'Alle';
 
   @override
-  String get predictionTabMyBets => 'Meine Wetten';
+  String get predictionTabMyBets => 'Meine Stimmen';
 
   @override
   String get predictionTabCreated => 'Erstellt';
@@ -803,11 +803,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'BLIP ist ein kostenloser, quelloffener, Ende-zu-Ende verschlüsselter ephemerer Chat-Service. Er bietet temporäre Kommunikationskanäle, die nach der Nutzung zerstört werden.';
 
   @override
-  String get termsSection2Title => 'Kein Konto erforderlich';
+  String get termsSection2Title => 'Zugang und Konten';
 
   @override
   String get termsSection2Content =>
-      'BLIP funktioniert ohne Registrierung, Anmeldedaten oder persönliche Profile. Der Zugang erfolgt über temporäre Raumlinks und gemeinsame Passwörter.';
+      'BLIP 1.13 benötigt auf keiner Plattform ein Konto. IDs und bereitgestellte E-Mail-Adressen der früheren Apple-Anmeldung bleiben bis zur Löschung gespeichert. Räume benötigen eine Einladung und ein gemeinsames Passwort. Bewahren Sie Schlüssel sicher auf, da wir sie nicht wiederherstellen können.';
 
   @override
   String get termsSection3Title => 'Akzeptable Nutzung';
@@ -817,11 +817,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Du stimmst zu, BLIP nicht für folgendes zu nutzen: Verbreitung illegaler Inhalte, Belästigung, Malware-Übertragung, automatisierten Spam oder gesetzeswidrige Aktivitäten.';
 
   @override
-  String get termsSection4Title => 'Keine Datenwiederherstellung';
+  String get termsSection4Title => 'Nachrichten und Meldungen';
 
   @override
   String get termsSection4Content =>
-      'Nachrichten werden in keiner Datenbank gespeichert. Sobald ein Chatraum zerstört wird, sind alle Daten dauerhaft verloren. Dies ist beabsichtigt, keine Einschränkung.';
+      'Normale Einzelchat-Verläufe werden nicht in unserer Datenbank gespeichert. Private Community-Beiträge werden verschlüsselt gespeichert. Nur ausdrücklich einer Meldung beigefügte aktuelle Texte werden zur menschlichen Prüfung aufbewahrt. Informationen zu Konto-, Werbe- und Analysedaten stehen in der Datenschutzerklärung.';
 
   @override
   String get termsSection5Title => 'Open Source';
@@ -887,7 +887,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get authPrivacyNote =>
-      'Wir speichern keine persönlichen Daten.\nDie Anmeldung dient nur dem Zugang zur App.';
+      'Apple-Konto-ID und gegebenenfalls E-Mail werden zur Anmeldung verwendet.\nDas Konto kann in den Einstellungen gelöscht werden.';
 
   @override
   String get authSignOut => 'Abmelden';
@@ -1041,10 +1041,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get blipMeCreateButton => 'BLIP me-Link erstellen';
 
   @override
-  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+  String get blipMeWidgetPrompt =>
+      'Teile deinen Link, um einen Chat zu starten';
 
   @override
-  String get blipMeWidgetConnections => 'connections';
+  String get blipMeWidgetConnections => 'Verbindungen';
 
   @override
   String get blipMeYourLink => 'Ihr Link';
@@ -1119,16 +1120,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => 'Wette platzieren';
+  String get predictionBet => 'Abstimmen';
 
   @override
-  String get predictionDiscuss => 'Join Discussion';
+  String get predictionDiscuss => 'An Diskussion teilnehmen';
 
   @override
-  String get predictionOdds => 'Quote';
+  String get predictionOdds => 'Beliebtheit';
 
   @override
-  String get predictionExpectedPayout => 'Erwartete Auszahlung';
+  String get predictionExpectedPayout => 'Erwartete Belohnung';
 
   @override
   String predictionClosesIn(String time) {
@@ -1211,4 +1212,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => 'Vorhersagen starten';
+
+  @override
+  String get safetyTitle => 'Melden oder blockieren';
+
+  @override
+  String get safetyNotice =>
+      'Sie entscheiden über Belege. Normale Chats werden nicht automatisch gespeichert.';
+
+  @override
+  String get safetyReason => 'Grund';
+
+  @override
+  String get safetyHarassment => 'Belästigung oder Mobbing';
+
+  @override
+  String get safetySexual => 'Sexuelle Inhalte';
+
+  @override
+  String get safetyHate => 'Hass oder Diskriminierung';
+
+  @override
+  String get safetyViolence => 'Drohungen oder Gewalt';
+
+  @override
+  String get safetyScam => 'Betrug oder Spam';
+
+  @override
+  String get safetyOther => 'Sonstiges';
+
+  @override
+  String get safetyEvidence =>
+      'Bis zu 4 sichtbare Textnachrichten lesbar zur Prüfung durch Menschen senden.';
+
+  @override
+  String get safetyReport => 'Meldung senden';
+
+  @override
+  String get safetyReported => 'Meldung eingegangen. Unser Support prüft sie.';
+
+  @override
+  String get safetyFailed =>
+      'Aktion fehlgeschlagen. Erneut versuchen oder Support kontaktieren.';
+
+  @override
+  String get safetyBlock => 'Diesen Chat blockieren und verlassen';
+
+  @override
+  String get safetyBlockNotice =>
+      'Schließt den Raum für alle und verhindert erneuten Beitritt mit dieser Einladung. Blockiert die Person nicht in anderen Räumen.';
+
+  @override
+  String get safetyClose => 'Schließen';
+
+  @override
+  String get safetyAdPrivacy => 'Datenschutzoptionen für Werbung';
+
+  @override
+  String get safetyAdPrivacyUnavailable =>
+      'Hier sind keine weiteren Angaben nötig oder sie werden noch geladen.';
+
+  @override
+  String get settingsDataDeletion => 'Datenlöschung anfordern';
 }

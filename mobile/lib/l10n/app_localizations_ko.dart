@@ -611,7 +611,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get predictionTabAll => '전체';
 
   @override
-  String get predictionTabMyBets => '내 베팅';
+  String get predictionTabMyBets => '내 투표';
 
   @override
   String get predictionTabCreated => '내 질문';
@@ -770,11 +770,11 @@ class AppLocalizationsKo extends AppLocalizations {
       'BLIP은 무료 오픈소스 종단간 암호화 일회용 채팅 서비스입니다. 사용 후 파기되는 임시 통신 채널을 제공합니다. BLIP은 메신저, 소셜 네트워크, 데이터 저장 플랫폼이 아닙니다. 쓰고 버리는 통신 도구입니다.';
 
   @override
-  String get termsSection2Title => '계정 불필요';
+  String get termsSection2Title => '접근과 계정';
 
   @override
   String get termsSection2Content =>
-      'BLIP은 회원가입, 로그인 자격 증명, 개인 프로필 없이 운영됩니다. 임시 채팅방 링크와 공유 비밀번호를 통해 접근할 수 있습니다. 채팅방 비밀번호 관리는 사용자의 책임입니다—복구할 수 없습니다.';
+      'BLIP 1.13부터 모든 플랫폼에서 계정 없이 사용할 수 있습니다. 이전 iOS 버전의 Apple 연결 계정 ID와 제공된 이메일은 삭제할 때까지 보관합니다. 대화방은 초대와 공유 비밀번호로 접근합니다. 키를 잃으면 복구할 수 없습니다.';
 
   @override
   String get termsSection3Title => '허용되는 사용';
@@ -784,11 +784,11 @@ class AppLocalizationsKo extends AppLocalizations {
       '다음 목적으로 BLIP을 사용하지 않을 것에 동의합니다: 불법 콘텐츠 배포, 괴롭힘이나 위협, 악성 소프트웨어 전송, 자동화된 스팸 또는 남용, 관련 법률을 위반하는 활동.';
 
   @override
-  String get termsSection4Title => '데이터 복구 불가';
+  String get termsSection4Title => '메시지와 신고 보관';
 
   @override
   String get termsSection4Content =>
-      '메시지는 어떤 데이터베이스에도 저장되지 않습니다. 채팅방이 파기되면 모든 대화 데이터는 영구적이고 비가역적으로 소실됩니다. 이것은 제한이 아니라 설계입니다.';
+      '일반 1:1 대화 기록은 데이터베이스에 보관하지 않습니다. 비공개 커뮤니티 게시글은 암호화해 보관합니다. 안전 신고에 사용자가 직접 첨부를 선택한 최근 텍스트만 운영자 검토용으로 보관합니다. 계정·광고·분석 데이터는 개인정보처리방침을 확인하세요.';
 
   @override
   String get termsSection5Title => '오픈 소스';
@@ -853,7 +853,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get authSignInGoogle => 'Google로 로그인';
 
   @override
-  String get authPrivacyNote => '개인정보를 저장하지 않습니다.\n로그인은 앱 접근에만 사용됩니다.';
+  String get authPrivacyNote =>
+      'Apple 계정 ID와 제공된 경우 이메일을 로그인에 사용합니다.\n설정에서 계정을 삭제할 수 있습니다.';
 
   @override
   String get authSignOut => '로그아웃';
@@ -1074,16 +1075,16 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => '베팅하기';
+  String get predictionBet => '투표하기';
 
   @override
   String get predictionDiscuss => '토론 참여';
 
   @override
-  String get predictionOdds => '배당률';
+  String get predictionOdds => '인기도';
 
   @override
-  String get predictionExpectedPayout => '예상 수익';
+  String get predictionExpectedPayout => '예상 보상';
 
   @override
   String predictionClosesIn(String time) {
@@ -1165,4 +1166,63 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => '예측 시작하기';
+
+  @override
+  String get safetyTitle => '신고 또는 차단';
+
+  @override
+  String get safetyNotice => '증거를 공유할지 직접 선택합니다. 일반 대화는 자동으로 저장하지 않습니다.';
+
+  @override
+  String get safetyReason => '신고 사유';
+
+  @override
+  String get safetyHarassment => '괴롭힘·따돌림';
+
+  @override
+  String get safetySexual => '성적 콘텐츠';
+
+  @override
+  String get safetyHate => '혐오·차별';
+
+  @override
+  String get safetyViolence => '위협·폭력';
+
+  @override
+  String get safetyScam => '사기·스팸';
+
+  @override
+  String get safetyOther => '기타';
+
+  @override
+  String get safetyEvidence => '현재 보이는 텍스트 메시지 최대 4개를 운영자가 읽고 검토할 수 있도록 전송합니다.';
+
+  @override
+  String get safetyReport => '신고 보내기';
+
+  @override
+  String get safetyReported => '신고가 접수되었습니다. 지원팀이 검토합니다.';
+
+  @override
+  String get safetyFailed => '처리하지 못했습니다. 다시 시도하거나 지원팀에 문의하세요.';
+
+  @override
+  String get safetyBlock => '이 채팅 차단하고 나가기';
+
+  @override
+  String get safetyBlockNotice =>
+      '모든 참여자의 방이 종료되고 이 초대 링크로 다시 들어올 수 없게 됩니다. 다른 방에서의 상대방까지 차단하지는 않습니다.';
+
+  @override
+  String get safetyClose => '닫기';
+
+  @override
+  String get safetyAdPrivacy => '광고 개인정보 선택';
+
+  @override
+  String get safetyAdPrivacyUnavailable =>
+      '현재 지역에서는 추가 선택이 필요하지 않거나 광고 설정을 준비 중입니다.';
+
+  @override
+  String get settingsDataDeletion => '데이터 삭제 요청';
 }

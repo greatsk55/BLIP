@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -17,9 +18,9 @@ vi.mock('next-intl', () => ({
 // framer-motion mock (테스트에서 애니메이션 불필요)
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    button: ({ children, whileHover, whileTap, ...props }: any) => (
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    p: ({ children, ...props }: ComponentProps<'p'> & Record<string, unknown>) => <p {...props}>{children}</p>,
+    button: ({ children, whileHover, whileTap, ...props }: ComponentProps<'button'> & Record<string, unknown>) => (
       <button {...props}>{children}</button>
     ),
   },

@@ -1,12 +1,10 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/device_identity_service.dart';
 import '../../../core/supabase/supabase_client.dart';
 import '../domain/models/device_points.dart';
 import 'widgets/category_filter.dart';
@@ -43,7 +41,11 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
   List<Map<String, dynamic>> _myPredictions = [];
   bool _loadingCreated = true;
 
+  // 배당 정보 캐시: predictionId -> {yes: odds, no: odds}
+  final Map<String, Map<String, double>> _oddsMap = {};
+
   bool _initialized = false;
+  bool _identityFailed = false;
 
   @override
   void initState() {
@@ -91,9 +93,17 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
   }
 
   Future<void> _init() async {
-    final raw = '${DateTime.now().timeZoneName}|mobile';
-    _fingerprint = sha256.convert(utf8.encode(raw)).toString();
-    await Future.wait([_loadPoints(), _loadPredictions()]);
+    if (mounted) setState(() => _identityFailed = false);
+    try {
+      _fingerprint = await DeviceIdentityService.instance.getFingerprint();
+      await Future.wait([
+        _loadPoints(), _loadPredictions(),
+        if (_tabController.index == 1) _loadMyBets(),
+        if (_tabController.index == 2) _loadMyPredictions(),
+      ]);
+    } catch (_) {
+      if (mounted) setState(() => _identityFailed = true);
+    }
   }
 
   // ─── Fingerprint & Points ───
@@ -108,10 +118,13 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           .maybeSingle();
 
       if (data == null) {
-        await supabase.rpc('register_device', params: {
-          'p_device_fingerprint': _fingerprint,
-          'p_hardware_hash': null,
-        });
+        await supabase.rpc(
+          'register_device',
+          params: {
+            'p_device_fingerprint': _fingerprint,
+            'p_hardware_hash': null,
+          },
+        );
         data = await supabase
             .from('device_points')
             .select()
@@ -134,6 +147,75 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
       }
     } catch (e) {
       debugPrint('[Prediction] Load points error: $e');
+    }
+  }
+
+  // ─── 마감 안 된 투표 우선 정렬 ───
+
+  void _sortActiveFirst(List<Map<String, dynamic>> list) {
+    final now = DateTime.now();
+    list.sort((a, b) {
+      final aClosesAt = DateTime.tryParse(a['closes_at'] ?? '') ?? now;
+      final bClosesAt = DateTime.tryParse(b['closes_at'] ?? '') ?? now;
+      final aActive =
+          (a['status'] ?? 'active') == 'active' && aClosesAt.isAfter(now);
+      final bActive =
+          (b['status'] ?? 'active') == 'active' && bClosesAt.isAfter(now);
+      if (aActive && !bActive) return -1;
+      if (!aActive && bActive) return 1;
+      final aCreated = DateTime.tryParse(a['created_at'] ?? '') ?? now;
+      final bCreated = DateTime.tryParse(b['created_at'] ?? '') ?? now;
+      return bCreated.compareTo(aCreated);
+    });
+  }
+
+  // ─── 배당 정보 일괄 로드 ───
+
+  Future<void> _loadOddsForPredictions(
+    List<Map<String, dynamic>> predictions,
+  ) async {
+    if (predictions.isEmpty) return;
+    final ids = predictions.map((p) => p['id'] as String).toList();
+    try {
+      final bets = await supabase
+          .from('prediction_bets')
+          .select('prediction_id, option_id, bet_amount')
+          .inFilter('prediction_id', ids)
+          .eq('status', 'pending');
+
+      final betsByPrediction = <String, List<Map<String, dynamic>>>{};
+      for (final bet in List<Map<String, dynamic>>.from(bets)) {
+        final pid = bet['prediction_id'] as String;
+        betsByPrediction.putIfAbsent(pid, () => []).add(bet);
+      }
+
+      final newOdds = <String, Map<String, double>>{};
+      for (final p in predictions) {
+        final pid = p['id'] as String;
+        final totalPool = (p['total_pool'] as int?) ?? 0;
+        final effectivePool = totalPool * 0.9;
+        final pBets = betsByPrediction[pid] ?? [];
+        int yesTotal = 0, noTotal = 0;
+        for (final b in pBets) {
+          if (b['option_id'] == 'yes') {
+            yesTotal += (b['bet_amount'] as int);
+          } else {
+            noTotal += (b['bet_amount'] as int);
+          }
+        }
+        newOdds[pid] = {
+          'yes': yesTotal > 0
+              ? (effectivePool / yesTotal).clamp(1.05, 20.0)
+              : (totalPool > 0 ? 20.0 : 0.0),
+          'no': noTotal > 0
+              ? (effectivePool / noTotal).clamp(1.05, 20.0)
+              : (totalPool > 0 ? 20.0 : 0.0),
+        };
+      }
+
+      if (mounted) setState(() => _oddsMap.addAll(newOdds));
+    } catch (e) {
+      debugPrint('[Prediction] Load odds error: $e');
     }
   }
 
@@ -175,7 +257,14 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
         data = await _queryPredictions('en', category);
       }
 
-      if (mounted) setState(() { _predictions = data; _loadingAll = false; });
+      _sortActiveFirst(data);
+      if (mounted) {
+        setState(() {
+          _predictions = data;
+          _loadingAll = false;
+        });
+      }
+      await _loadOddsForPredictions(data);
     } catch (e) {
       debugPrint('[Prediction] Load error: $e');
       if (mounted) setState(() => _loadingAll = false);
@@ -219,12 +308,15 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           .order('status', ascending: true)
           .order('created_at', ascending: false);
 
+      final list = List<Map<String, dynamic>>.from(data);
+      _sortActiveFirst(list);
       if (mounted) {
         setState(() {
-          _myPredictions = List<Map<String, dynamic>>.from(data);
+          _myPredictions = list;
           _loadingCreated = false;
         });
       }
+      await _loadOddsForPredictions(list);
     } catch (e) {
       debugPrint('[Prediction] Load created error: $e');
       if (mounted) setState(() => _loadingCreated = false);
@@ -245,10 +337,12 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final signalGreen =
-        isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight;
-    final ghostGrey =
-        isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
+    final signalGreen = isDark
+        ? AppColors.signalGreenDark
+        : AppColors.signalGreenLight;
+    final ghostGrey = isDark
+        ? AppColors.ghostGreyDark
+        : AppColors.ghostGreyLight;
 
     return Scaffold(
       appBar: AppBar(
@@ -279,13 +373,25 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
             letterSpacing: 1,
           ),
           tabs: [
-            Tab(icon: const Icon(Icons.public, size: 18), text: l10n.predictionTabAll),
-            Tab(icon: const Icon(Icons.history, size: 18), text: l10n.predictionTabMyBets),
-            Tab(icon: const Icon(Icons.person_outline, size: 18), text: l10n.predictionTabCreated),
+            Tab(
+              icon: const Icon(Icons.public, size: 18),
+              text: l10n.predictionTabAll,
+            ),
+            Tab(
+              icon: const Icon(Icons.history, size: 18),
+              text: l10n.predictionTabMyBets,
+            ),
+            Tab(
+              icon: const Icon(Icons.person_outline, size: 18),
+              text: l10n.predictionTabCreated,
+            ),
           ],
         ),
       ),
-      body: TabBarView(
+      body: _identityFailed ? Center(child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [Text(l10n.commonError), TextButton(onPressed: _init, child: Text(l10n.commonRetry))],
+      )) : TabBarView(
         controller: _tabController,
         children: [
           _buildAllTab(ghostGrey),
@@ -294,7 +400,10 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/prediction/create'),
+        onPressed: () async {
+          await context.push('/prediction/create');
+          if (mounted) await Future.wait([_loadPoints(), _loadPredictions()]);
+        },
         backgroundColor: signalGreen,
         foregroundColor: isDark ? AppColors.voidBlackDark : AppColors.white,
         child: const Icon(Icons.add),
@@ -320,35 +429,53 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           child: _loadingAll
               ? const Center(child: CircularProgressIndicator())
               : _predictions.isEmpty
-                  ? Center(
-                      child: Text('No predictions yet.',
-                          style: TextStyle(color: ghostGrey, fontFamily: 'monospace', fontSize: 13)),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () async { await _loadPredictions(); await _loadPoints(); },
-                      child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        itemCount: _predictions.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 12),
-                        itemBuilder: (context, index) {
-                          final p = _predictions[index];
-                          final createdAt = DateTime.tryParse(p['created_at'] ?? '') ?? DateTime.now();
-                          final closesAt = DateTime.tryParse(p['closes_at'] ?? '') ?? DateTime.now();
-                          return PredictionCard(
-                            id: p['id'] ?? '',
-                            question: p['question'] ?? '',
-                            category: _parseCategory(p['category']),
-                            yesOdds: 0, noOdds: 0, // 상세에서 조회
-                            participants: ((p['total_pool'] as int?) ?? 0) ~/ 50,
-                            createdAt: createdAt,
-                            closesAt: closesAt,
-                            status: p['status'] ?? 'active',
-                            correctAnswer: p['correct_answer'],
-                            onTap: () => context.push('/prediction/${p['id']}'),
-                          );
-                        },
-                      ),
+              ? Center(
+                  child: Text(
+                    'No predictions yet.',
+                    style: TextStyle(
+                      color: ghostGrey,
+                      fontFamily: 'monospace',
+                      fontSize: 13,
                     ),
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    await _loadPredictions();
+                    await _loadPoints();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    itemCount: _predictions.length,
+                    separatorBuilder: (_, _) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final p = _predictions[index];
+                      final pid = p['id'] ?? '';
+                      final createdAt =
+                          DateTime.tryParse(p['created_at'] ?? '') ??
+                          DateTime.now();
+                      final closesAt =
+                          DateTime.tryParse(p['closes_at'] ?? '') ??
+                          DateTime.now();
+                      return PredictionCard(
+                        id: pid,
+                        question: p['question'] ?? '',
+                        category: _parseCategory(p['category']),
+                        yesOdds: _oddsMap[pid]?['yes'] ?? 0,
+                        noOdds: _oddsMap[pid]?['no'] ?? 0,
+                        participants: ((p['total_pool'] as int?) ?? 0) ~/ 50,
+                        createdAt: createdAt,
+                        closesAt: closesAt,
+                        status: p['status'] ?? 'active',
+                        correctAnswer: p['correct_answer'],
+                        onTap: () => context.push('/prediction/${p['id']}'),
+                      );
+                    },
+                  ),
+                ),
         ),
       ],
     );
@@ -368,16 +495,25 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           children: [
             Icon(Icons.history, size: 48, color: ghostGrey),
             const SizedBox(height: 12),
-            Text('No bets yet.\nStart betting on predictions!',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: ghostGrey, fontFamily: 'monospace', fontSize: 13)),
+            Text(
+              'No bets yet.\nStart betting on predictions!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ghostGrey,
+                fontFamily: 'monospace',
+                fontSize: 13,
+              ),
+            ),
           ],
         ),
       );
     }
 
     return RefreshIndicator(
-      onRefresh: () async { await _loadMyBets(); await _loadPoints(); },
+      onRefresh: () async {
+        await _loadMyBets();
+        await _loadPoints();
+      },
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: _myBets.length,
@@ -397,7 +533,9 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           return GestureDetector(
             onTap: () => context.push('/prediction/${bet['prediction_id']}'),
             child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(14),
                 child: Column(
@@ -408,26 +546,39 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
                         Expanded(
                           child: Text(
                             pred?['question'] ?? 'Unknown',
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                            maxLines: 2, overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         const SizedBox(width: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 3,
+                          ),
                           decoration: BoxDecoration(
                             color: isWon
                                 ? signalGreen.withValues(alpha: 0.15)
                                 : isLost
-                                    ? AppColors.glitchRed.withValues(alpha: 0.15)
-                                    : ghostGrey.withValues(alpha: 0.15),
+                                ? AppColors.glitchRed.withValues(alpha: 0.15)
+                                : ghostGrey.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             status.toUpperCase(),
                             style: TextStyle(
-                              fontFamily: 'monospace', fontSize: 11, fontWeight: FontWeight.bold,
-                              color: isWon ? signalGreen : isLost ? AppColors.glitchRed : ghostGrey,
+                              fontFamily: 'monospace',
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: isWon
+                                  ? signalGreen
+                                  : isLost
+                                  ? AppColors.glitchRed
+                                  : ghostGrey,
                             ),
                           ),
                         ),
@@ -436,22 +587,40 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Text(optionId.toUpperCase(),
-                            style: TextStyle(
-                                fontFamily: 'monospace', fontSize: 12, fontWeight: FontWeight.bold,
-                                color: isYes ? signalGreen : AppColors.glitchRed)),
+                        Text(
+                          optionId.toUpperCase(),
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: isYes ? signalGreen : AppColors.glitchRed,
+                          ),
+                        ),
                         const SizedBox(width: 12),
-                        Text('$amount BP',
-                            style: const TextStyle(fontFamily: 'monospace', fontSize: 12)),
+                        Text(
+                          '$amount BP',
+                          style: const TextStyle(
+                            fontFamily: 'monospace',
+                            fontSize: 12,
+                          ),
+                        ),
                         const SizedBox(width: 12),
-                        Text('${odds.toStringAsFixed(2)}x',
-                            style: TextStyle(fontFamily: 'monospace', fontSize: 12, color: ghostGrey)),
+                        Text(
+                          '${odds.toStringAsFixed(2)}x',
+                          style: TextStyle(
+                            fontFamily: 'monospace',
+                            fontSize: 12,
+                            color: ghostGrey,
+                          ),
+                        ),
                         if (payout != null) ...[
                           const Spacer(),
                           Text(
                             '${isWon ? "+" : ""}${payout - amount} BP',
                             style: TextStyle(
-                              fontFamily: 'monospace', fontSize: 12, fontWeight: FontWeight.bold,
+                              fontFamily: 'monospace',
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
                               color: isWon ? signalGreen : AppColors.glitchRed,
                             ),
                           ),
@@ -482,28 +651,41 @@ class _PredictionListScreenState extends ConsumerState<PredictionListScreen>
           children: [
             Icon(Icons.person_outline, size: 48, color: ghostGrey),
             const SizedBox(height: 12),
-            Text('No predictions created yet.',
-                style: TextStyle(color: ghostGrey, fontFamily: 'monospace', fontSize: 13)),
+            Text(
+              'No predictions created yet.',
+              style: TextStyle(
+                color: ghostGrey,
+                fontFamily: 'monospace',
+                fontSize: 13,
+              ),
+            ),
           ],
         ),
       );
     }
 
     return RefreshIndicator(
-      onRefresh: () async { await _loadMyPredictions(); await _loadPoints(); },
+      onRefresh: () async {
+        await _loadMyPredictions();
+        await _loadPoints();
+      },
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: _myPredictions.length,
         separatorBuilder: (_, _) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
           final p = _myPredictions[index];
-          final createdAt = DateTime.tryParse(p['created_at'] ?? '') ?? DateTime.now();
-          final closesAt = DateTime.tryParse(p['closes_at'] ?? '') ?? DateTime.now();
+          final pid = p['id'] ?? '';
+          final createdAt =
+              DateTime.tryParse(p['created_at'] ?? '') ?? DateTime.now();
+          final closesAt =
+              DateTime.tryParse(p['closes_at'] ?? '') ?? DateTime.now();
           return PredictionCard(
-            id: p['id'] ?? '',
+            id: pid,
             question: p['question'] ?? '',
             category: _parseCategory(p['category']),
-            yesOdds: 0, noOdds: 0,
+            yesOdds: _oddsMap[pid]?['yes'] ?? 0,
+            noOdds: _oddsMap[pid]?['no'] ?? 0,
             participants: ((p['total_pool'] as int?) ?? 0) ~/ 50,
             createdAt: createdAt,
             closesAt: closesAt,

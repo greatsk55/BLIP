@@ -54,14 +54,10 @@ class DevicePoints {
 
   /// 방 생성 비용 (랭크별 할인)
   int get creationCost {
-    switch (rank) {
-      case 'Oracle':
-        return 75; // 50% 할인
-      case 'Control':
-        return 120; // 20% 할인
-      default:
-        return 150; // 기본
-    }
+    // The server awards creation discounts using lifetime earnings.
+    if (totalEarned >= 5000) return 75;
+    if (totalEarned >= 1000) return 120;
+    return 150;
   }
 
   DevicePoints copyWith({

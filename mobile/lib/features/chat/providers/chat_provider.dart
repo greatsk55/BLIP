@@ -84,6 +84,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
   RealtimeChannel? _channel;
   BlipKeyPair? _keyPair;
   Uint8List? _sharedSecret;
+  String? _authKeyHash;
   bool _selfTracked = false;
 
   /// 10분 비활성 시 방 자동 파쇄 타이머
@@ -100,20 +101,23 @@ class ChatNotifier extends StateNotifier<ChatState> {
   void Function(Map<String, dynamic>)? onWebrtcAnswer;
   void Function(Map<String, dynamic>)? onWebrtcIce;
 
-  ChatNotifier({
-    required this.roomId,
-    required this.password,
-    ApiClient? api,
-  })  : _api = api ?? ApiClient(),
-        super(ChatState(
-          myUsername: generateUsername(),
-          myId: const Uuid().v4(),
-        )) {
+  ChatNotifier({required this.roomId, required this.password, ApiClient? api})
+    : _api = api ?? ApiClient(),
+      super(
+        ChatState(myUsername: generateUsername(), myId: const Uuid().v4()),
+      ) {
     _init();
   }
 
   Future<void> _init() async {
     try {
+      final derived = await deriveKeysFromPasswordAsync(password, roomId);
+      if (!mounted) {
+        derived.dispose();
+        return;
+      }
+      _authKeyHash = hashAuthKey(derived.authKey);
+      derived.dispose();
       // 1. ECDH 키쌍 생성 (랜덤 → Perfect Forward Secrecy)
       _keyPair = generateKeyPair();
 
@@ -173,92 +177,113 @@ class ChatNotifier extends StateNotifier<ChatState> {
 
   void _setupBroadcastListeners() {
     // 공개키 교환 수신
-    _channel!.onBroadcast(event: 'key_exchange', callback: (raw) {
-      if (!mounted || _keyPair == null) return;
-      if (_sharedSecret != null) return; // 이미 교환 완료
+    _channel!.onBroadcast(
+      event: 'key_exchange',
+      callback: (raw) {
+        if (!mounted || _keyPair == null) return;
+        if (_sharedSecret != null) return; // 이미 교환 완료
 
-      final payload = _unwrapPayload(raw);
-      final pubKeyStr = payload['publicKey'] as String?;
-      final userIdStr = payload['userId'] as String?;
-      final usernameStr = payload['username'] as String?;
-      if (pubKeyStr == null || userIdStr == null || usernameStr == null) return;
+        final payload = _unwrapPayload(raw);
+        final pubKeyStr = payload['publicKey'] as String?;
+        final userIdStr = payload['userId'] as String?;
+        final usernameStr = payload['username'] as String?;
+        if (pubKeyStr == null || userIdStr == null || usernameStr == null) {
+          return;
+        }
 
-      final peerPublicKey = stringToPublicKey(pubKeyStr);
-      _sharedSecret = computeSharedSecret(peerPublicKey, _keyPair!.secretKey);
+        final peerPublicKey = stringToPublicKey(pubKeyStr);
+        _sharedSecret = computeSharedSecret(peerPublicKey, _keyPair!.secretKey);
 
-      // userId 비교로 WebRTC initiator 결정
-      final isInit = state.myId.compareTo(userIdStr) < 0;
+        // userId 비교로 WebRTC initiator 결정
+        final isInit = state.myId.compareTo(userIdStr) < 0;
 
-      _resetInactivityTimer();
-
-      state = state.copyWith(
-        peerUsername: usernameStr,
-        peerConnected: true,
-        isInitiator: isInit,
-        status: ChatStatus.chatting,
-        messages: _limitMessages([
-          ...state.messages,
-          DecryptedMessage(
-            id: const Uuid().v4(),
-            senderId: 'system',
-            senderName: 'SYSTEM',
-            content: '$usernameStr CONNECTED',
-            timestamp: DateTime.now().millisecondsSinceEpoch,
-            isMine: false,
-          ),
-        ]),
-      );
-    });
-
-    // 암호화된 메시지 수신
-    _channel!.onBroadcast(event: 'message', callback: (raw) {
-      if (!mounted || _sharedSecret == null) return;
-
-      final payload = _unwrapPayload(raw);
-      final ciphertext = payload['ciphertext'] as String?;
-      final nonce = payload['nonce'] as String?;
-      if (ciphertext == null || nonce == null) return;
-
-      final decrypted = decryptMessage(
-        EncryptedPayload(ciphertext: ciphertext, nonce: nonce),
-        _sharedSecret!,
-      );
-
-      if (decrypted != null) {
         _resetInactivityTimer();
+
         state = state.copyWith(
+          peerUsername: usernameStr,
+          peerConnected: true,
+          isInitiator: isInit,
+          status: ChatStatus.chatting,
           messages: _limitMessages([
             ...state.messages,
             DecryptedMessage(
-              id: (payload['id'] as String?) ?? const Uuid().v4(),
-              senderId: (payload['senderId'] as String?) ?? 'unknown',
-              senderName: (payload['senderName'] as String?) ?? 'Unknown',
-              content: decrypted,
-              timestamp: (payload['timestamp'] as int?) ??
-                  DateTime.now().millisecondsSinceEpoch,
+              id: const Uuid().v4(),
+              senderId: 'system',
+              senderName: 'SYSTEM',
+              content: '$usernameStr CONNECTED',
+              timestamp: DateTime.now().millisecondsSinceEpoch,
               isMine: false,
             ),
           ]),
         );
-      }
-    });
+      },
+    );
+
+    // 암호화된 메시지 수신
+    _channel!.onBroadcast(
+      event: 'message',
+      callback: (raw) {
+        if (!mounted || _sharedSecret == null) return;
+
+        final payload = _unwrapPayload(raw);
+        final ciphertext = payload['ciphertext'] as String?;
+        final nonce = payload['nonce'] as String?;
+        if (ciphertext == null || nonce == null) return;
+
+        final decrypted = decryptMessage(
+          EncryptedPayload(ciphertext: ciphertext, nonce: nonce),
+          _sharedSecret!,
+        );
+
+        if (decrypted != null) {
+          _resetInactivityTimer();
+          state = state.copyWith(
+            messages: _limitMessages([
+              ...state.messages,
+              DecryptedMessage(
+                id: (payload['id'] as String?) ?? const Uuid().v4(),
+                senderId: (payload['senderId'] as String?) ?? 'unknown',
+                senderName: (payload['senderName'] as String?) ?? 'Unknown',
+                content: decrypted,
+                timestamp:
+                    (payload['timestamp'] as int?) ??
+                    DateTime.now().millisecondsSinceEpoch,
+                isMine: false,
+              ),
+            ]),
+          );
+        }
+      },
+    );
 
     // 상대방 퇴장 → 즉시 방 폭파
-    _channel!.onBroadcast(event: 'user_left', callback: (_) {
-      if (!mounted) return;
-      _destroyLocally();
-    });
+    _channel!.onBroadcast(
+      event: 'user_left',
+      callback: (_) {
+        if (!mounted) return;
+        _destroyLocally();
+      },
+    );
 
     // WebRTC 시그널링 이벤트 (subscribe 전에 등록 → webrtc_provider로 포워딩)
-    _channel!.onBroadcast(event: 'webrtc_offer', callback: (raw) {
-      onWebrtcOffer?.call(raw);
-    });
-    _channel!.onBroadcast(event: 'webrtc_answer', callback: (raw) {
-      onWebrtcAnswer?.call(raw);
-    });
-    _channel!.onBroadcast(event: 'webrtc_ice', callback: (raw) {
-      onWebrtcIce?.call(raw);
-    });
+    _channel!.onBroadcast(
+      event: 'webrtc_offer',
+      callback: (raw) {
+        onWebrtcOffer?.call(raw);
+      },
+    );
+    _channel!.onBroadcast(
+      event: 'webrtc_answer',
+      callback: (raw) {
+        onWebrtcAnswer?.call(raw);
+      },
+    );
+    _channel!.onBroadcast(
+      event: 'webrtc_ice',
+      callback: (raw) {
+        onWebrtcIce?.call(raw);
+      },
+    );
   }
 
   /// presenceState()에서 모든 Presence 객체를 평탄화
@@ -276,13 +301,15 @@ class ChatNotifier extends StateNotifier<ChatState> {
       debugPrint('[Chat] presenceSync: ${users.length} users');
 
       // DB participant_count 업데이트
-      _api.updateParticipantCount(roomId, users.length).catchError((_) {});
+      _updateParticipantCount(users.length);
 
       // 3명 이상 → 후발 참여자 자동 퇴장
       if (users.length > 2) {
-        final sorted = [...users]..sort(
-            (a, b) => ((a.payload['joinedAt'] as int?) ?? 0)
-                .compareTo((b.payload['joinedAt'] as int?) ?? 0),
+        final sorted = [...users]
+          ..sort(
+            (a, b) => ((a.payload['joinedAt'] as int?) ?? 0).compareTo(
+              (b.payload['joinedAt'] as int?) ?? 0,
+            ),
           );
         final latestUser = sorted.last;
         if (latestUser.payload['userId'] == state.myId) {
@@ -297,17 +324,16 @@ class ChatNotifier extends StateNotifier<ChatState> {
           .where((u) => u.payload['userId'] != state.myId)
           .firstOrNull;
 
-      if (peer != null &&
-          _keyPair != null &&
-          _sharedSecret == null) {
+      if (peer != null && _keyPair != null && _sharedSecret == null) {
         final peerPubKeyStr = peer.payload['publicKey'] as String?;
         if (peerPubKeyStr != null && peerPubKeyStr.isNotEmpty) {
           final peerPublicKey = stringToPublicKey(peerPubKeyStr);
-          _sharedSecret =
-              computeSharedSecret(peerPublicKey, _keyPair!.secretKey);
-          final isInit = state.myId
-                  .compareTo(peer.payload['userId'] as String) <
-              0;
+          _sharedSecret = computeSharedSecret(
+            peerPublicKey,
+            _keyPair!.secretKey,
+          );
+          final isInit =
+              state.myId.compareTo(peer.payload['userId'] as String) < 0;
           state = state.copyWith(
             peerUsername: peer.payload['username'] as String,
             peerConnected: true,
@@ -324,11 +350,11 @@ class ChatNotifier extends StateNotifier<ChatState> {
     // 방 파쇄 트리거로 사용하지 않음
     _channel!.onPresenceLeave((payload) {
       if (!mounted || !_selfTracked) return;
-      debugPrint('[Chat] presenceLeave: left=${payload.leftPresences.length}, '
-          'remaining=${payload.currentPresences.length}');
-      _api
-          .updateParticipantCount(roomId, payload.currentPresences.length)
-          .catchError((_) {});
+      debugPrint(
+        '[Chat] presenceLeave: left=${payload.leftPresences.length}, '
+        'remaining=${payload.currentPresences.length}',
+      );
+      _updateParticipantCount(payload.currentPresences.length);
     });
   }
 
@@ -444,10 +470,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
       _channel!.untrack();
       _channel!.sendBroadcastMessage(
         event: 'user_left',
-        payload: {
-          'userId': state.myId,
-          'username': state.myUsername,
-        },
+        payload: {'userId': state.myId, 'username': state.myUsername},
       );
       _channel!.unsubscribe();
       _channel = null;
@@ -463,17 +486,36 @@ class ChatNotifier extends StateNotifier<ChatState> {
   }
 
   /// 내부 파쇄 (상대방 퇴장 또는 비활성 타이머)
+  Future<void> blockAndLeave() async {
+    final auth = _authKeyHash;
+    if (auth == null) throw StateError('Room authorization is not ready');
+    await _api.destroyRoom(roomId, authKeyHash: auth);
+    disconnect();
+  }
+
+  /// 내부 파쇄 (상대방 퇴장 또는 비활성 타이머)
   void _destroyLocally() {
     debugPrint('[Chat] _destroyLocally called');
     debugPrint(StackTrace.current.toString());
     _cleanup();
-    _api.updateParticipantCount(roomId, 0).catchError((_) {});
+    _updateParticipantCount(0);
     state = state.copyWith(
       messages: [],
       status: ChatStatus.destroyed,
       peerConnected: false,
       peerUsername: null,
     );
+  }
+
+  /// 채널 정리
+  void _updateParticipantCount(int count) {
+    final auth = _authKeyHash;
+    if (auth == null) return;
+    _api.updateParticipantCount(roomId, count, authKeyHash: auth).catchError((
+      Object error,
+    ) {
+      debugPrint('[BLIP] Room state update failed: $error');
+    });
   }
 
   /// 채널 정리
@@ -512,14 +554,15 @@ class ChatNotifier extends StateNotifier<ChatState> {
 /// keepAlive: ImagePicker 등 시스템 다이얼로그로 인한 임시 background 전환 시
 /// dispose 방지. ChatScreen.dispose()에서 명시적으로 invalidate.
 final chatNotifierProvider = StateNotifierProvider.autoDispose
-    .family<ChatNotifier, ChatState, ({String roomId, String password})>(
-  (ref, params) {
-    final link = ref.keepAlive();
-    final notifier = ChatNotifier(
-      roomId: params.roomId,
-      password: params.password,
-    );
-    ref.onDispose(() => link.close());
-    return notifier;
-  },
-);
+    .family<ChatNotifier, ChatState, ({String roomId, String password})>((
+      ref,
+      params,
+    ) {
+      final link = ref.keepAlive();
+      final notifier = ChatNotifier(
+        roomId: params.roomId,
+        password: params.password,
+      );
+      ref.onDispose(() => link.close());
+      return notifier;
+    });

@@ -113,12 +113,14 @@ export function useChat({ roomId, password, onMessageReceived, persistMessages =
   const keyPairRef = useRef<KeyPair | null>(null);
   const sharedSecretRef = useRef<Uint8Array | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
-  const myUsernameRef = useRef(generateUsername());
-  const myIdRef = useRef(generateUUID());
+  const [myUsername] = useState(generateUsername);
+  const [myId] = useState(generateUUID);
+  const myUsernameRef = useRef(myUsername);
+  const myIdRef = useRef(myId);
   const selfTrackedRef = useRef(false);
   const authKeyHashRef = useRef<string | null>(null);
   const onMessageReceivedRef = useRef(onMessageReceived);
-  onMessageReceivedRef.current = onMessageReceived;
+  useEffect(() => { onMessageReceivedRef.current = onMessageReceived; }, [onMessageReceived]);
   const persistRef = useRef(persistMessages);
 
   // 그룹채팅 히스토리 로드
@@ -257,15 +259,11 @@ export function useChat({ roomId, password, onMessageReceived, persistMessages =
     if (!password) return;
 
     // Secure Context 필수 — HTTP에서는 E2EE가 MITM에 무력화됨
-    if (!globalThis.isSecureContext) {
-      setStatus('error');
-      return;
-    }
-
     let isMounted = true;
 
     async function init() {
       try {
+        if (!globalThis.isSecureContext) throw new Error("Secure context required");
         // 방 인증용 authKeyHash 파생 (API 호출 인증에 사용)
         const { authKey } = await deriveKeysFromPassword(password, roomId);
         if (!isMounted) return;
@@ -614,7 +612,7 @@ export function useChat({ roomId, password, onMessageReceived, persistMessages =
   return {
     messages,
     status,
-    myUsername: myUsernameRef.current,
+    myUsername,
     peerUsername,
     peerConnected,
     sendMessage,
@@ -624,7 +622,7 @@ export function useChat({ roomId, password, onMessageReceived, persistMessages =
     channel: channelState,
     sharedSecret: sharedSecretState,
     isInitiator,
-    myId: myIdRef.current,
+    myId,
     setWebrtcHandlers,
   };
 }

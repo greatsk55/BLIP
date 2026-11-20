@@ -89,6 +89,28 @@
     "description": "Chaque amélioration, suivie de manière transparente.",
     "versions": {
       "0": {
+        "version": "v1.13.0",
+        "date": "2026-11-19",
+        "title": "Améliorations de connexion, confidentialité et sécurité",
+        "changes": {
+          "1": "Correction des mots de passe d’invitation et des mises à jour authentifiées des salons.",
+          "2": "Ajout de signalements facultatifs et de la fermeture du salon en cours.",
+          "3": "Amélioration du démarrage, des choix publicitaires et des identifiants propres à chaque installation.",
+          "4": "Connexion obligatoire supprimée sur iOS ; suppression des anciens comptes Apple conservée."
+        }
+      },
+      "1": {
+        "version": "v1.12.0",
+        "date": "31 mars 2026",
+        "title": "Améliorations UX et stabilité des prédictions",
+        "changes": {
+          "1": "Correction de la boucle splash — l'app ne revient plus au splash lors des changements d'authentification",
+          "2": "Prédictions actives en priorité — les votes non expirés apparaissent en haut de la liste",
+          "3": "Cotes en temps réel dans la liste — les cotes YES/NO s'affichent directement dans la liste",
+          "4": "Disponible sur web et application mobile"
+        }
+      },
+      "2": {
         "version": "v1.10.0",
         "date": "26 mars 2026",
         "title": "Jeu de Prédictions — Votes Anonymes par Points",
@@ -101,7 +123,7 @@
           "6": "Disponible sur web et application mobile"
         }
       },
-      "1": {
+      "3": {
         "version": "v1.9.0",
         "date": "24 mars 2026",
         "title": "BLIP me — Lien de contact jetable",
@@ -113,7 +135,7 @@
           "5": "Disponible sur le web et l'application mobile"
         }
       },
-      "2": {
+      "4": {
         "version": "v1.8.0",
         "date": "20 mars 2026",
         "title": "Mes Salons & Reconnexion Automatique",
@@ -126,7 +148,7 @@
           "6": "Disponible sur web et app mobile"
         }
       },
-      "3": {
+      "5": {
         "version": "v1.7.0",
         "date": "March 18, 2026",
         "title": "Universal File Transfer",
@@ -138,7 +160,7 @@
           "5": "Same E2E encryption as images/videos (NaCl + SHA-256 checksum)"
         }
       },
-      "4": {
+      "6": {
         "version": "v1.6.0",
         "date": "March 18, 2026",
         "title": "Group Chat",
@@ -151,7 +173,7 @@
           "6": "Available on both web and mobile app"
         }
       },
-      "5": {
+      "7": {
         "version": "v1.5.0",
         "date": "14 mars 2026",
         "title": "Widget de chat intégrable",
@@ -163,7 +185,7 @@
           "5": "Chiffrement E2E complet maintenu en mode intégré"
         }
       },
-      "6": {
+      "8": {
         "version": "v1.4.0",
         "date": "28 février 2026",
         "title": "Système de codes d’invitation communautaire",
@@ -174,7 +196,7 @@
           "4": "Prise en charge des liens profonds pour les codes d’invitation dans l’application mobile"
         }
       },
-      "7": {
+      "9": {
         "version": "v1.3.0",
         "date": "26 février 2026",
         "title": "Application mobile et stabilité",
@@ -187,7 +209,7 @@
           "6": "Support de 10 langues (+allemand, chinois traditionnel)"
         }
       },
-      "8": {
+      "10": {
         "version": "v1.2.0",
         "date": "15 février 2026",
         "title": "Transfert de médias chiffré",
@@ -199,7 +221,7 @@
           "5": "Vérification d’intégrité par sommes de contrôle SHA-256"
         }
       },
-      "9": {
+      "11": {
         "version": "v1.1.0",
         "date": "10 février 2026",
         "title": "Destruction instantanée et notifications",
@@ -210,7 +232,7 @@
           "4": "Communauté privée avec publications chiffrées"
         }
       },
-      "10": {
+      "12": {
         "version": "v1.0.0",
         "date": "1er février 2026",
         "title": "Version initiale",
@@ -335,46 +357,46 @@
     }
   },
   "Privacy": {
-    "title": "Vie Privée par Architecture",
-    "subtitle": "Politique de Confidentialité",
-    "lastUpdated": "Dernière mise à jour : mars 2026",
-    "intro": "BLIP est conçu pour ne rien savoir de vous. Ce n'est pas seulement une politique—c'est ainsi que nous avons construit le système. Ce que nous ne pouvons pas collecter, nous ne pouvons pas divulguer.",
+    "title": "Politique de confidentialité",
+    "subtitle": "Confidentialité et données",
+    "lastUpdated": "2026-11-19",
+    "intro": "BLIP 1.13 supprime la connexion obligatoire sur iOS. Le chat fonctionne sans compte sur toutes les plateformes. Cette politique décrit aussi les données de connexion, publicité, analyse, assistance et anciens comptes Apple.",
     "sections": {
       "1": {
-        "title": "Notre Philosophie",
-        "content": "La plupart des politiques de confidentialité expliquent quelles données les entreprises collectent et comment elles les utilisent. La nôtre est différente : nous expliquons pourquoi nous ne pouvons pas collecter vos données même si nous le voulions. L'architecture de BLIP rend la surveillance de masse techniquement impossible."
+        "title": "Conversations chiffrées",
+        "content": "Les messages ordinaires et fichiers P2P sont chiffrés et ne sont pas conservés comme historique dans notre base. Les clés restent sur les appareils ; seuls les messages récents restent en mémoire."
       },
       "2": {
-        "title": "Données que Nous ne Collectons Pas",
-        "content": "Nous ne collectons pas : comptes utilisateurs, adresses e-mail, numéros de téléphone, noms, profils, contenu des messages, historique de chat, listes de contacts ou toute forme d'identification personnelle. Vos conversations sont chiffrées de bout en bout et ne touchent jamais notre base de données. Nous ne pouvons littéralement pas les lire."
+        "title": "Connexion et service",
+        "content": "BLIP, Supabase, Vercel et les relais traitent les adresses IP, métadonnées, états des salons et identifiants anti-abus pour fonctionner et protéger le service. Les journaux de sécurité des prestataires peuvent être conservés selon leurs politiques."
       },
       "3": {
-        "title": "Données qui Transitent",
-        "content": "Lorsque vous utilisez BLIP, nos serveurs traitent brièvement : les charges de messages chiffrés (texte chiffré illisible) et les métadonnées de connexion temporaires (adresses IP pour le routage WebSocket). Ces données n'existent que dans la mémoire volatile (RAM) et ne sont jamais écrites sur disque. À la fin de votre session, elles disparaissent."
+        "title": "Comptes et communautés",
+        "content": "Les anciennes versions iOS utilisaient Se connecter avec Apple. Supabase conserve les identifiants liés et les e-mails fournis jusqu’à leur suppression ; l’application actuelle ne crée plus de nouveaux comptes de connexion. Les publications, commentaires et noms d’auteur sont conservés chiffrés jusqu’à suppression. Les invitations, soldes et votes sont aussi conservés pour leurs fonctions."
       },
       "4": {
-        "title": "Chiffrement de Bout en Bout",
-        "content": "Tous les messages sont chiffrés sur votre appareil en utilisant l'échange de clés Curve25519 ECDH et le chiffrement XSalsa20-Poly1305 avant transmission. Les clés de chiffrement sont générées localement dans votre navigateur et ne sont jamais envoyées à nos serveurs. Même sous contrainte légale, nous ne pouvons pas fournir le contenu des messages—nous ne l'avons pas."
+        "title": "Stockage local et points",
+        "content": "Clés, salons enregistrés, jetons de propriété et préférences restent sur votre appareil. Les prédictions utilisent un identifiant aléatoire d’installation. Effacer les données locales peut faire perdre l’accès aux clés et points anonymes."
       },
       "5": {
-        "title": "Cookies et Stockage Local",
-        "content": "BLIP utilise un stockage local minimal pour : les préférences de thème (mode sombre/clair), les paramètres de langue, les données de salons sauvegardées et les clés de chiffrement temporaires pendant les sessions actives. Nous utilisons le suivi des conversions Google Ads (gtag.js), qui peut définir des cookies pour mesurer l'efficacité publicitaire. Nous n'utilisons pas de cookies d'analyse qui suivent votre comportement de navigation entre les sites. Les clés de chiffrement sont automatiquement détruites lorsque vous fermez l'onglet du navigateur."
+        "title": "Publicité",
+        "content": "L’application utilise Google AdMob ; le Web peut utiliser Monetag. Ils peuvent traiter localisation approximative par IP, identifiants, interactions et diagnostics de plantage et performance à des fins publicitaires, analytiques et antifraude. Consentement et réglages système limitent suivi et personnalisation."
       },
       "6": {
-        "title": "Services Tiers",
-        "content": "BLIP utilise Supabase pour la communication WebSocket en temps réel (relais de messages uniquement, sans stockage). Nous utilisons Google Ads (gtag.js, ID : AW-874567055) pour le suivi des conversions afin de mesurer l'efficacité des campagnes publicitaires. Nous pouvons afficher des publicités contextuelles. Les fournisseurs de publicité peuvent utiliser leurs propres cookies conformément à leurs politiques de confidentialité. Nous ne partageons jamais de données de conversation avec les annonceurs—parce que nous n'en avons pas."
+        "title": "Analyse et notifications",
+        "content": "Firebase Analytics traite identifiants d’installation, informations sur l’appareil et interactions, sans texte des conversations. FCM traite jetons et données de livraison des notifications. L’autorisation de notification est facultative."
       },
       "7": {
-        "title": "Protection des Mineurs",
-        "content": "BLIP n'est pas destiné aux utilisateurs de moins de 13 ans. Comme nous ne collectons pas d'informations personnelles, nous ne pouvons pas vérifier l'âge. Si vous pensez qu'un enfant utilise ce service de manière inappropriée, veuillez nous contacter."
+        "title": "Vos choix",
+        "content": "Utilisez les réglages de publicité et de notifications du système et les options publicitaires disponibles dans l’application. Vous pouvez effacer les données locales et clés enregistrées. Les utilisateurs iOS déjà connectés peuvent supprimer leur ancien compte dans Réglages ; les autres demandes peuvent utiliser le contact ci-dessous. Les administrateurs peuvent supprimer les données communautaires."
       },
       "8": {
-        "title": "Modifications et Contact",
-        "content": "Nous pouvons mettre à jour cette politique pour refléter des changements dans nos pratiques ou pour la conformité légale. Les changements importants seront publiés sur cette page. Comme nous ne collectons pas d'adresses e-mail, nous ne pouvons pas envoyer de notifications—veuillez consulter cette page périodiquement. Pour toute question, visitez notre dépôt GitHub."
+        "title": "Demander la suppression",
+        "content": "Écrivez à wonwookimnida@gmail.com avec l’objet « BLIP data deletion » et identifiez le compte ou lien contrôlé. Après vérification, nous supprimons les données éligibles du compte, du lien et de l’assistance. Aucun historique ordinaire n’est conservé. La communauté est supprimée par l’administrateur ; seuls les dossiers nécessaires à la sécurité, à la lutte antifraude ou à la loi sont conservés."
       },
       "9": {
-        "title": "Communauté Privée",
-        "content": "Les Communautés Privées BLIP stockent des publications chiffrées dans notre base de données. Tout le contenu des publications et les noms d'auteurs sont chiffrés côté client avec XSalsa20-Poly1305 avant le stockage—le serveur ne détient que du texte chiffré illisible. Des empreintes de signalants (hash anonymisé des métadonnées de connexion) sont conservées pour empêcher les signalements en double. Si vous choisissez de sauvegarder le mot de passe de votre communauté dans votre navigateur, il est stocké uniquement dans le localStorage de votre appareil—jamais transmis à nos serveurs. Les données de la communauté peuvent être supprimées définitivement par l'administrateur à tout moment."
+        "title": "Sécurité et contact",
+        "content": "BLIP utilise des invitations, pas de rencontres aléatoires. Signalez un abus dans le menu de sécurité ou à wonwookimnida@gmail.com. Seuls les éléments explicitement soumis sont transmis à un examen humain, exception au non-stockage ordinaire. Ils sont conservés pour la modération et les obligations légales."
       }
     }
   },
@@ -390,16 +412,16 @@
         "content": "BLIP est un service de chat éphémère gratuit, open source et chiffré de bout en bout. Il fournit des canaux de communication temporaires qui sont détruits après utilisation. BLIP n'est pas une messagerie, un réseau social ni une plateforme de stockage de données. C'est un outil de communication jetable."
       },
       "2": {
-        "title": "Aucun Compte Requis",
-        "content": "BLIP fonctionne sans inscription, identifiants de connexion ni profils personnels. L'accès est accordé via des liens de salon temporaires et des mots de passe partagés. Vous êtes responsable de la protection de vos mots de passe de salon—nous ne pouvons pas les récupérer."
+        "title": "Accès et comptes",
+        "content": "BLIP 1.13 ne nécessite aucun compte sur toutes les plateformes. Les identifiants et e-mails fournis par l’ancienne connexion Apple sont conservés jusqu’à suppression. Les salons nécessitent une invitation et un mot de passe partagé. Protégez vos clés : nous ne pouvons pas les récupérer."
       },
       "3": {
         "title": "Utilisation Acceptable",
         "content": "Vous acceptez de ne pas utiliser BLIP pour : distribuer du contenu illégal, harceler ou menacer, transmettre des logiciels malveillants, envoyer du spam automatisé ou abuser, ni pour toute activité violant la loi applicable. Bien que nous ne puissions pas surveiller le contenu chiffré, nous nous réservons le droit de restreindre l'accès à notre infrastructure si un abus est détecté au niveau du réseau."
       },
       "4": {
-        "title": "Aucune Récupération de Données",
-        "content": "Les messages ne sont stockés dans aucune base de données. Une fois un salon de chat détruit, toutes les données de conversation sont perdues de manière permanente et irréversible. C'est par conception, pas une limitation. N'utilisez pas BLIP pour des communications que vous devez conserver."
+        "title": "Messages et signalements",
+        "content": "L’historique individuel ordinaire n’est pas conservé dans notre base de données. Les publications privées sont conservées chiffrées. Seuls les textes récents explicitement joints à un signalement sont conservés pour examen humain. Consultez la politique de confidentialité pour les comptes, la publicité et l’analyse."
       },
       "5": {
         "title": "Open Source",
@@ -783,5 +805,24 @@
       "cta": "Commencer à Prédire"
     },
     "discuss": "Rejoindre la Discussion"
+  },
+  "Safety": {
+    "title": "Signaler ou bloquer",
+    "notice": "Vous choisissez les preuves à partager. Le chat ordinaire n’est pas enregistré automatiquement.",
+    "reason": "Motif",
+    "harassment": "Harcèlement",
+    "sexual": "Contenu sexuel",
+    "hate": "Haine ou discrimination",
+    "violence": "Menaces ou violence",
+    "scam": "Escroquerie ou spam",
+    "other": "Autre",
+    "evidence": "Envoyer jusqu’à 4 messages visibles sous forme lisible pour examen humain.",
+    "report": "Envoyer le signalement",
+    "reported": "Signalement reçu. Notre assistance l’examinera.",
+    "failed": "Action impossible. Réessayez ou contactez l’assistance.",
+    "block": "Bloquer et quitter ce chat",
+    "blockNotice": "Ferme le salon pour tous et empêche de revenir avec cette invitation. Ne bloque pas la personne dans les autres salons.",
+    "close": "Fermer",
+    "adPrivacy": "Choix de confidentialité publicitaire"
   }
 }

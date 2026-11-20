@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:blip/l10n/app_localizations.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/device_identity_service.dart';
 import '../../../core/supabase/supabase_client.dart';
 import '../domain/models/device_points.dart';
 import 'widgets/betting_bottom_sheet.dart';
@@ -17,10 +16,7 @@ import 'widgets/category_filter.dart';
 class PredictionDetailScreen extends ConsumerStatefulWidget {
   final String predictionId;
 
-  const PredictionDetailScreen({
-    super.key,
-    required this.predictionId,
-  });
+  const PredictionDetailScreen({super.key, required this.predictionId});
 
   @override
   ConsumerState<PredictionDetailScreen> createState() =>
@@ -47,10 +43,7 @@ class _PredictionDetailScreenState
   }
 
   Future<String> _getDeviceFingerprint() async {
-    // 간단한 디바이스 fingerprint (웹과 동일 로직 간소화)
-    final raw = '${DateTime.now().timeZoneName}|mobile';
-    final hash = sha256.convert(utf8.encode(raw)).toString();
-    return hash;
+    return DeviceIdentityService.instance.getFingerprint();
   }
 
   Future<void> _loadData() async {
@@ -74,10 +67,10 @@ class _PredictionDetailScreenState
 
       if (pointsData == null) {
         // 신규 디바이스 등록
-        await supabase.rpc('register_device', params: {
-          'p_device_fingerprint': fp,
-          'p_hardware_hash': null,
-        });
+        await supabase.rpc(
+          'register_device',
+          params: {'p_device_fingerprint': fp, 'p_hardware_hash': null},
+        );
         pointsData = await supabase
             .from('device_points')
             .select()
@@ -148,18 +141,22 @@ class _PredictionDetailScreenState
 
     try {
       // idempotency key 생성
-      final random = List.generate(8, (_) => Random().nextInt(256))
-          .map((b) => b.toRadixString(16).padLeft(2, '0'))
-          .join();
+      final random = List.generate(
+        8,
+        (_) => Random().nextInt(256),
+      ).map((b) => b.toRadixString(16).padLeft(2, '0')).join();
       final key = '$_deviceFingerprint-${widget.predictionId}-$option-$random';
 
-      await supabase.rpc('calculate_odds_and_place_bet', params: {
-        'p_prediction_id': widget.predictionId,
-        'p_device_fingerprint': _deviceFingerprint,
-        'p_option_id': option,
-        'p_bet_amount': amount,
-        'p_idempotency_key': key,
-      });
+      await supabase.rpc(
+        'calculate_odds_and_place_bet',
+        params: {
+          'p_prediction_id': widget.predictionId,
+          'p_device_fingerprint': _deviceFingerprint,
+          'p_option_id': option,
+          'p_bet_amount': amount,
+          'p_idempotency_key': key,
+        },
+      );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -188,15 +185,17 @@ class _PredictionDetailScreenState
   }
 
   String _formatTimeRemaining(AppLocalizations l10n) {
-    final closesAt = DateTime.tryParse(_prediction?['closes_at'] ?? '') ??
-        DateTime.now();
+    final closesAt =
+        DateTime.tryParse(_prediction?['closes_at'] ?? '') ?? DateTime.now();
     if (closesAt.isBefore(DateTime.now())) return l10n.predictionClosed;
     final diff = closesAt.difference(DateTime.now());
     if (diff.inDays >= 1) {
       return l10n.predictionClosesIn('${diff.inDays}d ${diff.inHours % 24}h');
     }
     if (diff.inHours >= 1) {
-      return l10n.predictionClosesIn('${diff.inHours}h ${diff.inMinutes % 60}m');
+      return l10n.predictionClosesIn(
+        '${diff.inHours}h ${diff.inMinutes % 60}m',
+      );
     }
     return l10n.predictionClosesIn('${diff.inMinutes}m');
   }
@@ -205,12 +204,13 @@ class _PredictionDetailScreenState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final signalGreen =
-        isDark ? AppColors.signalGreenDark : AppColors.signalGreenLight;
-    final ghostGrey =
-        isDark ? AppColors.ghostGreyDark : AppColors.ghostGreyLight;
-    final borderColor =
-        isDark ? AppColors.borderDark : AppColors.borderLight;
+    final signalGreen = isDark
+        ? AppColors.signalGreenDark
+        : AppColors.signalGreenLight;
+    final ghostGrey = isDark
+        ? AppColors.ghostGreyDark
+        : AppColors.ghostGreyLight;
+    final borderColor = isDark ? AppColors.borderDark : AppColors.borderLight;
 
     if (_loading) {
       return Scaffold(
@@ -234,8 +234,8 @@ class _PredictionDetailScreenState
     );
     final totalPool = (_prediction!['total_pool'] as int?) ?? 0;
     final status = _prediction!['status'] as String? ?? 'active';
-    final closesAt = DateTime.tryParse(_prediction!['closes_at'] ?? '') ??
-        DateTime.now();
+    final closesAt =
+        DateTime.tryParse(_prediction!['closes_at'] ?? '') ?? DateTime.now();
     final isExpired = status != 'active' || closesAt.isBefore(DateTime.now());
     final isSettled = status == 'settled';
     final correctAnswer = _prediction!['correct_answer'] as String?;
@@ -283,7 +283,10 @@ class _PredictionDetailScreenState
                   if (isSettled && correctAnswer != null) ...[
                     const SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: signalGreen.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
@@ -322,9 +325,9 @@ class _PredictionDetailScreenState
               Text(
                 question,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      height: 1.3,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  height: 1.3,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
@@ -372,7 +375,10 @@ class _PredictionDetailScreenState
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 6),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: (isYes ? signalGreen : AppColors.glitchRed)
@@ -394,7 +400,10 @@ class _PredictionDetailScreenState
                           const SizedBox(width: 12),
                           Text(
                             '$amount BP',
-                            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                            style: const TextStyle(
+                              fontFamily: 'monospace',
+                              fontSize: 12,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -416,7 +425,13 @@ class _PredictionDetailScreenState
 
               // 잔액 정보
               if (_points != null)
-                _buildBalanceInfo(l10n, signalGreen, ghostGrey, borderColor, isDark),
+                _buildBalanceInfo(
+                  l10n,
+                  signalGreen,
+                  ghostGrey,
+                  borderColor,
+                  isDark,
+                ),
 
               const SizedBox(height: 16),
 
@@ -428,10 +443,13 @@ class _PredictionDetailScreenState
                   onPressed: () {
                     // 예측 ID 기반 그룹 채팅방 참여
                     // prediction ID를 roomId로 사용 (앞 12자)
-                    final roomId = widget.predictionId.replaceAll('-', '').substring(0, 12);
-                    context.push('/group/$roomId', extra: {
-                      'password': widget.predictionId,
-                    });
+                    final roomId = widget.predictionId
+                        .replaceAll('-', '')
+                        .substring(0, 12);
+                    context.push(
+                      '/group/$roomId',
+                      extra: {'password': widget.predictionId},
+                    );
                   },
                   icon: const Icon(Icons.forum_outlined, size: 18),
                   label: Text(
@@ -467,13 +485,13 @@ class _PredictionDetailScreenState
                     onPressed: _betting
                         ? null
                         : () => BettingBottomSheet.show(
-                              context,
-                              question: question,
-                              yesOdds: _yesOdds,
-                              noOdds: _noOdds,
-                              points: _points!,
-                              onBet: _onBet,
-                            ),
+                            context,
+                            question: question,
+                            yesOdds: _yesOdds,
+                            noOdds: _noOdds,
+                            points: _points!,
+                            onBet: _onBet,
+                          ),
                     child: _betting
                         ? const SizedBox(
                             width: 20,

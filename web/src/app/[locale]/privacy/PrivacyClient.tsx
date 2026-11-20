@@ -9,6 +9,7 @@ export default function PrivacyClient() {
   const t = useTranslations("Privacy");
 
   const sections = Array.from({ length: SECTION_COUNT }, (_, i) => ({
+    id: i === 7 ? 'data-deletion' : undefined,
     title: t(`sections.${i + 1}.title`),
     content: t(`sections.${i + 1}.content`),
   }));

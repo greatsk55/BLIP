@@ -1270,7 +1270,7 @@ abstract class AppLocalizations {
   /// No description provided for @predictionTabMyBets.
   ///
   /// In en, this message translates to:
-  /// **'My Bets'**
+  /// **'My Votes'**
   String get predictionTabMyBets;
 
   /// No description provided for @predictionTabCreated.
@@ -1582,13 +1582,13 @@ abstract class AppLocalizations {
   /// Terms section 2 title
   ///
   /// In en, this message translates to:
-  /// **'No Accounts Required'**
+  /// **'Access and accounts'**
   String get termsSection2Title;
 
   /// Terms section 2 content
   ///
   /// In en, this message translates to:
-  /// **'BLIP operates without user registration, login credentials, or personal profiles. Access is granted through temporary room links and shared passwords. You are responsible for safeguarding your room passwords—we cannot recover them.'**
+  /// **'BLIP 1.13 does not require an account on any platform. Older iOS versions used Apple sign-in; existing account IDs and supplied emails are retained until deletion. Rooms require an invitation and shared password. Protect your keys because we cannot recover them.'**
   String get termsSection2Content;
 
   /// Terms section 3 title
@@ -1606,13 +1606,13 @@ abstract class AppLocalizations {
   /// Terms section 4 title
   ///
   /// In en, this message translates to:
-  /// **'No Data Recovery'**
+  /// **'Messages and reports'**
   String get termsSection4Title;
 
   /// Terms section 4 content
   ///
   /// In en, this message translates to:
-  /// **'Messages are not stored in any database. Once a chat room is destroyed, all conversation data is permanently and irreversibly lost. This is by design, not a limitation. Do not use BLIP for communications that you need to preserve.'**
+  /// **'Ordinary 1:1 chat history is not stored in our database. Private community posts are stored encrypted. Only recent text you explicitly choose to submit in a safety report is retained for human review. See the privacy policy for account, advertising and analytics data.'**
   String get termsSection4Content;
 
   /// Terms section 5 title
@@ -1732,7 +1732,7 @@ abstract class AppLocalizations {
   /// Privacy note on login screen
   ///
   /// In en, this message translates to:
-  /// **'We don\'t store your personal information.\nSign-in is only used for app access.'**
+  /// **'Apple account ID and email, if provided, are used for sign-in.\nYou can delete your account in Settings.'**
   String get authPrivacyNote;
 
   /// Sign out button
@@ -2155,10 +2155,10 @@ abstract class AppLocalizations {
   /// **'Create ({cost} BP)'**
   String predictionSubmit(int cost);
 
-  /// Bet button
+  /// Vote button
   ///
   /// In en, this message translates to:
-  /// **'Place Bet'**
+  /// **'Place Vote'**
   String get predictionBet;
 
   /// No description provided for @predictionDiscuss.
@@ -2167,16 +2167,16 @@ abstract class AppLocalizations {
   /// **'Join Discussion'**
   String get predictionDiscuss;
 
-  /// Odds label
+  /// Popularity label
   ///
   /// In en, this message translates to:
-  /// **'Odds'**
+  /// **'Popularity'**
   String get predictionOdds;
 
-  /// Expected payout label
+  /// Expected reward label
   ///
   /// In en, this message translates to:
-  /// **'Expected Payout'**
+  /// **'Expected Reward'**
   String get predictionExpectedPayout;
 
   /// Time remaining
@@ -2328,6 +2328,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start Predicting'**
   String get predictionStartPredicting;
+
+  /// No description provided for @safetyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report or block'**
+  String get safetyTitle;
+
+  /// No description provided for @safetyNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'You choose whether to share evidence. Normal chat messages are not automatically saved.'**
+  String get safetyNotice;
+
+  /// No description provided for @safetyReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get safetyReason;
+
+  /// No description provided for @safetyHarassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or bullying'**
+  String get safetyHarassment;
+
+  /// No description provided for @safetySexual.
+  ///
+  /// In en, this message translates to:
+  /// **'Sexual content'**
+  String get safetySexual;
+
+  /// No description provided for @safetyHate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hate or discrimination'**
+  String get safetyHate;
+
+  /// No description provided for @safetyViolence.
+  ///
+  /// In en, this message translates to:
+  /// **'Threats or violence'**
+  String get safetyViolence;
+
+  /// No description provided for @safetyScam.
+  ///
+  /// In en, this message translates to:
+  /// **'Scam or spam'**
+  String get safetyScam;
+
+  /// No description provided for @safetyOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get safetyOther;
+
+  /// No description provided for @safetyEvidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Send up to 4 visible text messages in readable form for human review.'**
+  String get safetyEvidence;
+
+  /// No description provided for @safetyReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Send report'**
+  String get safetyReport;
+
+  /// No description provided for @safetyReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Report received. Our support team will review it.'**
+  String get safetyReported;
+
+  /// No description provided for @safetyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not complete this action. Try again or contact support.'**
+  String get safetyFailed;
+
+  /// No description provided for @safetyBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block and leave this chat'**
+  String get safetyBlock;
+
+  /// No description provided for @safetyBlockNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This closes the room for everyone and prevents re-entry with this invitation. It does not block the person in other rooms.'**
+  String get safetyBlockNotice;
+
+  /// No description provided for @safetyClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get safetyClose;
+
+  /// No description provided for @safetyAdPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad privacy choices'**
+  String get safetyAdPrivacy;
+
+  /// No description provided for @safetyAdPrivacyUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad privacy choices are not required here or are still loading.'**
+  String get safetyAdPrivacyUnavailable;
+
+  /// No description provided for @settingsDataDeletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Request data deletion'**
+  String get settingsDataDeletion;
 }
 
 class _AppLocalizationsDelegate

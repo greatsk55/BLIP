@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 
 interface LegalSection {
+  id?: string;
   title: string;
   content: string;
 }
@@ -59,6 +60,7 @@ export default function LegalPageLayout({
       <div className="space-y-12">
         {sections.map((section, index) => (
           <motion.section
+            id={section.id}
             key={index}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

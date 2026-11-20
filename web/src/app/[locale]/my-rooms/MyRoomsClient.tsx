@@ -1,4 +1,5 @@
 'use client';
+import ClientOnly from '@/components/shared/ClientOnly';
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,17 +10,12 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { Trash2, ArrowRight, Users, MessageCircle, Shield, Plus, ArrowLeft } from 'lucide-react';
 import { getSavedRooms, removeSavedRoom, getRoomPassword, getAdminToken, type SavedRoom } from '@/lib/room/storage';
 
-export default function MyRoomsClient() {
+function MyRoomsClientContent() {
   const t = useTranslations('MyRooms');
   const router = useRouter();
-  const [rooms, setRooms] = useState<SavedRoom[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [rooms, setRooms] = useState<SavedRoom[]>(getSavedRooms);
+  const loaded = true;
   const [confirmTarget, setConfirmTarget] = useState<SavedRoom | null>(null);
-
-  useEffect(() => {
-    setRooms(getSavedRooms());
-    setLoaded(true);
-  }, []);
 
   const handleRemove = useCallback(() => {
     if (!confirmTarget) return;
@@ -229,3 +225,5 @@ function formatTimeAgo(timestampMs: number): string {
   const days = Math.floor(hours / 24);
   return `${days}d`;
 }
+
+export default function MyRoomsClient() { return <ClientOnly><MyRoomsClientContent /></ClientOnly>; }

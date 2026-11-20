@@ -1,5 +1,6 @@
 'use client';
 
+import ClientOnly from '@/components/shared/ClientOnly';
 import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,14 +24,18 @@ interface BoardRoomProps {
   boardId: string;
 }
 
-export default function BoardRoom({ boardId }: BoardRoomProps) {
+function BoardRoomContent({ boardId }: BoardRoomProps) {
   const t = useTranslations('Board');
   const router = useRouter();
   const board = useBoard({ boardId });
 
   // 뷰 전환
-  const [view, setView] = useState<BoardView>('list');
-  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+  const [requestedView, setView] = useState<BoardView | null>(null);
+  const [selectedId, setSelectedPostId] = useState<string | null>(null);
+  const linkedPost = board.status === 'browsing' && board.initialPostId
+    ? board.posts.find(p => p.id === board.initialPostId && !p.isBlinded) : null;
+  const view = requestedView ?? (linkedPost ? 'detail' : 'list');
+  const selectedPostId = selectedId ?? linkedPost?.id ?? null;
 
   // posts에서 실시간 파생 (이미지 복호화 등 상태 변경 반영)
   const selectedPost = selectedPostId
@@ -41,26 +46,10 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
   const [passwordLoading, setPasswordLoading] = useState(false);
 
   // 생성 직후 안내 모달
-  const [createdInfo, setCreatedInfo] = useState<{ password: string; adminToken: string; inviteCode?: string } | null>(null);
-
+  const [createdInfo, setCreatedInfo] = useState(() => getCreatedInfo(boardId));
   useEffect(() => {
-    const info = getCreatedInfo(boardId);
-    if (info) {
-      setCreatedInfo(info);
-    }
+    sessionStorage.removeItem(`blip-board-created-${boardId}`);
   }, [boardId]);
-
-  // 공유 URL로 진입 시 해당 글 자동 오픈
-  useEffect(() => {
-    if (board.status === 'browsing' && board.initialPostId) {
-      const post = board.posts.find((p) => p.id === board.initialPostId);
-      if (post && !post.isBlinded) {
-        setSelectedPostId(post.id);
-        setView('detail');
-      }
-      board.clearInitialPostId();
-    }
-  }, [board.status, board.initialPostId, board.posts, board.clearInitialPostId]);
 
   // 신고 모달 (게시글 또는 댓글)
   const [reportTarget, setReportTarget] = useState<string | null>(null);
@@ -414,3 +403,5 @@ export default function BoardRoom({ boardId }: BoardRoomProps) {
     </div>
   );
 }
+
+export default function BoardRoom(props: BoardRoomProps) { return <ClientOnly><BoardRoomContent {...props} /></ClientOnly>; }

@@ -1,3 +1,4 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
@@ -15,11 +16,11 @@ vi.mock('next-intl', () => ({
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
-    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    p: ({ children, ...props }: ComponentProps<'p'> & Record<string, unknown>) => <p {...props}>{children}</p>,
+    button: ({ children, ...props }: ComponentProps<'button'> & Record<string, unknown>) => <button {...props}>{children}</button>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,
 }));
 
 vi.mock('@/hooks/useGroupChat', () => ({

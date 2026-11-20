@@ -121,7 +121,7 @@ export function useBlipMe(): UseBlipMeReturn {
     let cancelled = false;
 
     async function init() {
-      let token = getOwnerToken();
+      const token = getOwnerToken();
       if (!token) {
         setLoading(false);
         return;

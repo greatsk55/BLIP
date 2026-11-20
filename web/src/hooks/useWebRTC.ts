@@ -479,7 +479,7 @@ export function useWebRTC({
 
     try {
       let fileData: Uint8Array;
-      let metadata: Partial<MediaMetadata> = {
+      const metadata: Partial<MediaMetadata> = {
         fileName: file.name,
         mimeType: file.type,
         size: file.size,

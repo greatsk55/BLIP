@@ -1,3 +1,4 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import BettingCard from './BettingCard';
@@ -5,13 +6,13 @@ import type { Prediction } from '@/types/prediction';
 
 vi.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, whileHover, whileTap, ...props }: any) => (
+    div: ({ children, ...props }: ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
+    button: ({ children, whileHover, whileTap, ...props }: ComponentProps<'button'> & Record<string, unknown>) => (
       <button {...props}>{children}</button>
     ),
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    span: ({ children, ...props }: ComponentProps<'span'> & Record<string, unknown>) => <span {...props}>{children}</span>,
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,
 }));
 
 const basePrediction: Prediction = {
@@ -81,7 +82,7 @@ describe('BettingCard', () => {
         onBet={vi.fn()}
       />
     );
-    expect(screen.getByText(/2026/)).toBeInTheDocument();
+    expect(screen.getAllByText(/2026/)).toHaveLength(2);
   });
 
   it('마감된 질문 -> 버튼 disabled', () => {

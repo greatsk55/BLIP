@@ -4,6 +4,8 @@
 
 🌐 [한국어](docs/README.ko.md) | [English](#) | [日本語](docs/README.ja.md) | [中文](docs/README.zh.md) | [Español](docs/README.es.md) | [Français](docs/README.fr.md)
 
+> BLIP 1.13 works without sign-in on iOS, Android and web. Existing Apple accounts retain deletion controls. Ordinary 1:1 text is ephemeral; private community posts are stored encrypted. Explicitly submitted abuse evidence is a separate exception. Advertising and analytics data are described in the privacy policy. See [release setup](docs/RELEASE.md).
+
 ---
 
 BLIP is an ephemeral chat service that leaves no trace.
@@ -80,7 +82,13 @@ Send **any file** — PDFs, ZIPs, documents, audio, anything — via encrypted P
 - 📊 Real-time transfer progress
 - ⬇️ Explicit download button — nothing auto-saves
 
-## Prediction Game ✨ NEW
+## v1.12.0 — Prediction UX & Stability Fix ✨ NEW
+
+- Fixed splash screen loop bug (app no longer resets to splash on auth state changes)
+- Active predictions first — non-expired votes appear at the top of the list
+- Live odds in list — YES/NO odds now load directly in the prediction list view
+
+## Prediction Game
 
 Make predictions on real-world outcomes and earn **BP (BLIP Points)** — completely anonymous.
 

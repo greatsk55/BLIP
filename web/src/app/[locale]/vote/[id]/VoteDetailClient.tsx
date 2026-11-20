@@ -12,7 +12,7 @@ import { fetchPrediction, fetchOdds, placeBet, settlePrediction, fetchMyBets } f
 import { generateIdempotencyKey } from '@/lib/prediction/idempotency';
 import { getOrCreateDiscussionRoom } from '@/lib/group/actions';
 import { saveRoom, saveRoomPassword } from '@/lib/room/storage';
-import type { Prediction } from '@/types/prediction';
+import type { Prediction, PredictionRow, PredictionBetRow } from '@/types/prediction';
 
 interface VoteDetailClientProps {
   predictionId: string;
@@ -20,12 +20,17 @@ interface VoteDetailClientProps {
 
 export default function VoteDetailClient({ predictionId }: VoteDetailClientProps) {
   const t = useTranslations('Vote');
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   const { balance, deviceFingerprint, refreshBalance } = usePoints();
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [yesOdds, setYesOdds] = useState(1.85);
   const [noOdds, setNoOdds] = useState(2.10);
   const [betting, setBetting] = useState(false);
-  const [myBets, setMyBets] = useState<any[]>([]);
+  const [myBets, setMyBets] = useState<PredictionBetRow[]>([]);
   const [settling, setSettling] = useState(false);
   const [showSettleConfirm, setShowSettleConfirm] = useState<string | null>(null);
   const [joiningDiscussion, setJoiningDiscussion] = useState(false);
@@ -35,7 +40,7 @@ export default function VoteDetailClient({ predictionId }: VoteDetailClientProps
   const canSettle = isCreator
     && prediction?.status !== 'settled'
     && prediction?.settledAt === null
-    && new Date(prediction?.closesAt ?? 0).getTime() <= Date.now();
+    && new Date(prediction?.closesAt ?? 0).getTime() <= now;
 
   // 토론방 참여
   const handleJoinDiscussion = useCallback(async () => {
@@ -211,7 +216,7 @@ export default function VoteDetailClient({ predictionId }: VoteDetailClientProps
           <div className="flex flex-col items-center p-4 border border-ghost-grey/20 rounded-xl">
             <Clock className="w-5 h-5 text-ghost-grey mb-2" />
             <span className="font-mono text-lg font-bold text-ink">
-              {Math.ceil((new Date(prediction.closesAt).getTime() - Date.now()) / 86400000)}d
+              {Math.ceil((new Date(prediction.closesAt).getTime() - now) / 86400000)}d
             </span>
             <span className="font-mono text-xs text-ghost-grey">
               {t('betting.closesIn')}
@@ -230,7 +235,7 @@ export default function VoteDetailClient({ predictionId }: VoteDetailClientProps
             <h3 className="font-mono text-sm text-ghost-grey uppercase tracking-wider">
               My Votes
             </h3>
-            {myBets.map((bet: any) => {
+            {myBets.map((bet: PredictionBetRow) => {
               const isYes = bet.option_id === 'yes';
               return (
                 <div key={bet.id} className="flex justify-between items-center py-2 border-b border-ghost-grey/10 last:border-0">

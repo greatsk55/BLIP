@@ -97,3 +97,16 @@ export function toRankInfo(threshold: RankThreshold): RankInfo {
     color: threshold.color,
   };
 }
+
+export interface PredictionRow {
+  id: string; creator_fingerprint: string; question: string; category: string;
+  type: PredictionType; options: string[]; correct_answer: string | null;
+  status: PredictionStatus; total_pool: number; created_at: string;
+  closes_at: string; reveals_at: string; settled_at: string | null;
+}
+export interface PredictionBetRow {
+  id: string; prediction_id: string; device_fingerprint: string; option_id: string;
+  bet_amount: number; odds_at_bet: number; status: BetStatus; payout: number | null;
+  created_at: string; settled_at: string | null;
+  predictions?: PredictionRow | null;
+}

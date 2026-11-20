@@ -1,10 +1,11 @@
+import type { ComponentProps } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import RankBadge from './RankBadge';
 
 vi.mock('framer-motion', () => ({
   motion: {
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    span: ({ children, ...props }: ComponentProps<'span'> & Record<string, unknown>) => <span {...props}>{children}</span>,
   },
 }));
 

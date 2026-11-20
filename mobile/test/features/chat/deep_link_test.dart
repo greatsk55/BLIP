@@ -8,8 +8,7 @@ void main() {
 
   group('딥링크 URL 파싱', () {
     test('?k= query parameter에서 비밀번호 추출', () {
-      final uri =
-          Uri.parse('https://blip.app/room/ABCD1234?k=WXYZ-5678');
+      final uri = Uri.parse('https://blip.app/room/ABCD1234?k=WXYZ-5678');
       final password = uri.queryParameters['k'];
       expect(password, 'WXYZ-5678');
     });
@@ -22,24 +21,21 @@ void main() {
 
     test('URL-encoded 비밀번호 디코딩', () {
       final encoded = Uri.encodeComponent('AB+CD/EF==');
-      final uri =
-          Uri.parse('https://blip.app/room/ABCD1234?k=$encoded');
+      final uri = Uri.parse('https://blip.app/room/ABCD1234?k=$encoded');
       final password = uri.queryParameters['k'];
       // Uri.parse는 자동으로 디코딩
       expect(password, 'AB+CD/EF==');
     });
 
     test('#fragment에서 비밀번호 추출', () {
-      final uri =
-          Uri.parse('https://blip.app/room/ABCD1234#WXYZ-5678');
+      final uri = Uri.parse('https://blip.app/room/ABCD1234#WXYZ-5678');
       final fragment = uri.fragment;
       expect(fragment, 'WXYZ-5678');
     });
 
     test('#fragment URL-encoded 비밀번호 디코딩', () {
       final encoded = Uri.encodeComponent('AB+CD/EF==');
-      final uri =
-          Uri.parse('https://blip.app/room/ABCD1234#$encoded');
+      final uri = Uri.parse('https://blip.app/room/ABCD1234#$encoded');
       final password = Uri.decodeComponent(uri.fragment);
       expect(password, 'AB+CD/EF==');
     });
@@ -72,8 +68,7 @@ void main() {
 
       // redirect 로직 시뮬레이션
       final k = password;
-      final redirectUrl =
-          k.isNotEmpty ? '/room/$roomId?k=$k' : '/room/$roomId';
+      final redirectUrl = k.isNotEmpty ? '/room/$roomId?k=$k' : '/room/$roomId';
       expect(redirectUrl, '/room/ABCD1234?k=WXYZ-5678');
     });
 
@@ -82,14 +77,12 @@ void main() {
 
       // k가 null인 경우
       const String? k = null;
-      final redirectUrl =
-          k != null ? '/room/$roomId?k=$k' : '/room/$roomId';
+      final redirectUrl = k != null ? '/room/$roomId?k=$k' : '/room/$roomId';
       expect(redirectUrl, '/room/ABCD1234');
     });
 
     test('locale redirect 시 #fragment 유지', () {
-      final uri = Uri.parse(
-          'https://blip.app/ko/room/ABCD1234#WXYZ-5678');
+      final uri = Uri.parse('https://blip.app/ko/room/ABCD1234#WXYZ-5678');
       const roomId = 'ABCD1234';
       final k = uri.queryParameters['k'];
       final fragment = uri.fragment;
@@ -108,36 +101,36 @@ void main() {
 
   group('비밀번호 우선순위 (extra > query > fragment)', () {
     test('extra가 있으면 extra 우선', () {
-      const String? passwordFromExtra = 'FROM_EXTRA';
-      const String? passwordFromQuery = 'FROM_QUERY';
-      const String? passwordFromFragment = 'FROM_FRAGMENT';
+      final passwordFromExtra = <String?>['FROM_EXTRA'].single;
+      final passwordFromQuery = <String?>['FROM_QUERY'].single;
+      final passwordFromFragment = <String?>['FROM_FRAGMENT'].single;
       final result =
           passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment;
       expect(result, 'FROM_EXTRA');
     });
 
     test('extra null → query 사용', () {
-      const String? passwordFromExtra = null;
-      const String? passwordFromQuery = 'FROM_QUERY';
-      const String? passwordFromFragment = 'FROM_FRAGMENT';
+      final passwordFromExtra = <String?>[null].single;
+      final passwordFromQuery = <String?>['FROM_QUERY'].single;
+      final passwordFromFragment = <String?>['FROM_FRAGMENT'].single;
       final result =
           passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment;
       expect(result, 'FROM_QUERY');
     });
 
     test('extra·query null → fragment 사용', () {
-      const String? passwordFromExtra = null;
-      const String? passwordFromQuery = null;
-      const String? passwordFromFragment = 'FROM_FRAGMENT';
+      final passwordFromExtra = <String?>[null].single;
+      final passwordFromQuery = <String?>[null].single;
+      final passwordFromFragment = <String?>['FROM_FRAGMENT'].single;
       final result =
           passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment;
       expect(result, 'FROM_FRAGMENT');
     });
 
     test('모두 null이면 null', () {
-      const String? passwordFromExtra = null;
-      const String? passwordFromQuery = null;
-      const String? passwordFromFragment = null;
+      final passwordFromExtra = <String?>[null].single;
+      final passwordFromQuery = <String?>[null].single;
+      final passwordFromFragment = <String?>[null].single;
       final result =
           passwordFromExtra ?? passwordFromQuery ?? passwordFromFragment;
       expect(result, isNull);

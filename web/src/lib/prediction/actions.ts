@@ -1,5 +1,6 @@
 'use server';
 
+import type { PredictionRow, PredictionBetRow } from '@/types/prediction';
 import { headers } from 'next/headers';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -77,7 +78,7 @@ export async function fetchPredictions(
   locale: string = 'en',
   category?: string,
   limit = 20
-): Promise<{ predictions: any[] } | { error: string }> {
+): Promise<{ predictions: PredictionRow[] } | { error: string }> {
   const supabase = createServerSupabase();
 
   let query = supabase
@@ -121,7 +122,7 @@ export async function fetchPredictions(
 
 export async function fetchPrediction(
   predictionId: string
-): Promise<{ prediction: any } | { error: string }> {
+): Promise<{ prediction: PredictionRow } | { error: string }> {
   if (!predictionId) return { error: 'INVALID_PREDICTION' };
 
   const supabase = createServerSupabase();
@@ -192,7 +193,7 @@ export async function fetchOdds(
 export async function fetchMyBets(
   deviceFingerprint: string,
   predictionId?: string
-): Promise<{ bets: any[] } | { error: string }> {
+): Promise<{ bets: PredictionBetRow[] } | { error: string }> {
   if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
 
   const supabase = createServerSupabase();
@@ -218,7 +219,7 @@ export async function fetchMyBets(
 
 export async function fetchMyPredictions(
   deviceFingerprint: string
-): Promise<{ predictions: any[] } | { error: string }> {
+): Promise<{ predictions: PredictionRow[] } | { error: string }> {
   if (!deviceFingerprint) return { error: 'INVALID_DEVICE' };
 
   const supabase = createServerSupabase();

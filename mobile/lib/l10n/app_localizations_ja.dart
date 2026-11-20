@@ -134,10 +134,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chatMediaUnsupportedType => 'サポートされていないファイル形式';
 
   @override
-  String get chatMediaAttachAllFiles => 'Attach file';
+  String get chatMediaAttachAllFiles => 'ファイルを添付';
 
   @override
-  String get chatMediaDownloadFile => 'Download';
+  String get chatMediaDownloadFile => 'ダウンロード';
 
   @override
   String get boardCreateTitle => 'コミュニティ作成完了';
@@ -609,7 +609,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get predictionTabAll => 'すべて';
 
   @override
-  String get predictionTabMyBets => 'マイベット';
+  String get predictionTabMyBets => 'マイ投票';
 
   @override
   String get predictionTabCreated => '作成済み';
@@ -768,11 +768,11 @@ class AppLocalizationsJa extends AppLocalizations {
       'BLIPは無料のオープンソース、エンドツーエンド暗号化の使い捨てチャットサービスです。使用後に破棄される一時的な通信チャネルを提供します。';
 
   @override
-  String get termsSection2Title => 'アカウント不要';
+  String get termsSection2Title => 'アクセスとアカウント';
 
   @override
   String get termsSection2Content =>
-      'BLIPはユーザー登録、ログイン資格情報、個人プロフィールなしで運営されます。一時的なルームリンクと共有パスワードでアクセスできます。';
+      'BLIP 1.13は全プラットフォームでアカウント不要です。以前のiOS版で使われたApple連携IDと提供メールは削除まで保持されます。部屋には招待と共有パスワードが必要です。鍵は復元できないため大切に保管してください。';
 
   @override
   String get termsSection3Title => '許容される使用';
@@ -782,11 +782,11 @@ class AppLocalizationsJa extends AppLocalizations {
       'BLIPを違法コンテンツの配布、ハラスメント、マルウェアの送信、自動スパム、または法律に違反する活動に使用しないことに同意します。';
 
   @override
-  String get termsSection4Title => 'データ復旧不可';
+  String get termsSection4Title => 'メッセージと通報の保管';
 
   @override
   String get termsSection4Content =>
-      'メッセージはデータベースに保存されません。チャットルームが破棄されると、すべての会話データは永久に失われます。これは制限ではなく設計です。';
+      '通常の1対1チャット履歴はデータベースに保存しません。非公開コミュニティの投稿は暗号化して保存します。通報時に利用者が明示的に選んだ最近のテキストのみ、人による確認用に保管します。アカウント・広告・分析データはプライバシーポリシーをご覧ください。';
 
   @override
   String get termsSection5Title => 'オープンソース';
@@ -851,7 +851,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get authSignInGoogle => 'Googleでサインイン';
 
   @override
-  String get authPrivacyNote => '個人情報は保存しません。\nサインインはアプリへのアクセスにのみ使用されます。';
+  String get authPrivacyNote =>
+      'AppleのアカウントIDと提供されたメールアドレスをログインに使用します。\n設定からアカウントを削除できます。';
 
   @override
   String get authSignOut => 'サインアウト';
@@ -998,10 +999,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get blipMeCreateButton => 'BLIP meリンクを作成';
 
   @override
-  String get blipMeWidgetPrompt => 'Share your link to start chatting';
+  String get blipMeWidgetPrompt => 'リンクを共有してチャットを始めましょう';
 
   @override
-  String get blipMeWidgetConnections => 'connections';
+  String get blipMeWidgetConnections => '件の接続';
 
   @override
   String get blipMeYourLink => 'あなたのリンク';
@@ -1072,16 +1073,16 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get predictionBet => 'ベットする';
+  String get predictionBet => '投票する';
 
   @override
   String get predictionDiscuss => 'ディスカッション参加';
 
   @override
-  String get predictionOdds => 'オッズ';
+  String get predictionOdds => '人気度';
 
   @override
-  String get predictionExpectedPayout => '予想配当';
+  String get predictionExpectedPayout => '予想報酬';
 
   @override
   String predictionClosesIn(String time) {
@@ -1163,4 +1164,62 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get predictionStartPredicting => '予測を始める';
+
+  @override
+  String get safetyTitle => '通報またはブロック';
+
+  @override
+  String get safetyNotice => '証拠の共有は自分で選択します。通常の会話は自動保存されません。';
+
+  @override
+  String get safetyReason => '理由';
+
+  @override
+  String get safetyHarassment => '嫌がらせ・いじめ';
+
+  @override
+  String get safetySexual => '性的な内容';
+
+  @override
+  String get safetyHate => '差別・ヘイト';
+
+  @override
+  String get safetyViolence => '脅迫・暴力';
+
+  @override
+  String get safetyScam => '詐欺・スパム';
+
+  @override
+  String get safetyOther => 'その他';
+
+  @override
+  String get safetyEvidence => '表示中のテキストを最大4件、人が読んで確認できる形式で送信します。';
+
+  @override
+  String get safetyReport => '通報を送信';
+
+  @override
+  String get safetyReported => '通報を受け付けました。サポートが確認します。';
+
+  @override
+  String get safetyFailed => '処理できませんでした。再試行するかサポートに連絡してください。';
+
+  @override
+  String get safetyBlock => 'このチャットをブロックして退出';
+
+  @override
+  String get safetyBlockNotice =>
+      '全員のルームを閉じ、この招待での再参加を防ぎます。他のルームでの相手はブロックしません。';
+
+  @override
+  String get safetyClose => '閉じる';
+
+  @override
+  String get safetyAdPrivacy => '広告のプライバシー選択';
+
+  @override
+  String get safetyAdPrivacyUnavailable => 'この地域では追加の選択が不要か、設定を読み込み中です。';
+
+  @override
+  String get settingsDataDeletion => 'データ削除をリクエスト';
 }
